@@ -38,6 +38,8 @@ export default (() => {
 			throw new Error("Not Implemented dateString");
 		}
 
+		this.now = Now();
+		// setter
 		this.setFullYear = FullYearSet.bind(this);
 		this.setMonth = MonthSet.bind(this);
 		this.setDate = DateSet.bind(this);
@@ -46,7 +48,7 @@ export default (() => {
 		this.setSeconds = SecondsSet.bind(this);
 		this.setMilliseconds = MillisecondsSet.bind(this);
 		this.setTime = TimeSet.bind(this);
-
+		//getter
 		this.getFullYear = FullYearGet.bind(this);
 		this.getMonth = MonthGet.bind(this);
 		this.getDate = DateGet.bind(this);
@@ -56,8 +58,27 @@ export default (() => {
 		this.getMilliseconds = MillisecondsGet.bind(this);
 		this.getTime = TimeGet.bind(this);
 		this.getTimezoneOffset = TimezoneOffsetGet.bind(this);
-		this.now = Now();
+
+		// UTC
 		this.UTC = UTC();
+		// setter UTC
+		this.setUTCFullYear = FullYearUTCSet.bind(this);
+		this.setUTCMonth = MonthUTCSet.bind(this);
+		this.setUTCDate = DateUTCSet.bind(this);
+		this.setUTCHours = HoursUTCSet.bind(this);
+		this.setUTCMinutes = MinutesUTCSet.bind(this);
+		this.setUTCSeconds = SecondsUTCSet.bind(this);
+		this.setUTCMilliseconds = MillisecondsUTCSet.bind(this);
+		this.setUTCTime = TimeUTCSet.bind(this);
+		// getter UTC
+		this.getUTCFullYear = FullYearUTCGet.bind(this);
+		this.getUTCMonth = MonthUTCGet.bind(this);
+		this.getUTCDate = DateUTCGet.bind(this);
+		this.getUTCHours = HoursUTCGet.bind(this);
+		this.getUTCMinutes = MinutesUTCGet.bind(this);
+		this.getUTCSeconds = SecondsUTCGet.bind(this);
+		this.getUTCMilliseconds = MillisecondsUTCGet.bind(this);
+		this.getUTCTime = TimeUTCGet.bind(this);
 	}
 
 	function Update(tis) {
