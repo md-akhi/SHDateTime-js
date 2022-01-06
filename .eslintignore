@@ -1,0 +1,11 @@
+node_modules/
+.vscode/
+.git/
+public/
+.github/
+docs/
+
+
+!.eslintrc
+!.prettierrc
+.gitignore
