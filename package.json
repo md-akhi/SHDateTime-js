@@ -3,20 +3,19 @@
   "version": "1.0.0",
   "description": "jalali date &amp; time java script (js)",
   "main": "SHDate.js",
+  "type": "module",
   "scripts": {
-    "start": "node SHDate.js",
-    "test": "test"
+    "start": "npm run dev",
+    "dev": "nodemon test/tst.js",
+    "test": "node SHDate.js > test/out.out"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/md-akhi/SHDate-js.git"
   },
-  "keywords": [
-    "date",
-    "time"
-  ],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["date", "time", "datetime"],
+  "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/md-akhi/SHDate-js/issues"
   },
@@ -39,14 +38,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,jsx}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }
