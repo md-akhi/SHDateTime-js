@@ -1,14 +1,24 @@
 {
-  "printWidth": 80,
-  "useTabs": true,
-  "tabWidth": 2,
-  "overrides": [
-    {
-      "files": "*.json",
-      "options": {
-        "parser": "json",
-        "useTabs": false
-      }
-    }
-  ]
+	"trailingComma": "none",
+	"printWidth": 80,
+	"useTabs": true,
+	"tabWidth": 2,
+	"semi": true,
+	"singleQuote": false,
+	"overrides": [
+		{
+			"files": "*.json",
+			"options": {
+				"parser": "json",
+				"useTabs": false
+			}
+		},
+		{
+			"files": "*.js",
+			"options": {
+				"parser": "js",
+				"useTabs": false
+			}
+		}
+	]
 }
