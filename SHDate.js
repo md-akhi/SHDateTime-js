@@ -1,26 +1,49 @@
 /**
- * In The Name Of God
- * @package SHDate
- * @author   Mohammad Amanalikhani
- * @link    http://md-akhi.github.io | http://md.akhi.ir
- * @copyright   Copyright (C) 2015 - 2021 Open Source Matters,Inc. All right reserved.
+ * In the name of Allah, the Beneficent, the Merciful.
+ *
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @author Mohammad Amanalikhani
+ * @link http://docs.akhi.ir/js/SHDateTime
+ * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
  * @version Release: 1.0.0
  */
+
+/**
+ *
+ */
 class SHWord {}
 
+/**
+ *
+ */
 class SHDate {
+	/**
+	 *
+	 */
 	#shDate;
 	#shDateUTC;
 	#date;
 	#now;
 	#utc;
+	/**
+	 * @param {string} datastring
+	 * @param {number} value
+	 * @param {number} year
+	 * @param {number} month
+	 * @param {number} date
+	 * @param {number} hour
+	 * @param {number} minute
+	 * @param {number} second
+	 * @param {number} millisecond
+	 * @returns {number}
+	 */
 	constructor() {
 		if (!this) {
 			return new SHDate(arguments).toString();
 		}
 		this.#date = new Date();
-		this.#now = Date.now();
+		this.#now = SHDate.now();
 		this.#utc = Date.UTC(this.#date.getUTCFullYear());
 		this.#Update();
 		if (typeof arguments[0] == "number" && arguments.length == 1) {
@@ -43,9 +66,12 @@ class SHDate {
 			// dateString
 			throw new Error("Not Implemented dateString");
 		}
-		console.log(this);
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#Update(isUTC = false) {
 		if (
 			parseInt(this.getTime() / 1000) != parseInt(this.#date.getTime() / 1000)
@@ -68,6 +94,13 @@ class SHDate {
 		return;
 	}
 
+	/**
+	 *
+	 * @param {number} year
+	 * @param {number} month
+	 * @param {number} date
+	 * @returns {number}
+	 */
 	#GregorianToSolar(gyear, gmonth, gdate, julian) {
 		let doy, year, month, date, dim;
 		// if(julian&&(gyear<=1581||(gyear==1582&&gmonth<=10&&gdate<15)))
@@ -97,6 +130,10 @@ class SHDate {
 		return [parseInt(year), parseInt(month), parseInt(date)];
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#SolarToGregorian(year, month, date, julian) {
 		let gdoy, gyear, gmonth, gdate, dim;
 		gdoy =
@@ -127,7 +164,7 @@ class SHDate {
 			30,
 			31,
 			30,
-			31,
+			31
 		];
 		for (let i in gmn) {
 			(gmonth = i), (dim = gmn[i]);
@@ -148,12 +185,20 @@ class SHDate {
 		return [parseInt(gyear), parseInt(gmonth), parseInt(gdate)];
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#IsLeap(year, all) {
 		return all
 			? parseInt((year += 1128) * 365.2422) - parseInt(--year * 365.2422) - 365
 			: Math.ceil((year += 1127) * 365.2422 - year * 365) - 274;
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#GIsLeap(gyear, all) {
 		return all
 			? gyear % 4 == 0 && !(gyear % 100 == 0 && gyear % 400 != 0)
@@ -162,12 +207,20 @@ class SHDate {
 			  ) - 150;
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#DayOfWeek(year, month, date) {
 		return (
 			((1127 + year) * 365.2422 + this.#DayOfYear(month, date, year) - 3) % 7
 		);
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#DayOfYear(month, date, year) {
 		return (
 			((month < 7 ? (month - 1) * 31 : (month - 7) * 30 + 186) + --date) %
@@ -175,6 +228,10 @@ class SHDate {
 		);
 	}
 
+	/**
+	 *
+	 * @returns
+	 */
 	#WeekOfYear(year, month, date) {
 		var iw, iy;
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
@@ -188,7 +245,7 @@ class SHDate {
 					far1weekday == 5 || (far1weekday == 6 && this.#IsLeap((iy = --year)))
 						? 53
 						: 52),
-				iy,
+				iy
 			];
 		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
 		if (
@@ -205,18 +262,39 @@ class SHDate {
 		return [iw, iy];
 	}
 
+	/**
+	 * @returns
+	 */
 	#DaysInMonth(year, month) {
 		month < 7 ? 31 : month < 12 ? 30 : this.#IsLeap(year) + 29;
 	}
 
+	/**
+	 * @returns*/
 	#DaysInYear(year) {
 		this.#IsLeap(year) + 365;
 	}
 
-	now() {
+	/**
+	 * @returns
+	 */
+	static now() {
 		return Date.now();
 	}
-	UTC(
+
+	/**
+	 * Returns the number of milliseconds between midnight, January 1, 1970 Universal Coordinated Time (UTC) (or GMT) and the specified date.
+	 *
+	 * @param year — The full year designation is required for cross-century date accuracy. If year is between 0 and 99 is used, then year is assumed to be 1900 + year.
+	 * @param month — The month as a number between 0 and 11 (January to December).
+	 * @param date — The date as a number between 1 and 31.
+	 * @param hours — Must be supplied if minutes is supplied. A number from 0 to 23 (midnight to 11pm) that specifies the hour.
+	 * @param minutes — Must be supplied if seconds is supplied. A number from 0 to 59 that specifies the minutes.
+	 * @param seconds — Must be supplied if milliseconds is supplied. A number from 0 to 59 that specifies the seconds.
+	 * @param ms — A number from 0 to 999 that specifies the milliseconds.
+	 * @returns
+	 */
+	static UTC(
 		year,
 		month = false,
 		day = false,
@@ -225,21 +303,12 @@ class SHDate {
 		second = false,
 		millisecond = false
 	) {
-		let shDate = new SHDate();
-		let date = new Date();
+		const shDate = new SHDate();
+		const date = new Date();
 		const UTC = this.#SolarToGregorian(
 			year ?? shDate.getUTCFullYear(),
 			month ?? shDate.getUTCMonth() + 1,
 			day ?? shDate.getUTCDate()
-		);
-		console.log(
-			shDate.getUTCFullYear(),
-			shDate.getUTCMonth() + 1,
-			shDate.getUTCDate(),
-			UTC,
-			date.getUTCFullYear(),
-			date.getUTCMonth() + 1,
-			date.getUTCDate()
 		);
 		return Date.UTC(
 			UTC[0],
@@ -252,6 +321,15 @@ class SHDate {
 		);
 	}
 
+	/**
+	 * Sets the year of the Date object using local time.
+	 *
+	 * @param year — A numeric value for the year.
+	 * @param month — A zero-based numeric value for the month (0 for January, 11 for December). Must be *specified if numDate is specified.
+	 * @param date — A numeric value equal for the day of the month.
+	 *
+	 * @return Object SHDate
+	 */
 	setFullYear(year, month = false, date = false) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			year ?? this.getFullYear(),
@@ -260,6 +338,15 @@ class SHDate {
 		);
 		return this.#date.setFullYear(gmonth - 1, gdate, gyear);
 	}
+	/**
+	 * Sets the year value in the Date object using Universal Coordinated Time (UTC).
+	 *
+	 * @param year — A numeric value equal to the year.
+	 * @param month — A numeric value equal to the month. The value for January is 0, and other month values follow * consecutively. Must be supplied if numDate is supplied.
+	 * @param date — A numeric value equal to the day of the month.
+	 *
+	 * @return Object SHDate
+	 */
 	setUTCFullYear(year, month = false, date = false) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			year ?? this.getUTCFullYear(),
@@ -268,6 +355,15 @@ class SHDate {
 		);
 		return this.#date.setUTCFullYear(gmonth - 1, gdate, gyear);
 	}
+
+	/**
+	 * Sets the month value in the Date object using local time.
+	 *
+	 * @param month — A numeric value equal to the month. The value for January is 0, and other month values follow * consecutively.
+	 * @param date — A numeric value representing the day of the month. If this value is not supplied, the value from a * call to the getDate method is used.
+	 *
+	 * @return Object SHDate
+	 */
 	setMonth(month, date = false) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getFullYear(),
@@ -276,6 +372,15 @@ class SHDate {
 		);
 		return this.#date.setMonth(gmonth - 1, gdate);
 	}
+
+	/**
+	 * Sets the month value in the Date object using Universal Coordinated Time (UTC).
+	 *
+	 * @param month — A numeric value equal to the month. The value for January is 0, and other month values follow * consecutively.
+	 * @param date — A numeric value representing the day of the month. If it is not supplied, the value from a call to  the getUTCDate method is used.
+	 *
+	 * @return Object SHDate
+	 */
 	setUTCMonth(month, date = false) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getUTCFullYear(),
@@ -284,6 +389,13 @@ class SHDate {
 		);
 		return this.#date.setUTCMonth(gmonth - 1, gdate);
 	}
+
+	/**
+	 * Sets the numeric day-of-the-month value of the Date object using local time.
+	 *
+	 * @param date — A numeric value equal to the day of the month.
+	 * @returns
+	 */
 	setDate(date) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getFullYear(),
@@ -292,6 +404,13 @@ class SHDate {
 		);
 		return this.#date.setDate(gdate);
 	}
+
+	/**
+	 * 	Sets the numeric day of the month in the Date object using Universal Coordinated Time (UTC).
+	 *
+	 * @param date — A numeric value equal to the day of the month.
+	 * @returns
+	 */
 	setUTCDate(date) {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getUTCFullYear(),
@@ -300,6 +419,16 @@ class SHDate {
 		);
 		return this.#date.setUTCDate(gdate);
 	}
+
+	/**
+	 * 	Sets the hour value in the Date object using local time.
+	 *
+	 * @param hours — A numeric value equal to the hours value.
+	 * @param min — A numeric value equal to the minutes value.
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setHours(hours, minutes = false, seconds = false, milliSeconds = false) {
 		return this.#date.setHours(
 			hours,
@@ -308,6 +437,16 @@ class SHDate {
 			milliSeconds ?? this.getMilliseconds()
 		);
 	}
+
+	/**
+	 * 	Sets the hours value in the Date object using Universal Coordinated Time (UTC).
+	 *
+	 * @param hours — A numeric value equal to the hours value.
+	 * @param min — A numeric value equal to the minutes value.
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setUTCHours(hours, minutes = false, seconds = false, milliSeconds = false) {
 		return this.#date.setUTCHours(
 			hours,
@@ -316,6 +455,15 @@ class SHDate {
 			milliSeconds ?? this.getUTCMilliseconds()
 		);
 	}
+
+	/**
+	 * 	Sets the minutes value in the Date object using local time.
+	 *
+	 * @param min — A numeric value equal to the minutes value.
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setMinutes(minutes, seconds = false, milliSeconds = false) {
 		return this.#date.setMinutes(
 			minutes,
@@ -323,6 +471,15 @@ class SHDate {
 			milliSeconds ?? this.getMilliseconds()
 		);
 	}
+
+	/**
+	 * 	Sets the minutes value in the Date object using Universal Coordinated Time (UTC).
+	 *
+	 * @param min — A numeric value equal to the minutes value.
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setUTCMinutes(minutes, seconds = false, milliSeconds = false) {
 		return this.#date.setUTCMinutes(
 			minutes,
@@ -330,75 +487,182 @@ class SHDate {
 			milliSeconds ?? this.getUTCMilliseconds(true)
 		);
 	}
+
+	/**
+	 * Sets the seconds value in the Date object using local time.
+	 *
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setSeconds(seconds, milliSeconds = false) {
 		return this.#date.setSeconds(
 			seconds,
 			milliSeconds ?? this.getMilliseconds()
 		);
 	}
+
+	/**
+	 * 	Sets the seconds value in the Date object using Universal Coordinated Time (UTC).
+	 * @param sec — A numeric value equal to the seconds value.
+	 * @param ms — A numeric value equal to the milliseconds value.
+	 * @returns
+	 */
 	setUTCSeconds(seconds, milliSeconds = false) {
 		return this.#date.setUTCSeconds(
 			seconds,
 			milliSeconds ?? this.getUTCMilliseconds()
 		);
 	}
+
+	/**
+	 * 	Sets the milliseconds value in the Date object using local time.
+	 * @param ms — A numeric value equal to the millisecond value.
+	 * @returns
+	 */
 	setMilliseconds(milliSeconds) {
 		return this.#date.setMilliseconds(milliSeconds);
 	}
+
+	/**
+	 * 	Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).
+	 * @param ms — A numeric value equal to the millisecond value.
+	 * @returns
+	 */
 	setUTCMilliseconds(milliSeconds) {
 		return this.#date.setUTCMilliseconds(milliSeconds);
 	}
+
+	/**
+	 * Gets the year, using local time.
+	 * @returns
+	 */
 	getFullYear() {
 		this.#Update();
 		return this.#shDate[0];
 	}
+
+	/**
+	 * Gets the year using Universal Coordinated Time (UTC).
+	 * @returns
+	 *
+	 */
 	getUTCFullYear() {
 		this.#Update(true);
 		return this.shDateUTC[0];
 	}
+	/**
+	 * Gets the month, using local time.
+	 * @returns
+	 */
 	getMonth() {
 		this.#Update(this);
 		return this.#shDate[1];
 	}
+
+	/**
+	 * Gets the month of a Date object using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCMonth() {
 		this.#Update(true);
 		return this.shDateUTC[1];
 	}
+
+	/**
+	 * Gets the day-of-the-month, using local time.
+	 * @returns
+	 */
 	getDate() {
 		this.#Update(this);
 		return this.#shDate[2];
 	}
+
+	/**
+	 * Gets the day-of-the-month, using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCDate() {
 		this.#Update(true);
 		return this.shDateUTC[2];
 	}
+
+	/**
+	 * Gets the hours in a date, using local time.
+	 * @returns
+	 */
 	getHours() {
 		return this.#date.getHours();
 	}
+
+	/**
+	 * Gets the hours value in a Date object using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCHours() {
 		return this.#date.getUTCHours();
 	}
+
+	/**
+	 * Gets the minutes of a Date object, using local time.
+	 * @returns
+	 */
 	getMinutes() {
 		return this.#date.getMinutes();
 	}
+
+	/**
+	 * Gets the minutes of a Date object using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCMinutes() {
 		return this.#date.getUTCMinutes();
 	}
+
+	/**
+	 * Gets the seconds of a Date object, using local time.
+	 * @returns
+	 */
 	getSeconds() {
 		return this.#date.getSeconds();
 	}
+
+	/**
+	 * Gets the seconds of a Date object using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCSeconds() {
 		return this.#date.getUTCSeconds();
 	}
+
+	/**
+	 * Gets the milliseconds of a Date, using local time.
+	 * @returns
+	 */
 	getMilliseconds() {
 		return this.#date.getMilliseconds();
 	}
+
+	/**
+	 * Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getUTCMilliseconds() {
 		return this.#date.getUTCMilliseconds();
 	}
+
+	/**
+	 *
+	 * @returns
+	 */
 	getDay() {
 		return this.#DayOfWeek(this.getFullYear(), this.getMonth(), this.getDate());
 	}
+
+	/**
+	 *
+	 * @returns
+	 */
 	getUTCDay() {
 		return this.#DayOfWeek(
 			this.getFullYear(true),
@@ -406,30 +670,61 @@ class SHDate {
 			this.getDate(true)
 		);
 	}
+	/**
+	 * Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).
+	 * @returns
+	 */
 	getTimezoneOffset() {
 		return this.#date.getTimezoneOffset();
 	}
+
+	/**
+	 * Sets the date and time value in the Date object.
+	 *
+	 * @param time — A numeric value representing the number of elapsed milliseconds since midnight, January 1, 1970 GMT.
+	 * @returns
+	 */
 	setTime(time) {
 		//if (isUTC) return this.#date.setUTCTime(time);
 		return this.#date.setTime(time);
 	}
+
+	/**
+	 * Gets the time value in milliseconds.
+	 * @returns
+	 */
 	getTime() {
 		//if (isUTC) return this.#date.getUTCTime();
 		return this.#date.getTime();
 	}
+
+	/**
+	 * @returns
+	 */
 	valueOf() {
-		return this.getTime();
+		return this.#date.valueOf();
 	}
+
+	/**
+	 *
+	 * @returns
+	 */
 	checkDate(year, month, date) {
 		return !(
 			year < 1 ||
-			year > 1700 /*3500000  3,500,000 */ ||
+			year > 1700 /* 3,500,000 */ ||
 			month < 1 ||
 			month > 12 ||
 			date < 1 ||
 			date > this.#DaysInMonth(year, month)
 		);
 	}
+
+	/**
+	 *
+	 *
+	 * @returns
+	 */
 	checkTime(hours, minutes, seconds) {
 		return !(
 			hours < 0 ||
@@ -440,13 +735,25 @@ class SHDate {
 			seconds > 59
 		);
 	}
+
+	/**
+	 * Returns a string representation of a function.
+	 * @returns
+	 */
 	toString() {
-		return "Date.toString()";
+		return Date.toString();
 	}
-	parse() {
-		return "Date.parse()";
+
+	/**
+	 * Parses a string containing a date, and returns the number of milliseconds between that date and midnight, January 1, 1970.
+	 *
+	 * @param s — A date string
+	 * @returns
+	 */
+	parse(s) {
+		return Date.parse(s);
 	}
-	/* // get timestamp in linux format
+	/** // get timestamp in linux format
 	toString: function(format, convertDigit) {
 		var ret = (!!format && format !== null) ? jdate._format(format + '', this.jdate) : jdate._format('yyyy-MM-dd HH:mm:ss.l Z', this.jdate);
 		return (!!convertDigit && convertDigit !== null) ? ret.toFaDigit() : ret;
