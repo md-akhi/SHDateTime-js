@@ -1,17 +1,17 @@
 {
   "name": "shdate",
   "version": "1.0.0",
-  "description": "jalali date &amp; time java script (js)",
+  "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "main": "SHDate.js",
   "type": "module",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon test/tst.js",
-    "test": "node SHDate.js > test/out.out"
+    "test": "node src/SHDate.js > test/out.out"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/md-akhi/SHDate-js.git"
+    "url": "https://github.com/md-akhi/SHDate-js.git"
   },
   "keywords": ["date", "time", "datetime"],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
@@ -38,7 +38,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": ["prettier --write", "eslint --fix", "git add"],
+    "*.{js}": ["prettier --write", "eslint --fix", "git add"],
     "*": ["prettier --write", "git add"]
   }
 }

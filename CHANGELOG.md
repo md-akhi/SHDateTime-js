@@ -2,16 +2,13 @@
 
 # تغییرات
 
-</div>
-
-# Changelog
-
-<div dir="rtl">
 تمام تغییرات قابل توجه در این پروژه به صورت مستند ثبت می‌شود.
 
 [تغییرات](https://keepachangelog.com/fa-IR/1.0.0/), [نسخه‌بندی معنایی](https://semver.org/lang/fa/).
 
 </div>
+
+# Change Log
 
 All notable changes to this project will be documented in this file.
 [Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -22,15 +19,11 @@ All notable changes to this project will be documented in this file.
 
 ## [منتشر نشده][unreleased]
 
-</div>
-
-## [Unreleased]
-
-<div dir="rtl">
-
 -
 
 </div>
+
+## [Unreleased]
 
 -
 
