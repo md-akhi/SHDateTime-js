@@ -1,5 +1,5 @@
 {
-  "name": "shdate",
+  "name": "@md-akhi/shdate",
   "version": "1.0.0",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "main": "SHDate.js",

@@ -12,13 +12,6 @@
 				"parser": "json",
 				"useTabs": false
 			}
-		},
-		{
-			"files": "*.js",
-			"options": {
-				"parser": "js",
-				"useTabs": false
-			}
 		}
 	]
 }
