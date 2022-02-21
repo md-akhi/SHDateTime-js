@@ -438,7 +438,7 @@ class SHDateWord {
 class SHDate {
 	#date;
 	#shDate;
-	#shDateUTC;
+	#shUTCDate;
 	/**
 	 * Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format.Date objects contain a Number that represents milliseconds since 11 Day 1348 UTC.
 	 * @param {object} dateObject Date object
@@ -497,7 +497,7 @@ class SHDate {
 	 */
 	#UpDate(isUTC = false) {
 		if (isUTC) {
-			this.#shDateUTC = this.#GregorianToSolar(
+			this.#shUTCDate = this.#GregorianToSolar(
 				this.#date.getUTCFullYear(),
 				this.#date.getUTCMonth() + 1,
 				this.#date.getUTCDate()
@@ -785,89 +785,121 @@ class SHDate {
 	 * @param {string} format - format of data
 	 * @returns {array}
 	 */
-	format(format) {
-		let year = this.getFullYear(),
-			month = this.getMonth() + 1,
-			date = this.getDate(),
-			result = [],
-			diy,
-			doy,
-			dim,
-			dow,
-			week,
-			weekday,
-			woy,
-			wiy,
-			wod;
+	format(format, isUtc = false) {
+		const year = isUtc ? this.getUTCFullYear() : this.getFullYear(),
+			month = isUtc ? this.getUTCMonth() + 1 : this.getMonth() + 1,
+			date = isUtc ? this.getUTCDate() : this.getDate(),
+			hours = isUtc ? this.getUTCHours() : this.getHours(),
+			minute = isUtc ? this.getUTCMinutes() : this.getHours(),
+			second = isUtc ? this.getUTCSeconds() : this.getMinutes(),
+			millisecond = isUtc ? this.getUTCMilliseconds() : this.getMilliseconds(),
+			weekday = isUtc ? this.getDay() + 1 : this.getUTCDay() + 1;
+		let result = [];
 		format.split(/\s*(?:=|$)\s*/).forEach((f) => {
 			switch (f) {
+				case "YY":
+					result.push(year.toString());
+					break;
+				case "yy":
+					result.push(year.toString().padStart(4, "0"));
+					break;
+				case "MM":
+					result.push(month.toString());
+					break;
+				case "mm":
+					result.push(month.toString().padStart(2, "0"));
+					break;
+				case "DD":
+					result.push(date.toString());
+					break;
+				case "dd":
+					result.push(date.toString().padStart(2, "0"));
+					break;
+				case "HH":
+					result.push(hours.toString());
+					break;
+				case "hh":
+					result.push(hours.toString().padStart(2, "0"));
+					break;
+				case "II":
+					result.push(minute.toString());
+					break;
+				case "ii":
+					result.push(minute.toString().padStart(2, "0"));
+					break;
+				case "SS":
+					result.push(second.toString());
+					break;
+				case "ss":
+					result.push(second.toString().padStart(2, "0"));
+					break;
+				case "MS":
+					result.push(millisecond.toString());
+					break;
+				case "ms":
+					result.push(millisecond.toString().padStart(2, "0"));
+					break;
+				case "Diy":
+					result.push(this.#DaysInYear(year));
+					break;
 				case "diy":
 					result.push(this.#DaysInYear(year).toString().padStart(3, "0"));
 					break;
-				case "idiy":
-					result.push(this.#DaysInYear(year));
+				case "Dim":
+					result.push(this.#DaysInMonth(year, month));
 					break;
 				case "dim":
 					result.push(
 						this.#DaysInMonth(year, month).toString().padStart(2, "0")
 					);
 					break;
-				case "idim":
-					result.push(this.#DaysInMonth(year, month));
+				case "Wod":
+					result.push(this.#WeekOfDay(year, month, date));
 					break;
 				case "wod":
 					result.push(
 						this.#WeekOfDay(year, month, date).toString().padStart(2, "0")
 					);
 					break;
-				case "iwod":
-					result.push(this.#WeekOfDay(year, month, date));
+				case "Wiy":
+					result.push(this.#WeeksInYear(year));
 					break;
 				case "wiy":
 					result.push(this.#WeeksInYear(year).toString().padStart(2, "0"));
 					break;
-				case "iwiy":
-					result.push(this.#WeeksInYear(year));
+				case "Woy":
+					result.push(this.#WeekOfYear(year, month, date));
 					break;
 				case "woy":
 					result.push(
 						this.#WeekOfYear(year, month, date).toString().padStart(2, "0")
 					);
 					break;
-				case "iwoy":
-					result.push(this.#WeekOfYear(year, month, date));
+				case "Dow":
+					result.push(weekday);
 					break;
 				case "dow":
-					result.push(
-						this.#DayOfWeek(year, month, date).toString().padStart(2, "0")
-					);
+					result.push(weekday.toString().padStart(2, "0"));
 					break;
-				case "idow":
-					result.push(this.#DayOfWeek(year, month, date));
+				case "Doy":
+					result.push(this.#DayOfYear(year, month, date));
 					break;
 				case "doy":
 					result.push(
 						this.#DayOfYear(year, month, date).toString().padStart(3, "0")
 					);
 					break;
-				case "idoy":
-					result.push(this.#DayOfYear(year, month, date));
-					break;
 				case "dsn":
-					result.push(
-						SHDateWord.getDayShortNames(this.#DayOfWeek(year, month, date))
-					);
+					result.push(SHDateWord.getDayShortNames(weekday));
 					break;
 				case "dfn":
-					result.push(
-						SHDateWord.getDayFullNames(this.#DayOfWeek(year, month, date))
-					);
+					result.push(SHDateWord.getDayFullNames(weekday));
 					break;
 				case "efn":
-					result.push(SHDateWord.getMeridienFullNames(year));
+					result.push(SHDateWord.getMeridienFullNames(hours));
 					break;
 				case "esn":
-					result.push(SHDateWord.getMeridienShortNames(year));
+					result.push(SHDateWord.getMeridienShortNames(hours));
 					break;
 				case "mfn":
 					result.push(SHDateWord.getMonthFullNames(month - 1));
@@ -1192,7 +1224,7 @@ class SHDate {
 	 */
 	getUTCFullYear() {
 		this.#UpDate(true);
-		return this.shDateUTC[0];
+		return this.#shUTCDate[0];
 	}
 
 	/**
@@ -1212,7 +1244,7 @@ class SHDate {
 	 */
 	getUTCMonth() {
 		this.#UpDate(true);
-		return this.shDateUTC[1] - 1;
+		return this.#shUTCDate[1] - 1;
 	}
 
 	/**
@@ -1232,7 +1264,7 @@ class SHDate {
 	 */
 	getUTCDate() {
 		this.#UpDate(true);
-		return this.shDateUTC[2];
+		return this.#shUTCDate[2];
 	}
 
 	/**
@@ -1433,17 +1465,77 @@ class SHDate {
 	 * @since x.y.z
 	 */
 	toString() {
-		const [dsn, msn] = this.format("dsn=msn");
-		return `${dsn} ${this.getDate()} ${msn} ${this.getFullYear()} ${this.toTimeString()}`;
+		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy");
+		return `${this.toDateString()} ${this.toTimeString()}`;
 	}
 
 	/**
-	 * Returns a time as a string value..
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since x.y.z
+	 */
+	toUTCString() {
+		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy", true);
+		return `${this.toUTCDateString()} ${this.toUTCTimeString()}`;
+	}
+
+	/**
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since x.y.z
+	 */
+	toDateString() {
+		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy");
+		return `${dsn} ${date} ${msn} ${year}`;
+	}
+
+	/**
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since x.y.z
+	 */
+	toUTCDateString() {
+		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy", true);
+		return `${dsn}, ${date} ${msn} ${year}`;
+	}
+
+	/**
+	 * Returns a time as a string value.
 	 * @returns {string} A string representation of a function.
 	 * @since 1.0.0
 	 */
 	toTimeString() {
 		return this.#date.toTimeString();
+	}
+
+	/**
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since 1.0.0
+	 */
+	toUTCTimeString() {
+		const [hours, minute, second] = this.format("hh=ii=ss", true);
+		return `${hours}:${minute}:${second} GMT`;
+	}
+
+	/**
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since 1.0.0
+	 */
+	toISOString() {
+		const [dates, times] = this.#date.toJSON().split(/\s*(?:T|$)\s*/);
+		const [year, month, date] = this.format("yy=mm=dd");
+		return `${year}-${month}-${date}T${times}`;
+	}
+
+	/**
+	 *
+	 * @returns {string} A string representation of a function.
+	 * @since 1.0.0
+	 */
+	toJSON() {
+		return this.toISOString();
 	}
 
 	/**
@@ -1483,7 +1575,7 @@ class SHDate {
 	 * @param {Intl.DateTimeFormatOptions} options An object that contains one or more properties that specify comparison options.
 	 * @returns
 	 */
-	toLocaleTimeString(locales, options) {
+	toLocaleTimeString(locales, options = {}) {
 		return this.#date.toLocaleTimeString(locales, options);
 	}
 	/**
@@ -1491,18 +1583,6 @@ class SHDate {
 		toLocaleDateString(locales?, options?)
 
 		toLocaleString(locales?, options?)
-
-
-
-
-		toUTCString()
-		toISOString()
-
-		toDateString()
-
-
-
-
 	*/
 }
 
@@ -1526,6 +1606,49 @@ const NumsTo = (str, con = "FA", dec = false) => {
 	}
 	return str;
 };
+
+class SHDateTimeFormat {
+	constructor(locales, options) {
+		locales = {
+			fa: [],
+			"fa-IR": [],
+			en: [],
+			"en-US": [],
+			nu: [numberingSystem],
+			ca: [calendar],
+			hc: [hourCycle]
+		};
+		options = {
+			dateStyle: ["full", "long", "medium", "short"],
+			timeStyle: ["full", "long", "medium", "short"],
+			calendar: ["islamic", "gregory", ".."],
+			dayPeriod: ["long", "short", "narrow"],
+			numberingSystem: ["arab", "arabext", "..."],
+			localeMatcher: ["lookup", "best fit"],
+			timeZone: ["UTC", "America/New_York", "..."],
+			hour12: ["true", "false"],
+			hourCycle: ["h11", "h12", "h23", "h24"],
+			formatMatcher: ["basic", "best fit"],
+			weekday: ["long", "short", "narrow"],
+			era: ["long", "short", "narrow"],
+			year: ["numeric", "2-digit"],
+			month: ["numeric", "2-digit", "long", "short", "narrow"],
+			day: ["numeric", "2-digit"],
+			hour: ["numeric", "2-digit"],
+			minute: ["numeric", "2-digit"],
+			second: ["numeric", "2-digit"],
+			fractionalSecondDigits: ["0", "1", "2", "3"],
+			timeZoneName: ["long", "short"]
+		};
+	}
+	format() {}
+	formatToParts() {}
+	resolvedOptions() {}
+	formatRange() {}
+	formatRangeToParts() {}
+}
+
+Intl.SHDateTimeFormat = SHDateTimeFormat;
 
 export { NumsTo };
 export default SHDate;
