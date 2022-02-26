@@ -1,0 +1,14 @@
+.*
+tsconfig.json
+webpack.config.js
+node_modules
+build
+.husky
+.vscode
+.github
+nodemon.json
+package-lock.json
+*.map
+.gitignore
+.git
+.npmignore
