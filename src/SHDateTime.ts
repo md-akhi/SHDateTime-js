@@ -7,438 +7,18 @@
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
  * @version Release: 1.0.0
  */
-"use strict";
-/**
- * class SHDate Language: Persian
- * @since 1.0.0
- */
-class SHDateLang_fa_IR {
-	// Languages
-	static LANG = "fa_IR"; //Persion	fa
-	static DIGIT = new Array(
-		"٠",
-		"١",
-		"٢",
-		"٣",
-		"۴",
-		"۵",
-		"۶",
-		"٧",
-		"٨",
-		"٩",
-		","
-	);
-	static SUFFIX = "ام";
-	static MERIDIEN_FULL_NAMES = new Array("قبل از ظهر", "بعد از ظهر");
-	static MERIDIEN_SHORT_NAMES = new Array("ق‍.ظ", "ب‍.ظ");
-	static MONTH_FULL_NAMES = new Array(
-		"فروردين",
-		"ارديبهشت",
-		"خرداد",
-		"تير",
-		"امرداد",
-		"شهريور",
-		"مهر",
-		"آبان",
-		"آذر",
-		"دي",
-		"بهمن",
-		"اسفند"
-	);
-	static MONTH_SHORT_NAMES = new Array(
-		"فرو",
-		"ارد",
-		"خرد",
-		"تير",
-		"امر",
-		"شهر",
-		"مهر",
-		"آبا",
-		"آذر",
-		"دي",
-		"بهم‍",
-		"اسف‍"
-	);
-	static DAY_FULL_NAMES = new Array(
-		"شنبه",
-		"يک‌شنبه",
-		"دوشنبه",
-		"سه ش‍‍‍‍نبه",
-		"چهارشنبه",
-		"پنجشنبه",
-		"جمعه"
-	);
-	static DAY_SHORT_NAMES = new Array("ش‍", "ی‍", "د", "س‍", "چ‍", "پ‍", "ج‍");
-	static CONSTELLATIONS_FULL_NAMES = new Array(
-		"حَمَل",
-		"ثَور",
-		"جَوزا",
-		"سَرَطان",
-		"اَسَد",
-		"سُنبُله",
-		"مِیزان",
-		"عَقرَب",
-		"قَوس",
-		"جَدْی",
-		"دَلو",
-		"حوت"
-	);
-	static ANIMALS_FULL_NAMES = new Array(
-		"مار",
-		"اسب",
-		"گوسفند",
-		"ميمون",
-		"مرغ",
-		"سگ",
-		"خوک",
-		"موش",
-		"گاو",
-		"پلنگ",
-		"خرگوش",
-		"نهنگ"
-	);
-	static SEASON_FULL_NAMES = new Array("بهار", "تابستان", "پاييز", "زمستان");
-	static SOLSTICE_FULL_NAMES = new Array("يلدا", "تموز");
-	/**
-	 * Ordinal suffix for the day of the month
-	 * @param   int  $num    numeric the day of the month
-	 * @return  string  Ordinal suffix for the day of the month
-	 * @since   1.0.0
-	 */
-	static SuffixNames(num) {
-		if (!Number.isInteger(num)) {
-			throw new Error("The value is not integer");
-		}
-		return SHDateLang_fa_IR.SUFFIX;
-	}
-}
 
-/**
- * class SHDate Language: English
- * @since 1.0.0
- */
-class SHDateLang_en_US {
-	// Languages
-	static LANG = "en_US"; //English	en
-	static DIGIT = new Array(
-		"0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7",
-		"8",
-		"9",
-		"."
-	);
-	static SUFFIX = new Array("th", "st", "nd", "rd");
-	static MERIDIEN_FULL_NAMES = new Array("AM", "PM");
-	static MERIDIEN_SHORT_NAMES = new Array("am", "pm");
-	static MONTH_FULL_NAMES = new Array(
-		"Farvardin",
-		"Ordibehesht",
-		"Khordad",
-		"Tir",
-		"Amordad",
-		"Shahrivar",
-		"Mehr",
-		"Aban",
-		"Azar",
-		"Dey",
-		"Bahman",
-		"Esfand"
-	);
-	static MONTH_SHORT_NAMES = new Array(
-		"Far",
-		"Ord",
-		"Kho",
-		"Tir",
-		"Amo",
-		"Sha",
-		"Meh",
-		"Aba",
-		"Aza",
-		"Dey",
-		"Bah",
-		"Esf"
-	);
-	static DAY_FULL_NAMES = new Array(
-		"Saturday",
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday"
-	);
-	static DAY_SHORT_NAMES = new Array(
-		"Sat",
-		"Sun",
-		"Mon",
-		"Tue",
-		"Wed",
-		"Thu",
-		"Fri"
-	);
-	static CONSTELLATIONS_FULL_NAMES = new Array(
-		"Aries",
-		"Taurus",
-		"Gemini",
-		"Cancer",
-		"Leo",
-		"Virgo",
-		"Libra",
-		"Scorpio",
-		"Sagittarius",
-		"Capricorn",
-		"Aquarius",
-		"Pisces"
-	);
-	static ANIMALS_FULL_NAMES = new Array(
-		"Snake",
-		"Horse",
-		"Sheep",
-		"Monkey",
-		"Chicken",
-		"Dog",
-		"Pig",
-		"Mouse",
-		"Cow",
-		"Panther",
-		"Rabbit",
-		"Whale"
-	);
-	static SEASON_FULL_NAMES = new Array("Spring", "Summer", "Fall", "Winter");
-	static SOLSTICE_FULL_NAMES = new Array("Yalda", "Tammuz");
-	/**
-	 * Ordinal suffix for the day of the month
-	 * @param   int  $num    numeric the day of the month
-	 * @return  string  Ordinal suffix for the day of the month
-	 * @since   1.0.0
-	 */
-	static SuffixNames(num) {
-		if (!Number.isInteger(num)) {
-			throw new Error("The value is not integer");
-		}
-		//Calculate Ordinal suffix for the day of the month
-		if (num >= 10 && num <= 19) return SHDateLang_en_US.SUFFIX[0];
-		switch (num % 10) {
-			case 1:
-				return SHDateLang_en_US.SUFFIX[1];
-			case 2:
-				return SHDateLang_en_US.SUFFIX[2];
-			case 3:
-				return SHDateLang_en_US.SUFFIX[3];
-			default:
-				return SHDateLang_en_US.SUFFIX[0];
-		}
-	}
-}
-
-/**
- * class SHDate Configuration
- * @since 1.0.0
- */
-class SHDateConfig {
-	/**
-	 *	The time difference with the server
-	 */
-	static TIME_SERVER = 0;
-	static TSERVER = SHDateConfig.TIME_SERVER;
-	/**
-	 *    Timezone identifier
-	 */
-	static TIME_ZONE = "Asia/Tehran";
-	static TZONE = SHDateConfig.TIME_ZONE;
-
-	/**
-	 *    Language words Software
-	 */
-	static LANG_WORD = "en_US";
-	static FIRST_DAY_OF_WEEK = 0; // 0 = Saturday | 6 = Friday
-}
-/**
- * class SHDate Word
- * @since 1.0.0
- */
-class SHDateWord {
-	/**
-	 * Get Language
-	 * @param string lang
-	 * @return  string
-	 * @since   1.0.0
-	 */
-	static getClassLanguage(lang = SHDateConfig.LANG_WORD) {
-		if (typeof lang !== "string") {
-			throw new Error("The value is not string");
-		}
-		switch (lang) {
-			// Languages
-			case "fa_IR":
-				return SHDateLang_fa_IR;
-			case "en_US":
-				return SHDateLang_en_US;
-			default:
-				return SHDateLang_en_US;
-		}
-	}
-
-	/**
-	 * Uppercase Ante meridiem and Post meridiem
-	 * @param   int  num    numeric
-	 * @param   string  LW    language    word
-	 * @return  string  Ante/Post meridiem
-	 * @since   1.0.0
-	 */
-	static getMeridienFullNames(H24, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(H24)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.MERIDIEN_FULL_NAMES[H24 > 11];
-	}
-
-	/**
-	 * Lowercase Ante meridiem and Post meridiem, two letters
-	 * @param   int  num    numeric
-	 * @param   string  LW    language    word
-	 * @return  string  Ante/Post meridiem, two letters
-	 * @since   1.0.0
-	 */
-	static getMeridienShortNames(H24, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(H24)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.MERIDIEN_SHORT_NAMES[H24 > 11];
-	}
-
-	/**
-	 * A full textual representation of a month
-	 * @param   int  num    numeric of a month
-	 * @return  string  A full textual of a month
-	 * @since   1.0.0
-	 */
-	static getMonthFullNames(month, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(month)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.MONTH_FULL_NAMES[month];
-	}
-
-	/**
-	 * A short textual representation of a month, three letters
-	 * @param   int  num    numeric of a month
-	 * @return  string  A short textual of a month, three letters
-	 * @since   1.0.0
-	 */
-	static getMonthShortNames(month, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(month)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.MONTH_SHORT_NAMES[month];
-	}
-
-	/**
-	 * A full textual representation of the day of the week
-	 * @param   int  num    numeric of the day of the week
-	 * @return  string  A full textual the day of the week
-	 * @since   1.0.0
-	 */
-	static getDayFullNames(dow, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(dow)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.DAY_FULL_NAMES[(dow + SHDateConfig.FIRST_DAY_OF_WEEK) % 7];
-	}
-
-	/**
-	 * A short textual representation of the day of the week, three letters
-	 * @param   int  num    numeric of the day of the week
-	 * @return  string  A short textual of a day, three letters
-	 * @since   1.0.0
-	 */
-	static getDayShortNames(dow, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(dow)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.DAY_SHORT_NAMES[(dow + SHDateConfig.FIRST_DAY_OF_WEEK) % 7];
-	}
-
-	/**
-	 * Ordinal suffix for the day of the month
-	 * @param   {int}  $num    numeric the day of the month
-	 * @return  string  Ordinal suffix for the day of the month
-	 * @since   1.0.0
-	 */
-	static getSuffixNames(num, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(num)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.SuffixNames(num);
-	}
-
-	/**
-	 *
-	 */
-	static getConstellationsFullNames(month, LW = SHDateConfig.LANG_WORD) {
-		//Constellations
-		if (!Number.isInteger(month)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.CONSTELLATIONS_FULL_NAMES[month];
-	}
-
-	/**
-	 *
-	 */
-	static getAnimalsFullNames(year, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(year)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.ANIMALS_FULL_NAMES[year % 12];
-	}
-
-	/**
-	 *
-	 */
-	static getSeasonFullNames(month, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(month)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.SEASON_FULL_NAMES[parseInt(month / 3.1)];
-	}
-
-	/**
-	 *
-	 */
-	static getSolsticeFullNames(num, LW = SHDateConfig.LANG_WORD) {
-		if (!Number.isInteger(num)) {
-			throw new Error("The value is not integer");
-		}
-		const cls = SHDateWord.getClassLanguage(LW);
-		return cls.SOLSTICE_FULL_NAMES[num];
-	}
-}
+import SHDateWord, { Config as SHDateConfig } from "./Word";
 
 /**
  * class SHDate
  * @since   1.0.0
  */
-class SHDate {
-	#date;
-	#shDate;
-	#shUTCDate;
+export default class SHDate {
+	public static version: string = SHDateConfig.version;
+	private date: Date;
+	private shDate: number[] = [];
+	private shUTCDate: number[] = [];
 	/**
 	 * Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format.Date objects contain a Number that represents milliseconds since 11 Day 1348 UTC.
 	 * @param {object} dateObject Date object
@@ -454,39 +34,41 @@ class SHDate {
 	 * @returns {string} a Date object whose toString() method returns the literal string Invalid Date.
 	 * @since 1.0.0
 	 */
-	constructor() {
+	constructor(data: number | string | object, ...args: number[]) {
 		if (!new.target || !this) {
 			// if you run me without new
-			return new SHDate(arguments).toString();
+			throw new Error("You must use new to create a instance of this class");
+			//return new SHDate().toString();
 		}
-		this.#date = new Date();
-		this.#UpDate();
-		// date time
-		if (typeof arguments[0] == "number" && arguments.length == 1) {
-			// year
-			if (
-				arguments[0].length == 4 &&
-				(arguments[0] >= 1200 || arguments[0] < 1700)
-			)
-				this.setFullYear(arguments[0]);
+		this.date = new Date();
+		if (typeof data == "number")
+			if (data.toString().length == 4 && (data >= 1200 || data < 1700)) {
+				const [
+					month = this.getMonth(),
+					date = 1,
+					hours = 0,
+					minute = 0,
+					second = 0,
+					millisecond = 0
+				] = args;
+				// year
+				this.setFullYear(data || this.getFullYear());
+				this.setMonth(month);
+				this.setDate(date);
+				this.setHours(hours);
+				this.setMinutes(minute);
+				this.setSeconds(second);
+				this.setMilliseconds(millisecond);
+			}
 			// value
-			else this.setTime(arguments[0]);
-		} else if (typeof arguments[0] == "number" && arguments.length >= 1) {
-			this.setFullYear(arguments[0] || this.getFullYear());
-			this.setMonth(arguments[1] || this.getMonth());
-			this.setDate(arguments[2] || 1);
-			this.setHours(arguments[3] || 0);
-			this.setMinutes(arguments[4] || 0);
-			this.setSeconds(arguments[5] || 0);
-			this.setMilliseconds(arguments[6] || 0);
-		} else if (typeof arguments[0] == "string" && arguments.length == 1) {
+			else this.setTime(data);
+		else if (typeof data == "string")
 			// dateString
 			throw new Error("Not Implemented dateString");
-		} else if (typeof arguments[0] == "object" && arguments.length == 1) {
+		else if (data instanceof SHDate)
 			// dateObject
-			throw new Error("Not Implemented dateObject");
-		}
-		return;
+			this.date.setTime(data.getTime());
+		else throw new Error("Invalid data");
 	}
 
 	/**
@@ -495,19 +77,19 @@ class SHDate {
 	 * @returns {null}
 	 * @since 1.0.0
 	 */
-	#UpDate(isUTC = false) {
+	private UpDate(isUTC: boolean = false): void {
 		if (isUTC) {
-			this.#shUTCDate = this.#GregorianToSolar(
-				this.#date.getUTCFullYear(),
-				this.#date.getUTCMonth() + 1,
-				this.#date.getUTCDate()
+			this.shUTCDate = this.GregorianToSolar(
+				this.date.getUTCFullYear(),
+				this.date.getUTCMonth() + 1,
+				this.date.getUTCDate()
 			);
 			return;
 		}
-		this.#shDate = this.#GregorianToSolar(
-			this.#date.getFullYear(),
-			this.#date.getMonth() + 1,
-			this.#date.getDate()
+		this.shDate = this.GregorianToSolar(
+			this.date.getFullYear(),
+			this.date.getMonth() + 1,
+			this.date.getDate()
 		);
 		return;
 	}
@@ -521,18 +103,23 @@ class SHDate {
 	 * @returns {array} - solar hijri date
 	 * @since 1.0.0
 	 */
-	#GregorianToSolar(gyear, gmonth, gdate, julian = false) {
+	private GregorianToSolar(
+		gyear: number,
+		gmonth: number,
+		gdate: number,
+		julian: boolean = false
+	): Array<any> {
 		// 0622/03/22 = 0001/01/01
-		let gdoy, doy, year;
+		let gdoy: number, doy: number, year: number;
 		gdoy =
 			(gyear - 1) * 365 +
 			([0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] +
 				gdate) -
 			226745; //226745 = 621*365+80
-		if (this.#GIsLeap(gyear) && gmonth > 2) gdoy++;
-		year = parseInt(gdoy / 365) + 1;
-		doy = (gdoy % 365) + this.#GIsLeap(gyear, true) - this.#IsLeap(year, true);
-		return this.#DaysOfDay(year, doy - 1);
+		if (this.GIsLeap(gyear) && gmonth > 2) gdoy++;
+		year = parseInt((gdoy / 365).toString()) + 1;
+		doy = (gdoy % 365) + this.GIsLeap(gyear, true) - this.IsLeap(year, true);
+		return this.DaysOfDay(year, doy - 1);
 	}
 
 	/**
@@ -544,45 +131,53 @@ class SHDate {
 	 * @returns {array} - gregorian date
 	 * @since 1.0.0
 	 */
-	#SolarToGregorian(year, month, date, julian = false) {
+	private SolarToGregorian(
+		year: number,
+		month: number,
+		date: number,
+		julian: boolean = false
+	): number[] {
 		// 0001/01/01 = 0622/03/22
-		let doy, gdoy, gyear;
+		let doy: number, gdoy: number, gyear: number;
 		doy =
 			(year - 1) * 365 +
-			this.#DayOfYear(year, month, date) +
+			this.DayOfYear(year, month, date) +
 			226745 /*621*365+80*/;
-		gyear = parseInt(doy / 365) + 1;
-		gdoy = (doy % 365) + this.#IsLeap(year, true) - this.#GIsLeap(gyear, true);
-		return this.#GDaysOfDay(gyear, gdoy);
+		gyear = parseInt((doy / 365).toString()) + 1;
+		gdoy = (doy % 365) + this.IsLeap(year, true) - this.GIsLeap(gyear, true);
+		return this.GDaysOfDay(gyear, gdoy);
 	}
-	#GDaysOfDay(gyear, gdoy) {
-		let gdiy, gleap;
-		gdiy = this.#GDaysInYear(gyear);
+	private GDaysOfDay(gyear: number, gdoy: number): number[] {
+		let gdiy: number,
+			gleap: number,
+			gmonth: number = 0;
+		gdiy = this.GDaysInYear(gyear);
 		if (gdoy < 1)
 			do {
 				gyear--;
-				gdiy = this.#GDaysInYear(gyear);
+				gdiy = this.GDaysInYear(gyear);
 				gdoy += gdiy;
 			} while (gdoy < 1);
 		else if (gdoy > gdiy)
 			do {
 				gdoy -= gdiy;
 				gyear++;
-				gdiy = this.#GDaysInYear(gyear);
+				gdiy = this.GDaysInYear(gyear);
 			} while (gdoy > gdiy);
-		gleap = this.#GIsLeap(gyear) ? 29 : 28;
+		gleap = this.GIsLeap(gyear) ? 29 : 28;
 		[0, 31, gleap, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].forEach(
-			(gdim, gmonth) => {
-				if (gdoy <= gdim) return [gmonth, parseInt(gdoy), gyear];
+			(gdim, gmiy) => {
+				if (gdoy <= gdim) return [gyear, gmonth, parseInt(gdoy.toString())];
 				gdoy -= gdim;
+				gmonth = gmiy;
 			}
 		);
-		return [gmonth, parseInt(gdoy), gyear];
+		return [gyear, gmonth, parseInt(gdoy.toString())];
 	}
-	#GDaysInYear(year) {
-		return this.#GIsLeap(year) ? 366 : 365;
+	private GDaysInYear(year: number): number {
+		return this.GIsLeap(year) ? 366 : 365;
 	}
-	#GDayOfWeek(gdow) {
+	private GDOWToDOW(gdow: number): number {
 		// 7+(gdow+1)-SHDateConfig.FIRST_DAY_OF_WEEK%7
 		return (8 + gdow - SHDateConfig.FIRST_DAY_OF_WEEK) % 7; // shdow
 	}
@@ -593,14 +188,18 @@ class SHDate {
 	 * @returns {boolean} - leap year
 	 * @since 1.0.0
 	 */
-	#GIsLeap(gyear, all = false) {
+	private GIsLeap(gyear: number, all: boolean = false): number {
 		if (all)
 			return (
 				Math.ceil(
-					parseInt(--gyear / 4) - parseInt(gyear / 100) + parseInt(gyear / 400)
+					parseInt((--gyear / 4).toString()) -
+						parseInt((gyear / 100).toString()) +
+						parseInt((gyear / 400).toString())
 				) - 150
 			);
-		return parseInt(gyear % 4 == 0 && !(gyear % 100 == 0 && gyear % 400 != 0));
+		return parseInt(
+			(gyear % 4 == 0 && !(gyear % 100 == 0 && gyear % 400 != 0)).toString()
+		);
 	}
 
 	/**
@@ -610,11 +209,15 @@ class SHDate {
 	 * @returns {boolean} - leap year
 	 * @since 1.0.0
 	 */
-	#IsLeap(year, all = false) {
+	private IsLeap(year: number, all: boolean = false): number {
 		if (all)
-			return parseInt(Math.ceil((year += 1127) * 365.2422 - year * 365) - 274);
+			return parseInt(
+				(Math.ceil((year += 1127) * 365.2422 - year * 365) - 274).toString()
+			);
 		return (
-			parseInt((year += 1128) * 365.2422) - parseInt(--year * 365.2422) - 365
+			parseInt(((year += 1128) * 365.2422).toString()) -
+			parseInt((--year * 365.2422).toString()) -
+			365
 		);
 	}
 
@@ -624,8 +227,8 @@ class SHDate {
 	 * @returns {boolean} - leap year
 	 * @since 1.0.0
 	 */
-	isLeap(year) {
-		return this.#IsLeap(year) ? true : false;
+	public isLeap(year: number = this.getFullYear()): boolean {
+		return this.IsLeap(year) ? true : false;
 	}
 
 	/**
@@ -636,14 +239,19 @@ class SHDate {
 	 * @returns {number} - day of week
 	 * @since 1.0.0
 	 */
-	#DayOfWeek(year, month, date, FDOW = SHDateConfig.FIRST_DAY_OF_WEEK) {
+	private DayOfWeek(
+		year: number,
+		month: number,
+		date: number,
+		FDOW: number = SHDateConfig.FIRST_DAY_OF_WEEK
+	): number {
 		//return (year+this.IsLeaps(year,1)+this::DayOfYear(year,month,date)+5)%7;
 		//new and best version
 		return (
 			(5 +
 				year +
-				this.#IsLeap(year, 1) +
-				this.#DayOfYear(year, month, date) -
+				this.IsLeap(year, true) +
+				this.DayOfYear(year, month, date) -
 				FDOW) %
 			7
 		);
@@ -657,11 +265,11 @@ class SHDate {
 	 * @returns {number} - day of year
 	 * @since 1.0.0
 	 */
-	#DayOfYear(year, month, date) {
-		let doy;
+	private DayOfYear(year: number, month: number, date: number): number {
+		let doy: number;
 		if (month < 7) doy = (month - 1) * 31;
 		else doy = (month - 7) * 30 + 186;
-		return (doy + date - 1) % (this.#DaysInYear(year) - 1);
+		return (doy + date - 1) % (this.DaysInYear(year) - 1);
 	}
 
 	/**
@@ -672,28 +280,30 @@ class SHDate {
 	 * @returns {number} - week of year
 	 * @since 1.0.0
 	 */
-	#WeekOfYear(year, month, date) {
-		var iw, iy;
+	private WeekOfYear(year: number, month: number, date: number): number[] {
+		var iw: number,
+			iy: number,
+			doy: number,
+			far1weekday: number,
+			weekday: number;
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
 		if (
-			(doy = this.#DayOfYear(year, month, date) + 1) <=
-				8 - (far1weekday = this.#DayOfWeek(year, 1, 1) + 1) &&
+			(doy = this.DayOfYear(year, month, date) + 1) <=
+				8 - (far1weekday = this.DayOfWeek(year, 1, 1) + 1) &&
 			far1weekday > 4
-		)
-			return [
-				(iw =
-					far1weekday == 5 || (far1weekday == 6 && this.#IsLeap((iy = --year)))
-						? 53
-						: 52),
-				iy
-			];
+		) {
+			iy = --year;
+			iw = far1weekday == 5 || (far1weekday == 6 && this.IsLeap(iy)) ? 53 : 52;
+			return [iw, iy];
+		}
 		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
 		if (
-			365 - doy + this.#IsLeap(year) <
-			4 - (weekday = this.#DayOfWeek(year, month, date) + 1)
+			365 - doy + this.IsLeap(year) <
+			4 - (weekday = this.DayOfWeek(year, month, date) + 1)
 		) {
 			iy = ++year;
-			return [(iw = 1), iy];
+			iw = 1;
+			return [iw, iy];
 		}
 		/* Find if Y M D falls in YearNumber Y, WeekNumber 1 through 52|53 */
 		iy = year;
@@ -708,9 +318,9 @@ class SHDate {
 	 * @returns {number} - weeks in year
 	 * @since 1.0.0
 	 */
-	#WeeksInYear(year) {
-		const far1dow = this.#DayOfWeek(year, 1, 1) + 1;
-		if (far1dow == 4 && far1dow == 3 && this.#IsLeap(year)) return 53;
+	private WeeksInYear(year: number): number {
+		const far1dow: number = this.DayOfWeek(year, 1, 1) + 1;
+		if (far1dow == 4 || (far1dow == 3 && this.IsLeap(year))) return 53;
 		return 52;
 	}
 
@@ -721,9 +331,9 @@ class SHDate {
 	 * @param date - solar hijri date
 	 * @returns {number} - week of day
 	 */
-	#WeekOfDay(year, week, date = 1) {
-		const doy = (week - 1) * 7 + date - this.#DayOfWeek(year, 1, 4) + 2;
-		return this.#DaysOfDay(year, doy);
+	private WeekOfDay(year: number, week: number, date: number = 1): number[] {
+		const doy = (week - 1) * 7 + date - this.DayOfWeek(year, 1, 4) + 2;
+		return this.DaysOfDay(year, doy);
 	}
 
 	/**
@@ -733,27 +343,27 @@ class SHDate {
 	 * @returns {array} - days of day
 	 * @since 1.0.0
 	 */
-	#DaysOfDay(year, doy) {
+	private DaysOfDay(year: number, doy: number): number[] {
 		let diy, month, date;
 		doy++;
-		diy = this.#DaysInYear(year);
+		diy = this.DaysInYear(year);
 		if (doy < 1)
 			do {
 				year--;
-				doy += this.#DaysInYear(year);
+				doy += this.DaysInYear(year);
 			} while (doy < 1);
 		else if (doy > diy)
 			do {
 				doy -= diy;
 				year++;
-				diy = this.#DaysInYear(year);
+				diy = this.DaysInYear(year);
 			} while (doy > diy);
 		if (doy < 187) {
-			month = parseInt((doy - 1) / 31) + 1;
+			month = parseInt(((doy - 1) / 31).toString()) + 1;
 			date = doy % 31 || 31;
 		} else {
 			doy -= 186;
-			month = parseInt((doy - 1) / 30) + 7;
+			month = parseInt(((doy - 1) / 30).toString()) + 7;
 			date = doy % 30 || 30;
 		}
 		return [year, month, date];
@@ -766,8 +376,11 @@ class SHDate {
 	 * @returns {number} - days in month
 	 * @since 1.0.0
 	 */
-	#DaysInMonth(year, month) {
-		return month < 7 ? 31 : month < 12 ? 30 : this.#IsLeap(year) + 29;
+	private DaysInMonth(year: number, month: number): number {
+		return month < 7 ? 31 : month < 12 ? 30 : this.IsLeap(year) + 29;
+		if (month < 7) return 31;
+		else if (month < 12) return 30;
+		return this.IsLeap(year) + 29;
 	}
 
 	/**
@@ -776,8 +389,8 @@ class SHDate {
 	 * @returns {number} - days in year
 	 * @since 1.0.0
 	 */
-	#DaysInYear(year) {
-		return this.#IsLeap(year) + 365;
+	private DaysInYear(year: number): number {
+		return this.IsLeap(year) + 365;
 	}
 
 	/**
@@ -785,7 +398,7 @@ class SHDate {
 	 * @param {string} format - format of data
 	 * @returns {array}
 	 */
-	format(format, isUtc = false) {
+	public format(format: string, isUtc = false): string[] {
 		const year = isUtc ? this.getUTCFullYear() : this.getFullYear(),
 			month = isUtc ? this.getUTCMonth() + 1 : this.getMonth() + 1,
 			date = isUtc ? this.getUTCDate() : this.getDate(),
@@ -794,7 +407,7 @@ class SHDate {
 			second = isUtc ? this.getUTCSeconds() : this.getMinutes(),
 			millisecond = isUtc ? this.getUTCMilliseconds() : this.getMilliseconds(),
 			weekday = isUtc ? this.getDay() + 1 : this.getUTCDay() + 1;
-		let result = [];
+		let result: string[] = [];
 		format.split(/\s*(?:=|$)\s*/).forEach((f) => {
 			switch (f) {
 				case "YY":
@@ -840,53 +453,53 @@ class SHDate {
 					result.push(millisecond.toString().padStart(2, "0"));
 					break;
 				case "Diy":
-					result.push(this.#DaysInYear(year));
+					result.push(this.DaysInYear(year).toString());
 					break;
 				case "diy":
-					result.push(this.#DaysInYear(year).toString().padStart(3, "0"));
+					result.push(this.DaysInYear(year).toString().padStart(3, "0"));
 					break;
 				case "Dim":
-					result.push(this.#DaysInMonth(year, month));
+					result.push(this.DaysInMonth(year, month).toString());
 					break;
 				case "dim":
 					result.push(
-						this.#DaysInMonth(year, month).toString().padStart(2, "0")
+						this.DaysInMonth(year, month).toString().padStart(2, "0")
 					);
 					break;
 				case "Wod":
-					result.push(this.#WeekOfDay(year, month, date));
+					result.push(this.WeekOfDay(year, month, date).toString());
 					break;
 				case "wod":
 					result.push(
-						this.#WeekOfDay(year, month, date).toString().padStart(2, "0")
+						this.WeekOfDay(year, month, date).toString().padStart(2, "0")
 					);
 					break;
 				case "Wiy":
-					result.push(this.#WeeksInYear(year));
+					result.push(this.WeeksInYear(year).toString());
 					break;
 				case "wiy":
-					result.push(this.#WeeksInYear(year).toString().padStart(2, "0"));
+					result.push(this.WeeksInYear(year).toString().padStart(2, "0"));
 					break;
 				case "Woy":
-					result.push(this.#WeekOfYear(year, month, date));
+					result.push(this.WeekOfYear(year, month, date).toString());
 					break;
 				case "woy":
 					result.push(
-						this.#WeekOfYear(year, month, date).toString().padStart(2, "0")
+						this.WeekOfYear(year, month, date).toString().padStart(2, "0")
 					);
 					break;
 				case "Dow":
-					result.push(weekday);
+					result.push(weekday.toString());
 					break;
 				case "dow":
 					result.push(weekday.toString().padStart(2, "0"));
 					break;
 				case "Doy":
-					result.push(this.#DayOfYear(year, month, date));
+					result.push(this.DayOfYear(year, month, date).toString());
 					break;
 				case "doy":
 					result.push(
-						this.#DayOfYear(year, month, date).toString().padStart(3, "0")
+						this.DayOfYear(year, month, date).toString().padStart(3, "0")
 					);
 					break;
 				case "dsn":
@@ -935,7 +548,7 @@ class SHDate {
 	 * @returns {number} - current Unix timestamp
 	 * @since 1.0.0
 	 */
-	static now() {
+	public static now(): number {
 		return Date.now();
 	}
 
@@ -951,30 +564,16 @@ class SHDate {
 	 * @returns {number} The number of milliseconds between midnight, 11 Dey 1348 UTC and the supplied date.
 	 * @since 1.0.0
 	 */
-	static UTC(
-		year,
-		month = false,
-		day = false,
-		hour = false,
-		minute = false,
-		second = false,
-		millisecond = false
-	) {
-		const shDate = new SHDate();
-		const date = new Date();
-		const UTC = this.#SolarToGregorian(
-			year || shDate.getUTCFullYear(),
-			month || shDate.getUTCMonth() + 1,
-			day || shDate.getUTCDate()
-		);
+	public static UTC(...args: number[]): number {
+		let date = new Date(new SHDate(args).getTime());
 		return Date.UTC(
-			UTC[0],
-			UTC[1] - 1,
-			UTC[2],
-			hour || date.getUTCHours(),
-			minute || date.getUTCMinutes(),
-			second || date.getUTCSeconds(),
-			millisecond || date.getUTCMilliseconds()
+			date.getUTCFullYear(),
+			date.getUTCMonth(),
+			date.getUTCDate(),
+			date.getUTCHours(),
+			date.getUTCMinutes(),
+			date.getUTCSeconds(),
+			date.getUTCMilliseconds()
 		);
 	}
 
@@ -986,13 +585,13 @@ class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setFullYear(year, month = false, date = false) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			year || this.getFullYear(),
-			month || this.getMonth() + 1,
-			date || this.getDate()
-		);
-		this.#date.setFullYear(gmonth - 1, gdate, gyear);
+	setFullYear(
+		year: number,
+		month: number = this.getMonth() + 1,
+		date: number = this.getDate()
+	): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(year, month, date);
+		this.date.setFullYear(gmonth - 1, gdate, gyear);
 		return this;
 	}
 
@@ -1004,13 +603,13 @@ class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCFullYear(year, month = false, date = false) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			year || this.getUTCFullYear(),
-			month || this.getUTCMonth() + 1,
-			date || this.getUTCDate()
-		);
-		this.#date.setUTCFullYear(gmonth - 1, gdate, gyear);
+	setUTCFullYear(
+		year: number,
+		month: number = this.getUTCMonth() + 1,
+		date: number = this.getUTCDate()
+	): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(year, month, date);
+		this.date.setUTCFullYear(gmonth - 1, gdate, gyear);
 		return this;
 	}
 
@@ -1021,13 +620,13 @@ class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setMonth(month, date = false) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+	setMonth(month: number, date: number = this.getDate()): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(
 			this.getFullYear(),
-			month || this.getMonth() + 1,
-			date || this.getDate()
+			month,
+			date
 		);
-		this.#date.setMonth(gmonth - 1, gdate);
+		this.date.setMonth(gmonth - 1, gdate);
 		return this;
 	}
 
@@ -1038,13 +637,13 @@ class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCMonth(month, date = false) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+	setUTCMonth(month: number, date: number = this.getUTCDate()): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(
 			this.getUTCFullYear(),
-			month || this.getUTCMonth() + 1,
-			date || this.getUTCDate()
+			month,
+			date
 		);
-		this.#date.setUTCMonth(gmonth - 1, gdate);
+		this.date.setUTCMonth(gmonth - 1, gdate);
 		return this;
 	}
 
@@ -1054,13 +653,13 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setDate(date) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+	setDate(date: number): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(
 			this.getFullYear(),
 			this.getMonth() + 1,
-			date || this.getDate()
+			date
 		);
-		this.#date.setDate(gdate);
+		this.date.setDate(gdate);
 		return this;
 	}
 
@@ -1070,13 +669,13 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCDate(date) {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+	setUTCDate(date: number): object {
+		const [gyear, gmonth, gdate] = this.SolarToGregorian(
 			this.getUTCFullYear(),
 			this.getUTCMonth() + 1,
-			date || this.getDate()
+			date
 		);
-		this.#date.setUTCDate(gdate);
+		this.date.setUTCDate(gdate);
 		return this;
 	}
 
@@ -1090,13 +689,13 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setHours(hours, minutes = false, seconds = false, milliSeconds = false) {
-		this.#date.setHours(
-			hours,
-			minutes || this.getMinutes(),
-			seconds || this.getSeconds(),
-			milliSeconds || this.getMilliseconds()
-		);
+	public setHours(
+		hours: number,
+		minutes: number = this.getMinutes(),
+		seconds: number = this.getSeconds(),
+		milliSeconds: number = this.getMilliseconds()
+	): object {
+		this.date.setHours(hours, minutes, seconds, milliSeconds);
 		return this;
 	}
 
@@ -1110,13 +709,13 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCHours(hours, minutes = false, seconds = false, milliSeconds = false) {
-		this.#date.setUTCHours(
-			hours,
-			minutes || this.getUTCMinutes(),
-			seconds || this.getUTCSeconds(),
-			milliSeconds || this.getUTCMilliseconds()
-		);
+	public setUTCHours(
+		hours: number,
+		minutes: number = this.getUTCMinutes(),
+		seconds: number = this.getUTCSeconds(),
+		milliSeconds: number = this.getUTCMilliseconds()
+	): object {
+		this.date.setUTCHours(hours, minutes, seconds, milliSeconds);
 		return this;
 	}
 
@@ -1129,12 +728,12 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setMinutes(minutes, seconds = false, milliSeconds = false) {
-		this.#date.setMinutes(
-			minutes,
-			seconds || this.getSeconds(),
-			milliSeconds || this.getMilliseconds()
-		);
+	public setMinutes(
+		minutes: number,
+		seconds: number = this.getSeconds(),
+		milliSeconds: number = this.getMilliseconds()
+	): object {
+		this.date.setMinutes(minutes, seconds, milliSeconds);
 		return this;
 	}
 
@@ -1147,12 +746,12 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCMinutes(minutes, seconds = false, milliSeconds = false) {
-		this.#date.setUTCMinutes(
-			minutes,
-			seconds || this.getUTCSeconds(true),
-			milliSeconds || this.getUTCMilliseconds(true)
-		);
+	public setUTCMinutes(
+		minutes: number,
+		seconds: number = this.getUTCSeconds(),
+		milliSeconds: number = this.getUTCMilliseconds()
+	): object {
+		this.date.setUTCMinutes(minutes, seconds, milliSeconds);
 		return this;
 	}
 
@@ -1164,8 +763,11 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setSeconds(seconds, milliSeconds = false) {
-		this.#date.setSeconds(seconds, milliSeconds || this.getMilliseconds());
+	public setSeconds(
+		seconds: number,
+		milliSeconds: number = this.getMilliseconds()
+	): object {
+		this.date.setSeconds(seconds, milliSeconds);
 		return this;
 	}
 
@@ -1176,11 +778,11 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCSeconds(seconds, milliSeconds = false) {
-		this.#date.setUTCSeconds(
-			seconds,
-			milliSeconds || this.getUTCMilliseconds()
-		);
+	public setUTCSeconds(
+		seconds: number,
+		milliSeconds: number = this.getUTCMilliseconds()
+	): object {
+		this.date.setUTCSeconds(seconds, milliSeconds);
 		return this;
 	}
 
@@ -1190,8 +792,8 @@ class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	setMilliseconds(ms) {
-		this.#date.setMilliseconds(ms);
+	public setMilliseconds(ms: number): object {
+		this.date.setMilliseconds(ms);
 		return this;
 	}
 
@@ -1201,8 +803,8 @@ class SHDate {
 	 * @returns {object} The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date.
 	 * @since 1.0.0
 	 */
-	setUTCMilliseconds(ms) {
-		this.#date.setUTCMilliseconds(ms);
+	public setUTCMilliseconds(ms: number): object {
+		this.date.setUTCMilliseconds(ms);
 		return this;
 	}
 
@@ -1211,9 +813,9 @@ class SHDate {
 	 * @returns {number} The year.
 	 * @since 1.0.0
 	 */
-	getFullYear() {
-		this.#UpDate();
-		return this.#shDate[0];
+	public getFullYear(): number {
+		this.UpDate();
+		return this.shDate[0];
 	}
 
 	/**
@@ -1222,9 +824,9 @@ class SHDate {
 	 * @since 1.0.0
 	 *
 	 */
-	getUTCFullYear() {
-		this.#UpDate(true);
-		return this.#shUTCDate[0];
+	public getUTCFullYear(): number {
+		this.UpDate(true);
+		return this.shUTCDate[0];
 	}
 
 	/**
@@ -1232,9 +834,9 @@ class SHDate {
 	 * @returns {number} The month (0-11)
 	 * @since 1.0.0
 	 */
-	getMonth() {
-		this.#UpDate();
-		return this.#shDate[1] - 1;
+	public getMonth(): number {
+		this.UpDate();
+		return this.shDate[1] - 1;
 	}
 
 	/**
@@ -1242,9 +844,9 @@ class SHDate {
 	 * @returns {number} The month (0-11) in the Date object using Universal Coordinated Time (UTC).
 	 * @since 1.0.0
 	 */
-	getUTCMonth() {
-		this.#UpDate(true);
-		return this.#shUTCDate[1] - 1;
+	public getUTCMonth(): number {
+		this.UpDate(true);
+		return this.shUTCDate[1] - 1;
 	}
 
 	/**
@@ -1252,9 +854,9 @@ class SHDate {
 	 * @returns {number} The day-of-the-month, using local time.
 	 * @since 1.0.0
 	 */
-	getDate() {
-		this.#UpDate();
-		return this.#shDate[2];
+	public getDate(): number {
+		this.UpDate();
+		return this.shDate[2];
 	}
 
 	/**
@@ -1262,9 +864,9 @@ class SHDate {
 	 * @returns {number} The day-of-the-month, using Universal Coordinated Time (UTC).
 	 * @since 1.0.0
 	 */
-	getUTCDate() {
-		this.#UpDate(true);
-		return this.#shUTCDate[2];
+	public getUTCDate(): number {
+		this.UpDate(true);
+		return this.shUTCDate[2];
 	}
 
 	/**
@@ -1272,8 +874,8 @@ class SHDate {
 	 * @returns {number} The hours (from 0 to 23)
 	 * @since 1.0.0
 	 */
-	getHours() {
-		return this.#date.getHours();
+	public getHours(): number {
+		return this.date.getHours();
 	}
 
 	/**
@@ -1281,8 +883,8 @@ class SHDate {
 	 * @returns {number} The hours (from 0 to 23)
 	 * @since 1.0.0
 	 */
-	getUTCHours() {
-		return this.#date.getUTCHours();
+	public getUTCHours(): number {
+		return this.date.getUTCHours();
 	}
 
 	/**
@@ -1290,8 +892,8 @@ class SHDate {
 	 * @returns {number} The minutes value in the Date object.
 	 * @since 1.0.0
 	 */
-	getMinutes() {
-		return this.#date.getMinutes();
+	public getMinutes(): number {
+		return this.date.getMinutes();
 	}
 
 	/**
@@ -1299,8 +901,8 @@ class SHDate {
 	 * @returns {number} The minutes of the Date object using Universal Coordinated Time (UTC).
 	 * @since 1.0.0
 	 */
-	getUTCMinutes() {
-		return this.#date.getUTCMinutes();
+	public getUTCMinutes(): number {
+		return this.date.getUTCMinutes();
 	}
 
 	/**
@@ -1308,8 +910,8 @@ class SHDate {
 	 * @returns {number} The seconds of the Date object.
 	 * @since 1.0.0
 	 */
-	getSeconds() {
-		return this.#date.getSeconds();
+	public getSeconds(): number {
+		return this.date.getSeconds();
 	}
 
 	/**
@@ -1317,8 +919,8 @@ class SHDate {
 	 * @returns {number} The seconds value in a Date object using Universal Coordinated Time (UTC).
 	 * @since 1.0.0
 	 */
-	getUTCSeconds() {
-		return this.#date.getUTCSeconds();
+	public getUTCSeconds(): number {
+		return this.date.getUTCSeconds();
 	}
 
 	/**
@@ -1326,8 +928,8 @@ class SHDate {
 	 * @returns {number} The return value ranges from 0 to 999.
 	 * @since 1.0.0
 	 */
-	getMilliseconds() {
-		return this.#date.getMilliseconds();
+	public getMilliseconds(): number {
+		return this.date.getMilliseconds();
 	}
 
 	/**
@@ -1335,8 +937,8 @@ class SHDate {
 	 * @returns {number} The return value ranges from 0 to 999.
 	 * @since 1.0.0
 	 */
-	getUTCMilliseconds() {
-		return this.#date.getUTCMilliseconds();
+	public getUTCMilliseconds(): number {
+		return this.date.getUTCMilliseconds();
 	}
 
 	/**
@@ -1344,9 +946,9 @@ class SHDate {
 	 * @returns {number} 0 for satarday , 1 for Sunday, and so on.
 	 * @since 1.0.0
 	 */
-	getDay() {
+	public getDay(): number {
 		return (
-			this.#DayOfWeek(this.getFullYear(), this.getMonth() + 1, this.getDate()) -
+			this.DayOfWeek(this.getFullYear(), this.getMonth() + 1, this.getDate()) -
 			1
 		);
 	}
@@ -1356,9 +958,9 @@ class SHDate {
 	 * @returns {number} 0 for satarday , 1 for Sunday, and so on.
 	 * @since 1.0.0
 	 */
-	getUTCDay() {
+	public getUTCDay(): number {
 		return (
-			this.#DayOfWeek(
+			this.DayOfWeek(
 				this.getUTCFullYear(),
 				this.getUTCMonth() + 1,
 				this.getUTCDate()
@@ -1371,8 +973,8 @@ class SHDate {
 	 * @returns {number} The difference in minutes.
 	 * @since 1.0.0
 	 */
-	getTimezoneOffset() {
-		return this.#date.getTimezoneOffset();
+	public getTimezoneOffset(): number {
+		return this.date.getTimezoneOffset();
 	}
 
 	/**
@@ -1380,26 +982,27 @@ class SHDate {
 	 * @param {number} time — A numeric value representing the number of elapsed milliseconds since midnight, 11 Dey 1348 GMT.
 	 * @returns {object} The Date object.
 	 */
-	setTime(time) {
-		//if (isUTC) return this.#date.setUTCTime(time);
-		return this.#date.setTime(time);
+	public setTime(time: number): object {
+		//if (isUTC) return this.date.setUTCTime(time);
+		this.date.setTime(time);
+		return this;
 	}
 
 	/**
 	 * Gets the time value in milliseconds.
 	 * @returns {number}
 	 */
-	getTime() {
-		//if (isUTC) return this.#date.getUTCTime();
-		return this.#date.getTime();
+	public getTime(): number {
+		//if (isUTC) return this.date.getUTCTime();
+		return this.date.getTime();
 	}
 
 	/**
 	 * Returns the stored time value in milliseconds since midnight, 11 Dey 1348 UTC.
 	 * @returns {number}
 	 */
-	valueOf() {
-		return this.#date.valueOf();
+	public valueOf(): number {
+		return this.date.valueOf();
 	}
 
 	/**
@@ -1410,14 +1013,14 @@ class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 * @since 1.0.0
 	 */
-	checkDate(year, month, date) {
+	public checkDate(year: number, month: number, date: number): boolean {
 		return !(
 			year < 1 ||
 			year > 1700 /* 3,500,000 */ ||
 			month < 1 ||
 			month > 12 ||
 			date < 1 ||
-			date > this.#DaysInMonth(year, month)
+			date > this.DaysInMonth(year, month)
 		);
 	}
 
@@ -1429,7 +1032,7 @@ class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 * @since 1.0.0
 	 */
-	checkTime(hours, minutes, seconds) {
+	public checkTime(hours: number, minutes: number, seconds: number): boolean {
 		return !(
 			hours < 0 ||
 			hours > 23 ||
@@ -1448,12 +1051,12 @@ class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 * @since 1.0.0
 	 */
-	checkWeek(year, week, day) {
+	public checkWeek(year: number, week: number, day: number): boolean {
 		return !(
 			year < 1 ||
 			year > 1700 /* 3,500,000 */ ||
 			week < 1 ||
-			week > this.#WeeksInYear(year) ||
+			week > this.WeeksInYear(year) ||
 			day < 1 ||
 			day > 7
 		);
@@ -1464,7 +1067,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since x.y.z
 	 */
-	toString() {
+	public toString(): string {
 		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy");
 		return `${this.toDateString()} ${this.toTimeString()}`;
 	}
@@ -1474,7 +1077,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since x.y.z
 	 */
-	toUTCString() {
+	public toUTCString(): string {
 		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy", true);
 		return `${this.toUTCDateString()} ${this.toUTCTimeString()}`;
 	}
@@ -1484,7 +1087,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since x.y.z
 	 */
-	toDateString() {
+	public toDateString(): string {
 		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy");
 		return `${dsn} ${date} ${msn} ${year}`;
 	}
@@ -1494,7 +1097,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since x.y.z
 	 */
-	toUTCDateString() {
+	public toUTCDateString(): string {
 		const [dsn, date, msn, year] = this.format("dsn=dd=msn=yy", true);
 		return `${dsn}, ${date} ${msn} ${year}`;
 	}
@@ -1504,8 +1107,8 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since 1.0.0
 	 */
-	toTimeString() {
-		return this.#date.toTimeString();
+	public toTimeString(): string {
+		return this.date.toTimeString();
 	}
 
 	/**
@@ -1513,7 +1116,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since 1.0.0
 	 */
-	toUTCTimeString() {
+	public toUTCTimeString(): string {
 		const [hours, minute, second] = this.format("hh=ii=ss", true);
 		return `${hours}:${minute}:${second} GMT`;
 	}
@@ -1523,8 +1126,8 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since 1.0.0
 	 */
-	toISOString() {
-		const [dates, times] = this.#date.toJSON().split(/\s*(?:T|$)\s*/);
+	public toISOString(): string {
+		const [dates, times] = this.date.toJSON().split(/\s*(?:T|$)\s*/);
 		const [year, month, date] = this.format("yy=mm=dd");
 		return `${year}-${month}-${date}T${times}`;
 	}
@@ -1534,7 +1137,7 @@ class SHDate {
 	 * @returns {string} A string representation of a function.
 	 * @since 1.0.0
 	 */
-	toJSON() {
+	public toJSON(): string {
 		return this.toISOString();
 	}
 
@@ -1545,8 +1148,8 @@ class SHDate {
 	 * @since x.y.z
 	 * https://gitcode.net/openthos/gecko-dev/-/blob/GECKO120_2012041106_RELBRANCH/js/src/jsdate.cpp#L911
 	 */
-	static parse(s) {
-		return Date.parse(s); // TODO: implement
+	public static parse(s: string): number {
+		throw new Error("Not Implemented parse"); // TODO: implement
 	}
 
 	/** // get timestamp in linux format
@@ -1560,7 +1163,7 @@ class SHDate {
 	 * @param {*} hint
 	 * @returns
 	 */
-	[Symbol.toPrimitive](hint) {
+	public [Symbol.toPrimitive](hint: string | number): string | number | null {
 		if (hint === "number") {
 			return this.getTime();
 		} else if (hint === "string" || hint === "default") {
@@ -1575,80 +1178,24 @@ class SHDate {
 	 * @param {Intl.DateTimeFormatOptions} options An object that contains one or more properties that specify comparison options.
 	 * @returns
 	 */
-	toLocaleTimeString(locales, options = {}) {
-		return this.#date.toLocaleTimeString(locales, options);
+	public toLocaleTimeString(
+		locales?: string | string[],
+		options?: Intl.DateTimeFormatOptions
+	) {
+		return this.date.toLocaleTimeString(locales, options);
 	}
-	/**
-	 *
-		toLocaleDateString(locales?, options?)
 
-		toLocaleString(locales?, options?)
-	*/
+	public toLocaleDateString(
+		locales?: string | string[],
+		options?: Intl.DateTimeFormatOptions
+	) {
+		return this.date.toLocaleDateString(locales, options);
+	}
+
+	public toLocaleString(
+		locales?: string | string[],
+		options?: Intl.DateTimeFormatOptions
+	) {
+		return this.date.toLocaleString(locales, options);
+	}
 }
-
-/**
- * Convert a number to Persian digit
- * @param {string} str The string to be converted to Persian digits.
- * @param {boolean} con If true, convert to persian digits.
- * @param {boolean} dec If true, convert to persian digits.
- * @returns {string} The converted string.
- * @since 1.0.0
- */
-const NumsTo = (str, con = "FA", dec = false) => {
-	dec = dec || ",";
-	EN = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".");
-	FA = new Array("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", dec);
-	FA2 = new Array("٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", dec);
-	con = con || "FA";
-	for (lang in ["EN", "FA", "FA2"]) {
-		if (con == lang) continue;
-		str = str_replace(lang, con, str);
-	}
-	return str;
-};
-
-class SHDateTimeFormat {
-	constructor(locales, options) {
-		locales = {
-			fa: [],
-			"fa-IR": [],
-			en: [],
-			"en-US": [],
-			nu: [numberingSystem],
-			ca: [calendar],
-			hc: [hourCycle]
-		};
-		options = {
-			dateStyle: ["full", "long", "medium", "short"],
-			timeStyle: ["full", "long", "medium", "short"],
-			calendar: ["islamic", "gregory", ".."],
-			dayPeriod: ["long", "short", "narrow"],
-			numberingSystem: ["arab", "arabext", "..."],
-			localeMatcher: ["lookup", "best fit"],
-			timeZone: ["UTC", "America/New_York", "..."],
-			hour12: ["true", "false"],
-			hourCycle: ["h11", "h12", "h23", "h24"],
-			formatMatcher: ["basic", "best fit"],
-			weekday: ["long", "short", "narrow"],
-			era: ["long", "short", "narrow"],
-			year: ["numeric", "2-digit"],
-			month: ["numeric", "2-digit", "long", "short", "narrow"],
-			day: ["numeric", "2-digit"],
-			hour: ["numeric", "2-digit"],
-			minute: ["numeric", "2-digit"],
-			second: ["numeric", "2-digit"],
-			fractionalSecondDigits: ["0", "1", "2", "3"],
-			timeZoneName: ["long", "short"]
-		};
-	}
-	format() {}
-	formatToParts() {}
-	resolvedOptions() {}
-	formatRange() {}
-	formatRangeToParts() {}
-}
-
-Intl.SHDateTimeFormat = SHDateTimeFormat;
-
-export { NumsTo };
-export default SHDate;
