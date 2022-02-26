@@ -1,0 +1,36 @@
+{
+  "id": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "../../src",
+    "declaration": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": false,
+    "lib": ["esnext"],
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "rootDir": "../../src",
+    "skipLibCheck": true,
+    "strict": true,
+    "traceResolution": false,
+    "types": ["node"],
+    // "types": ["node", "jest"]
+    "removeComments": true
+  },
+  "compileOnSave": false,
+  "exclude": ["../../node_modules", "../../dist"],
+  "include": ["../../src/**/*"],
+  "files": [
+    "../../src/I18n/en_US.ts",
+    "../../src/I18n/fa_IR.ts",
+    "../../src/Config.ts",
+    "../../src/Convert.ts",
+    "../../src/SHDateTime.ts",
+    "../../src/Word.ts"
+  ]
+}

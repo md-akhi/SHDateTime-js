@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "extends": "./tsconfig-base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "../../dist/mjs",
+    "target": "esnext",
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true
+  }
+}
