@@ -1,6 +1,6 @@
-import SHDateConfig from "./Config";
-import SHDateLanguage_fa_IR from "./I18n/fa_IR";
-import SHDateLanguage_en_US from "./I18n/en_US";
+import SHDateConfig from "./Config.js";
+import SHDateLanguage_fa_IR from "./I18n/fa_IR.js";
+import SHDateLanguage_en_US from "./I18n/en_US.js";
 export { SHDateConfig as Config };
 
 /**
