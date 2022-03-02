@@ -1,5 +1,4 @@
 {
   "extension": ["js"],
-  "spec": "lib/tests/**/*.spec.js",
-  "ui": "BDD"
+  "spec": "lib/tests/**/*.spec.js"
 }
