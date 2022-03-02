@@ -1,5 +1,6 @@
 {
-  "execMap": {
-    "ts": "ts-node"
-  }
+  "watch": ["src", "tests"],
+  "ext": "ts",
+  "ignore": ["lib"],
+  "exec": ""
 }
