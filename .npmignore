@@ -1,0 +1,10 @@
+node_modules
+nodemon.json
+docs
+**/*.spec.js
+**/*.js.map
+**/*.spec.ts
+tsconfig*.json
+coverage
+.npmrc
+.git

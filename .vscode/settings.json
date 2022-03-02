@@ -1,0 +1,19 @@
+{
+  // Set the default
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "git.enableCommitSigning": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.enable": true,
+  "eslint.alwaysShowStatus": true,
+
+  // Enable per-language
+  "[javascript]": {
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true
+  }
+}
