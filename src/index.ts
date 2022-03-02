@@ -16,9 +16,97 @@ import Word from "./Word.js";
  * @since   1.0.0
  */
 export default class SHDate {
+	/**
+	 * @type {Date} Date
+	 */
 	#date: Date;
+
+	/**
+	 * @type {number[]} year, month, date
+	 */
 	#shDate: number[] = [];
+
+	/**
+	 * @type {number[]} UTC year, month, date
+	 */
 	#shUTCDate: number[] = [];
+
+	/**
+	 * @type {number[]} days in month without leap year
+	 */
+	static DAYS_IN_MONTH = [
+		0,
+		31, // far
+		31, // ord
+		31, // kho
+		31, // tir
+		31, // amo
+		31, // sha
+		30, // meh
+		30, // aba
+		30, // aza
+		30, // dey
+		30, // bah
+		29 // esf
+	];
+
+	/**
+	 * @type {number[]} days in month with leap year
+	 */
+	static DAYS_IN_MONTH_LEAP = [
+		0,
+		31, // far
+		31, // ord
+		31, // kho
+		31, // tir
+		31, // amo
+		31, // sha
+		30, // meh
+		30, // aba
+		30, // aza
+		30, // dey
+		30, // bah
+		30 // esf
+	];
+
+	/**
+	 * @type {number[]} days of year
+	 */
+	static DAY_OF_YEAR = [
+		0,
+		0, // far
+		31, // ord
+		62, // kho
+		93, // tir
+		124, // amo
+		155, // sha
+		186, // meh
+		216, // aba
+		246, // aza
+		276, // dey
+		306, // bah
+		336 // esf
+	];
+
+	/**
+	 * @type {number[]} days in year without leap year
+	 */
+	static DAYS_IN_YEAR = 365;
+
+	/**
+	 * @type {number[]} days in year with leap year
+	 */
+	static DAYS_IN_YEAR_LEAP = 366;
+
+	/**
+	 * @type {number[]} weeks in year without leap week
+	 */
+	static WEEKS_IN_YEAR = 52;
+
+	/**
+	 * @type {number[]} weeks in year with leap week
+	 */
+	static WEEKS_IN_YEAR_LEAP = 53;
 	/**
 	 * Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format.Date objects contain a Number that represents milliseconds since 11 Day 1348 UTC.
 	 * @param {object} dateObject Date object
