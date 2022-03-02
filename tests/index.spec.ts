@@ -1,11 +1,20 @@
-var assert = require("assert");
-var describe = require("mocha").describe;
-var it = require("mocha").it;
-import SHDate from "../src/index";
-describe("#SHDate", function () {
-	describe("now()", function () {
-		it("should equal now", function () {
-			assert.equal(SHDate.now(), Date.now());
+import assert from "assert"; // import {assert} from 'chai';
+import { it, describe } from "mocha";
+
+import * as Until from "./Until.js";
+import SHDate from "../src/index.js";
+const date = new SHDate();
+
+describe("now()", function () {
+	it("should equal now", function () {
+		assert.equal(SHDate.now(), Date.now());
+	});
+});
+
+describe("isLeap()", function () {
+	it("correctly leap", function () {
+		Until.leapYear.forEach(({ year, expected }) => {
+			assert.strictEqual(date.isLeap(year), expected);
 		});
 	});
 });
