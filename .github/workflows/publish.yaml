@@ -29,11 +29,13 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: https://registry.npmjs.org/
+          # Defaults to the user or organization that owns the workflow file
+          scope: "@md-akhi"
       - run: |
           npm install
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
   publish-github:
     needs: build
@@ -47,9 +49,8 @@ jobs:
           registry-url: https://npm.pkg.github.com
           # Defaults to the user or organization that owns the workflow file
           scope: "@md-akhi"
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: |
           npm install
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
