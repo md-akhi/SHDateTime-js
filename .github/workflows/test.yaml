@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i
-      - run: npm i gulp-cli
+      - name: Install dependencies
+      - run: npm install
+      - run: npm install gulp-cli
       - run: npm test
