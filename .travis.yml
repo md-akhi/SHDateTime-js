@@ -2,9 +2,7 @@ language: node_js
 node_js:
   - "lts/*"
 install:
-  - npm i
-git:
-  depth: 2
+  - npm install
 branches:
   only:
     - dev
@@ -13,7 +11,3 @@ jobs:
     - stage: "Tests" # naming the Tests stage
       name: "Unit Tests" # names the first Tests stage job
       script: npm test
-
-before_script:
-  - npm install -g gulp-cli
-script: gulp
