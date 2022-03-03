@@ -20,7 +20,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "npm"
       - name: Install dependencies
       - run: npm install
-      - run: npm install gulp-cli
+      - run: npm install -g gulp-cli
       - run: npm test
