@@ -7,32 +7,54 @@ on:
     branches: [main]
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to Npm Packages
       - uses: actions/setup-node@v2
         with:
-          always-auth: true
           node-version: "16.x"
-          registry-url: "https://registry.npmjs.org"
-          # Defaults to the user or organization that owns the workflow file
-          scope: "@md-akhi"
       - run: |
           npm install
           npm run build --if-present
+          npm test
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to NPM Packages
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          always-auth: true
+      - name: Set package registry
+        run: npm config set @md-akhi:registry https://registry.npmjs.org/
+      - name: Npm registry authentication
+        run: npm set //registry.npmjs.org/:_authToken ${{ NPM_TOKEN }}
+      - run: |
+          npm install
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  publish-github:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v2
         with:
-          registry-url: "https://npm.pkg.github.com"
-      - run: npm publish --access public
+          node-version: "16.x"
+          always-auth: true
+      - name: Set package registry
+        run: npm config set @md-akhi:registry https://npm.pkg.github.com/
+      - name: Github package registry authentication
+        run: npm set //npm.pkg.github.com/:_authToken ${{ GITHUB_TOKEN }}
+      - run: |
+          npm install
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
