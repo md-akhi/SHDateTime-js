@@ -1,6 +1,6 @@
 {
   "name": "@md-akhi/shdate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "keywords": ["date", "time", "datetime"],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
@@ -13,17 +13,17 @@
     "dev": "nodemon npm run dev:watch",
     "dev:watch": "npm run dev:build && npm run watch",
     "dev:build": "npm run clean:lib && npm run tsc:cjs",
-    "watch:tsc": "tsc -w",
-    "watch": "node lib/tests/dev.js",
     "clean:lib": "rm -rf lib",
     "tsc:cjs": "tsc -p ./tsconfig.json",
-    "build": "npm run clean:lib && npm run tsc",
     "tsc": "npm run tsc:cjs && npm run tsc:esm && gulp",
     "tsc:esm": "tsc -p ./tsconfig.esm.json",
+    "build": "npm run clean:lib && npm run tsc",
     "test": " npm run dev:build && mocha",
     "test:dev": "nodemon npm run test",
+    "watch:tsc": "tsc -w",
+    "watch": "node lib/tests/dev.js",
     "postinstall": "husky install",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build --if-present"
   },
   "exports": {
     "import": "./lib/mjs/index.js",
