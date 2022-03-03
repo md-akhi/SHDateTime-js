@@ -2,14 +2,6 @@
 'use strict';
 const gulp = require('gulp');
 const rename = require('gulp-rename');
-const del = require('del');
-
-/**
- * Remove build directory.
- */
- gulp.task('clean', function () {
-  return del(["lib"]);
-});
 
 /**
  * Copy commonjs package.
