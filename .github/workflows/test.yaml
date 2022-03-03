@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
