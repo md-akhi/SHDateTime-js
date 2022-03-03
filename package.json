@@ -1,6 +1,6 @@
 {
   "name": "@md-akhi/shdate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "keywords": ["date", "time", "datetime"],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
