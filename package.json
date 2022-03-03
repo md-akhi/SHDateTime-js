@@ -14,7 +14,7 @@
     "dev:watch": "npm run dev:build && npm run watch",
     "dev:build": "npm run clean:lib && npm run tsc:cjs",
     "watch:tsc": "tsc -w",
-    "watch": "node lib/tests/tst.js",
+    "watch": "node lib/tests/dev.js",
     "clean:lib": "del lib",
     "tsc:cjs": "tsc -p ./tsconfig.json",
     "build": "npm run clean:lib && npm run tsc",
