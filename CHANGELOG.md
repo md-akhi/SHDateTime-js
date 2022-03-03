@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 # تغییرات
 
@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 
 #
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ## [منتشر نشده][unreleased]
 
@@ -29,34 +29,36 @@ All notable changes to this project will be documented in this file.
 
 #
 
-<div align="center">
+<div style="text-align: center;">
 
-## [x.y.z] - SH 4Y-2M-2D - G 4Y-2M-2D
-
-</div>
-
-<div dir="rtl">
-
--
+## [1.0.0] - SH 1400-12-11 - G 2022-03-02
 
 </div>
 
--
+<div dir="rtl" style="text-align: right;">
 
-[unreleased]: https://github.com/md-akhi/repo/compare/vx.y.z...HEAD
-[x.y.z]: https://github.com/md-akhi/repo/compare/vx.y.z...vx.y.z
-[x.y.z]: https://github.com/md-akhi/repo/releases/tag/vx.y.z
+- انتشار نسخه اولیه
+
+</div>
+
+- First release
+
+#
+
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...HEAD
+[2.0.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...2.0.0
+[1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0
 [#]: #
 
 <!--
 
-<div align="center">
+<div style="text-align: center;">
 
 ## [x.y.z] - SH 4Y-2M-2D - G 4Y-2M-2D
 
 </div>
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 -
 
@@ -66,7 +68,7 @@ All notable changes to this project will be documented in this file.
 
 #
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [ایجاد / اضافه شد][#]
 
@@ -78,7 +80,7 @@ All notable changes to this project will be documented in this file.
 
 -
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [رفع / درست شد][#]
 
@@ -90,7 +92,7 @@ All notable changes to this project will be documented in this file.
 
 -
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [تغییر کرد][#]
 
@@ -102,7 +104,7 @@ All notable changes to this project will be documented in this file.
 
 -
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [منسوخ شد][#]
 
@@ -114,7 +116,7 @@ All notable changes to this project will be documented in this file.
 
 -
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [حذف شد][#]
 
@@ -126,7 +128,7 @@ All notable changes to this project will be documented in this file.
 
 -
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
 ### [امنیتی][#]
 
