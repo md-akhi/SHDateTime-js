@@ -20,7 +20,7 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
           # Defaults to the user or organization that owns the workflow file
           scope: "@md-akhi"
-      - run: npm ci
+      - run: npm i
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
