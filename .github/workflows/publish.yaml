@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +20,11 @@ jobs:
           npm test
 
   publish-npm:
-    needs: build
+    needs: build-test
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v2
       # Setup .npmrc file to publish to NPM Packages
@@ -39,9 +42,12 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
-  publish-github:
-    needs: build
+  publish-gpr: #github
+    needs: build-test
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v2
       # Setup .npmrc file to publish to GitHub Packages
