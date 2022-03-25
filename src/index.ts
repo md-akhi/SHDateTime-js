@@ -11,31 +11,25 @@
 import Config from "./Config.js";
 import Word from "./Word.js";
 
+interface IFVarSHDate {
+	[key: string]: number | undefined;
+	Year?: number;
+	Month?: number;
+	Date?: number;
+	UTCYear?: number;
+	UTCMonth?: number;
+	UTCDate?: number;
+	TimeDate?: number;
+}
 /**
  * class SHDate
  * @since   1.0.0
  */
 export default class SHDate {
 	/**
-	 * @type {Date} Date
-	 */
-	#date: Date;
-
-	/**
-	 * @type {number[]} year, month, date
-	 */
-	#shDate: number[] = [];
-
-	/**
-	 * @type {number[]} UTC year, month, date
-	 */
-	#shUTCDate: number[] = [];
-
-	/**
 	 * @type {number[]} days in month without leap year
 	 */
 	static DAYS_IN_MONTH = [
-		0,
 		31, // far
 		31, // ord
 		31, // kho
@@ -54,7 +48,6 @@ export default class SHDate {
 	 * @type {number[]} days in month with leap year
 	 */
 	static DAYS_IN_MONTH_LEAP = [
-		0,
 		31, // far
 		31, // ord
 		31, // kho
@@ -73,7 +66,6 @@ export default class SHDate {
 	 * @type {number[]} days of year
 	 */
 	static DAY_OF_YEAR = [
-		0,
 		0, // far
 		31, // ord
 		62, // kho
@@ -107,6 +99,17 @@ export default class SHDate {
 	 * @type {number[]} weeks in year with leap week
 	 */
 	static WEEKS_IN_YEAR_LEAP = 53;
+
+	/**
+	 * @type {Date} Date
+	 */
+	#date: Date;
+
+	/**
+	 * @type {object} year, month, date, UTCYear, UTCMonth, UTCDate, TimeDate
+	 */
+	#sh: IFVarSHDate = {};
+
 	/**
 	 * Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format.Date objects contain a Number that represents milliseconds since 11 Day 1348 UTC.
 	 * @param {object} dateObject Date object
@@ -132,7 +135,7 @@ export default class SHDate {
 		if (typeof data == "number")
 			if (data.toString().length == 4 && (data >= 1200 || data < 1700)) {
 				const [
-					month = this.getMonth(),
+					month = 0,
 					date = 1,
 					hours = 0,
 					minute = 0,
@@ -140,13 +143,8 @@ export default class SHDate {
 					millisecond = 0
 				] = args;
 				// year
-				this.setFullYear(data || this.getFullYear());
-				this.setMonth(month);
-				this.setDate(date);
-				this.setHours(hours);
-				this.setMinutes(minute);
-				this.setSeconds(second);
-				this.setMilliseconds(millisecond);
+				this.setFullYear(data, month, date);
+				this.setHours(hours, minute, second, millisecond);
 			}
 			// value
 			else this.setTime(data);
@@ -155,7 +153,7 @@ export default class SHDate {
 			throw new Error("Not Implemented dateString");
 		else if (data instanceof SHDate)
 			// dateObject
-			this.#date.setTime(data.getTime());
+			this.setTime(data.getTime());
 	}
 
 	/**
@@ -164,20 +162,23 @@ export default class SHDate {
 	 * @returns {null}
 	 * @since 1.0.0
 	 */
-	#UpDate(isUTC: boolean = false): void {
-		if (isUTC && this.#shUTCDate.length == 0) {
-			this.#shUTCDate = this.#GregorianToSolar(
-				this.#date.getUTCFullYear(),
-				this.#date.getUTCMonth() + 1,
-				this.#date.getUTCDate()
-			);
-		} else if (this.#shDate.length == 0) {
-			this.#shDate = this.#GregorianToSolar(
-				this.#date.getFullYear(),
-				this.#date.getMonth() + 1,
-				this.#date.getDate()
-			);
-		}
+	#UpDate(): void {
+		const [utcyear, utcmonth, utcdate] = this.#GregorianToSolar(
+			this.#date.getUTCFullYear(),
+			this.#date.getUTCMonth(),
+			this.#date.getUTCDate()
+		);
+		const [year, month, date] = this.#GregorianToSolar(
+			this.#date.getFullYear(),
+			this.#date.getMonth(),
+			this.#date.getDate()
+		);
+		this.#sh.UTCYear = utcyear;
+		this.#sh.UTCMonth = utcmonth;
+		this.#sh.UTCDate = utcdate;
+		this.#sh.Year = year;
+		this.#sh.Month = month;
+		this.#sh.Date = date;
 		return;
 	}
 
@@ -195,15 +196,15 @@ export default class SHDate {
 		gmonth: number,
 		gdate: number,
 		julian: boolean = false
-	): Array<any> {
+	): number[] {
 		// 0622/03/22 = 0001/01/01
 		let gdoy: number, doy: number, year: number;
 		gdoy =
 			(gyear - 1) * 365 +
-			([0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] +
+			([0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] +
 				gdate) -
 			226745; //226745 = 621*365+80
-		if (this.#GIsLeap(gyear) && gmonth > 2) gdoy++;
+		if (this.#GIsLeap(gyear) && gmonth > 1) gdoy++;
 		year = parseInt((gdoy / 365).toString()) + 1;
 		doy = (gdoy % 365) + this.#GIsLeap(gyear, true) - this.#IsLeap(year, true);
 		return this.#DaysOfDay(year, doy - 1);
@@ -229,45 +230,42 @@ export default class SHDate {
 		doy =
 			(year - 1) * 365 +
 			this.#DayOfYear(year, month, date) +
-			226745 /*621*365+80*/;
+			226746 /*621*365+80*/;
 		gyear = parseInt((doy / 365).toString()) + 1;
 		gdoy = (doy % 365) + this.#IsLeap(year, true) - this.#GIsLeap(gyear, true);
 		return this.#GDaysOfDay(gyear, gdoy);
 	}
+
 	#GDaysOfDay(gyear: number, gdoy: number): number[] {
-		let gdiy: number,
+		let gdiy: number = this.#GDaysInYear(gyear),
 			gleap: number,
-			gmonth: number = 0;
-		gdiy = this.#GDaysInYear(gyear);
+			data = { gmonth: 0, gdate: 0 };
 		if (gdoy < 1)
 			do {
-				gyear--;
-				gdiy = this.#GDaysInYear(gyear);
+				gdiy = this.#GDaysInYear(--gyear);
 				gdoy += gdiy;
 			} while (gdoy < 1);
 		else if (gdoy > gdiy)
 			do {
+				gdiy = this.#GDaysInYear(++gyear);
 				gdoy -= gdiy;
-				gyear++;
-				gdiy = this.#GDaysInYear(gyear);
 			} while (gdoy > gdiy);
 		gleap = this.#GIsLeap(gyear) ? 29 : 28;
 		[0, 31, gleap, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].forEach(
-			(gdim, gmiy) => {
-				if (gdoy <= gdim) return [gyear, gmonth, parseInt(gdoy.toString())];
+			(gdim: number, gmoy: number) => {
+				if (gdoy <= gdim) return;
 				gdoy -= gdim;
-				gmonth = gmiy;
+				data.gmonth = gmoy;
+				data.gdate = parseInt(gdoy.toString());
 			}
 		);
-		return [gyear, gmonth, parseInt(gdoy.toString())];
+		return [gyear, data.gmonth, data.gdate];
 	}
+
 	#GDaysInYear(year: number): number {
 		return this.#GIsLeap(year) ? 366 : 365;
 	}
-	#GDOWToDOW(gdow: number): number {
-		// 7+(gdow+1)-Config.FIRST_DAY_OF_WEEK%7
-		return (8 + gdow - Config.FIRST_DAY_OF_WEEK) % 7; // shdow
-	}
+
 	/**
 	 * Get gregorian leap year
 	 * @param {number} gyear - gregorian year
@@ -325,6 +323,8 @@ export default class SHDate {
 	 * @param {number} date - solar hijri date
 	 * @returns {number} - day of week
 	 * @since 1.0.0
+	 * Note:  0 = Saturday, 1 = Sunday, 2 = Monday, 3 = Tuesday, 4 = Wednesday, 5 = Thursday, 6 = Friday
+	 * 5 => first day of week is Tuesday
 	 */
 	#DayOfWeek(
 		year: number,
@@ -332,8 +332,10 @@ export default class SHDate {
 		date: number,
 		FDOW: number = Config.FIRST_DAY_OF_WEEK
 	): number {
-		//return (year+this.IsLeaps(year,1)+this::DayOfYear(year,month,date)+5)%7;
-		//new and best version
+		//	return (year+this.IsLeaps(year,true)+this::DayOfYear(year,month,date)+5)%7;
+		// 7+(gdow+1)-Config.FIRST_DAY_OF_WEEK%7
+		// return (8 + gdow - Config.FIRST_DAY_OF_WEEK) % 7; // shdow
+		//	new and best version
 		return (
 			(5 +
 				year +
@@ -353,10 +355,12 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	#DayOfYear(year: number, month: number, date: number): number {
-		let doy: number;
-		if (month < 7) doy = (month - 1) * 31;
-		else doy = (month - 7) * 30 + 186;
-		return (doy + date - 1) % (this.#DaysInYear(year) - 1);
+		return SHDate.DAY_OF_YEAR[month] + date - 1;
+		// let doy: number;
+		// month++;
+		// if (month < 7) doy = (month - 1) * 31;
+		// else doy = (month - 7) * 30 + 186;
+		// return (doy + date - 1) % (this.#DaysInYear(year) - 1);
 	}
 
 	/**
@@ -376,7 +380,7 @@ export default class SHDate {
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
 		if (
 			(doy = this.#DayOfYear(year, month, date) + 1) <=
-				8 - (far1weekday = this.#DayOfWeek(year, 1, 1) + 1) &&
+				8 - (far1weekday = this.#DayOfWeek(year, 0, 1) + 1) &&
 			far1weekday > 4
 		) {
 			iy = --year;
@@ -406,7 +410,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	#WeeksInYear(year: number): number {
-		const far1dow: number = this.#DayOfWeek(year, 1, 1) + 1;
+		const far1dow: number = this.#DayOfWeek(year, 0, 1) + 1;
 		if (far1dow == 4 || (far1dow == 3 && this.#IsLeap(year))) return 53;
 		return 52;
 	}
@@ -419,7 +423,7 @@ export default class SHDate {
 	 * @returns {number} - week of day
 	 */
 	#WeekOfDay(year: number, week: number, date: number = 1): number[] {
-		const doy = (week - 1) * 7 + date - this.#DayOfWeek(year, 1, 4) + 2;
+		const doy = (week - 1) * 7 + date - this.#DayOfWeek(year, 0, 4) + 2;
 		return this.#DaysOfDay(year, doy);
 	}
 
@@ -446,11 +450,11 @@ export default class SHDate {
 				diy = this.#DaysInYear(year);
 			} while (doy > diy);
 		if (doy < 187) {
-			month = parseInt(((doy - 1) / 31).toString()) + 1;
+			month = parseInt(((doy - 1) / 31).toString());
 			date = doy % 31 || 31;
 		} else {
 			doy -= 186;
-			month = parseInt(((doy - 1) / 30).toString()) + 7;
+			month = parseInt(((doy - 1) / 30).toString()) + 6;
 			date = doy % 30 || 30;
 		}
 		return [year, month, date];
@@ -464,9 +468,9 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	#DaysInMonth(year: number, month: number): number {
-		return month < 7 ? 31 : month < 12 ? 30 : this.#IsLeap(year) + 29;
-		if (month < 7) return 31;
-		else if (month < 12) return 30;
+		return month < 6 ? 31 : month < 11 ? 30 : this.#IsLeap(year) + 29;
+		if (month < 6) return 31;
+		else if (month < 11) return 30;
 		return this.#IsLeap(year) + 29;
 	}
 
@@ -487,13 +491,13 @@ export default class SHDate {
 	 */
 	public format(format: string, isUtc = false): string[] {
 		const year = isUtc ? this.getUTCFullYear() : this.getFullYear(),
-			month = isUtc ? this.getUTCMonth() + 1 : this.getMonth() + 1,
+			month = isUtc ? this.getUTCMonth() : this.getMonth(),
 			date = isUtc ? this.getUTCDate() : this.getDate(),
 			hours = isUtc ? this.getUTCHours() : this.getHours(),
 			minute = isUtc ? this.getUTCMinutes() : this.getHours(),
 			second = isUtc ? this.getUTCSeconds() : this.getMinutes(),
 			millisecond = isUtc ? this.getUTCMilliseconds() : this.getMilliseconds(),
-			weekday = isUtc ? this.getDay() + 1 : this.getUTCDay() + 1;
+			weekday = isUtc ? this.getUTCDay() : this.getDay();
 		let result: string[] = [];
 		format.split(/\s*(?:=|$)\s*/).forEach((f) => {
 			switch (f) {
@@ -602,22 +606,22 @@ export default class SHDate {
 					result.push(Word.getMeridienShortNames(hours));
 					break;
 				case "mfn":
-					result.push(Word.getMonthFullNames(month - 1));
+					result.push(Word.getMonthFullNames(month));
 					break;
 				case "msn":
-					result.push(Word.getMonthShortNames(month - 1));
+					result.push(Word.getMonthShortNames(month));
 					break;
 				case "asn":
 					result.push(Word.getAnimalsFullNames(year));
 					break;
 				case "csn":
-					result.push(Word.getConstellationsFullNames(month - 1));
+					result.push(Word.getConstellationsFullNames(month));
 					break;
 				case "ssn":
-					result.push(Word.getSeasonFullNames(month - 1));
+					result.push(Word.getSeasonFullNames(month));
 					break;
 				case "osn":
-					result.push(Word.getSolsticeFullNames(month - 1));
+					result.push(Word.getSolsticeFullNames(month));
 					break;
 				case "sun":
 					result.push(Word.getSuffixNames(date));
@@ -674,11 +678,12 @@ export default class SHDate {
 	 */
 	setFullYear(
 		year: number,
-		month: number = this.getMonth() + 1,
+		month: number = this.getMonth(),
 		date: number = this.getDate()
 	): object {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		this.#date.setFullYear(gmonth - 1, gdate, gyear);
+		this.#date.setFullYear(gyear, gmonth, gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -692,11 +697,12 @@ export default class SHDate {
 	 */
 	setUTCFullYear(
 		year: number,
-		month: number = this.getUTCMonth() + 1,
+		month: number = this.getUTCMonth(),
 		date: number = this.getUTCDate()
 	): object {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		this.#date.setUTCFullYear(gmonth - 1, gdate, gyear);
+		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -713,7 +719,8 @@ export default class SHDate {
 			month,
 			date
 		);
-		this.#date.setMonth(gmonth - 1, gdate);
+		this.#date.setMonth(gmonth, gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -730,7 +737,8 @@ export default class SHDate {
 			month,
 			date
 		);
-		this.#date.setUTCMonth(gmonth - 1, gdate);
+		this.#date.setUTCMonth(gmonth, gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -743,10 +751,11 @@ export default class SHDate {
 	setDate(date: number): object {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getFullYear(),
-			this.getMonth() + 1,
+			this.getMonth(),
 			date
 		);
 		this.#date.setDate(gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -759,10 +768,11 @@ export default class SHDate {
 	setUTCDate(date: number): object {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getUTCFullYear(),
-			this.getUTCMonth() + 1,
+			this.getUTCMonth(),
 			date
 		);
 		this.#date.setUTCDate(gdate);
+		this.#UpDate();
 		return this;
 	}
 
@@ -901,8 +911,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getFullYear(): number {
-		this.#UpDate();
-		return this.#shDate[0];
+		return this.#sh.Year as number;
 	}
 
 	/**
@@ -912,8 +921,7 @@ export default class SHDate {
 	 *
 	 */
 	public getUTCFullYear(): number {
-		this.#UpDate(true);
-		return this.#shUTCDate[0];
+		return this.#sh.UTCYear as number;
 	}
 
 	/**
@@ -922,8 +930,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getMonth(): number {
-		this.#UpDate();
-		return this.#shDate[1] - 1;
+		return this.#sh.Month as number;
 	}
 
 	/**
@@ -932,8 +939,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getUTCMonth(): number {
-		this.#UpDate(true);
-		return this.#shUTCDate[1] - 1;
+		return this.#sh.UTCMonth as number;
 	}
 
 	/**
@@ -942,8 +948,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getDate(): number {
-		this.#UpDate();
-		return this.#shDate[2];
+		return this.#sh.Date as number;
 	}
 
 	/**
@@ -952,8 +957,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getUTCDate(): number {
-		this.#UpDate(true);
-		return this.#shUTCDate[2];
+		return this.#sh.UTCDate as number;
 	}
 
 	/**
@@ -1034,10 +1038,8 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getDay(): number {
-		return (
-			this.#DayOfWeek(this.getFullYear(), this.getMonth() + 1, this.getDate()) -
-			1
-		);
+		return this.#DayOfWeek(this.getFullYear(), this.getMonth(), this.getDate());
+		//return this.#GDOWToDOW(this.#date.getDay());
 	}
 
 	/**
@@ -1046,12 +1048,10 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public getUTCDay(): number {
-		return (
-			this.#DayOfWeek(
-				this.getUTCFullYear(),
-				this.getUTCMonth() + 1,
-				this.getUTCDate()
-			) - 1
+		return this.#DayOfWeek(
+			this.getUTCFullYear(),
+			this.getUTCMonth(),
+			this.getUTCDate()
 		);
 	}
 
@@ -1072,6 +1072,7 @@ export default class SHDate {
 	public setTime(time: number): object {
 		//if (isUTC) return this.#date.setUTCTime(time);
 		this.#date.setTime(time);
+		this.#UpDate();
 		return this;
 	}
 
@@ -1104,8 +1105,8 @@ export default class SHDate {
 		return !(
 			year < 1 ||
 			year > 1700 /* 3,500,000 */ ||
-			month < 1 ||
-			month > 12 ||
+			month < 0 ||
+			month > 11 ||
 			date < 1 ||
 			date > this.#DaysInMonth(year, month)
 		);
@@ -1119,10 +1120,15 @@ export default class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 * @since 1.0.0
 	 */
-	public checkTime(hours: number, minutes: number, seconds: number): boolean {
+	public checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		H12: boolean = false
+	): boolean {
 		return !(
 			hours < 0 ||
-			hours > 23 ||
+			(H12 ? hours > 11 : hours > 23) ||
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||

@@ -137,7 +137,7 @@ export default class Word {
 	 */
 	static getSeasonFullNames(month: number, LW = Config.LANGUAGE_WORD): string {
 		const cls = Word.getClassLanguage(LW);
-		return cls.SEASON_FULL_NAMES[parseInt((month / 3).toString())];
+		return cls.SEASON_FULL_NAMES[parseInt(((month + 1) / 3).toString())];
 	}
 
 	/**
