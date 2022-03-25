@@ -1,5 +1,5 @@
 {
-  "name": "@md-akhi/shdate",
+  "name": "@md-akhi/shdatetime",
   "version": "1.0.2",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "keywords": ["date", "time", "datetime"],
@@ -20,6 +20,7 @@
     "build": "npm run clean:lib && npm run tsc",
     "test": " npm run dev:build && mocha",
     "test:dev": "nodemon npm run test",
+    "test:out": "node lib/tests/dev.js > tests/tst.out",
     "watch:tsc": "tsc -w",
     "watch": "node lib/tests/dev.js",
     "postinstall": "husky install",
@@ -39,15 +40,17 @@
   "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/md-akhi/SHDate-js.git"
+    "url": "https://github.com/md-akhi/SHDateTime-js.git"
   },
   "bugs": {
-    "url": "https://github.com/md-akhi/SHDate-js/issues"
+    "url": "https://github.com/md-akhi/SHDateTime-js/issues"
   },
-  "homepage": "https://github.com/md-akhi/SHDate-js#readme",
+  "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
   "devDependencies": {
     "@types/mocha": "^9.1.0",
+    "@types/chai": "^4.3.0",
     "@types/node": "^17.0.21",
+    "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.6.0",
     "gulp": "^4.0.2",
