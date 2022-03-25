@@ -35,8 +35,8 @@ jobs:
       - run: |
           npm install
           npm publish --access public
-      - env:
-         NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
   publish-gpr: #github
     needs: build-test
@@ -54,5 +54,5 @@ jobs:
       - run: |
           npm install
           npm publish
-      - env:
-         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
