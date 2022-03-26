@@ -13,7 +13,7 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 ## Install
 
 ```shell
-npm i @md-akhi/shdate
+npm i @md-akhi/shdatetime
 ```
 
 ## Usage
@@ -21,23 +21,24 @@ npm i @md-akhi/shdate
 - ES Modules:
 
 ```javascript
-import SHDate from "@md-akhi/shdate";
+import SHDate from "@md-akhi/shdatetime";
 var date = new SHDate();
 ```
 
 - CommonJS:
 
 ```javascript
-const SHDate = require("@md-akhi/shdate");
+const SHDate = require("@md-akhi/shdatetime");
 var date = new SHDate();
 ```
 
 - TypeScript:
 
 ```TypeScript
-const SHDate = require('@md-akhi/shdate');
+const SHDate = require('@md-akhi/shdatetime');
 #OR
-import SHDate from '@md-akhi/shdate';
+import SHDate from '@md-akhi/shdatetime';
+
 var date = new SHDate();
 ```
 
@@ -45,16 +46,7 @@ var date = new SHDate();
 
 ```html
 <script type="module">
-	import SHDate from "/path/to/shdate.js";
-	var date = new SHDate();
-</script>
-```
-
-- Older browser:
-
-```html
-<script src="/path/to/shdate.js"></script>
-<script>
+	import SHDate from "/path/to/@md-akhi/shdatetime.js";
 	var date = new SHDate();
 </script>
 ```
@@ -129,6 +121,6 @@ var date = new SHDate();
 
   - seting milliseconds
 
-- [isLeapYear](#isleapyeary)
+- [isLeap](#isleap)
 
   - Whether year is leap year
