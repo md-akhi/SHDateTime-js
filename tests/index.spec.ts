@@ -1,7 +1,8 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import * as Until from "./Until.js";
+import * as UntilDate from "./Until-Date.js";
+import * as UntilConvertDate from "./Until-Convert-Date.js";
 import SHDate from "../src/index.js";
 const date = new SHDate();
 
@@ -13,13 +14,15 @@ describe("now()", () => {
 
 describe("Convert Date Gregorian() And Solar()", () => {
 	it("correctly leap", () => {
-		Until.leapYear.forEach(({ year, expected }) => {
-			assert.equal(date.isLeap(year), expected);
+		UntilConvertDate.leapYear.forEach(({ solar, Leap }) => {
+			const [shyear] = solar;
+			let solardate = new SHDate(shyear);
+			assert.equal(solardate.isLeap(shyear), Leap);
 		});
 	});
 
 	it("correctly gregorian to solar", () => {
-		Until.gregorianAndSolar.forEach(({ gregorian, solar }) => {
+		UntilConvertDate.gregorianAndSolar.forEach(({ gregorian, solar }) => {
 			const [gyear, gmonth, gdate] = gregorian;
 			let gregoriandate = new Date(gyear, gmonth, gdate);
 			let solardate = new SHDate(gregoriandate.getTime());
@@ -33,7 +36,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 	});
 
 	it("correctly solar to gregorian", () => {
-		Until.solarAndGregorian.forEach(({ solar, gregorian }) => {
+		UntilConvertDate.solarAndGregorian.forEach(({ solar, gregorian }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
 			let gregoriandate = new Date(solardate.getTime());
@@ -49,20 +52,57 @@ describe("Convert Date Gregorian() And Solar()", () => {
 
 describe("week", () => {
 	it("correctly dow", () => {
-		Until.solarDow.forEach(({ solar, dow }) => {
+		UntilDate.solarDate.forEach(({ solar, Dow }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			assert.equal(solardate.getDay(), dow);
+			assert.equal(solardate.getDay(), Dow);
 		});
 	});
 
-	it("correctly woy", () => {});
+	it("correctly woy", () => {
+		UntilDate.solarDate.forEach(({ solar, Woy }) => {
+			const [shyear, shmonth, shdate] = solar;
+			let solardate = new SHDate(shyear, shmonth, shdate);
+			const [[iws, iys]] = solardate.format("Woy");
+			assert.deepEqual([parseInt(iws), parseInt(iys)], Woy);
+		});
+	});
 
-	it("correctly wiy", () => {});
+	it("correctly wiy", () => {
+		UntilDate.solarDate.forEach(({ solar, Wiy }) => {
+			const [shyear, shmonth, shdate] = solar;
+			let solardate = new SHDate(shyear, shmonth, shdate);
+			const [Wiys] = solardate.format("Wiy");
+			assert.equal(parseInt(Wiys), Wiy);
+		});
+	});
 });
 
 describe("year and day", () => {
-	it("correctly diy", () => {});
+	it("correctly diy", () => {
+		UntilDate.solarDate.forEach(({ solar, Diy }) => {
+			const [shyear, shmonth, shdate] = solar;
+			let solardate = new SHDate(shyear, shmonth, shdate);
+			const [Diys] = solardate.format("Diy");
+			assert.equal(parseInt(Diys), Diy);
+		});
+	});
 
-	it("correctly doy", () => {});
+	it("correctly doy", () => {
+		UntilDate.solarDate.forEach(({ solar, Doy }) => {
+			const [shyear, shmonth, shdate] = solar;
+			let solardate = new SHDate(shyear, shmonth, shdate);
+			const [Doys] = solardate.format("Doy");
+			assert.equal(parseInt(Doys), Doy);
+		});
+	});
+
+	it("correctly dim", () => {
+		UntilDate.solarDate.forEach(({ solar, Dim }) => {
+			const [shyear, shmonth, shdate] = solar;
+			let solardate = new SHDate(shyear, shmonth, shdate);
+			const [Dims] = solardate.format("Dim");
+			assert.equal(parseInt(Dims), Dim);
+		});
+	});
 });
