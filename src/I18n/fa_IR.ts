@@ -116,7 +116,7 @@ export default class fa_IR {
 		"پاييز",
 		"زمستان"
 	];
-	public static SOLSTICE_FULL_NAMES: string[] = ["يلدا", "تموز"];
+	public static SOLSTICE_FULL_NAMES: string[] = ["تموز", "يلدا"];
 	/**
 	 * Ordinal suffix for the day of the month
 	 * @param   int  $num    numeric the day of the month
