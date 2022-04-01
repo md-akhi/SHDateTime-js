@@ -18,6 +18,6 @@ export default class Config {
 	/**
 	 *    Language words Software
 	 */
-	public static LANGUAGE_WORD: string = "en_US";
+	public static LANGUAGE_WORD: string = "en_US"; //en_US
 	public static FIRST_DAY_OF_WEEK: number = 0; // 0 = Saturday | 6 = Friday
 }
