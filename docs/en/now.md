@@ -4,7 +4,7 @@ The static SHDate.now() method returns the number of milliseconds elapsed since 
 
 Try it
 
-<iframe height="460" width="830" src="/SHDateTime-js/examples/live.html" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=now" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax
