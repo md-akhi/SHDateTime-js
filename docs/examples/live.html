@@ -72,6 +72,7 @@
 		<script type="text/javascript">
 			var xhr = false;
 			const url = new URL(document.location);
+			const params = url.searchParams;
 			function loadXMLDoc(theURL, callback) {
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
@@ -91,7 +92,7 @@
 			loadXMLDoc(
 				`${url.protocol}//${
 					url.hostname
-				}/SHDateTime-js/examples/code/${url.searchParams.get("function")}`,
+				}/SHDateTime-js/examples/code/${params.get("function")}.js`,
 				function (code) {
 					document.getElementById("static-js").innerHTML = code;
 					// Do something with the div here, like inserting it into the page
