@@ -12,8 +12,8 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
 ## Install
 
-```shell
-npm i @md-akhi/shdatetime
+```bash
+$ npm i @md-akhi/shdatetime
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ var date = new SHDate();
 
 ```TypeScript
 const SHDate = require('@md-akhi/shdatetime');
-#OR
+// OR
 import SHDate from '@md-akhi/shdatetime';
 
 var date = new SHDate();
@@ -121,6 +121,6 @@ var date = new SHDate();
 
   - seting milliseconds
 
-- [isLeap](#isleap)
+- [isLeapYear](#isLeapYear)
 
   - Whether year is leap year

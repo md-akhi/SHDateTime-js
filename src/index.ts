@@ -2,10 +2,10 @@
  * In the name of Allah, the Beneficent, the Merciful.
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
  * @author Mohammad Amanalikhani
- * @link http://docs.akhi.ir/js/SHDateTime
+ * @link http://codehub.akhi.ir/js/SHDateTime
  * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
- * @version Release: 1.0.0
+ * @version Release: 1.0.0-rc1
  */
 
 import Config from "./Config.js";

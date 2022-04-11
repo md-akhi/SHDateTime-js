@@ -1,4 +1,10 @@
 /**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @link http://codehub.akhi.ir/js/SHDateTime
+ */
+
+/**
  * Convert a number to Persian digit
  * @param {string} str The string to be converted to Persian digits.
  * @param {boolean} con If true, convert to persian digits.

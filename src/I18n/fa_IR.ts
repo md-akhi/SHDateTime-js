@@ -1,4 +1,10 @@
 /**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @link http://codehub.akhi.ir/js/SHDateTime
+ */
+
+/**
  * class SHDate Language Persian
  * @since 1.0.0
  */
