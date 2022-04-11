@@ -1,6 +1,6 @@
 {
   "watch": ["src", "tests"],
   "ext": "ts",
-  "ignore": ["lib"],
+  "ignore": ["dist", "node_modules"],
   "exec": ""
 }

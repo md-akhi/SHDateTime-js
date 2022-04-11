@@ -11,7 +11,7 @@ gulp.task('package-cjs', function() {
 	.pipe(rename( {
 		basename: 'package'
     }))
-    .pipe(gulp.dest('lib/src'))
+    .pipe(gulp.dest('dist/cjs'))
 });
 
 /**
@@ -22,7 +22,7 @@ gulp.task('package-mjs', function() {
 	.pipe(rename( {
 		basename: 'package'
     }))
-    .pipe(gulp.dest('lib/mjs'))
+    .pipe(gulp.dest('dist/mjs'))
 });
 
  /**

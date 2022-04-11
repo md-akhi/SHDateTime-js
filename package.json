@@ -1,38 +1,49 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.0.2",
+  "version": "1.0.0-rc1",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
-  "keywords": ["date", "time", "datetime"],
+  "keywords": [
+    "date",
+    "time",
+    "datetime",
+    "shamsi hijri",
+    "solar hijri",
+    "iranian hijri",
+    "typescript"
+  ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
   "license": "AGPL-3.0",
-  "main": "./lib/src/index.js",
-  "module": "./lib/mjs/index.js",
-  "types": "./lib/src/index.d.ts",
+  "source": "./src/index.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
   "scripts": {
     "start": "npm run dev",
-    "dev": "nodemon npm run dev:watch",
-    "dev:watch": "npm run dev:build && npm run watch",
-    "dev:build": "npm run clean:lib && npm run tsc:cjs",
-    "clean:lib": "rm -rf lib",
+    "dev": "nodemon --exec run-s dev:* --watch ./src --inspect",
+    "dev:clean": "rm -rf dist/src dist/tests",
+    "dev:test": "npm run tsc:test",
+    "dev:watch": "node dist/tests/dev.js",
     "tsc:cjs": "tsc -p ./tsconfig.json",
-    "tsc": "npm run tsc:cjs && npm run tsc:esm && gulp",
-    "tsc:esm": "tsc -p ./tsconfig.esm.json",
-    "build": "npm run clean:lib && npm run tsc",
-    "test": " npm run dev:build && mocha",
+    "tsc:mjs": "tsc -p ./tsconfig.mjs.json",
+    "tsc:test": "tsc -p ./tsconfig.test.json",
+    "test": "npm run dev:test && mocha",
     "test:dev": "nodemon npm run test",
-    "test:out": "node lib/tests/dev.js > tests/tst.out",
-    "watch:tsc": "tsc -w",
-    "watch": "node lib/tests/dev.js",
+    "test:out": "node dist/tests/dev.js > tests/tst.out",
+    "build": "run-s build:*",
+    "build:clean": "rm -rf dist",
+    "build:tsc": "run-p tsc:cjs tsc:mjs && gulp",
+    "watch": "tsc -w",
     "postinstall": "husky install",
     "prepublishOnly": "npm run build --if-present"
   },
   "exports": {
-    "import": "./lib/mjs/index.js",
-    "require": "./lib/src/index.js",
-    "types": "./lib/src/index.d.ts"
+    "default": "./dist/cjs/index.js",
+    "import": "./dist/mjs/index.js",
+    "require": "./dist/cjs/index.js",
+    "types": "./dist/cjs/index.d.ts"
   },
   "directories": {
-    "lib": "./lib",
+    "dist": "./dist",
     "src": "./src",
     "tests": "./tests",
     "docs": "./docs"
@@ -69,7 +80,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*.{ts}": ["prettier --write", "eslint --fix", "git add"],
     "*": ["prettier --write", "git add"]
   }
 }
