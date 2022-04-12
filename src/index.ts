@@ -1287,7 +1287,7 @@ export default class SHDate {
 	/**
 	 * version
 	 */
-	public version() {
+	public static version() {
 		return Config.version;
 	}
 }

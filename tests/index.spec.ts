@@ -17,7 +17,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 		UntilConvertDate.leapYear.forEach(({ solar, Leap }) => {
 			const [shyear] = solar;
 			let solardate = new SHDate(shyear);
-			assert.equal(solardate.isLeap(shyear), Leap);
+			assert.equal(solardate.isLeapYear(shyear), Leap);
 		});
 	});
 

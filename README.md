@@ -42,14 +42,14 @@ import SHDate from '@md-akhi/shdatetime';
 var date = new SHDate();
 ```
 
-- ES Modules for the browser:
+<!-- - ES Modules for the browser:
 
 ```html
 <script type="module">
 	import SHDate from "/path/to/@md-akhi/shdatetime.js";
 	var date = new SHDate();
 </script>
-```
+``` -->
 
 ### Note
 

@@ -23,9 +23,10 @@
     "dev:clean": "rm -rf dist/src dist/tests",
     "dev:test": "npm run tsc:test",
     "dev:watch": "node dist/tests/dev.js",
-    "tsc:cjs": "tsc -p ./tsconfig.json",
-    "tsc:mjs": "tsc -p ./tsconfig.mjs.json",
-    "tsc:test": "tsc -p ./tsconfig.test.json",
+    "tsc:cjs": "tsc --project ./tsconfig.json",
+    "tsc:mjs": "tsc --project ./tsconfig.mjs.json",
+    "tsc:test": "tsc --project ./tsconfig.test.json",
+    "tsc:umd": "tsc --project ./tsconfig.umd.json",
     "test": "npm run dev:test && mocha",
     "test:dev": "nodemon npm run test",
     "test:out": "node dist/tests/dev.js > tests/tst.out",
@@ -72,6 +73,8 @@
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
+    "rollup": "^2.70.1",
+    "terser": "^5.12.1",
     "typescript": "^4.5.5"
   },
   "husky": {
