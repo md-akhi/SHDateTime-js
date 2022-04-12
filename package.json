@@ -1,6 +1,6 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.0.0-rc1",
+  "version": "1.0.1-rc1",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "keywords": [
     "date",
@@ -13,10 +13,6 @@
   ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
   "license": "AGPL-3.0",
-  "source": "./src/index.ts",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/mjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon --exec run-s dev:* --watch ./src --inspect",
@@ -37,6 +33,10 @@
     "postinstall": "husky install",
     "prepublishOnly": "npm run build --if-present"
   },
+  "source": "./src/index.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
   "exports": {
     "default": "./dist/cjs/index.js",
     "import": "./dist/mjs/index.js",
@@ -59,8 +59,9 @@
   },
   "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
   "devDependencies": {
-    "@types/mocha": "^9.1.0",
+    "@tsconfig/recommended": "^1.0.1",
     "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
     "@types/node": "^17.0.21",
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
@@ -73,7 +74,6 @@
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
-    "rollup": "^2.70.1",
     "terser": "^5.12.1",
     "typescript": "^4.5.5"
   },
