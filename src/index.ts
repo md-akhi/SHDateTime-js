@@ -153,6 +153,7 @@ export default class SHDate {
 		else if (data instanceof SHDate)
 			// dateObject
 			this.setTime(data.getTime());
+		else if (typeof data == "boolean") this.setTime(this.#date.getTime());
 	}
 
 	/**
