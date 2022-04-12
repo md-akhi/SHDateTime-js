@@ -1,4 +1,4 @@
 {
   "extension": ["js"],
-  "spec": "lib/tests/**/*.spec.js"
+  "spec": "dist/tests/**/*.spec.js"
 }
