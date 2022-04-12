@@ -26,6 +26,9 @@ jobs:
   publish-npm: #NPM Packages
     needs: build-test
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v2
       # Setup .npmrc file to publish to NPM Packages
@@ -45,6 +48,9 @@ jobs:
   publish-gpr: #GitHub Packages
     needs: build-test
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v2
       # Setup .npmrc file to publish to GitHub Packages
