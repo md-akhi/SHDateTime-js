@@ -5,7 +5,7 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
- * @version Release: 1.0.0-rc1
+ * @version Release: 1.0.1-rc1
  */
 
 import Config from "./Config.js";
@@ -153,6 +153,7 @@ export default class SHDate {
 		else if (data instanceof SHDate)
 			// dateObject
 			this.setTime(data.getTime());
+		else if (typeof data == "boolean") this.setTime(this.#date.getTime());
 	}
 
 	/**
