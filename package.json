@@ -38,7 +38,6 @@
   "module": "./dist/mjs/index.js",
   "types": "./dist/cjs/index.d.ts",
   "exports": {
-    "default": "./dist/cjs/index.js",
     "import": "./dist/mjs/index.js",
     "require": "./dist/cjs/index.js",
     "types": "./dist/cjs/index.d.ts"
