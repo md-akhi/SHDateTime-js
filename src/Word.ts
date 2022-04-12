@@ -1,3 +1,9 @@
+/**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @link http://codehub.akhi.ir/js/SHDateTime
+ */
+
 import Config from "./Config.js";
 import Language_fa_IR from "./I18n/fa_IR.js";
 import Language_en_US from "./I18n/en_US.js";
@@ -137,14 +143,20 @@ export default class Word {
 	 */
 	static getSeasonFullNames(month: number, LW = Config.LANGUAGE_WORD): string {
 		const cls = Word.getClassLanguage(LW);
-		return cls.SEASON_FULL_NAMES[parseInt((month / 3).toString())];
+		return cls.SEASON_FULL_NAMES[parseInt(((month + 1) / 3.1).toString())];
 	}
 
 	/**
 	 *
 	 */
-	static getSolsticeFullNames(num: number, LW = Config.LANGUAGE_WORD): string {
+	static getSolsticeFullNames(
+		month: number,
+		date: number,
+		LW = Config.LANGUAGE_WORD
+	): string {
 		const cls = Word.getClassLanguage(LW);
-		return cls.SOLSTICE_FULL_NAMES[num];
+		if (month === 2 && date === 31) return cls.SOLSTICE_FULL_NAMES[0];
+		else if (month === 8 && date === 30) return cls.SOLSTICE_FULL_NAMES[1];
+		return "";
 	}
 }

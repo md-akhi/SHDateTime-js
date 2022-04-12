@@ -1,10 +1,14 @@
-name: Publish Package to GitHub/NPM Packages
+name: Publish Package to GitHub And NPM
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+env:
+  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 jobs:
   build-test:
@@ -19,7 +23,7 @@ jobs:
           npm run build --if-present
           npm test
 
-  publish-npm:
+  publish-npm: #NPM Packages
     needs: build-test
     runs-on: ubuntu-latest
     permissions:
@@ -31,18 +35,17 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
-          always-auth: true
       - name: Set package registry
         run: npm config set @md-akhi:registry https://registry.npmjs.org/
       - name: Npm registry authentication
-        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+        run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
           npm install
           npm publish --access public
         env:
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: $NPM_TOKEN
 
-  publish-gpr: #github
+  publish-gpr: #GitHub Packages
     needs: build-test
     runs-on: ubuntu-latest
     permissions:
@@ -54,13 +57,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
-          always-auth: true
       - name: Set package registry
         run: npm config set @md-akhi:registry https://npm.pkg.github.com/
       - name: Github package registry authentication
-        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+        run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
           npm install
           npm publish
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: $GITHUB_TOKEN

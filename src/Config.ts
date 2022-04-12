@@ -1,4 +1,10 @@
 /**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @link http://codehub.akhi.ir/js/SHDateTime
+ */
+
+/**
  * class SHDate Configuration
  * @since 1.0.0
  */
@@ -18,6 +24,6 @@ export default class Config {
 	/**
 	 *    Language words Software
 	 */
-	public static LANGUAGE_WORD: string = "en_US";
+	public static LANGUAGE_WORD: string = "en_US"; //en_US
 	public static FIRST_DAY_OF_WEEK: number = 0; // 0 = Saturday | 6 = Friday
 }
