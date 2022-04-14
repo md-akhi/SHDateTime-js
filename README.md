@@ -1,3 +1,5 @@
+[![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
+
 <div dir=rtl>
   
 ## به نام خدا
@@ -28,7 +30,7 @@ var date = new SHDate();
 - CommonJS:
 
 ```javascript
-const SHDate = require("@md-akhi/shdatetime");
+const SHDate = require("@md-akhi/shdatetime").default;
 var date = new SHDate();
 ```
 
@@ -49,7 +51,16 @@ var date = new SHDate();
 	import SHDate from "/path/to/@md-akhi/shdatetime.js";
 	var date = new SHDate();
 </script>
-``` -->
+```
+jsdrive:
+
+cdnjs:
+
+ubpkg:
+
+
+
+-->
 
 ### Note
 
