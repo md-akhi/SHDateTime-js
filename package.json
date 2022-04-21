@@ -1,6 +1,6 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.0.2-rc2",
+  "version": "1.0.3-rc2",
   "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
   "keywords": [
     "date",
@@ -22,7 +22,7 @@
     "tsc:cjs": "tsc --project ./tsconfig.json",
     "tsc:mjs": "tsc --project ./tsconfig.mjs.json",
     "tsc:test": "tsc --project ./tsconfig.test.json",
-    "tsc:umd": "tsc --project ./tsconfig.umd.json",
+    "tsc:browser": "tsc --project ./tsconfig.browser.json",
     "test": "npm run dev:test && mocha",
     "test:dev": "nodemon npm run test",
     "test:out": "node dist/tests/dev.js > tests/tst.out",
@@ -30,8 +30,7 @@
     "build:clean": "rm -rf dist",
     "build:tsc": "run-p tsc:cjs tsc:mjs && gulp",
     "watch": "tsc -w",
-    "postinstall": "husky install",
-    "prepublishOnly": "npm run build --if-present"
+    "prepare": "husky install"
   },
   "source": "./src/index.ts",
   "main": "./dist/cjs/index.js",
@@ -48,9 +47,8 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["dist", "src", "tests", "docs"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -85,14 +83,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }
