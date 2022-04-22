@@ -41,6 +41,7 @@ jobs:
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
           npm install
+          npm run build
           npm publish --access public
         env:
           NPM_TOKEN: $NPM_TOKEN
@@ -63,6 +64,7 @@ jobs:
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
           npm install
+          npm run build
           npm publish
         env:
           GITHUB_TOKEN: $GITHUB_TOKEN
