@@ -1,4 +1,3 @@
-[![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
 
 <div dir=rtl>
   
@@ -11,6 +10,11 @@
 ## In the name of Allah, the Beneficent, the Merciful.
 
 Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
+
+[![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/md-akhi/SHDateTime-js)
+![ workflow](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)
+![ workflow](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)
 
 ## Install
 
