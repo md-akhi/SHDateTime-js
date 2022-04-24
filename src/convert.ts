@@ -4,6 +4,9 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
 
+import Language_fa_IR from "./i18n/fa_IR.js";
+import Language_en_US from "./i18n/en_US.js";
+
 /**
  * Convert a number to Persian digit
  * @param {string} str The string to be converted to Persian digits.
@@ -12,7 +15,7 @@
  * @returns {string} The converted string.
  * @since 1.0.0
  */
-export default function NumsTo(
+export default function NumbersTo(
 	str: string,
 	con: string | string[] = "FA",
 	dec: string = ","

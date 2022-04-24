@@ -4,9 +4,9 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
 
-import Config from "./Config.js";
-import Language_fa_IR from "./I18n/fa_IR.js";
-import Language_en_US from "./I18n/en_US.js";
+import { Config } from "./index.js";
+import Language_fa_IR from "./i18n/fa_IR.js";
+import Language_en_US from "./i18n/en_US.js";
 
 /**
  * list of supported languages
