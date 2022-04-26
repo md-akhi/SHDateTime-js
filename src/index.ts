@@ -8,8 +8,8 @@
  * @version Release: 1.0.4-rc2
  */
 
-import Config from "./Config.js";
-import Word from "./Word.js";
+import Word from "./word.js";
+
 
 interface VarSHDate {
 	[key: string]: number | undefined;
@@ -20,11 +20,16 @@ interface VarSHDate {
 	UTCMonth?: number;
 	UTCDate?: number;
 }
+
 /**
  * class SHDate
  * @since   1.0.0
  */
 export default class SHDate {
+	/**
+	 * version of SHDate
+	 */
+	static version: string = "1.0.4-rc2";
 	/**
 	 * @type {number[]} days in month without leap year
 	 */
@@ -108,6 +113,13 @@ export default class SHDate {
 	 * @type {object} year, month, date, UTCYear, UTCMonth, UTCDate, TimeDate
 	 */
 	#sh: VarSHDate = {};
+
+	#config: any = {
+		timeZone: "Asia/Tehran",
+		languageWord: "en_US",
+		firstDayOfWeek: 0,
+		timeServer: 0
+	};
 
 	/**
 	 * Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format.Date objects contain a Number that represents milliseconds since 11 Day 1348 UTC.
@@ -333,11 +345,11 @@ export default class SHDate {
 		year: number,
 		month: number,
 		date: number,
-		FDOW: number = Config.FIRST_DAY_OF_WEEK
+		FDOW: number = this.#config.firstDayOfWeek
 	): number {
 		//	return (year+this.IsLeapYear(year,true)+this::DayOfYear(year,month,date)+5)%7;
-		// 7+(gdow+1)-Config.FIRST_DAY_OF_WEEK%7
-		// return (8 + gdow - Config.FIRST_DAY_OF_WEEK) % 7; // shdow
+		// 7+(gdow+1)-this.#config.firstDayOfWeek%7
+		// return (8 + gdow - this.#config.firstDayOfWeek) % 7; // shdow
 		//	new and best version
 		return (
 			(5 +
@@ -377,7 +389,7 @@ export default class SHDate {
 		year: number,
 		month: number,
 		date: number,
-		FDOW: number = Config.FIRST_DAY_OF_WEEK
+		FDOW: number = this.#config.firstDayOfWeek
 	): number[] {
 		let iw: number,
 			iy: number,
@@ -588,37 +600,57 @@ export default class SHDate {
 					result.push(this.#DayOfYear(month, date).toString().padStart(3, "0"));
 					break;
 				case "dsn":
-					result.push(Word.getDayShortNames(weekday));
+					result.push(
+						Word.getDayShortNames(
+							weekday,
+							this.#config.languageWord,
+							this.#config.firstDayOfWeek
+						)
+					);
 					break;
 				case "dfn":
-					result.push(Word.getDayFullNames(weekday));
+					result.push(
+						Word.getDayFullNames(
+							weekday,
+							this.#config.languageWord,
+							this.#config.firstDayOfWeek
+						)
+					);
 					break;
 				case "efn":
-					result.push(Word.getMeridienFullNames(hours));
+					result.push(
+						Word.getMeridienFullNames(hours, this.#config.languageWord)
+					);
 					break;
 				case "esn":
-					result.push(Word.getMeridienShortNames(hours));
+					result.push(
+						Word.getMeridienShortNames(hours, this.#config.languageWord)
+					);
 					break;
 				case "mfn":
-					result.push(Word.getMonthFullNames(month));
+					result.push(Word.getMonthFullNames(month, this.#config.languageWord));
 					break;
 				case "msn":
-					result.push(Word.getMonthShortNames(month));
+					result.push(Word.getMonthShortNames(month, this.#config.languageWord));
 					break;
 				case "asn":
-					result.push(Word.getAnimalsFullNames(year));
+					result.push(Word.getAnimalsFullNames(year, this.#config.languageWord));
 					break;
 				case "csn":
-					result.push(Word.getConstellationsFullNames(month));
+					result.push(
+						Word.getConstellationsFullNames(month, this.#config.languageWord)
+					);
 					break;
 				case "ssn":
-					result.push(Word.getSeasonFullNames(month));
+					result.push(Word.getSeasonFullNames(month, this.#config.languageWord));
 					break;
 				case "osn":
-					result.push(Word.getSolsticeFullNames(month, date));
+					result.push(
+						Word.getSolsticeFullNames(month, date, this.#config.languageWord)
+					);
 					break;
 				case "sun":
-					result.push(Word.getSuffixNames(date));
+					result.push(Word.getSuffixNames(date, this.#config.languageWord));
 					break;
 				default:
 					result.push(f);
@@ -1285,10 +1317,55 @@ export default class SHDate {
 	) {
 		return this.#date.toLocaleString(locales, options);
 	}
+
+	/**
+	 *	The time difference with the server
+	 */
+	setTimeServer(time: number): void {
+		this.#config.timeServer = time;
+	}
+	getTimeServer(): number {
+		return this.#config.timeServer;
+	}
+
+	/**
+	 *    Timezone identifier
+	 */
+	public static TIME_ZONE: string = "Asia/Tehran";
+	setTimeZone(timeZone: string): void {
+		this.#config.timeZone = timeZone;
+	}
+	getTimeZone(): string {
+		return this.#config.timeZone;
+	}
+
+	/**
+	 *    Language words Software
+	 */
+	setLanguageWord(language: string): void {
+		this.#config.languageWord = language;
+	}
+	getLanguageWord(): string {
+		return this.#config.languageWord;
+	}
+
+	/**
+	 * Start first day of the week// 0 = Saturday | 6 = Friday
+	 */
+	setFirstDayOfWeek(day: number | number[]): void {
+		this.#config.firstDayOfWeek = day;
+	}
+	getFirstDayOfWeek(): number | number[] {
+		return this.#config.firstDayOfWeek;
+	}
+
+	setConfig(...args: any[]): void {
+		this.#config = { ...this.#config, ...args };
+	}
 	/**
 	 * version
 	 */
-	public static version() {
-		return Config.version;
+	public static getVersion() {
+		return SHDate.version;
 	}
 }
