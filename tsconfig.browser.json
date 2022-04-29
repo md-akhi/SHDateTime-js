@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "strict": true,
     "module": "UMD",
     "outDir": "dist/browser",
     "target": "ES6",
     "lib": ["es2016", "dom"],
     "esModuleInterop": false,
     "noImplicitAny": true,
-    "removeComments": true
+    "removeComments": true,
+    "sourceMap": true,
+    "declaration": true
   },
   "compileOnSave": false,
   "include": ["src/browser/**.ts"],

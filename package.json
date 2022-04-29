@@ -31,6 +31,7 @@
     "watch": "tsc -w",
     "prepare": "husky install"
   },
+  "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
   "types": "./dist/types/index.d.ts",
   "browser": "./dist/browser/shdatetime.min.js",
@@ -59,16 +60,8 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "docs",
-    "dist"
-  ],
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -78,7 +71,6 @@
   },
   "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
   "devDependencies": {
-    "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@tsconfig/recommended": "^1.0.1",
     "@types/chai": "^4.3.0",
@@ -116,14 +108,7 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }
