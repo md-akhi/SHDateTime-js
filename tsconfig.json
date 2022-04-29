@@ -2,12 +2,11 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "lib",
-    "target": "es6",
+    "outDir": "dist/cjs",
+    "target": "ES6",
     "sourceMap": true,
     "declaration": true
   },
-  "include": ["tests/**/*.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

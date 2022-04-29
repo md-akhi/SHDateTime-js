@@ -1,3 +1,16 @@
 language: node_js
 node_js:
-  - "16"
+  - "lts/*"
+install:
+  - npm install
+branches:
+  only:
+    - "ftr/*"
+jobs:
+  include:
+    - stage: "Build"
+      name: "Build lib"
+      script: npm run build --if-present
+    - stage: "Tests" # naming the Tests stage
+      name: "Unit Tests" # names the first Tests stage job
+      script: npm test

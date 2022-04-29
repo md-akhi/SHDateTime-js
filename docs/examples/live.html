@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://interactive-examples.mdn.mozilla.net/pages/js/date-now.html -->
+<html lang="en" class="js">
+	<script id="allow-copy_script">
+		(function agent() {
+			let unlock = false;
+			document.addEventListener("allow_copy", (event) => {
+				unlock = event.detail.unlock;
+			});
+
+			const copyEvents = [
+				"copy",
+				"cut",
+				"contextmenu",
+				"selectstart",
+				"mousedown",
+				"mouseup",
+				"mousemove",
+				"keydown",
+				"keypress",
+				"keyup"
+			];
+			const rejectOtherHandlers = (e) => {
+				if (unlock) {
+					e.stopPropagation();
+					if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+				}
+			};
+			copyEvents.forEach((evt) => {
+				document.documentElement.addEventListener(evt, rejectOtherHandlers, {
+					capture: true
+				});
+			});
+		})();
+	</script>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<title>JavaScript Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="./asset/codemirror-5-50-2.css" rel="stylesheet" />
+		<link href="./asset/editor-js.css" rel="stylesheet" />
+	</head>
+
+	<body
+		data-new-gr-c-s-check-loaded="14.1055.0"
+		data-gr-ext-installed=""
+		data-new-gr-c-s-loaded="14.1055.0"
+	>
+		<section id="static" class="hidden">
+			<pre>
+				<code id="static-js" data-height="">
+				</code>
+			</pre>
+		</section>
+
+		<section id="live" class="live">
+			<header class="output-header full-border">
+				<h4 class="output-heading">JavaScript Demo</h4>
+			</header>
+			<div id="editor" class="editor"></div>
+
+			<div class="output-container">
+				<div class="buttons-container">
+					<button id="execute" class="button run" type="button">Run ›</button>
+					<button id="reset" type="button" class="button">Reset</button>
+				</div>
+				<div id="console" class="output"><code></code></div>
+			</div>
+		</section>
+		<script type="text/javascript">
+			var xhr = false;
+			const url = new URL(document.location);
+			const params = url.searchParams;
+			function loadXMLDoc(theURL, callback) {
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
+					xhr = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						callback(xhr.responseText);
+					}
+				};
+				xhr.open("GET", theURL);
+				xhr.send(null);
+			}
+			loadXMLDoc(
+				`${url.protocol}//${
+					url.hostname
+				}/SHDateTime-js/examples/code/${params.get("function")}.js`,
+				function (code) {
+					document.getElementById("static-js").innerHTML = code;
+					// Do something with the div here, like inserting it into the page
+				}
+			);
+			if (xhr == false) {
+				/* set timeout or alert() */
+			} else {
+				/* assign `xhr.responseText` to some var */
+			}
+		</script>
+		<script src="./asset/codemirror-5-50-2.js"></script>
+		<script src="./asset/editor-js.js"></script>
+	</body>
+</html>

@@ -1,4 +1,10 @@
 /**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
+ * @link http://codehub.akhi.ir/js/SHDateTime
+ */
+
+/**
  * class SHDate Language English
  * @since 1.0.0
  */
@@ -101,7 +107,7 @@ export default class en_US {
 		"Fall",
 		"Winter"
 	];
-	public static SOLSTICE_FULL_NAMES: string[] = ["Yalda", "Tammuz"];
+	public static SOLSTICE_FULL_NAMES: string[] = ["Tammuz", "Yalda"];
 	/**
 	 * Ordinal suffix for the day of the month
 	 * @param   int  $num    numeric the day of the month

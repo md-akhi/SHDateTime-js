@@ -1,5 +1,7 @@
-lib
+dist
 package-lock.json
+tst.out
+src/browser
 
 # Logs
 logs

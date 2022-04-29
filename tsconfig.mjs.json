@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "esnext",
+    "sourceMap": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "esnext"
+    }
+  }
+}
