@@ -4,8 +4,7 @@
     "module": "esnext",
     "outDir": "dist/mjs",
     "target": "esnext",
-    "sourceMap": true,
-    "declaration": true
+    "sourceMap": true
   },
   "ts-node": {
     "compilerOptions": {
