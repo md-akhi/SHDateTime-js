@@ -3,9 +3,9 @@
 /.github
 /node_modules
 /docs
+/src
 /tests
 /coverage
-/build
 .eslintrc
 .eslintignore
 .editorconfig
