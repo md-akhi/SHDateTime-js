@@ -1,6 +1,6 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
@@ -63,7 +63,8 @@
     "LICENSE",
     "README.md",
     "CHANGELOG.md",
-    "docs"
+    "docs",
+    "dist"
   ],
   "man": [
     "./docs/**/*.md"
