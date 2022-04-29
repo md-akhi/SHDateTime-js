@@ -5,7 +5,7 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
- * @version Release: 1.1.1
+ * @version Release: 1.1.3
  */
 
 import Word from "./word.js";
@@ -28,7 +28,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static version: string = "1.1.1";
+	static version: string = "1.1.3";
 	/**
 	 * @type {number[]} days in month without leap year
 	 */
