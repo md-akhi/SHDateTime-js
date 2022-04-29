@@ -5,11 +5,10 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
- * @version Release: 1.0.4-rc2
+ * @version Release: 1.0.0-rc3
  */
 
 import Word from "./word.js";
-
 
 interface VarSHDate {
 	[key: string]: number | undefined;
@@ -29,7 +28,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static version: string = "1.0.4-rc2";
+	static version: string = "1.0.0-rc3";
 	/**
 	 * @type {number[]} days in month without leap year
 	 */
@@ -631,10 +630,14 @@ export default class SHDate {
 					result.push(Word.getMonthFullNames(month, this.#config.languageWord));
 					break;
 				case "msn":
-					result.push(Word.getMonthShortNames(month, this.#config.languageWord));
+					result.push(
+						Word.getMonthShortNames(month, this.#config.languageWord)
+					);
 					break;
 				case "asn":
-					result.push(Word.getAnimalsFullNames(year, this.#config.languageWord));
+					result.push(
+						Word.getAnimalsFullNames(year, this.#config.languageWord)
+					);
 					break;
 				case "csn":
 					result.push(
@@ -642,7 +645,9 @@ export default class SHDate {
 					);
 					break;
 				case "ssn":
-					result.push(Word.getSeasonFullNames(month, this.#config.languageWord));
+					result.push(
+						Word.getSeasonFullNames(month, this.#config.languageWord)
+					);
 					break;
 				case "osn":
 					result.push(
@@ -1272,10 +1277,10 @@ export default class SHDate {
 	}
 
 	/** // get timestamp in linux format
-	toString: function(format, convertDigit) {
-		var ret = (!!format && format !== null) ? jdate._format(format + '', this.jdate) : jdate._format('yyyy-MM-dd HH:mm:ss.l Z', this.jdate);
-		return (!!convertDigit && convertDigit !== null) ? ret.toFaDigit() : ret;
-	} */
+	 toString: function(format, convertDigit) {
+		 var ret = (!!format && format !== null) ? jdate._format(format + '', this.jdate) : jdate._format('yyyy-MM-dd HH:mm:ss.l Z', this.jdate);
+		 return (!!convertDigit && convertDigit !== null) ? ret.toFaDigit() : ret;
+	 } */
 
 	/**
 	 * converts a Date object to a primitive value.

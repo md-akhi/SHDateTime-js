@@ -3,7 +3,6 @@ import { it, describe } from "mocha";
 
 import * as UntilWord from "./Until-Word.js";
 import SHDate from "../src/index.js";
-import SHWord from "../src/Word.js";
 const date = new SHDate();
 
 describe("word", () => {
