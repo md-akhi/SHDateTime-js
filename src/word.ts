@@ -21,7 +21,7 @@ enum Language {
  * @since 1.0.0
  */
 export default class Word {
-	static LANGUAGE_WORD: Language = Language.en_US;
+	static LANGUAGE_WORD: string = Language.en_US;
 	static FIRST_DAY_OF_WEEK: number = 0;
 	/**
 	 * Get Language class

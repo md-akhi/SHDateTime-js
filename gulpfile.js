@@ -22,7 +22,9 @@ function combineTS() {
 		.pipe(replace(/ ([a-z]{2}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
 		.pipe(replace(/ Language_([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage_$1"))
 		.pipe(replace(/class (Word)/g, "class SHDate$1"))
-		.pipe(replace(/\w?(Word\.)/g, " SHDate$1"))
+		.pipe(replace(/(Word\.)/g, " SHDate$1"))
+		.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
+		.pipe(replace(/ Language.([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage.$1"))
 		.pipe(gulp.dest("src/browser"));
 }
 
