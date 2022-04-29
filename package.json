@@ -18,8 +18,8 @@
     "dev": "nodemon --exec run-s dev:* --watch ./src --inspect",
     "dev:clean": "rm -rf dist/src dist/tests",
     "dev:watch": "node dist/tests/dev.js",
-    "tsc:cjs": "tsc --project tsconfig.json && gulp moveDTS && gulp delDTS",
-    "tsc:mjs": "tsc --project tsconfig.mjs.json",
+    "tsc:cjs": "tsc --project tsconfig.json  && echo {\"type\":\"commonjs\"}>dist/cjs/package.json && gulp moveDTS && gulp delDTS",
+    "tsc:mjs": "tsc --project tsconfig.mjs.json && echo {\"type\":\"module\"}>dist/mjs/package.json",
     "tsc:browser": "gulp combineTS && tsc --project tsconfig.browser.json",
     "tsc:test": "tsc --project tsconfig.test.json",
     "test": "npm run tsc:test && mocha",
@@ -31,8 +31,6 @@
     "watch": "tsc -w",
     "prepare": "husky install"
   },
-  "source": "./src/index.ts",
-  "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
   "types": "./dist/types/index.d.ts",
   "browser": "./dist/browser/shdatetime.min.js",
@@ -40,18 +38,18 @@
   "jsdrive": "https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
   "exports": {
     ".": {
-      "import": "./dist/mjs/index.js",
       "require": "./dist/cjs/index.js",
+      "import": "./dist/mjs/index.js",
       "types": "./dist/types/index.d.ts"
     },
     "./en_US": {
-      "import": "./dist/cjs/I18n/en_US.js",
-      "require": "./dist/mjs/I18n/en_US.js",
+      "require": "./dist/cjs/I18n/en_US.js",
+      "import": "./dist/mjs/I18n/en_US.js",
       "types": "./dist/types/I18n/en_US.d.js"
     },
     "./fa_IR": {
-      "import": "./dist/cjs/I18n/fa_IR.js",
-      "require": "./dist/mjs/I18n/fa_IR.js",
+      "require": "./dist/cjs/I18n/fa_IR.js",
+      "import": "./dist/mjs/I18n/fa_IR.js",
       "types": "./dist/types/I18n/fa_IR.d.js"
     }
   },
