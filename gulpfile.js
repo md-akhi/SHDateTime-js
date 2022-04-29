@@ -21,6 +21,8 @@ function combineTS() {
 		.pipe(replace(/import [a-zA-z_]* from [0-9a-zA-z_/\.\"]*;/g, " "))
 		.pipe(replace(/ ([a-z]{2}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
 		.pipe(replace(/ Language_([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage_$1"))
+		.pipe(replace(/class (Word)/g, "class SHDate$1"))
+		.pipe(replace(/\w?(Word\.)/g, " SHDate$1"))
 		.pipe(gulp.dest("src/browser"));
 }
 
@@ -60,7 +62,7 @@ function browser() {
 }
 
 function delTSBrowser() {
-	return del(["src/browser"]);
+	//return del(["src/browser"]);
 }
 
 /**
