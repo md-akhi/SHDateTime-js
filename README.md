@@ -56,7 +56,7 @@ var date = new SHDate();
 </script>
 ```
 
-- client the browser:
+- client side for the browser:
 
 ```html
 <script

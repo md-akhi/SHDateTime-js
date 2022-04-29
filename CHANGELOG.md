@@ -19,22 +19,44 @@ All notable changes to this project will be documented in this file.
 
 ## [منتشر نشده][unreleased]
 
--
+### [ایجاد / اضافه شد][#]
+
+- اضافه شدن مستندات
+- اضاقه شدن داکرایز
 
 </div>
 
 ## [Unreleased]
 
--
+### [Added][#]
+
+- Added documentation
+- Added dockerize
 
 #
+
+<div style="text-align: center;">
+
+## [1.1.0] - SH 1400-02-09 - G 2022-04-29
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- اضافه شدن سمت کلاینت برای مرورگر
+
+</div>
+
+### [Added][#]
+
+- Added client side for browser
 
 <div style="text-align: center;">
 
 ## [1.0.0] - SH 1400-12-11 - G 2022-03-02
 
 </div>
-
 <div dir="rtl" style="text-align: right;">
 
 - انتشار نسخه اولیه
@@ -45,8 +67,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...HEAD
-[2.0.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...2.0.0
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0
 [#]: #
 
@@ -57,7 +79,6 @@ All notable changes to this project will be documented in this file.
 ## [x.y.z] - SH 4Y-2M-2D - G 4Y-2M-2D
 
 </div>
-
 <div dir="rtl" style="text-align: right;">
 
 -
