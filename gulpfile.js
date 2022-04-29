@@ -62,7 +62,7 @@ function browser() {
 }
 
 function delTSBrowser() {
-	//return del(["src/browser"]);
+	return del(["src/browser"]);
 }
 
 /**
