@@ -1,7 +1,7 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.0.4-rc2",
-  "description": "Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }",
+  "version": "1.0.0-rc3",
+  "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
     "time",
@@ -11,35 +11,50 @@
     "iranian hijri",
     "typescript"
   ],
-  "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com>",
+  "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
   "license": "AGPL-3.0",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon --exec run-s dev:* --watch ./src --inspect",
     "dev:clean": "rm -rf dist/src dist/tests",
-    "dev:test": "npm run tsc:test",
     "dev:watch": "node dist/tests/dev.js",
-    "tsc:cjs": "tsc --project ./tsconfig.json",
-    "tsc:mjs": "tsc --project ./tsconfig.mjs.json",
-    "tsc:test": "tsc --project ./tsconfig.test.json",
-    "tsc:browser": "tsc --project ./tsconfig.browser.json",
-    "test": "npm run dev:test && mocha",
+    "tsc:cjs": "tsc --project tsconfig.json && gulp moveDTS && gulp delDTS",
+    "tsc:mjs": "tsc --project tsconfig.mjs.json",
+    "tsc:browser": "gulp combineTS && tsc --project tsconfig.browser.json",
+    "tsc:test": "tsc --project tsconfig.test.json",
+    "test": "npm run tsc:test && mocha",
     "test:dev": "nodemon npm run test",
     "test:out": "node dist/tests/dev.js > tests/tst.out",
     "build": "run-s build:*",
-    "build:clean": "rm -rf dist",
-    "build:tsc": "run-p tsc:cjs tsc:mjs && gulp",
+    "build:clean": "rm -rf dist src/browser",
+    "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
     "watch": "tsc -w",
     "prepare": "husky install"
   },
   "source": "./src/index.ts",
   "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
+  "types": "./dist/types/index.d.ts",
+  "browser": {
+    "shdatetime.js": "./dist/browser/shdatetime.js",
+    "shdatetime.min.js": "./dist/browser/shdatetime.min.js"
+  },
   "exports": {
-    "import": "./dist/mjs/index.js",
-    "require": "./dist/cjs/index.js",
-    "types": "./dist/cjs/index.d.ts"
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./en_US": {
+      "import": "./dist/cjs/I18n/en_US.js",
+      "require": "./dist/mjs/I18n/en_US.js",
+      "types": "./dist/types/I18n/en_US.d.js"
+    },
+    "./fa_IR": {
+      "import": "./dist/cjs/I18n/fa_IR.js",
+      "require": "./dist/mjs/I18n/fa_IR.js",
+      "types": "./dist/types/I18n/fa_IR.d.js"
+    }
   },
   "directories": {
     "dist": "./dist",
@@ -48,7 +63,7 @@
     "docs": "./docs"
   },
   "files": ["dist", "src", "tests", "docs"],
-  "man": ["./docs/**/*.md"],
+  "man": ["./docs/**/*.md", "./docs"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -58,24 +73,37 @@
   },
   "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
     "@tsconfig/recommended": "^1.0.1",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
-    "eslint": "^8.6.0",
+    "del": "^6.0.0",
+    "eslint": "^8.14.0",
+    "eslint-config-recommended": "^4.1.0",
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
     "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.3",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-uglify": "^3.0.2",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.5",
     "mocha": "^9.2.1",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
-    "terser": "^5.12.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.4"
   },
   "husky": {
     "hooks": {
@@ -83,7 +111,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
     "*": ["prettier --write", "git add"]
   }
 }
