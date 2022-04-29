@@ -1,16 +1,19 @@
-[![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
-
 <div dir=rtl>
   
 ## به نام خدا
 
-تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی) به زبان js
+تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
 
 </div>
 
 ## In the name of Allah, the Beneficent, the Merciful.
 
 Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
+
+[![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/md-akhi/SHDateTime-js)
+![ workflow](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)
+![ workflow](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)
 
 ## Install
 
@@ -44,23 +47,38 @@ import SHDate from '@md-akhi/shdatetime';
 var date = new SHDate();
 ```
 
-<!-- - ES Modules for the browser:
+- ES Modules for the browser:
 
 ```html
 <script type="module">
-	import SHDate from "/path/to/@md-akhi/shdatetime.js";
+	import SHDate from "@md-akhi/shdatetime";
 	var date = new SHDate();
 </script>
 ```
+
+- client side for the browser:
+
+```html
+<script
+	type="text/javascript"
+	src="/path/to/@md-akhi/shdatetime/dist/browser/shdatetime.min.js"
+></script>
+<script>
+	var date = new SHDate();
+</script>
+```
+
 jsdrive:
 
-cdnjs:
+```shell
+https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+```
 
 ubpkg:
 
-
-
--->
+```shell
+https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+```
 
 ### Note
 
@@ -72,9 +90,9 @@ ubpkg:
 
   - Formatting a Date and Time (Date -> String)
 
-- [parse](#parse)
+<!-- - [parse](#parse)
 
-  - Parsing a Date and Time string (String -> Date)
+  - Parsing a Date and Time string (String -> Date) -->
 
 - [setFullYears](#setyearsdateobj-years)
 
