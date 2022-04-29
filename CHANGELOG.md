@@ -1,3 +1,12 @@
+## 1.1.1 (2022-04-29)
+
+
+### Bug Fixes
+
+* show dist ([f5dd9ee](https://github.com/md-akhi/SHDateTime-js/commits/f5dd9ee73b72cf649397393a8f0edbd7c20d07fe))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
