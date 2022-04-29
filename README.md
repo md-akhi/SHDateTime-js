@@ -1,9 +1,8 @@
-
 <div dir=rtl>
   
 ## به نام خدا
 
-تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی) به زبان js
+تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
 
 </div>
 
@@ -48,23 +47,38 @@ import SHDate from '@md-akhi/shdatetime';
 var date = new SHDate();
 ```
 
-<!-- - ES Modules for the browser:
+- ES Modules for the browser:
 
 ```html
 <script type="module">
-	import SHDate from "/path/to/@md-akhi/shdatetime.js";
+	import SHDate from "@md-akhi/shdatetime";
 	var date = new SHDate();
 </script>
 ```
+
+- client the browser:
+
+```html
+<script
+	type="text/javascript"
+	src="/path/to/@md-akhi/shdatetime/dist/browser/shdatetime.min.js"
+></script>
+<script>
+	var date = new SHDate();
+</script>
+```
+
 jsdrive:
 
-cdnjs:
+```shell
+https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+```
 
 ubpkg:
 
-
-
--->
+```shell
+https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+```
 
 ### Note
 
@@ -76,9 +90,9 @@ ubpkg:
 
   - Formatting a Date and Time (Date -> String)
 
-- [parse](#parse)
+<!-- - [parse](#parse)
 
-  - Parsing a Date and Time string (String -> Date)
+  - Parsing a Date and Time string (String -> Date) -->
 
 - [setFullYears](#setyearsdateobj-years)
 
