@@ -35,10 +35,9 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
   "types": "./dist/types/index.d.ts",
-  "browser": {
-    "shdatetime.js": "./dist/browser/shdatetime.js",
-    "shdatetime.min.js": "./dist/browser/shdatetime.min.js"
-  },
+  "browser": "./dist/browser/shdatetime.min.js",
+  "unpkg": "https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
+  "jsdrive": "https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
   "exports": {
     ".": {
       "import": "./dist/mjs/index.js",
@@ -62,8 +61,8 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": ["dist", "src", "tests", "docs"],
-  "man": ["./docs/**/*.md", "./docs"],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
