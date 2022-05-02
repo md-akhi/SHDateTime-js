@@ -3,14 +3,16 @@
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
-
 /**
  * class SHDate Language English
  * @since 1.0.0
  */
 export default class en_US {
-	// Languages
+	/**
+	 * @var LANGUAGE Language English
+	 */
 	public static LANGUAGE = "en_US"; //English	en
+
 	public static DIGIT: string[] = [
 		"0",
 		"1",
@@ -24,9 +26,13 @@ export default class en_US {
 		"9",
 		"."
 	];
+
 	public static SUFFIX: string[] = ["th", "st", "nd", "rd"];
+
 	public static MERIDIEN_FULL_NAMES: string[] = ["AM", "PM"];
+
 	public static MERIDIEN_SHORT_NAMES: string[] = ["am", "pm"];
+
 	public static MONTH_FULL_NAMES: string[] = [
 		"Farvardin",
 		"Ordibehesht",
@@ -41,6 +47,7 @@ export default class en_US {
 		"Bahman",
 		"Esfand"
 	];
+
 	public static MONTH_SHORT_NAMES: string[] = [
 		"Far",
 		"Ord",
@@ -55,6 +62,7 @@ export default class en_US {
 		"Bah",
 		"Esf"
 	];
+
 	public static DAY_FULL_NAMES: string[] = [
 		"Saturday",
 		"Sunday",
@@ -64,6 +72,7 @@ export default class en_US {
 		"Thursday",
 		"Friday"
 	];
+
 	public static DAY_SHORT_NAMES: string[] = [
 		"Sat",
 		"Sun",
@@ -73,6 +82,7 @@ export default class en_US {
 		"Thu",
 		"Fri"
 	];
+
 	public static CONSTELLATIONS_FULL_NAMES: string[] = [
 		"Aries",
 		"Taurus",
@@ -87,32 +97,36 @@ export default class en_US {
 		"Aquarius",
 		"Pisces"
 	];
+
 	public static ANIMALS_FULL_NAMES: string[] = [
-		"Snake",
-		"Horse",
-		"Sheep",
-		"Monkey",
-		"Chicken",
-		"Dog",
-		"Pig",
-		"Mouse",
-		"Cow",
-		"Panther",
-		"Rabbit",
-		"Whale"
+		"Snake", // 5
+		"Horse", // 6
+		"Sheep", // 7
+		"Monkey", // 8
+		"Chicken", // 9
+		"Dog", // 10
+		"Pig", // 11
+		"Mouse", // 0
+		"Cow", // 1
+		"Panther", // 2
+		"Rabbit", // 3
+		"Whale" // 4
 	];
+
 	public static SEASON_FULL_NAMES: string[] = [
 		"Spring",
 		"Summer",
 		"Fall",
 		"Winter"
 	];
+
 	public static SOLSTICE_FULL_NAMES: string[] = ["Tammuz", "Yalda"];
+
 	/**
 	 * Ordinal suffix for the day of the month
-	 * @param   int  $num    numeric the day of the month
-	 * @return  string  Ordinal suffix for the day of the month
-	 * @since   1.0.0
+	 * @param {number} num numeric the day of the month
+	 * @return string  Ordinal suffix for the day of the month
+	 * @since 1.0.0
 	 */
 	public static SuffixNames(num: number): string {
 		if (!Number.isInteger(num)) {
