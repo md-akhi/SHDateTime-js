@@ -1,7 +1,3 @@
-# 1.2.0 (2022-05-02)
-
-
-
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
@@ -25,6 +21,35 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
+-
+
+### [تغییر کرد][#]
+
+-
+
+</div>
+
+## [Unreleased]
+
+### [Added][#]
+
+-
+
+### [Changed][#]
+
+-
+
+#
+
+<div style="text-align: center;">
+
+## [1.2.0] - SH 1400-02-12 - G 2022-05-02
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
 - اضافه شدن مستندات
 - اضاقه شدن داکرایز
 - ایجاد تابع چک کننده زبان
@@ -35,8 +60,6 @@ All notable changes to this project will be documented in this file.
 - تغییر نام تابع از getTimeServer به getTimeServerDiff
 
 </div>
-
-## [Unreleased]
 
 ### [Added][#]
 
@@ -49,10 +72,9 @@ All notable changes to this project will be documented in this file.
 - Change setTimeServer function to setTimeServerDiff
 - Change getTimeServer function to getTimeServerDiff
 
-#
-
 <div style="text-align: center;">
 
+#
 ## [1.1.0] - SH 1400-02-09 - G 2022-04-29
 
 </div>
@@ -70,6 +92,7 @@ All notable changes to this project will be documented in this file.
 
 <div style="text-align: center;">
 
+#
 ## [1.0.0] - SH 1400-12-11 - G 2022-03-02
 
 </div>
@@ -83,9 +106,10 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.0...HEAD
-[1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...1.1.0
-[1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
+[1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0
+[1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0-rc1
 [#]: #
 
 <!--
