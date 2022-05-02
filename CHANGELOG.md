@@ -1,3 +1,12 @@
+## 1.2.1 (2022-05-02)
+
+
+### Bug Fixes
+
+* compile ts ([8c28c08](https://github.com/md-akhi/SHDateTime-js/commits/8c28c08f7b89c5d284fc1ec9310504bfad3e0c2c))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات

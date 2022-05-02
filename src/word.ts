@@ -28,9 +28,7 @@ export default class Word {
 	 * @return string
 	 * @since 1.0.0
 	 */
-	static checkLanguage(
-		language: string = Word.LANGUAGE_WORD
-	): Language | boolean {
+	static checkLanguage(language: string = Word.LANGUAGE_WORD): boolean {
 		switch (language) {
 			case Language.fa_IR:
 			case Language.en_US:
