@@ -1,3 +1,7 @@
+# 1.2.0 (2022-05-02)
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
