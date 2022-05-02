@@ -1,11 +1,3 @@
-## 1.1.3 (2022-04-29)
-
-
-
-## 1.1.2 (2022-04-29)
-
-
-
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
@@ -31,6 +23,12 @@ All notable changes to this project will be documented in this file.
 
 - اضافه شدن مستندات
 - اضاقه شدن داکرایز
+- ایجاد تابع چک کننده زبان
+
+### [تغییر کرد][#]
+
+- تغییر نام تابع از setTimeServer به setTimeServerDiff
+- تغییر نام تابع از getTimeServer به getTimeServerDiff
 
 </div>
 
@@ -40,6 +38,12 @@ All notable changes to this project will be documented in this file.
 
 - Added documentation
 - Added dockerize
+- added check language function
+
+### [Changed][#]
+
+- Change setTimeServer function to setTimeServerDiff
+- Change getTimeServer function to getTimeServerDiff
 
 #
 
