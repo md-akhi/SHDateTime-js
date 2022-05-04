@@ -43,20 +43,28 @@
       "import": "./dist/mjs/index.js",
       "types": "./dist/types/index.d.ts"
     },
+    "./words?": {
+      "require": "./dist/cjs/word.js",
+      "import": "./dist/mjs/word.js",
+      "types": "./dist/types/word.d.ts"
+    },
+    "./tools?": {
+      "require": "./dist/cjs/tools.js",
+      "import": "./dist/mjs/tools.js",
+      "types": "./dist/types/tools.d.ts"
+    },
     "./*": {
       "require": "./dist/cjs/i18n/*.js",
       "import": "./dist/mjs/i18n/*.js",
-      "types": "./dist/types/i18n/*.d.js"
+      "types": "./dist/types/i18n/*.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "dist/types/index.d.ts"
-      ],
-      "./*": [
-        "./dist/types/i18n/*.d.js"
-      ]
+      ".": ["dist/types/index.d.ts"],
+      "./words?": ["./dist/types/word.d.ts"],
+      "./tools?": ["./dist/types/tools.d.ts"],
+      "./*": ["./dist/types/i18n/*.d.ts"]
     }
   },
   "directories": {
@@ -65,16 +73,8 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "docs",
-    "dist"
-  ],
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -120,14 +120,7 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }
