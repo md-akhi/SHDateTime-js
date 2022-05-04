@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### [رفع / درست شد][#]
 
-- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+-
 
 </div>
 
@@ -42,6 +42,25 @@ All notable changes to this project will be documented in this file.
 ### [Changed][#]
 
 -
+
+### [Fixed][#]
+
+-
+
+#
+
+<div style="text-align: center;">
+
+## [1.2.4] - SH 1401-02-14 - G 2022-05-04
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [رفع / درست شد][#]
+
+- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+
+</div>
 
 ### [Fixed][#]
 
@@ -116,7 +135,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...HEAD
+[1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
 [1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0
 [1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0-rc1
