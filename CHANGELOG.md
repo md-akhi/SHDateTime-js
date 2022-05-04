@@ -1,3 +1,18 @@
+## 1.2.4 (2022-05-04)
+
+
+### Bug Fixes
+
+* added @babel/core for run auto test ([5d22416](https://github.com/md-akhi/SHDateTime-js/commits/5d2241619f6d2943eec22bbd72ef9dbd83a4eca6))
+* fixed set day in setDate, setUTCDate ([f3c9d21](https://github.com/md-akhi/SHDateTime-js/commits/f3c9d21c946b5d19a01a18959ea01a48de7cff7e))
+
+
+### Features
+
+* **l10n:** added Central Kurdish (Iran) ([3a4c87f](https://github.com/md-akhi/SHDateTime-js/commits/3a4c87f50da726517baa7b51605e488edc6d645b))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
