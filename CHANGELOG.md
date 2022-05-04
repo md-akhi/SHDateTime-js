@@ -1,3 +1,18 @@
+## 1.2.4 (2022-05-04)
+
+
+### Bug Fixes
+
+* added @babel/core for run auto test ([5d22416](https://github.com/md-akhi/SHDateTime-js/commits/5d2241619f6d2943eec22bbd72ef9dbd83a4eca6))
+* fixed set day in setDate, setUTCDate ([f3c9d21](https://github.com/md-akhi/SHDateTime-js/commits/f3c9d21c946b5d19a01a18959ea01a48de7cff7e))
+
+
+### Features
+
+* **l10n:** added Central Kurdish (Iran) ([3a4c87f](https://github.com/md-akhi/SHDateTime-js/commits/3a4c87f50da726517baa7b51605e488edc6d645b))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
@@ -29,7 +44,7 @@ All notable changes to this project will be documented in this file.
 
 ### [رفع / درست شد][#]
 
-- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+-
 
 </div>
 
@@ -42,6 +57,25 @@ All notable changes to this project will be documented in this file.
 ### [Changed][#]
 
 -
+
+### [Fixed][#]
+
+-
+
+#
+
+<div style="text-align: center;">
+
+## [1.2.4] - SH 1401-02-14 - G 2022-05-04
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [رفع / درست شد][#]
+
+- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+
+</div>
 
 ### [Fixed][#]
 
@@ -116,7 +150,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...HEAD
+[1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
 [1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0
 [1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0-rc1

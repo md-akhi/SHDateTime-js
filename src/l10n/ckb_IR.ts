@@ -5,7 +5,7 @@
  */
 /**
  * class SHDate Language Central Kurdish (Iran)
- * @since 1.2.0
+ * @since 1.2.4
  */
 export default class ckb_IR {
 	/**
