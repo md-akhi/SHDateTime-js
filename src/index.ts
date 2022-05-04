@@ -169,27 +169,36 @@ export default class SHDate {
 
 	/**
 	 * update date
-	 * @param {boolean} isUTC
 	 * @returns {null}
 	 * @since 1.0.0
 	 */
-	#update(): void {
+	#updateDate(): void {
 		const [UTC_year, UTC_month, UTC_date] = this.#GregorianToSolar(
 			this.#date.getUTCFullYear(),
 			this.#date.getUTCMonth(),
 			this.#date.getUTCDate()
 		);
+		this.#sh.UTC_year = UTC_year;
+		this.#sh.UTC_month = UTC_month;
+		this.#sh.UTC_date = UTC_date;
+
 		const [year, month, date] = this.#GregorianToSolar(
 			this.#date.getFullYear(),
 			this.#date.getMonth(),
 			this.#date.getDate()
 		);
-		this.#sh.UTC_year = UTC_year;
-		this.#sh.UTC_month = UTC_month;
-		this.#sh.UTC_date = UTC_date;
 		this.#sh.year = year;
 		this.#sh.month = month;
 		this.#sh.date = date;
+		return;
+	}
+	/**
+	 * update time
+	 * @returns {null}
+	 * @since 1.2.2
+	 */
+	#updateTime(): void {
+		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
 		return;
 	}
 	/**
@@ -713,7 +722,7 @@ export default class SHDate {
 	): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
 		this.#date.setFullYear(gyear, gmonth, gdate);
-		this.#update();
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -732,7 +741,7 @@ export default class SHDate {
 	): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
 		this.#date.setUTCFullYear(gyear, gmonth, gdate);
-		this.#update();
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -749,8 +758,8 @@ export default class SHDate {
 			month,
 			date
 		);
-		this.#date.setMonth(gmonth, gdate);
-		this.#update();
+		this.#date.setFullYear(gyear, gmonth, gdate);
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -767,8 +776,8 @@ export default class SHDate {
 			month,
 			date
 		);
-		this.#date.setUTCMonth(gmonth, gdate);
-		this.#update();
+		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -784,8 +793,8 @@ export default class SHDate {
 			this.getMonth(),
 			date
 		);
-		this.#date.setDate(gdate);
-		this.#update();
+		this.#date.setFullYear(gyear, gmonth, gdate);
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -801,8 +810,8 @@ export default class SHDate {
 			this.getUTCMonth(),
 			date
 		);
-		this.#date.setUTCDate(gdate);
-		this.#update();
+		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		this.#updateDate();
 		return this.getTime();
 	}
 
@@ -823,7 +832,7 @@ export default class SHDate {
 		milliseconds: number = this.getMilliseconds()
 	): number {
 		this.#date.setHours(hours, minutes, seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -844,7 +853,7 @@ export default class SHDate {
 		milliseconds: number = this.getUTCMilliseconds()
 	): number {
 		this.#date.setUTCHours(hours, minutes, seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -863,7 +872,7 @@ export default class SHDate {
 		milliseconds: number = this.getMilliseconds()
 	): number {
 		this.#date.setMinutes(minutes, seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -882,7 +891,7 @@ export default class SHDate {
 		milliseconds: number = this.getUTCMilliseconds()
 	): number {
 		this.#date.setUTCMinutes(minutes, seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -899,7 +908,7 @@ export default class SHDate {
 		milliseconds: number = this.getMilliseconds()
 	): number {
 		this.#date.setSeconds(seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -915,7 +924,7 @@ export default class SHDate {
 		milliseconds: number = this.getUTCMilliseconds()
 	): number {
 		this.#date.setUTCSeconds(seconds, milliseconds);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -927,7 +936,7 @@ export default class SHDate {
 	 */
 	public setMilliseconds(ms: number): number {
 		this.#date.setMilliseconds(ms);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -939,7 +948,7 @@ export default class SHDate {
 	 */
 	public setUTCMilliseconds(ms: number): number {
 		this.#date.setUTCMilliseconds(ms);
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#updateTime();
 		return this.getTime();
 	}
 
@@ -1110,7 +1119,7 @@ export default class SHDate {
 	public setTime(time: number): number {
 		//if (isUTC) return this.#date.setUTCTime(time);
 		this.#date.setTime(time + this.#config.time_server_diff);
-		this.#update();
+		this.#updateDate();
 		return this.getTime();
 	}
 
