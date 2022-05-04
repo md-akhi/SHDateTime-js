@@ -1,12 +1,3 @@
-## 1.2.1 (2022-05-02)
-
-
-### Bug Fixes
-
-* compile ts ([8c28c08](https://github.com/md-akhi/SHDateTime-js/commits/8c28c08f7b89c5d284fc1ec9310504bfad3e0c2c))
-
-
-
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
@@ -36,6 +27,10 @@ All notable changes to this project will be documented in this file.
 
 -
 
+### [رفع / درست شد][#]
+
+- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+
 </div>
 
 ## [Unreleased]
@@ -47,6 +42,10 @@ All notable changes to this project will be documented in this file.
 ### [Changed][#]
 
 -
+
+### [Fixed][#]
+
+- Fixed set day in setDate, setUTCDate
 
 #
 
@@ -84,6 +83,7 @@ All notable changes to this project will be documented in this file.
 <div style="text-align: center;">
 
 #
+
 ## [1.1.0] - SH 1400-02-09 - G 2022-04-29
 
 </div>
@@ -102,6 +102,7 @@ All notable changes to this project will be documented in this file.
 <div style="text-align: center;">
 
 #
+
 ## [1.0.0] - SH 1400-12-11 - G 2022-03-02
 
 </div>
