@@ -53,6 +53,11 @@
       "import": "./dist/mjs/tools.js",
       "types": "./dist/types/tools.d.ts"
     },
+    "./l10n/*": {
+      "require": "./dist/cjs/l10n/*.js",
+      "import": "./dist/mjs/l10n/*.js",
+      "types": "./dist/types/l10n/*.d.ts"
+    },
     "./*": {
       "require": "./dist/cjs/i18n/*.js",
       "import": "./dist/mjs/i18n/*.js",
