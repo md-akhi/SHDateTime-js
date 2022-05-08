@@ -1,9 +1,15 @@
-## 1.1.1 (2022-04-29)
+## 1.2.4 (2022-05-04)
 
 
 ### Bug Fixes
 
-* show dist ([f5dd9ee](https://github.com/md-akhi/SHDateTime-js/commits/f5dd9ee73b72cf649397393a8f0edbd7c20d07fe))
+* added @babel/core for run auto test ([5d22416](https://github.com/md-akhi/SHDateTime-js/commits/5d2241619f6d2943eec22bbd72ef9dbd83a4eca6))
+* fixed set day in setDate, setUTCDate ([f3c9d21](https://github.com/md-akhi/SHDateTime-js/commits/f3c9d21c946b5d19a01a18959ea01a48de7cff7e))
+
+
+### Features
+
+* **l10n:** added Central Kurdish (Iran) ([3a4c87f](https://github.com/md-akhi/SHDateTime-js/commits/3a4c87f50da726517baa7b51605e488edc6d645b))
 
 
 
@@ -30,8 +36,15 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
-- اضافه شدن مستندات
-- اضاقه شدن داکرایز
+-
+
+### [تغییر کرد][#]
+
+-
+
+### [رفع / درست شد][#]
+
+-
 
 </div>
 
@@ -39,12 +52,71 @@ All notable changes to this project will be documented in this file.
 
 ### [Added][#]
 
-- Added documentation
-- Added dockerize
+-
+
+### [Changed][#]
+
+-
+
+### [Fixed][#]
+
+-
 
 #
 
 <div style="text-align: center;">
+
+## [1.2.4] - SH 1401-02-14 - G 2022-05-04
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [رفع / درست شد][#]
+
+- رفع خطای محاسباتی تاریخ setDate, setUTCDate
+
+</div>
+
+### [Fixed][#]
+
+- Fixed set day in setDate, setUTCDate
+
+#
+
+<div style="text-align: center;">
+
+## [1.2.0] - SH 1400-02-12 - G 2022-05-02
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- اضافه شدن مستندات
+- اضاقه شدن داکرایز
+- ایجاد تابع چک کننده زبان
+
+### [تغییر کرد][#]
+
+- تغییر نام تابع از setTimeServer به setTimeServerDiff
+- تغییر نام تابع از getTimeServer به getTimeServerDiff
+
+</div>
+
+### [Added][#]
+
+- Added documentation
+- Added dockerize
+- added check language function
+
+### [Changed][#]
+
+- Change setTimeServer function to setTimeServerDiff
+- Change getTimeServer function to getTimeServerDiff
+
+<div style="text-align: center;">
+
+#
 
 ## [1.1.0] - SH 1400-02-09 - G 2022-04-29
 
@@ -63,6 +135,8 @@ All notable changes to this project will be documented in this file.
 
 <div style="text-align: center;">
 
+#
+
 ## [1.0.0] - SH 1400-12-11 - G 2022-03-02
 
 </div>
@@ -76,9 +150,11 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.0...HEAD
-[1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0...1.1.0
-[1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...HEAD
+[1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
+[1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
+[1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0
+[1.0.0]: https://github.com/md-akhi/SHDateTime-js/releases/tag/1.0.0-rc1
 [#]: #
 
 <!--
