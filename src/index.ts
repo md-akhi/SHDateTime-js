@@ -126,12 +126,12 @@ export default class SHDate {
 	 * @param {string} mix-datastring Timestamp string
 	 * @param {number} mix-value Time value or timestamp number
 	 * @param {number} mix-year Year
-	 * @param {number} args-month beginning with 0 for Farvardin to 11 for Esfand.
-	 * @param {number} args-date the day of the month. The default is 1.
-	 * @param {number} args-hour between 0 and 23 representing the hour of the day. Defaults to 0.
-	 * @param {number} args-minute the minute segment of a time. The default is 0 minutes past the hour.
-	 * @param {number} args-second the second segment of a time. The default is 0 seconds past the minute.
-	 * @param {number} args-millisecond the millisecond segment of a time. The default is 0 milliseconds past the second.
+	 * @param {number} month beginning with 0 for Farvardin to 11 for Esfand.
+	 * @param {number} date the day of the month. The default is 1.
+	 * @param {number} hour between 0 and 23 representing the hour of the day. Defaults to 0.
+	 * @param {number} minute the minute segment of a time. The default is 0 minutes past the hour.
+	 * @param {number} second the second segment of a time. The default is 0 seconds past the minute.
+	 * @param {number} millisecond the millisecond segment of a time. The default is 0 milliseconds past the second.
 	 * @returns {string} a Date object whose toString() method returns the literal string Invalid Date.
 	 * @since 1.0.0
 	 */
