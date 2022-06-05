@@ -1,8 +1,10 @@
-Date.getUTCDate()
+SHDate.getUTCDate()
 The getUTCDate() method returns the day of the month(from 1 to 31) in the specified date according to universal time.
 
 Try it
 
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 Syntax
 getUTCDate()
 

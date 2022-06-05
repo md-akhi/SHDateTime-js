@@ -1,4 +1,4 @@
-# Date.toUTCString()
+# SHDate.toUTCString()
 
 The toUTCString() method converts a date to a string, using the UTC time zone.
 
@@ -6,9 +6,14 @@ Based on rfc7231 and modified according to ecma-262 toUTCString, it can have neg
 
 Try it
 
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
+
 # Syntax
 
-toUTCString()
+```js
+toUTCString();
+```
 
 # Return value
 

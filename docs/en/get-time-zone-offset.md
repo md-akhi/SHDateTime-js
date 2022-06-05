@@ -1,15 +1,24 @@
-Date.getTimezoneOffset()
+# SHDate.getTimezoneOffset()
+
 The getTimezoneOffset() method returns the difference, in minutes, between a date as evaluated in the UTC time zone, and the same date as evaluated in the local time zone.
 
 Try it
 
-Syntax
-getTimezoneOffset()
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Return value
+# Syntax
+
+```js
+getTimezoneOffset();
+```
+
+# Return value
+
 The difference, in minutes, between date, as evaluated in the UTC time zone, and as evaluated in the local time zone.
 
-Description
+# Description
+
 date.getTimezoneOffset() returns the difference, in minutes, between date as evaluated in the UTC time zone, and date as evaluated in the local time zone — that is, the time zone of the host system in which the browser is being used (if the code is run from the Web in a browser), or otherwise the host system of whatever JavaScript runtime (for example, a Node.js environment) the code is executed in.
 
 Negative values and positive values
@@ -28,13 +37,17 @@ In a time zone that doesn't annually shift in and out of Daylight Saving Time (D
 
 Note: The above description is a simplification. In implementations, the IANA time zone database (tzdata) is used for precisely determining the effect of DST on the calculation of the time-zone difference.
 
-Examples
+# Examples
+
+```js
 // Create a Date instance for the current time
 let currentLocalDate = new Date();
 // Create a Date instance for 03:24 GMT-0200 on May 1st in 2016
-let laborDay2016at0324GMTminus2 = new Date('May 1, 2016 03:24:00 GMT-0200');
-currentLocalDate.getTimezoneOffset() === laborDay2016at0324GMTminus2.getTimezoneOffset();
+let laborDay2016at0324GMTminus2 = new Date("May 1, 2016 03:24:00 GMT-0200");
+currentLocalDate.getTimezoneOffset() ===
+	laborDay2016at0324GMTminus2.getTimezoneOffset();
 // true, always, in any timezone that doesn't annually shift in and out of DST
 // false, sometimes, in any timezone that annually shifts in and out of DST
+```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset

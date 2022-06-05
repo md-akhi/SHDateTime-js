@@ -1,8 +1,10 @@
-Date.getUTCFullYear()
+SHDate.getUTCFullYear()
 The getUTCFullYear() method returns the year in the specified date according to universal time.
 
 Try it
 
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 Syntax
 getUTCFullYear()
 

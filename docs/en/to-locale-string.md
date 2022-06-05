@@ -1,4 +1,5 @@
-Date.toLocaleString()
+# SHDate.toLocaleString()
+
 The toLocaleString() method returns a string with a language sensitive representation of this date.
 
 The new locales and options arguments let applications specify the language whose formatting conventions should be used and customize the behavior of the function.
@@ -7,26 +8,36 @@ In older implementations, which ignore the locales and options arguments, the lo
 
 Try it
 
-Syntax
-toLocaleString()
-toLocaleString(locales)
-toLocaleString(locales, options)
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Parameters
+# Syntax
+
+```js
+toLocaleString();
+toLocaleString(locales);
+toLocaleString(locales, options);
+```
+
+# Parameters
+
 The locales and options arguments customize the behavior of the function and let applications specify the language whose formatting conventions should be used. In implementations which ignore the locales and options arguments, the locale used and the form of the string returned are entirely implementation-dependent.
 
 See the Intl.DateTimeFormat() constructor for details on these parameters and how to use them.
 
 The default value for each date-time component property is undefined. But if the weekday, year, month, and day properties are all undefined, then year, month, and day are assumed to be "numeric".
 
-Return value
+# Return value
+
 A string representing the given date according to language-specific conventions.
 
-Examples
+# Examples
+
 Using toLocaleString()
 In basic use without specifying a locale, a formatted string in the default locale and with default options is returned.
 
-let date = new Date(Date.UTC(2012, 11, 12, 3, 0, 0));
+```js
+let date = new Date(SHDate.UTC(2012, 11, 12, 3, 0, 0));
 
 // toLocaleString() without arguments depends on the
 // implementation, the default locale, and the default time zone
@@ -48,7 +59,7 @@ return false;
 Using locales
 This example shows some of the variations in localized date and time formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
 
-let date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+let date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // Formats below assume the local time zone of the locale;
 // America/Los_Angeles for the US
@@ -82,7 +93,7 @@ console.log(date.toLocaleString(['ban', 'id']));
 Using options
 The results provided by toLocaleString() can be customized using the options argument:
 
-let date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+let date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // Request a weekday along with a long date
 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -111,6 +122,7 @@ For this reason, you cannot expect to be able to compare the results of toLocale
 "1/1/2019, 01:00:00" === new Date("2019-01-01T01:00:00Z").toLocaleString("en-US");
 // true in Firefox and others
 // false in IE and Edge
-Note: See also this StackOverflow thread for more details and examples.
+```
 
+Note: See also this StackOverflow thread for more details and examples.
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString

@@ -1,19 +1,30 @@
-Date.getUTCMinutes()
+# SHDate.getUTCMinutes()
+
 The getUTCMinutes() method returns the minutes in the specified date according to universal time.
 
 Try it
 
-Syntax
-getUTCMinutes()
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Return value
+# Syntax
+
+```js
+getUTCMinutes();
+```
+
+# Return value
+
 A number. If the Date object represents a valid date, an integer between 0 and 59, representing the minutes in the given date according to universal time. Otherwise, NaN if the Date object doesn't represent a valid date.
 
-Examples
+# Examples
+
 Using getUTCMinutes()
 The following example assigns the minutes portion of the current time to the variable minutes.
 
+```js
 var today = new Date();
 var minutes = today.getUTCMinutes();
+```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCMinutes

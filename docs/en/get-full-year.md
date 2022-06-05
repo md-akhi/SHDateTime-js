@@ -1,24 +1,35 @@
-Date.getFullYear()
-The getFullYear() method returns the year of the specified date according to local time.
+# SHDate.getFullYear()
 
-Use this method instead of the getYear() method.
+The <code>getFullYear()</code> method returns the year of the specified date according to local time.
+
+Use this method instead of the <code>getYear()</code> method.
 
 Try it
 
-Syntax
-getFullYear()
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Return value
+# Syntax
+
+```js
+getFullYear();
+```
+
+# Return value
+
 A number corresponding to the year of the given date, according to local time.
 
-Description
-The value returned by getFullYear() is an absolute number. For dates between the years 1000 and 9999, getFullYear() returns a four-digit number, for example, 1995. Use this function to make sure a year is compliant with years after 2000.
+# Description
 
-Examples
-Using getFullYear()
+The value returned by <code>getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code>getFullYear()</code> returns a four-digit number, for example, 1995. Use this function to make sure a year is compliant with years after 2000.
+
+# Examples
+
 The following example assigns the four-digit value of the current year to the variable year.
 
+```js
 var today = new Date();
 var year = today.getFullYear();
+```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear

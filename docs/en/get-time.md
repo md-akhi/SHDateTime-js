@@ -1,19 +1,29 @@
-Date.getTime()
+# SHDate.getTime()
+
 The getTime() method returns the number of milliseconds since the ECMAScript epoch.
 
 You can use this method to help assign a date and time to another Date object. This method is functionally equivalent to the valueOf() method.
 
 Try it
 
-Syntax
-getTime()
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Return value
+# Syntax
+
+```js
+getTime();
+```
+
+# Return value
+
 A number representing the milliseconds elapsed between 1 January 1970 00:00:00 UTC and the given date.
 
-Reduced time precision
+# Reduced time precision
+
 To offer protection against timing attacks and fingerprinting, the precision of new Date().getTime() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.
 
+```js
 // reduced time precision (2ms) in Firefox 60
 new Date().getTime();
 // 1519211809934
@@ -27,20 +37,23 @@ new Date().getTime();
 // 1519129858900
 // 1519129864400
 // ...
+```
 
 In Firefox, you can also enable privacy.resistFingerprinting, the precision will be 100ms or the value of privacy.resistFingerprinting.reduceTimerPrecision.microseconds, whichever is larger.
 
-Examples
+# Examples
+
 Using getTime() for copying dates
 Constructing a date object with the identical time value.
 
+```js
 // Since month is zero based, birthday will be January 10, 1995
 var birthday = new Date(1994, 12, 10);
 var copy = new Date();
 copy.setTime(birthday.getTime());
 
 Measuring execution time
-Subtracting two subsequent getTime() calls on newly generated Date objects, give the time span between these two calls. This can be used to calculate the executing time of some operations. See also Date.now() to prevent instantiating unnecessary Date objects.
+Subtracting two subsequent getTime() calls on newly generated Date objects, give the time span between these two calls. This can be used to calculate the executing time of some operations. See also SHDate.now() to prevent instantiating unnecessary Date objects.
 
 var end, start;
 
@@ -51,5 +64,6 @@ Math.sqrt(i);
 end = new Date();
 
 console.log('Operation took ' + (end.getTime() - start.getTime()) + ' msec');
+```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime

@@ -1,16 +1,25 @@
-Date.toString()
+# SHDate.toString()
+
 The toString() method returns a string representing the specified Date object.
 
 Try it
 
-Syntax
-toString()
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<br/>
 
-Return value
+# Syntax
+
+```js
+toString();
+```
+
+# Return value
+
 A string representing the given date.
 
-Description
-Date instances inherit their toString() method from Date.prototype, not Object.prototype. Date.prototype.toString() returns a string representation of the Date in the format specified in ECMA-262 which can be summarized as:
+# Description
+
+Date instances inherit their toString() method from SHDate.prototype, not Object.prototype. SHDate.prototype.toString() returns a string representation of the Date in the format specified in ECMA-262 which can be summarized as:
 
 Week day: 3 letter English week day name, e.g. "Sat"
 space
@@ -39,18 +48,21 @@ An implementation dependent string representation of the timezone, which might b
 Right bracket, i.e. ")"
 E.g. "Sat Sep 01 2018 14:53:26 GMT+1400 (LINT)"
 
-Until ECMAScript 2018 (edition 9), the format of the string returned by Date.prototype.toString was implementation dependent. Therefore it should not be relied upon to be in the specified format.
+Until ECMAScript 2018 (edition 9), the format of the string returned by SHDate.prototype.toString was implementation dependent. Therefore it should not be relied upon to be in the specified format.
 
 The toString() method is automatically called when a date is to be represented as a text value, e.g. console.log(new Date()), or when a date is used in a string concatenation, such as var today = 'Today is ' + new Date().
 
 toString() is a generic method, it does not require that its this is a Date instance. However, it must have an internal [[TimeValue]] property that can't be constructed using native javascript, so it's effectively limited to use with Date instances. If called on a non–Date instance, a TypeError is thrown.
 
-Examples
+# Examples
+
 Using toString()
 The following assigns the toString() value of a Date object to myVar:
 
+```js
 var x = new Date();
 var myVar = x.toString(); // assigns a string value to myVar in the same format as:
 // Mon Sep 08 1998 14:36:22 GMT-0700 (PDT)
+```
 
-    												https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toString
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toString
