@@ -4,14 +4,14 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
 /**
- * class SHDate Language Persian
- * @since 1.0.0
+ * class SHDate Language Central Kurdish (Iran)
+ * @since 1.2.4
  */
-export default class fa_IR {
+export default class ckb_IR {
 	/**
 	 * @var LANGUAGE Language Persian
 	 */
-	public static LANGUAGE: string = "fa_IR"; //Persion	fa
+	public static LANGUAGE: string = "ckb_IR"; //Central Kurdish (Iran) ckb
 
 	public static DIGIT: string[] = [
 		"٠",
@@ -43,59 +43,38 @@ export default class fa_IR {
 
 	public static SUFFIX: string = "ام";
 
-	public static MERIDIEN_FULL_NAMES: string[] = ["قبل از ظهر", "بعد از ظهر"];
+	public static MERIDIEN_FULL_NAMES: string[] = ["پێش زایین", "زایینی"];
 
-	public static MERIDIEN_SHORT_NAMES: string[] = ["ق‍.ظ", "ب‍.ظ"];
+	public static MERIDIEN_SHORT_NAMES: string[] = ["ب.ن", "د.ن"];
 
 	public static MONTH_FULL_NAMES: string[] = [
-		"فروردين",
-		"ارديبهشت",
-		"خرداد",
-		"تير",
-		"امرداد",
-		"شهريور",
-		"مهر",
-		"آبان",
-		"آذر",
-		"دي",
-		"بهمن",
-		"اسفند"
+		"کانوونی دووەم",
+		"شوبات",
+		"ئازار",
+		"نیسان",
+		"ئایار",
+		"حوزەیران",
+		"تەمووز",
+		"ئاب",
+		"ئەیلوول",
+		"تشرینی یەکەم",
+		"تشرینی دووەم",
+		"کانونی یەکەم"
 	];
 
-	public static MONTH_SHORT_NAMES: string[] = [
-		"فرو",
-		"ارد",
-		"خرد",
-		"تير",
-		"امر",
-		"شهر",
-		"مهر",
-		"آبا",
-		"آذر",
-		"دي",
-		"بهم‍",
-		"اسف‍"
-	];
+	public static MONTH_SHORT_NAMES: string[] = [];
 
 	public static DAY_FULL_NAMES: string[] = [
-		"شنبه",
-		"يک‌شنبه",
-		"دوشنبه",
-		"سه ش‍‍‍‍نبه",
-		"چهارشنبه",
-		"پنجشنبه",
-		"جمعه"
+		"یەکشەممە",
+		"دووشەممە",
+		"سێشەممە",
+		"چوارشەممە",
+		"پێنجشەممە",
+		"ھەینی",
+		"شەممە"
 	];
 
-	public static DAY_SHORT_NAMES: string[] = [
-		"ش‍",
-		"ی‍",
-		"د",
-		"س‍",
-		"چ‍",
-		"پ‍",
-		"ج‍"
-	];
+	public static DAY_SHORT_NAMES: string[] = ["ی", "د", "س", "چ", "پ", "ھ", "ش"];
 
 	public static CONSTELLATIONS_FULL_NAMES: string[] = [
 		"حَمَل",
@@ -142,6 +121,6 @@ export default class fa_IR {
 	 * @since 1.0.0
 	 */
 	public static SuffixNames(): string {
-		return fa_IR.SUFFIX;
+		return ckb_IR.SUFFIX;
 	}
 }
