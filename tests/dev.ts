@@ -79,3 +79,7 @@ for (let day = 12; day <= 15; day++) {
 // 			);
 // 	});
 // }
+
+import parse from "../src/parse.js";
+let parser = new parse("1395/12/1");
+console.log(parser);

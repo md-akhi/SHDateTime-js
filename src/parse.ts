@@ -1,4 +1,4 @@
-import SHDate from "./index.js";
+//import SHDate from "./index.js";
 
 class SHLexerConfig {
 	static SINGLE_QUOTE: any = "'";
@@ -250,8 +250,8 @@ class SHLexerConfig {
 
 		UTC: "utc|gmt",
 
-		SIGN_TIME: "t",
-		SIGN_WEEK: "w",
+		SIGN_TIME: "t|T",
+		SIGN_WEEK: "w|W",
 
 		// ********** date rules **********
 
@@ -361,7 +361,8 @@ class SHTokenDefn {
 		this.name = name;
 		//delimiter = this.findDelimiter(regex);
 		this.regex = regex; //sprintf('%s^%s%s%s', delimiter, regex, delimiter, modifiers);
-		if (regex("/^" + regex + "/i", "") === false) {
+		console.log(name, regex);
+		if (new RegExp(regex, "i").test(name) === false) {
 			// empty(regex)
 			//throw new InvalidArgumentException(sprintf('Invalid regex for token %s : %s', name, regex));
 		}
@@ -678,7 +679,7 @@ class SHLexer {
 /**
  * SHParser
  */
-class SHParser {
+export default class SHParser {
 	/**
 	 * Lexer
 	 *
@@ -697,11 +698,11 @@ class SHParser {
 	 */
 	constructor(srt: any, time: any = null) {
 		if (time == null) {
-			time = this.Date.time();
+			time = Date.now();
 		}
 		this.time = time;
 		this.Lexer = new SHLexer(srt);
-		this.Date = new SHDate();
+		// this.Date = new SHDate();
 		this.setDateTime(time);
 		do {
 			//  if(this.CompoundFormats());
@@ -719,17 +720,17 @@ class SHParser {
 	 * @return void
 	 */
 	setDateTime(time: any) {
-		let date = this.Date.getdate(time);
-		this.data["YEAR"] = date["year"];
-		this.data["MONTH"] = date["mon"];
-		this.data["DAY"] = date["mday"];
-		this.data["HOURS"] = date["hours"];
-		this.data["MINUTES"] = date["minutes"];
-		this.data["SECONDS"] = date["seconds"];
+		// let date = this.Date.getdate(time);
+		// this.data["YEAR"] = date["year"];
+		// this.data["MONTH"] = date["mon"];
+		// this.data["DAY"] = date["mday"];
+		// this.data["HOURS"] = date["hours"];
+		// this.data["MINUTES"] = date["minutes"];
+		// this.data["SECONDS"] = date["seconds"];
 		//this.data['DAY_OF_YEAR'] = date['yday'];
 		//this.data['DAY_OF_WEEK'] = date['wday'];
 		//this.data['TIMESTAMP'] = date[0];
-		this.data["DATE"] = date;
+		// this.data["DATE"] = date;
 		//this.data['GDATE'] = getdate(time);
 	}
 
@@ -1587,7 +1588,7 @@ class SHParser {
 				int = 30;
 				this.nextToken();
 				return int;
-			case "TWENTY":
+			case "TWENTY": {
 				this.nextToken();
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
 					this.nextToken();
@@ -1630,7 +1631,9 @@ class SHParser {
 						this.nextToken();
 						return int;
 				}
-			case "THIRTY":
+				break;
+			}
+			case "THIRTY": {
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
 					this.nextToken();
 				}
@@ -1639,6 +1642,8 @@ class SHParser {
 					this.nextToken();
 					return int;
 				}
+				break;
+			}
 			default:
 				return false;
 		}

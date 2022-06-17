@@ -9,6 +9,7 @@
  */
 
 import Word from "./word.js";
+import parse from "./parse.js";
 
 interface VarSHDate {
 	[key: string]: number | undefined;

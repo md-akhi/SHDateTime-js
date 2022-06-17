@@ -24,7 +24,7 @@
     "tsc:test": "tsc --project tsconfig.test.json",
     "test": "npm run tsc:test && mocha",
     "test:dev": "nodemon npm run test",
-    "test:out": "node dist/tests/dev.js > tests/tst.out",
+    "test:out": "npm run dev:test && node dist/tests/dev.js > tests/tst.out",
     "build": "run-s build:*",
     "build:clean": "rm -rf dist src/browser",
     "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
