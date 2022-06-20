@@ -1,19 +1,18 @@
 //import SHDate from "./index.js";
 
 class SHLexerConfig {
-	static SINGLE_QUOTE: any = "'";
+	static SINGLE_QUOTE: any = `\'`;
 	static COMMA: any = ",";
-	static DOT: any = ".";
-	static SPACE: any = "s";
-	static UNKNOWN_CHAR: any =
-		"[^" + SHLexerConfig.SPACE + SHLexerConfig.DOT + "]";
+	static DOT: any = `.`;
+	static SPACE: any = `\s`;
+	static UNKNOWN_CHAR: any = `[^${SHLexerConfig.SPACE}${SHLexerConfig.DOT}]`;
 
 	static tokenDefinitions: any = {
-		DASH: "-", // MINUS
-		PLUS: "+",
-		SLASH: "/",
+		DASH: `\-`, // MINUS
+		PLUS: `\+`,
+		SLASH: `\/`,
 		COLON: ":",
-		DOT: SHLexerConfig.DOT,
+		DOT: "\\" + SHLexerConfig.DOT,
 		COMMA: SHLexerConfig.COMMA,
 		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
 		SPACE: SHLexerConfig.SPACE,
@@ -304,29 +303,27 @@ class SHLexerConfig {
 
 		// ********** season specific **********
 
-		WINTER: "winters?",
-		FALL: "falls?",
-		AUTUMN: "autumns?",
-		SPRING: "springs?",
-		SUMMER: "summers?",
+		// WINTER: "winters?",
+		// FALL: "falls?",
+		// AUTUMN: "autumns?",
+		// SPRING: "springs?",
+		// SUMMER: "summers?",
 
 		//"TZ"		:	'\(?[A-Za-z]{3,6}\)?|[A-Z][a-z]+([_\/][A-Z][a-z]+)+',
 
-		UNKNOWN: SHLexerConfig.UNKNOWN_CHAR,
+		//UNKNOWN: SHLexerConfig.UNKNOWN_CHAR,
 		UNKNOWN_CHAR: SHLexerConfig.UNKNOWN_CHAR //  fragment
 	};
 
-	definitions: any;
+	definitions: any[] = [];
 
 	constructor() {
-		for (let item in SHLexerConfig.tokenDefinitions) {
-			// if (v instanceof SHTokenDefn) {
-			//     this.addTokenDefinition(v);
-			// } else if (is_string(k) && is_string(v)) {
-			this.addTokenDefinition(
-				new SHTokenDefn(item, SHLexerConfig.tokenDefinitions[item])
-			);
-			// }
+		for (const [key, value] of Object.entries(SHLexerConfig.tokenDefinitions)) {
+			if (value instanceof SHTokenDefn) {
+				this.addTokenDefinition(value);
+			} else if (typeof key === "string" && typeof value === "string") {
+				this.addTokenDefinition(new SHTokenDefn(key, value));
+			}
 		}
 	}
 
@@ -334,7 +331,7 @@ class SHLexerConfig {
 	 * @param TokenDefn tokenDefn
 	 */
 	public addTokenDefinition(tokenDefn: SHTokenDefn) {
-		this.definitions = tokenDefn;
+		this.definitions.push(tokenDefn);
 	}
 
 	/**
@@ -361,11 +358,11 @@ class SHTokenDefn {
 		this.name = name;
 		//delimiter = this.findDelimiter(regex);
 		this.regex = regex; //sprintf('%s^%s%s%s', delimiter, regex, delimiter, modifiers);
-		console.log(name, regex);
-		if (new RegExp(regex, "i").test(name) === false) {
-			// empty(regex)
-			//throw new InvalidArgumentException(sprintf('Invalid regex for token %s : %s', name, regex));
-		}
+		//console.log(name, regex);
+		// if (new RegExp(`/${regex}/`, "i").test(name) === false) {
+		// 	// empty(regex)
+		// 	throw new Error(`Invalid regex for token ${name} : ${regex} `);
+		// }
 	}
 
 	/**
@@ -455,7 +452,7 @@ class SHToken {
 	}
 
 	public is(token: any) {
-		if (typeof token) {
+		if (typeof token === "string") {
 			return this.name === token;
 		} else if (token instanceof SHToken) {
 			return this.name === token.getName();
@@ -504,8 +501,9 @@ class SHLexer {
 		let matches: any = null;
 		while (input.length) {
 			let anyMatch = false;
-			for (let tokenDefinition of config.getTokenDefinitions()) {
-				if (input.match("/^" + tokenDefinition.getRegex() + "/i")) {
+			for (const tokenDefinition of config.getTokenDefinitions()) {
+				console.log(tokenDefinition);
+				if (input.match(`/^${tokenDefinition.getRegex()}/i`)) {
 					let str = input;
 					let len = str.length;
 					if (tokenDefinition.getName().length > 0) {
