@@ -1,16 +1,16 @@
 import SHDate from "../src/index";
 
-for (let day = 12; day <= 15; day++) {
-	let shdate = new SHDate(1401, 0, day, 0);
-	console.log(
-		`${1401}-${0}-${12}`,
-		"\t",
-		shdate.getTime() / 86400000,
-		"\t",
-		shdate.toString(),
-		"\t"
-	);
-}
+// for (let day = 12; day <= 15; day++) {
+// 	let shdate = new SHDate(1401, 0, day, 0);
+// 	console.log(
+// 		`${1401}-${0}-${12}`,
+// 		"\t",
+// 		shdate.getTime() / 86400000,
+// 		"\t",
+// 		shdate.toString(),
+// 		"\t"
+// 	);
+// }
 
 // for (let year = 1380; year <= 1410; year += 1) {
 // 	[
@@ -82,4 +82,4 @@ for (let day = 12; day <= 15; day++) {
 
 import parse from "../src/parse.js";
 let parser = new parse("1395/12/1");
-console.log(parser);
+// console.log(parser);
