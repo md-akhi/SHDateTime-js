@@ -9,10 +9,10 @@ class SHLexerConfig {
 
 	static tokenDefinitions: any = {
 		DASH: `\-`, // MINUS
-		PLUS: `\+`,
+		PLUS: `\\+`,
 		SLASH: `\/`,
 		COLON: ":",
-		DOT: "\\" + SHLexerConfig.DOT,
+		DOT: `${SHLexerConfig.DOT}`,
 		COMMA: SHLexerConfig.COMMA,
 		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
 		SPACE: SHLexerConfig.SPACE,
@@ -358,7 +358,7 @@ class SHTokenDefn {
 		this.name = name;
 		//delimiter = this.findDelimiter(regex);
 		this.regex = regex; //sprintf('%s^%s%s%s', delimiter, regex, delimiter, modifiers);
-		//console.log(name, regex);
+		// console.log(name, regex);
 		// if (new RegExp(`/${regex}/`, "i").test(name) === false) {
 		// 	// empty(regex)
 		// 	throw new Error(`Invalid regex for token ${name} : ${regex} `);
@@ -502,7 +502,11 @@ class SHLexer {
 		while (input.length) {
 			let anyMatch = false;
 			for (const tokenDefinition of config.getTokenDefinitions()) {
-				console.log(tokenDefinition);
+				console.log(
+					input,
+					tokenDefinition.getRegex(),
+					input.split(/(\W)/)
+				);
 				if (input.match(`/^${tokenDefinition.getRegex()}/i`)) {
 					let str = input;
 					let len = str.length;
