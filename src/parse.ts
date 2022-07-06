@@ -504,8 +504,8 @@ class SHLexer {
 			for (const tokenDefinition of config.getTokenDefinitions()) {
 				console.log(
 					input,
-					tokenDefinition.getRegex(),
-					input.split(/(\W)/)
+					` /^${tokenDefinition.getRegex()}/i`,
+					input.match(`/^${tokenDefinition.getRegex()}/i`)
 				);
 				if (input.match(`/^${tokenDefinition.getRegex()}/i`)) {
 					let str = input;
