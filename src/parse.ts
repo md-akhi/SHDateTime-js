@@ -499,15 +499,18 @@ class SHLexer {
 		let offset: any = 0;
 		let position: any = 0;
 		let matches: any = null;
+		var i = 0;
 		while (input.length) {
 			let anyMatch = false;
+			i++;
 			for (const tokenDefinition of config.getTokenDefinitions()) {
 				console.log(
-					input,
-					` /^${tokenDefinition.getRegex()}/i`,
-					input.match(`/^${tokenDefinition.getRegex()}/i`)
+					input[i],
+					input.split(/(\W)/gi),
+					tokenDefinition.getRegex(),
+					input[i].match(tokenDefinition.getRegex())
 				);
-				if (input.match(`/^${tokenDefinition.getRegex()}/i`)) {
+				if (input.match(tokenDefinition.getRegex())) {
 					let str = input;
 					let len = str.length;
 					if (tokenDefinition.getName().length > 0) {
