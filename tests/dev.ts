@@ -82,4 +82,4 @@ import SHDate from "../src/index";
 
 import parse from "../src/parse.js";
 let parser = new parse("1395/12/1 Farvardin, 1 Day 1401");
-// console.log(parser);
+console.log(parser);
