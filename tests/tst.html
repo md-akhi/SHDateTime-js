@@ -3,14 +3,17 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>SHDate.js</title>
+		<script src="../dist/browser/shdatetime.min.js"></script>
 	</head>
 
 	<body id="id">
-		<script src="../dist/browser/shdatetime.min.js"></script>
 		<script>
 			document.getElementById("id").innerText = SHDate.DAYS_IN_MONTH;
+		</script>
 
-			//var SHDate = require("file:///D:/DevOps/js/SHDateTime-js/dist/amd/shdate.js");
+		<script>
+			var parser = new SHParser("1395/10/10");
+			console.log(parser);
 		</script>
 	</body>
 </html>
