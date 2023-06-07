@@ -8,15 +8,6 @@ class SHLexerConfig {
 	static UNKNOWN_CHAR: any = `[^${SHLexerConfig.SPACE}${SHLexerConfig.DOT}]`;
 
 	static tokenDefinitions: any = {
-		DASH: `\-`, // MINUS
-		PLUS: `\\+`,
-		SLASH: `\/`,
-		COLON: ":",
-		DOT: `${SHLexerConfig.DOT}`,
-		COMMA: SHLexerConfig.COMMA,
-		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
-		SPACE: SHLexerConfig.SPACE,
-
 		// ********* numeric rules **********
 
 		INT_00: "00",
@@ -311,6 +302,15 @@ class SHLexerConfig {
 
 		//"TZ"		:	'\(?[A-Za-z]{3,6}\)?|[A-Z][a-z]+([_\/][A-Z][a-z]+)+',
 
+		DASH: `\-`, // MINUS
+		PLUS: `\\+`,
+		SLASH: `\/`,
+		COLON: ":",
+		DOT: `${SHLexerConfig.DOT}`,
+		COMMA: SHLexerConfig.COMMA,
+		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
+		SPACE: SHLexerConfig.SPACE,
+
 		//UNKNOWN: SHLexerConfig.UNKNOWN_CHAR,
 		UNKNOWN_CHAR: SHLexerConfig.UNKNOWN_CHAR //  fragment
 	};
@@ -498,29 +498,25 @@ class SHLexer {
 		let tokens: any = [];
 		let offset: any = 0;
 		let position: any = 0;
-		let matches: any = null;
-		//var split_input = input.split(/(\W)/gi);
-		var i = input.length;
-		//var i  = input.length ;
+		let match: any = null;
+		let i = input.length;
 		while (i-- >= 0) {
 			let anyMatch = false;
 			for (const tokenDefinition of config.getTokenDefinitions()) {
-				// 	var arrinput = split_input[i];
-				var Regex: RegExp = new RegExp("^" + tokenDefinition.getRegex(), "i");
-				if (input.match(Regex)) {
-					console.log(input, input.match(Regex), Regex);
-					//console.log(input, tokenDefinition.getRegex());
+				const GetRegex = tokenDefinition.getRegex();
+				const GetName = tokenDefinition.getName();
+				const Regex: RegExp = new RegExp("^" + GetRegex, "i");
+				if ((match = input.match(Regex))) {
 					let str = input;
 					let len = str.length;
-					if (tokenDefinition.getName().length > 0) {
-						tokens.push(
-							new SHToken(tokenDefinition.getName(), str, offset, position)
-						);
-						++position;
+					console.log(input, len, match, Regex);
+					if (GetName.length > 0) {
+						tokens.push(new SHToken(GetName, match[0], offset, position));
+						position++;
 					}
-					input = input.substr(len);
+					input = input.substr(GetRegex.length);
 					anyMatch = true;
-					offset += len;
+					offset += GetRegex.length;
 					break;
 				}
 			}
@@ -710,10 +706,10 @@ export default class SHParser {
 		// this.Date = new SHDate();
 		this.setDateTime(time);
 		do {
-			//  if(this.CompoundFormats());
-			//  else if(this.RelativeFormats());
-			//  else if(this.DateFormats());
-			//  else if(this.TimeFormats());
+			 if(this.CompoundFormats());
+			 else if(this.RelativeFormats());
+			 else if(this.DateFormats());
+			 else if(this.TimeFormats());
 		} while (this.nextToken());
 		//return this.data();
 	}
@@ -725,18 +721,18 @@ export default class SHParser {
 	 * @return void
 	 */
 	setDateTime(time: any) {
-		// let date = this.Date.getdate(time);
-		// this.data["YEAR"] = date["year"];
-		// this.data["MONTH"] = date["mon"];
-		// this.data["DAY"] = date["mday"];
-		// this.data["HOURS"] = date["hours"];
-		// this.data["MINUTES"] = date["minutes"];
-		// this.data["SECONDS"] = date["seconds"];
-		//this.data['DAY_OF_YEAR'] = date['yday'];
-		//this.data['DAY_OF_WEEK'] = date['wday'];
-		//this.data['TIMESTAMP'] = date[0];
-		// this.data["DATE"] = date;
-		//this.data['GDATE'] = getdate(time);
+		let date = this.Date.getdate(time);
+		this.data["YEAR"] = date["year"];
+		this.data["MONTH"] = date["mon"];
+		this.data["DAY"] = date["mday"];
+		this.data["HOURS"] = date["hours"];
+		this.data["MINUTES"] = date["minutes"];
+		this.data["SECONDS"] = date["seconds"];
+		this.data['DAY_OF_YEAR'] = date['yday'];
+		this.data['DAY_OF_WEEK'] = date['wday'];
+		this.data['TIMESTAMP'] = date[0];
+		this.data["DATE"] = date;
+		this.data['GDATE'] = getdate(time);
 	}
 
 	/**
