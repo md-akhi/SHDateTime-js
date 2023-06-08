@@ -706,13 +706,2050 @@ export default class SHParser {
 		// this.Date = new SHDate();
 		this.setDateTime(time);
 		do {
-			 if(this.CompoundFormats());
-			 else if(this.RelativeFormats());
-			 else if(this.DateFormats());
-			 else if(this.TimeFormats());
+			 if(this.CompoundFormats()){}
+			 else if(this.RelativeFormats()){}
+			 else if(this.DateFormats()){}
+			 else if(this.TimeFormats()){}
 		} while (this.nextToken());
 		//return this.data();
 	}
+	/**
+	 * Compound Formats
+	 *
+	 * @return bool
+	 */
+	 public CompoundFormats(){// Localized Notations
+		if(this.commonLogFormat()){ // dd/M/Y:HH:II:SS tspace tzcorrection
+			return true;
+		}
+		else if(this.EXIF()){ //  YY:MM:DD HH:II:SS
+			return true;
+		}
+		else if(this.isoYearWeekDay()){ //  YY-?"W"W-?[0-7]
+			return true;
+		}
+		else if(this.MySQL()){//  YY-MM-DD HH:II:SS
+			return true;
+		}
+		else if(this.postgreSQL()){ // YY .? doy
+			return true;
+		}
+		else if(this.SOAP()){ //  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
+			return true;
+		}
+		else if(this.unixTimestamp()){ // "@" "-"? [0-9]+
+			return true;
+		}
+		else if(this.XMLRPC()){ // & (Compact) YY MM DD "T" hh :? II :? SS
+			return true;
+		}
+		else if(this.WDDX()){ // YY "-" mm "-" dd "T" hh ":" ii ":" ss
+			return true;
+		}
+		else if(this.MSSQL()){// time
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 * Common Log Format
+	 *
+	 * @return bool
+	 */
+	 commonLogFormat(){
+		let day,month,year,h24,min,sec;
+		let pos = this.getPosition();
+		if(day=this.dayOptionalPrefix()){
+			if(this.isToken('SLASH')){
+				this.nextToken();
+				if(month=this.monthTextualShort()){
+					if(this.isToken('SLASH')){
+						this.nextToken();
+						if(year=this.year4MandatoryPrefix()){
+							if(this.isToken('COLON')){
+								this.nextToken();
+								if(h24=this.hour24()){
+									if(this.isToken('COLON')){
+										this.nextToken();
+										if(min=this.minutesMandatoryPrefix()){
+											if(this.isToken('COLON')){
+												this.nextToken();
+												if(sec=this.secondsMandatoryPrefix()){
+													if(this.whiteSpace()){
+														if(this.TZCorrection()){
+															this.data['YEAR'] = year;
+															this.data['MONTH'] = month;
+															this.data['DAY'] = day;
+															this.data['HOURS'] = h24;
+															this.data['MINUTES'] = min;
+															this.data['SECONDS'] = sec;
+															return true;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+
+	/**
+	 * EXIF
+	 *
+	 * @return bool
+	 */
+	 EXIF(){
+		let pos,year,month,
+		day,
+		h24,
+		min,
+		sec;
+		pos = this.getPosition();
+		if(year=this.year4MandatoryPrefix()){
+			if(this.isToken('COLON')){
+				this.nextToken();
+				if(month=this.monthMandatoryPrefix()){
+					if(this.isToken('COLON')){
+						this.nextToken();
+						if(day=this.dayMandatoryPrefix()){
+							if(this.whiteSpace()){
+								if(h24=this.hour24()){
+									if(this.isToken('COLON')){
+										this.nextToken();
+										if(min=this.minutesMandatoryPrefix()){
+											if(this.isToken('COLON')){
+												this.nextToken();
+												if(sec=this.secondsMandatoryPrefix()){
+													this.data['YEAR'] = year;
+													this.data['MONTH'] = month;
+													this.data['DAY'] = day;
+													this.data['HOURS'] = h24;
+													this.data['MINUTES'] = min;
+													this.data['SECONDS'] = sec;
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * ISO year with ISO week
+	 * ISO year with ISO week and day
+	 *
+	 * @return bool
+	 */
+	 isoYearWeekDay(){
+		let dow,
+		week,
+		year,
+		pos = this.getPosition();
+		if(year=this.year4MandatoryPrefix()){
+			if(this.isToken('DASH')){
+				this.nextToken();
+			}
+			if(this.isToken('SIGN_WEEK')){
+				this.nextToken();
+				if(week=this.setWeekOfYear()){
+					if(this.isToken('DASH')){
+						this.nextToken();
+					}
+					if((dow=this.int1To7())||(dow=this.int0())){
+						this.data['DAY_OF_WEEK'] = dow;
+					}
+					this.data['WEEK_OF_YEAR'] = week;
+					this.data['YEAR'] = year;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * MySQL
+	 *
+	 * @return bool
+	 */
+	 MySQL(){
+		let pos,year,month,
+		day,
+		h24,
+		min,
+		sec;
+		pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthMandatoryPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayMandatoryPrefix($day)){
+							if(this.whiteSpace()){
+								if(this.hour24($h24)){
+									if(this.isToken('COLON')){
+										this.nextToken();
+										if(this.minutesMandatoryPrefix($min)){
+											if(this.isToken('COLON')){
+												this.nextToken();
+												if(this.secondsMandatoryPrefix($sec)){
+													this.data['YEAR'] = year;
+													this.data['MONTH'] = month;
+													this.data['DAY'] = day;
+													this.data['HOURS'] = h24;
+													this.data['MINUTES'] = min;
+													this.data['SECONDS'] = sec;
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * PostgreSQL: Year with day-of-year
+	 *
+	 * @return bool
+	 */
+	 postgreSQL(){
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DOT')){
+				this.nextToken();
+			}
+			if(this.setDayOfYear($doy)){
+				this.data['YEAR'] = $year;
+				this.data['DAY_OF_YEAR'] = $doy;
+				return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * SOAP
+	 *
+	 * @return bool
+	 */
+	 SOAP(){
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthMandatoryPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayMandatoryPrefix($day)){
+							if(this.isToken('SIGN_TIME')){
+								this.nextToken();
+								if(this.hour24($h24)){
+									if(this.isToken('COLON')){
+										this.nextToken();
+										if(this.minutesMandatoryPrefix($min)){
+											if(this.isToken('COLON')){
+												this.nextToken();
+												if(this.secondsMandatoryPrefix($sec)){
+													if(this.fraction($frac)){
+														this.TZCorrection();
+														this.data['YEAR'] = $year;
+														this.data['MONTH'] = $month;
+														this.data['DAY'] = $day;
+														this.data['HOURS'] = $h24;
+														this.data['MINUTES'] = $min;
+														this.data['SECONDS'] = $sec;
+														this.data['FRAC'] = $frac;
+														return true;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Unix Timestamp
+	 *
+	 * @return bool
+	 */
+	 unixTimestamp(){
+		$pos = this.getPosition();
+		if(this.isToken('AT')){
+			this.nextToken();
+			if(this.signNumber($sign)){
+				this.data['Sign_Timestamp'] = $sign;
+			}
+			if(this.number($int)){
+				this.data['Timestamp'] = $int;
+				return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * XMLRPC
+	 * XMLRPC (Compact)
+	 *
+	 * @return bool
+	 */
+	 XMLRPC(){
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.monthMandatoryPrefix($month)){
+				if(this.dayMandatoryPrefix($day)){
+					if(this.isToken('SIGN_TIME')){
+						this.nextToken();
+						if(this.hour12($h1t2)||this.hour24($h1t2)){
+							if(this.isToken('COLON')){
+								this.nextToken();
+							}
+							if(this.minutesMandatoryPrefix($min)){
+								if(this.isToken('COLON')){
+									this.nextToken();
+								}
+								if(this.secondsMandatoryPrefix($sec)){
+									this.data['YEAR'] = $year;
+									this.data['MONTH'] = $month;
+									this.data['DAY'] = $day;
+									this.data['HOURS'] = $h1t2;
+									this.data['MINUTES'] = $min;
+									this.data['SECONDS'] = $sec;
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * WDDX
+	 *
+	 * @return bool
+	 */
+	 WDDX(){
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthOptionalPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayOptionalPrefix($day)){
+							if(this.isToken('SIGN_TIME')){
+								this.nextToken();
+								if(this.hour12($h12)){
+									if(this.isToken('COLON')){
+										this.nextToken();
+										if(this.minutesOptionalPrefix($min)){
+											if(this.isToken('COLON')){
+												this.nextToken();
+												if(this.secondsOptionalPrefix($sec)){
+													this.data['YEAR'] = $year;
+													this.data['MONTH'] = $month;
+													this.data['DAY'] = $day;
+													this.data['HOURS'] = $h12;
+													this.data['MINUTES'] = $min;
+													this.data['SECONDS'] = $sec;
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
+	 *
+	 * @return bool
+	 */
+	 MSSQL(){ //hh ":" II ":" SS [.:] [0-9]+ meridian  |  in Time Formats
+		$pos = this.getPosition();
+		if(this.hour12($h12)){
+			if(this.isToken('COLON')){
+				this.nextToken();
+				if(this.minutesMandatoryPrefix($min)){
+					if(this.isToken('COLON')){
+						this.nextToken();
+						if(this.secondsMandatoryPrefix($sec)){
+							if(this.isToken('DOT')||this.isToken('COLON')){
+								this.nextToken();
+								if(this.number($frac)){
+									if(this.meridian($meridian)){
+										if($meridian){
+											this.data['HOURS'] = $h12+12;
+										}
+										else{
+											this.data['HOURS'] = $h12;
+										}
+										this.data['MINUTES'] = $min;
+										this.data['SECONDS'] = $sec;
+										this.data['FRAC'] = $frac;
+										this.data['AM_PM'] = $meridian;
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Relative Formats
+	 *
+	 * @return bool
+	 */
+	 RelativeFormats(){
+		//Day-based Notations
+		if(this.isToken('NOW')){ // Now - this is simply ignored
+			this.setDateTime(this.time);
+			return true;
+		}
+		else if(this.isToken('TODAY')||this.isToken('MIDNIGHT')){ // The time is set to 00:00:00
+			this.restTime();
+			return true;
+		}
+		else if(this.isToken('NOON')){ // The time is set to 12:00:00
+			this.restTime(12);
+			return true;
+		}
+		else if(this.isToken('YESTERDAY')){ // Midnight of yesterday
+			this.data['DAY'] -= 1;
+			this.restTime();
+			return true;
+		}
+		else if(this.isToken('TOMORROW')){ // Midnight of tomorrow
+			this.data['DAY'] += 1;
+			this.restTime();
+			return true;
+		}
+		else if(this.minutes15Hour()){
+			return true;
+		}
+		else if(this.setDayOfMonth()){
+			return true;
+		}
+		else if(this.setWeekDayOfMonth()){
+			return true;
+		}
+		else if(this.handleRelTimeNumber()){
+			return true;
+		}
+		else if(this.handleRelTimeText()){
+			return true;
+		}/*
+		else if(this.isToken('ago')){ // Negates all the values of previously found relative time items.
+			this.nextToken();
+			return true;
+		}*/
+		else if(this.dayNeme($dow)){ // Moves to the next day of this name.
+			$dowmonth = this.Date::getDayOfWeek(this.data['YEAR'] ,this.data['MONTH'] ,this.data['DAY']);
+			if($dow < $dowmonth){
+				$diffdow = 7 - $dowmonth - $dow ;
+			}
+			else if($dow > $dowmonth){
+				$diffdow = $dow - $dowmonth;
+			}
+			else{
+				$diffdow = 0;
+			}
+			list(
+				this.data['YEAR']
+				,this.data['MONTH']
+				,this.data['DAY']) = this.Date::getDaysOfDay(
+					this.data['YEAR']
+					,this.Date::getDayOfYear(false
+						,this.data['MONTH']
+						,1)
+						+$diffdow);
+			return true;
+		}
+		else if(this.handleRelTimeFormat()){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 15 minutes past the specified hour
+	 * 15 minutes before the specified hour
+	 *
+	 * @return bool
+	 */
+	 minutes15Hour(){
+		$pos = this.getPosition();
+		if(this.isToken('BACK')){ // 15 minutes past the specified hour
+			this.nextToken();
+			if(this.whiteSpace()){
+				if(this.isToken('OF')){
+					this.nextToken();
+					if(this.whiteSpace()){
+						if(this.hour12Notation()||this.hour24($h24)){
+							if(!is_numeric($h24)){
+								$h24 = this.data['HOURS'];
+							}
+							this.data['HOURS'] = $h24;
+							this.data['MINUTES'] = 15;
+							this.data['SECONDS'] = 0;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		else if(this.isToken('FRONT')){ // 15 minutes before the specified hour
+			$h24 = false;
+			this.nextToken();
+			if(this.whiteSpace()){
+				if(this.isToken('OF')){
+					this.nextToken();
+					if(this.whiteSpace()){
+						if(this.hour12Notation()||this.hour24($h24)){
+							if(!is_numeric($h24)){
+								$h24 = this.data['HOURS'];
+							}
+							this.data['HOURS'] = $h24-1;
+							this.data['MINUTES'] = 45;
+							this.data['SECONDS'] = 0;
+							if(!this.Date->checktime($h24-1,45,0)){
+								this.data['HOURS'] = this.Date->revTime($h24-1,45,0)[0];
+							}
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Sets the day of the first of the current month.		=>
+	 * Sets the day to the last day of the current month.	=>
+	 * 		=> This phrase is best used together with a month name following it.
+	 *
+	 * @return bool
+	 */
+	 setDayOfMonth(){
+		$pos = this.getPosition();
+		if(this.isToken('FIRST')){ // Sets the day of the first of the current month. This phrase is best used together with a month name following it.
+			this.nextToken();
+			if(this.whiteSpace()){
+				if(this.isToken('DAY')){
+					this.nextToken();
+					if(this.whiteSpace()){
+						if(this.isToken('OF')){
+							this.nextToken();
+							if(this.whiteSpace()){
+								if(this.RelativeFormats()||this.DateFormats()){
+									this.data['DAY'] = 1;
+									this.data['HOURS'] = 0;
+									this.data['MINUTES'] = 0;
+									this.data['SECONDS'] = 0;
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(this.isToken('LAST')){ // Sets the day to the last day of the current month. This phrase is best used together with a month name following it.
+			this.nextToken();
+			if(this.whiteSpace()){
+				if(this.isToken('DAY')){
+					this.nextToken();
+					if(this.whiteSpace()){
+						if(this.isToken('OF')){
+							this.nextToken();
+							if(this.whiteSpace()){
+								if(this.RelativeFormats()||this.DateFormats()){
+									this.data['DAY'] = this.Date::getDaysInMonth(this.data['YEAR'] ,this.data['MONTH']);
+									var_dump(this.Date::getDaysInMonth(this.data['YEAR'] ,this.data['MONTH']));
+									this.data['HOURS'] = 0;
+									this.data['MINUTES'] = 0;
+									this.data['SECONDS'] = 0;
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Calculates the x-th week day of the current month.
+	 * Calculates the last week day of the current month.
+	 *
+	 * @return bool
+	 */
+	 setWeekDayOfMonth(){
+		$pos = this.getPosition();
+		if(this.isToken('LAST')){ // Calculates the last week day of the current month.
+			this.nextToken();
+			if(this.whiteSpace()){
+				if(this.dayNeme($dow)){
+					if(this.whiteSpace()){
+						if(this.isToken('OF')){
+							this.nextToken();
+							if(this.whiteSpace()){
+								if(this.RelativeFormats()||this.DateFormats()){
+									$dow29month = this.Date::getDayOfWeek(
+										this.data['YEAR']
+										,this.data['MONTH']
+										,this.Date::getDaysInMonth(
+											this.data['YEAR']
+											,this.data['MONTH']));
+									if($dow < $dow29month){
+										$diffdow = $dow29month - $dow ;
+									}
+									else if($dow > $dow29month){
+										$diffdow = 7 - $dow - $dow29month;
+									}
+									else{
+										$diffdow = 0;
+									}
+									list(
+										this.data['YEAR']
+										,this.data['MONTH']
+										,this.data['DAY']) = this.Date::getDaysOfDay(
+											this.data['YEAR']
+											,this.Date::getDayOfYear(false
+												,this.data['MONTH']
+												,1)
+												-$diffdow);
+									this.data['HOURS'] = 0;
+									this.data['MINUTES'] = 0;
+									this.data['SECONDS'] = 0;
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(this.ordinal($int)){ // Calculates the x-th week day of the current month.
+			if(this.whiteSpace()){
+				if(this.dayNeme($dow)){
+					if(this.whiteSpace()){
+						if(this.isToken('OF')){
+							this.nextToken();
+							if(this.whiteSpace()){
+								if(this.RelativeFormats()||this.DateFormats()){
+									if($int>0){
+										$dow1month = this.Date::getDayOfWeek(this.data['YEAR'] ,this.data['MONTH'] ,1);
+										if($dow < $dow1month){
+											$diffdow = $dow1month - $dow ;
+										}
+										else if($dow > $dow1month){
+											$diffdow = 7 - $dow - $dow1month;
+										}
+										else{
+											$diffdow = 0;
+										}
+										list(
+											this.data['YEAR']
+											,this.data['MONTH']
+											,this.data['DAY']) = this.Date::getDaysOfDay(
+												this.data['YEAR']
+												,this.Date::getDayOfYear(false
+													,this.data['MONTH']
+													,1)
+													+$diffdow+(($int-1)*7));
+										return true;
+									}
+									else if($int == 0){
+
+									}
+									else if($int == -1){
+
+									}
+									else if($int == -2){
+
+									}
+									else if($int == -3){
+
+									}
+									this.data['HOURS'] = 0;
+									this.data['MINUTES'] = 0;
+									this.data['SECONDS'] = 0;
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Handles relative time items where the value is a number.
+	 *
+	 * @return bool
+	 */
+	 handleRelTimeNumber(){
+		$pos = this.getPosition();
+		if(this.number($int,$sign)){ // Handles relative time items where the value is a number.
+			if(this.whiteSpace());
+			if(this.unit($rel) || this.isToken('WEEK')){
+				$int = intval($sign.$int);
+				if(this.isToken('WEEK')||$rel == 53){
+					$diffdow = $int*7;
+				}
+				else if($rel == 59){ // SECONDS
+					list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime(this.data['HOURS'] ,this.data['MINUTES'] ,$int);
+				}
+				else if($rel == 60){ // MINUTES
+					list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime(this.data['HOURS'] ,$int ,this.data['SECONDS']);
+				}
+				else if($rel == 24){ // todo add with date
+					list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime($int ,this.data['MINUTES'] ,this.data['SECONDS']);
+				}
+				else if($rel == 31){// DAY
+					$diffdow = $int;
+				}
+				else if($rel == 12){// todo calc with month with year
+					$diffdow = $int*30.5;
+				}
+				else if($rel == 100){// YEAR
+					if($int<0)
+						this.data['YEAR'] -= $int;
+					if($int>0)
+						this.data['YEAR'] += $int;
+				}
+				else if($rel == 7){// todo day of week		weekday
+
+				}
+				else if($rel == 14){// FORTNIGHT
+					$diffdow = $int*14;
+				}
+				list(this.data['YEAR'] ,this.data['MONTH'] ,this.data['DAY']) = this.Date::getDaysOfDay(this.data['YEAR'], this.Date::getDayOfYear(this.data['YEAR'] ,this.data['MONTH'] ,this.data['DAY'])+$diffdow);
+				return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Handles relative time items where the value is text.
+	 *
+	 * @return bool
+	 */
+	 handleRelTimeText(){
+		$pos = this.getPosition();
+		if(this.ordinal($int)){ // Handles relative time items where the value is text.
+			if(this.whiteSpace()){
+				if(this.unit($rel)){
+					if(this.isToken('WEEK')||$rel == 53){
+						$diffdoy = $int*7;
+					}
+					else if($rel == 59){ // SECONDS
+						list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime(this.data['HOURS'] ,this.data['MINUTES'] ,$int);
+					}
+					else if($rel == 60){ // MINUTES
+						list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime(this.data['HOURS'] ,$int ,this.data['SECONDS']);
+					}
+					else if($rel == 24){ // todo add with date
+						list(this.data['HOURS'] ,this.data['MINUTES'] ,this.data['SECONDS']) = this.Date::revTime($int ,this.data['MINUTES'] ,this.data['SECONDS']);
+					}
+					else if($rel == 31){// DAY
+						$diffdoy = $int;
+					}
+					else if($rel == 12){// todo calc with month with year
+						$diffdoy = $int*30.5;
+					}
+					else if($rel == 100){// YEAR
+						if($int<0)
+							this.data['YEAR'] -= $int;
+						if($int>0)
+							this.data['YEAR'] += $int;
+					}
+					else if($rel == 7){// todo day of week		weekday
+
+					}
+					else if($rel == 14){// FORTNIGHT
+						$diffdoy = $int*14;
+					}
+					list(this.data['YEAR'] ,this.data['MONTH'] ,this.data['DAY']) = this.Date::getDaysOfDay(this.data['YEAR'], this.Date::getDayOfYear(this.data['YEAR'] ,this.data['MONTH'] ,this.data['DAY'])+$diffdoy);
+					return true;
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Handles the special format "weekday + last/this/next week".
+	 *
+	 * @return bool
+	 */
+	 handleRelTimeFormat(){
+		$pos = this.getPosition();
+		if(this.relText($int)){ // Handles the special format "weekday + last/this/next week".
+			if(this.whiteSpace()){
+				if(this.isToken('WEEK')){
+					this.nextToken();
+					return true;
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * TimeFormats
+	 *
+	 * @return bool
+	 */
+	 TimeFormats(){// hh [.:]? II? [.:]? SS? space? meridian
+		if(this.hour12Notation()){
+			return true;
+		}
+		else if(this.hour24Notation()){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Hour, optional minutes and seconds, with meridian
+	 *
+	 *
+	 * @return bool
+	 */
+	 hour12Notation(){
+		$pos = this.getPosition();
+		if(this.hour12($h12)){
+			if(this.isToken('COLON')||this.isToken('DOT')){
+				this.nextToken();
+				if(this.minutesMandatoryPrefix($min)){
+					this.data['MINUTES'] = $min;
+					if(this.isToken('COLON')||this.isToken('DOT')){
+						this.nextToken();
+						if(this.secondsMandatoryPrefix($sec)){
+							this.data['SECONDS'] = $sec;
+						}
+					}
+				}
+			}
+			if(this.whiteSpace()){
+				this.nextToken();
+			}
+			if(this.meridian($meridian)){
+				if($meridian){
+					this.data['HOURS'] = $h12+12;
+				}
+				else{
+					this.data['HOURS'] = $h12;
+				}
+				this.data['AM_PM'] = $meridian;
+				return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Hour, minutes and optional seconds, optional colon and dot
+	 * Hour, minutes, seconds and timezone
+	 * Hour, minutes, seconds and fraction
+	 * Time zone information
+	 *
+	 * @return bool
+	 */
+	 hour24Notation(){// 't'? HH [.:] II [.:]? SS? (frac | (space? ( tzcorrection | tz )))
+		$pos = this.getPosition();
+		if(this.isToken('SIGN_TIME')){
+			this.nextToken();
+		}
+		if(this.hour24($h24)){
+			if(this.isToken('DOT')||this.isToken('COLON')){
+				this.nextToken();
+				if(this.minutesMandatoryPrefix($min)){
+					if(this.isToken('DOT')||this.isToken('COLON')){
+						this.nextToken();
+						if(this.secondsMandatoryPrefix($sec)){
+							this.data['SECONDS'] = $sec;
+							if(this.fraction($frac)){
+								this.data['FRAC'] = $frac;
+							}
+							this.whiteSpace();
+							this.TZCorrection();
+							this.timeZone();
+						}
+					}
+					this.data['HOURS'] = $h24;
+					this.data['MINUTES'] = $min;
+					return true;
+				}
+			}
+			else if(this.minutesMandatoryPrefix($min)){
+				if(this.secondsMandatoryPrefix($sec)){
+					this.data['SECONDS'] = $sec;
+				}
+				this.data['HOURS'] = $h24;
+				this.data['MINUTES'] = $min;
+				return true;
+			}
+		}
+		else if(this.TZCorrection()||this.timeZone()){
+			return true;
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Date Formats
+	 *
+	 * @return bool
+	 */
+	 DateFormats(){
+		// Localized Notations
+
+		if(this.usaDate()){ // mm / dd /? y?
+			return true;
+		}
+		else if(this.year4Date()){
+			return true;
+		}
+		else if(this.yearMonthAbbrDayDashes()){
+			return true;
+		}
+		else if(this.year2MonthDay()){
+			return true;
+		}
+		else if(this.dayMonth2digit4Year()){
+			return true;
+		}
+		else if(this.year4MandatoryPrefix($year)){
+			this.data['YEAR'] = $year;
+			return true;
+		}
+		else if(this.monthTextualFull($month)){
+			this.data['MONTH'] = $month;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * American month, day and optional year
+	 *
+	 * @return bool
+	 */
+	 usaDate(){
+		$pos = this.getPosition();
+		if(this.monthOptionalPrefix($month)){
+			if(this.isToken('SLASH')){
+				this.nextToken();
+				if(this.dayOptionalPrefix($day)){
+					if(this.isToken('SLASH')){
+						this.nextToken();
+						if(this.yearOptionalPrefix($year)){
+							this.data['YEAR'] = $year;
+						}
+					}
+					this.data['MONTH'] = $month;
+					this.data['DAY'] = $day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year, month and day with slashes
+	 * Four digit year and month (GNU)
+	 * Four digit year and textual month (Day reset to 1)
+	 * Year (and just the year)
+	 * Four digit year, month and day with optional slashes
+	 * Four digit year with optional sign, month and day
+	 *
+	 * @return bool
+	 */
+	 year4Date(){
+		if(this.year4MonthDayDlashes()){ // YY "/" mm "/" dd
+			return true;
+		}
+		if(this.year4MonthDay()){//ISO  YY "/"? MM "/"? DD
+			return true;
+		}
+		if(this.year4MonthGNU()){// YY "-" mm
+			return true;
+		}
+		if(this.year4TextualMonth()){ // YY ([ \t.-])* m    Day reset to 1
+			return true;
+		}
+		if(this.year4SignMonthDay()){ // [+-]? YY "-" MM "-" DD
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Four digit year, month and day with slashes
+	 *
+	 * @return bool
+	 */
+	 year4MonthDayDlashes(){ // YY "/" mm "/" dd
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('SLASH')){
+				this.nextToken();
+				if(this.monthOptionalPrefix($month)){
+					if(this.isToken('SLASH')){
+						this.nextToken();
+						if(this.dayOptionalPrefix($day)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year, month and day
+	 *
+	 * @return bool
+	 */
+	 year4MonthDay(){ // YY "/"? MM "/"? DD
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('SLASH')){
+				this.nextToken();
+			}
+			if(this.monthMandatoryPrefix($month)){
+				if(this.isToken('SLASH')){
+					this.nextToken();
+				}
+				if(this.dayMandatoryPrefix($day)){
+					this.data['YEAR'] = $year;
+					this.data['MONTH'] = $month;
+					this.data['DAY'] = $day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year and month (GNU)
+	 *
+	 * @return bool
+	 */
+	 year4MonthGNU(){ // YY "-" mm
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthOptionalPrefix($month)){
+					this.data['YEAR'] = $year;
+					this.data['MONTH'] = $month;
+					return true;
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year and textual month (Day reset to 1)
+	 *
+	 * @return bool
+	 */
+	 year4TextualMonth(){ // YY ([ \t.-])* m    Day reset to 1
+		$pos = this.getPosition();
+		if(this.year4MandatoryPrefix($year)){
+			while(this.whiteSpace()||this.isToken('DOT')||this.isToken('DASH')){
+				if(this.isToken('DOT')||this.isToken('DASH')){
+					this.nextToken();
+				}
+			}
+			if(this.monthTextualFull($month)){
+				this.data['YEAR'] = $year;
+				this.data['MONTH'] = $month;
+				this.data['DAY'] = 1;
+				return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year with optional sign, month and day
+	 *
+	 * @return bool
+	 */
+	 year4SignMonthDay(){ // [+-]? YY "-" MM "-" DD
+		$pos = this.getPosition();
+		if(this.signNumber($sign));{
+			this.data['SIGN_DATE'] = $sign;
+		}
+		if(this.year4MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthMandatoryPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayMandatoryPrefix($day)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Year, month and day with dashes
+	 * Year, month abbreviation and day
+	 *
+	 * @return bool
+	 */
+	 yearMonthAbbrDayDashes(){
+		if(this.yearMonthDayDashes()){ // y "-" mm "-" dd
+			return true;
+		}
+		else if(this.yearMonthAbbrDay()){ // y "-" M "-" DD
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Year, month and day with dashes
+	 *
+	 * @return bool
+	 */
+	 yearMonthDayDashes(){ // y "-" mm "-" dd
+		$pos = this.getPosition();
+		if(this.yearOptionalPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthOptionalPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayOptionalPrefix($day)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Year, month abbreviation and day
+	 *
+	 * @return bool
+	 */
+	 yearMonthAbbrDay(){ // y "-" M "-" DD
+		$pos = this.getPosition();
+		if(this.yearOptionalPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthTextualShort($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayMandatoryPrefix($day)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Two digit year, month and day with dashes
+	 *
+	 * @return bool
+	 */
+	 year2MonthDay(){ // yy "-" MM "-" DD
+		$pos = this.getPosition();
+		if(this.year2MandatoryPrefix($year)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.monthMandatoryPrefix($month)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.dayMandatoryPrefix($day)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Day, month and four digit year, with dots, tabs or dashes
+	 * Day, month and two digit year, with dots or tabs
+	 * Day, textual month and year
+	 * Day and textual month
+	 *
+	 * @return bool
+	 */
+	 dayMonth2digit4Year(){
+		if(this.dayMonth4Year()){
+			return true;
+		}
+		else if(this.dayMonth2Year()){
+			return true;
+		}
+		else if(this.dayTextualMonthYear()){
+			return true;
+		}
+		else if(this.textualMonth4Year()){
+			return true;
+		}
+		else if(this.monthAbbrDayYear()){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Day, month and four digit year, with dots, tabs or dashes
+	 *
+	 * @return bool
+	 */
+	 dayMonth4Year(){ // dd [.\t-] mm [.-] YY
+		$pos = this.getPosition();
+		if(this.dayOptionalPrefix($day)){
+			if(this.whiteSpace()||this.isToken('DOT')||this.isToken('DASH')){
+				if(this.isToken('DOT')||this.isToken('DASH')){
+					this.nextToken();
+				}
+				if(this.monthOptionalPrefix($month)){
+					if(this.isToken('DOT')||this.isToken('DASH')){
+						this.nextToken();
+						if(this.year4MandatoryPrefix($year)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Day, month and two digit year, with dots or tabs
+	 *
+	 * @return bool
+	 */
+	 dayMonth2Year(){ //  dd [.\t] mm "." yy
+		$pos = this.getPosition();
+		if(this.dayOptionalPrefix($day)){
+			if(this.whiteSpace()||this.isToken('DOT')){
+				if(this.isToken('DOT')){
+					this.nextToken();
+				}
+				if(this.monthOptionalPrefix($month)){
+					if(this.isToken('DOT')){
+						this.nextToken();
+						if(this.year2MandatoryPrefix($year)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Day, textual month and year
+	 *
+	 * @return bool
+	 */
+	 dayTextualMonthYear(){
+		$pos = this.getPosition();
+		if(this.dayOptionalPrefix($day)){ // dd ([ \t.-])* m ([ \t.-])* y
+			while(this.whiteSpace()||this.isToken('DOT')||this.isToken('DASH')){
+				if(this.isToken('DOT')||this.isToken('DASH')){
+					this.nextToken();
+				}
+			}
+			if(this.monthTextualFull($month)){ // d ([ .\t-])* m
+				while(this.whiteSpace()||this.isToken('DOT')||this.isToken('DASH')){
+					if(this.isToken('DOT')||this.isToken('DASH')){
+						this.nextToken();
+					}
+				}
+				if(this.yearOptionalPrefix($year)){
+					this.data['YEAR'] = $year;
+				}
+				this.data['MONTH'] = $month;
+				this.data['DAY'] = $day;
+				return true;
+			}
+
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Textual month and four digit year (Day reset to 1)
+	 *
+	 * @return bool
+	 */
+	 textualMonth4Year(){
+		$pos = this.getPosition();
+		if(this.monthTextualFull($month)){ // m ([ \t.-])* YY         Day reset to 1
+			while(this.whiteSpace()||this.isToken('DOT')||this.isToken('DASH')){
+				if(this.isToken('DOT')||this.isToken('DASH')){
+					this.nextToken();
+				}
+			}
+			if(this.year4MandatoryPrefix($year)){
+				this.data['YEAR'] = $year;
+				this.data['MONTH'] = $month;
+				this.data['DAY'] = 1;
+				return true;
+			}
+			else if(this.dayOptionalPrefix($day)){ // m ([ .\t-])* dd [,.stndrh\t ]+? y?
+				while(this.whiteSpace()||this.daySuffixTextual()||this.isToken('COMMA')||this.isToken('DOT')){
+					if(this.isToken('DOT')||this.isToken('COMMA')){
+						this.nextToken();
+					}
+				}
+				if(this.yearOptionalPrefix($year)){
+					this.data['YEAR'] = $year;
+					return true;
+				}
+					this.data['MONTH'] = $month;
+					this.data['DAY'] = $day;
+					return true;
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+	/**
+	 * Month abbreviation, day and year
+	 *
+	 * @return bool
+	 */
+	 monthAbbrDayYear(){ // M "-" DD "-" y
+		$pos = this.getPosition();
+		if(this.monthTextualShort($month)){
+			if(this.isToken('DASH')){
+				this.nextToken();
+				if(this.dayMandatoryPrefix($day)){
+					if(this.isToken('DASH')){
+						this.nextToken();
+						if(this.yearOptionalPrefix($year)){
+							this.data['YEAR'] = $year;
+							this.data['MONTH'] = $month;
+							this.data['DAY'] = $day;
+							return true;
+						}
+					}
+				}
+			}
+		}
+		this.resetPosition($pos);
+		return false;
+	}
+
+
+	/**
+	 * rest Time
+	 *
+	 * @param  int $h
+	 * @param  int $m
+	 * @param  int $s
+	 * @return bool
+	 */
+	 restTime($h = 0,$m = 0,$s = 0){
+		this.data['HOURS'] = $h;
+		this.data['MINUTES'] = $m;
+		this.data['SECONDS'] = $s;
+		return true;
+	}
+
+	/**
+	 * white Space
+	 *
+	 * @return bool
+	 */
+	 whiteSpace(){
+		if(this.isToken('SPACE')){
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * hours
+	 * a number between 1 and 12 inclusive, with a optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 hour12(&$int){
+		if(this.int01To09($int)||this.int1To9($int)||this.int10To12($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * hours
+	 * a number between 01 and 24 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 hour24(&$int){
+		if(this.int01To09($int)||this.int10To24($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * meridian am/pm indicator
+	 *
+	 * @param  int $str
+	 * @return bool
+	 */
+	 meridian(&$str){
+		if(this.isToken('AM')){
+			$str = false;
+			this.nextToken();
+			return true;
+		}
+		else if(this.isToken('PM')){
+			$str = true;
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * minutes
+	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 minutesMandatoryPrefix(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To59($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * minutes
+	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 minutesOptionalPrefix(&$int){
+		if(this.int00($int)||this.int0($int)||this.int1To9($int)||this.int01To09($int)||this.int10To59($int)){
+			this.data['MINUTES'] = $int;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * seconds
+	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 secondsOptionalPrefix(&$int){
+		if(this.int00($int)||this.int0($int)||this.int1To9($int)||this.int01To09($int)||this.int10To59($int)){
+			this.data['SECONDS'] = $int;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * seconds
+	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 secondsMandatoryPrefix(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To59($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * timeZone
+	 *
+	 * @return bool
+	 */
+	 timeZone(){
+		if(this.isToken('TZ')){
+			this.data['TZ_NAME'] = this.valueToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * TZCorrection
+	 *
+	 * @return bool
+	 */
+	 TZCorrection(){
+		if(this.isToken('UTC')){
+			this.nextToken();
+		}
+		$PLUS_DASH = false;
+		if(this.isToken('PLUS')){
+			this.data['TZ_SIGN'] = '+';
+			this.nextToken();
+			$PLUS_DASH = true;
+		}
+		else if(this.isToken('DASH')){
+			this.data['TZ_SIGN'] = '-';
+			this.nextToken();
+			$PLUS_DASH = true;
+		}
+		if($PLUS_DASH&&this.hour12($h12)){
+			this.data['TZ_HOURS'] = $h12;
+			if(this.isToken('COLON')){
+				this.nextToken();
+			}
+			if(this.minutesMandatoryPrefix($min)){
+				this.data['TZ_MINUTES'] = $min;
+				return true;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * fraction
+	 *
+	 * @param  int $num
+	 * @return bool
+	 */
+	 fraction(&$num){
+		if(this.isToken('DOT')){
+			this.nextToken();
+			$isInt = false;
+			while(this.int10To99($int)||this.int00($int)||this.int01To09($int)||this.int0($int)||this.int1To9($int)){
+				$num .= $int;//sprintf('%s%s',$num,$int);
+				$isInt = true;
+			}
+			if($isInt){
+				return true;
+			}
+		}
+		return false;
+	}
+
+// date
+	/**
+	 * daySuffixTextual
+	 *
+	 * @return bool
+	 */
+	 daySuffixTextual(){
+		switch(this.nameToken()){
+			case "st": this.nextToken(); return true;
+			case "nd": this.nextToken(); return true;
+			case "rd": this.nextToken(); return true;
+			case "th": this.nextToken(); return true;
+			default: return false;
+		}
+	}
+
+	/**
+	 * day
+	 * a number between 1 and 31 inclusive, with an optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 dayOptionalPrefix(&$int){
+		if(this.int00($int)||this.int0($int)||this.int1To9($int)||this.int01To09($int)||this.int10To31($int)){
+			if(this.daySuffixTextual()){
+				return true;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * day
+	 * a number between 01 and 31 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 dayMandatoryPrefix(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To31($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Textual month (and just the month)
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 monthTextualFull(&$int){
+		switch(this.nameToken()){
+			case 'FARVARDIN':
+			case 'INT_I':
+				$int = 1; this.nextToken(); return true;
+			case 'ORDIBEHESHT':
+			case 'INT_II':
+				$int = 2; this.nextToken(); return true;
+			case 'KHORDAD':
+			case 'INT_III':
+				$int = 3; this.nextToken(); return true;
+			case 'TIR':
+			case 'INT_IV':
+				$int = 4; this.nextToken(); return true;
+			case 'AMORDAD':
+			case 'INT_V':
+				$int = 5; this.nextToken(); return true;
+			case 'SHAHRIVAR':
+			case 'INT_VI':
+				$int = 6; this.nextToken(); return true;
+			case 'MEHR':
+			case 'INT_VII':
+				$int = 7; this.nextToken(); return true;
+			case 'ABAN':
+			case 'INT_VIII':
+				$int = 8; this.nextToken(); return true;
+			case 'AZAR':
+			case 'INT_IX':
+				$int = 9; this.nextToken(); return true;
+			case 'DEY':
+			case 'INT_X':
+				$int = 10; this.nextToken(); return true;
+			case 'BAHMAN':
+			case 'INT_XI':
+				$int = 11; this.nextToken(); return true;
+			case 'ESFAND':
+			case 'INT_XII':
+				$int = 12; this.nextToken(); return true;
+			default:return false;
+		}
+	}
+
+	/**
+	 * Textual abbreviation month  (and just the month)
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 monthTextualShort(&$int){ // abbreviated month
+		if(this.monthTextualFull($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * month
+	 * a number between 1 and 12 inclusive, with an optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 monthOptionalPrefix(&$int){
+		if(this.int00($int)||this.int0($int)||this.int01To09($int)||this.int1To9($int)||this.int10To12($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * month
+	 * a number between 1 and 12 inclusive, with an mandatory 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 monthMandatoryPrefix(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int1To9($int)||this.int10To12($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * year
+	 *  a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 yearOptionalPrefix(&$int){
+		if(this.int00($int)||this.int0($int)||this.int01To09($int)||this.int1To9($int)||this.int10To99($int)){
+			if(this.int00($int2)||this.int0($int2)||this.int01To09($int2)||this.int1To9($int2)||this.int10To99($int2)){
+				$int .= $int2;
+				return true;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 *	a number with exactly two digits
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 year2MandatoryPrefix(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To99($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * year
+	 * a number with exactly four digits
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 year4MandatoryPrefix(&$int){
+		if(this.year2MandatoryPrefix($int)){
+			if(this.year2MandatoryPrefix($int2)){
+				$int .= $int2;
+				return true;
+			}
+		}
+		return false;
+	}
+
+// Compound
+
+	/**
+	 * day Of Year
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 setDayOfYear(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To99($int)){
+			if(this.int0($int2)||this.int1To9($int2)){
+				$int .= $int2;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * week of year
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 setWeekOfYear(&$int){
+		if(this.int00($int)||this.int01To09($int)||this.int10To53($int)){
+			return true;
+		}
+		return false;
+	}
+// Relative
+
+	/**
+	 * Space +
+	 *
+	 * @return bool
+	 */
+	 spaceMore(){
+		while(this.whiteSpace()){
+			$space = true;
+		}
+		if($space){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * day neme
+	 *
+	 * @param  int $dow
+	 * @return bool
+	 */
+	 dayNeme(&$dow){
+		switch(this.nameToken()){
+			case 'SATURDAY':
+				$dow = 0; this.nextToken(); return true;
+			case 'SUNDAY':
+				$dow = 1; this.nextToken(); return true;
+			case 'MONDAY':
+				$dow = 2; this.nextToken(); return true;
+			case 'TUESDAY':
+				$dow = 3; this.nextToken(); return true;
+			case 'WEDNESDAY':
+				$dow = 4; this.nextToken(); return true;
+			case 'THURSDAY':
+				$dow = 5; this.nextToken(); return true;
+			case 'FRIDAY':
+				$dow = 6; this.nextToken(); return true;
+			default:return false;
+		}
+	}
+
+	/**
+	 * day text
+	 *
+	 * @return bool
+	 */
+	 daytext(){
+		if(this.isToken('WEEKDAY')){
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * number sign
+	 *
+	 * @param  string $sign
+	 * @return bool
+	 */
+	 signNumber(&$sign){
+		if(this.isToken('PLUS')){
+			$sign = '+';
+			this.nextToken();
+			return true;
+		}
+		else if(this.isToken('DASH')){
+			$sign = '-';
+			this.nextToken();
+			return true;
+		}
+		$sign = '+';
+		return false;
+	}
+
+	/**
+	 * number
+	 *
+	 * @param  int $num
+	 * @param  string $sign
+	 * @return bool
+	 */
+	 number(&$num,&$sign){
+		if(this.signNumber($sign));
+		$isInt = false;
+		while(this.int10To99($int)||this.int00($int)||this.int01To09($int)||this.int0($int)||this.int1To9($int)){
+			$num .= $int;//sprintf('%s%s',$num,$int);
+			$isInt = true;
+		}
+		if($isInt){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Ordinal number
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 ordinal(&$int){
+		if(this.firstToThirtyFirstTextual($int)){
+			return true;
+		}
+		else if(this.relText($int)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * relative text
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 relText(&$int){
+		switch(this.nameToken()){
+			case 'THIS':
+				$int = 0; this.nextToken(); return true;
+			case 'NEXT':
+				$int = -1; this.nextToken(); return true;
+			case 'PREVIOUS':
+				$int = -2; this.nextToken(); return true;
+			case 'LAST':
+				$int = -3; this.nextToken(); return true;
+			default:return false;
+		}
+	}
+
+	/**
+	 * unit
+	 *
+	 * @param  int $int
+	 * @return bool
+	 */
+	 unit(&$int){
+		switch(this.nameToken()){
+			case 'SECOND':
+				$int = 59; this.nextToken(); return true;
+			case 'MINUTE':
+				$int = 60; this.nextToken(); return true;
+			case 'HOUR':
+				$int = 24; this.nextToken(); return true;
+			case 'DAY':
+				$int = 31; this.nextToken(); return true;
+			case 'MONTH':
+				$int = 12; this.nextToken(); return true;
+			case 'YEAR':
+				$int = 100; this.nextToken(); return true;
+			case 'WEEKS':
+				$int = 53; this.nextToken(); return true;
+			case 'WEEKDAY':
+				$int = 7; this.nextToken(); return true;
+			case 'FORTNIGHT':
+				$int = 14; this.nextToken(); return true;
+			default:return false;
+		}
+	}
+
+
 
 	/**
 	 * set Date/Time
