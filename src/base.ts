@@ -9,7 +9,6 @@
  */
 
 import Word from "./word.js";
-import parse from "./parse.js";
 
 interface VarSHDate {
 	[key: string]: number | undefined;
@@ -1373,7 +1372,7 @@ export default class SHDate {
 	/**
 	 * Start first day of the week // 0 = Saturday | 6 = Friday
 	 */
-	setFirstDayOfWeek(FDOW: number | number[]): void {
+	setFirstDayOfWeek(FDOW: number): void {
 		if (FDOW >= 0 && FDOW <= 6) this.#config.first_day_of_week = FDOW;
 		else
 			throw new Error(

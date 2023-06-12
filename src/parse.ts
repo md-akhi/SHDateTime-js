@@ -3,7 +3,7 @@ function isNumeric(value: string) {
 	return /^\d+\.\d+$/.test(value);
 }
 
-import Export_SHDate from "./index.js";
+import Export_SHDate from "./base.js";
 
 class SHLexerConfig {
 	static SINGLE_QUOTE: any = `\'`;
@@ -2487,7 +2487,7 @@ export default class SHParser {
 	/**
 	 * reset Position
 	 *
-	 * @param  int pos
+	 * @param  int pos Position
 	 * @return bool
 	 */
 	resetPosition(pos: any) {
@@ -2501,9 +2501,9 @@ export default class SHParser {
 	/**
 	 * rest Time
 	 *
-	 * @param  int h
-	 * @param  int m
-	 * @param  int s
+	 * @param  int h Hours
+	 * @param  int m Minutes
+	 * @param  int s Seconds
 	 * @return bool
 	 */
 	restTime(h = 0, m = 0, s = 0) {
@@ -2558,12 +2558,12 @@ export default class SHParser {
 		let str: any;
 		if (this.isToken("AM")) {
 			//00:00-11:59
-			str = false;
+			str = 0;
 			this.nextToken();
 			return str;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
-			str = true;
+			str = 1;
 			this.nextToken();
 			return str;
 		}
