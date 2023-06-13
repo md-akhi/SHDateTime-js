@@ -369,6 +369,14 @@ export default class SHDate {
 		);
 	}
 
+	getDayOfWeek(
+		year: number,
+		month: number,
+		date: number,
+		FDOW: number = this.#config.first_day_of_week
+	) {
+		return this.#dayOfWeek(year, month, date, FDOW);
+	}
 	/**
 	 * Get day of year (doy)
 	 * @param {number} month - solar hijri month
@@ -384,7 +392,9 @@ export default class SHDate {
 		// else doy = (month - 7) * 30 + 186;
 		// return (doy + date - 1) % (this.#daysInYear(year) - 1);
 	}
-
+	getDayOfYear(month: number, date: number) {
+		return this.#dayOfYear(month, date);
+	}
 	/**
 	 * Get week of year (woy)
 	 * @param {number} year - solar hijri year
@@ -495,6 +505,9 @@ export default class SHDate {
 	#daysInMonth(year: number, month: number): number {
 		if (month < 11) return SHDate.DAYS_IN_MONTH[month];
 		return this.#isLeapYear(year) ? 30 : 29; // SHDate.DAYS_IN_MONTH_LEAP[month] : SHDate.DAYS_IN_MONTH[month];
+	}
+	getDaysInMonth(year: number, month: number) {
+		return this.#daysInMonth;
 	}
 
 	/**
@@ -1379,7 +1392,7 @@ export default class SHDate {
 				"setFirstDayOfWeek: " + FDOW + " less than 0 or more than 6"
 			);
 	}
-	getFirstDayOfWeek(): number | number[] {
+	getFirstDayOfWeek(): number {
 		return this.#config.first_day_of_week;
 	}
 
@@ -1404,5 +1417,44 @@ export default class SHDate {
 	 */
 	static getVersion() {
 		return SHDate.version;
+	}
+}
+
+export class Export_SHDate extends SHDate {
+	getDaysInMonth(shYear: any, shMonth: any) {
+		return super.getDaysInMonth(shYear, shMonth);
+	}
+
+	getTime() {
+		return super.getTime();
+	}
+
+	getDate() {
+		return super.getDate();
+	}
+
+	checkTime(hours: number, minute: number, second: number) {
+		return super.checkTime(hours, minute, second);
+	}
+
+	revTime(hours: number, minute: number, second: number) {
+		return super.revTime(hours, minute, second);
+	}
+
+	getDayOfWeek(
+		shYear: number,
+		shMonth: number,
+		shDay: number,
+		FDOW = super.getFirstDayOfWeek()
+	) {
+		return super.getDayOfWeek(shYear, shMonth, shDay, FDOW);
+	}
+
+	getDayOfYear(Month: number, Day: number) {
+		return super.getDayOfYear(Month, Day);
+	}
+
+	getDaysOfDay(Year: number, doy: number) {
+		return super.getDaysOfDay(Year, doy);
 	}
 }
