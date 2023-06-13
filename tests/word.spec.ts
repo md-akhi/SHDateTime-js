@@ -2,7 +2,7 @@ import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
 import * as UntilWord from "./Until-Word.js";
-import SHDate from "../src/index.js";
+import SHDate from "../src/base.js";
 const date = new SHDate();
 
 describe("word", () => {

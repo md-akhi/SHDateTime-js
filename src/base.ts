@@ -570,6 +570,35 @@ export default class SHDate {
 		return [hours, minute, second, doy];
 	}
 
+
+		/**
+		* Get date/time information
+		* @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
+		* @return  array  an associative array of information related to the timestamp.
+		* @since   1.0.0
+		*/
+	getdates(timestamp=false, gmt=false){
+		if(gmt)
+			//sscanf(gmdate('n=j=Y=H=i=s=w=U',this.time(timestamp)),'%d=%d=%d=%d=%d=%d=%d=%d',gMonth,gDay,gYear,$Hours,$minute,$second,gdow,timestamp);
+		else
+			//list($second,$minute,$Hours,gDay,gdow,gMonth,gYear,gdoy,gdfn,gmfn,timestamp) = array_values(getdate(this.time(timestamp)));
+		[shYear,shMonth,shDay=this.gregoriantosolar(gMonth,gDay,gYear);
+		shdow = this.gDayOfWeeks(gdow);//this.getDayOfWeek(shYear,shMonth,shDay);
+		return array(
+		'seconds' => second,
+		'minutes' => minute,
+		'hours' => Hours,
+		'mday' => shDay,
+		'wday' => shdow,
+		'mon' => shMonth,
+		'year' => shYear,
+		'yday' => this.getDayOfYear(shYear,shMonth,shDay),
+		'weekday' => this.getDayFullNames(shdow),
+		'month' => this.getMonthFullNames(shMonth),
+		0 => timestamp
+		);
+	}
+
 	/**
 	 * Get private data of solar hijri date
 	 * @param {string} format - format of data
@@ -1479,8 +1508,8 @@ export class Export_SHDate extends SHDate {
 		return super.getTime();
 	}
 
-	getDate() {
-		return super.getDate();
+	getDates() {
+		return super.getDates();
 	}
 
 	checkTime(hours: number, minute: number, second: number) {

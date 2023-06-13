@@ -3,7 +3,7 @@ import { it, describe } from "mocha";
 
 import * as UntilDate from "./Until-Date.js";
 import * as UntilConvertDate from "./Until-Convert-Date.js";
-import SHDate from "../src/index.js";
+import SHDate from "../src/base.js";
 const date = new SHDate();
 
 describe("now()", () => {
