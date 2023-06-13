@@ -519,6 +519,56 @@ export default class SHDate {
 	#daysInYear(year: number): number {
 		return this.#isLeapYear(year) ? 366 : 365; // SHDate.DAYS_IN_YEAR_LEAP : SHDate.DAYS_IN_YEAR;
 	}
+	/**
+	 * getRevDayOfYear
+	 *
+	 */
+	getDaysOfDay(year: number, doy: number) {
+		let month: number, day: number, diy: number;
+		if (!(Number.isInteger(year) && Number.isInteger(doy))) {
+			throw "The value is not integer";
+		}
+		doy++;
+		diy = this.#daysInYear(year);
+		if (doy < 1)
+			do {
+				year--;
+				doy += this.#daysInYear(year);
+			} while (doy < 1);
+		else if (doy > diy)
+			do {
+				doy -= diy;
+				year++;
+				diy = this.#daysInYear(year);
+			} while (doy > diy);
+		if (doy < 187) {
+			month = parseInt(((doy - 1) / 31).toString()) + 1;
+			day = doy % 31 ? doy % 31 : 31;
+		} else {
+			doy -= 186;
+			month = parseInt(((doy - 1) / 30).toString()) + 7;
+			day = doy % 30 ? doy % 30 : 30;
+		}
+		return [year, month, day];
+	}
+
+	/**
+	 * revTime
+	 *
+	 * @param  int hours
+	 * @param  int minute
+	 * @param  int second
+	 * @return array
+	 */
+	revTime(hours: number, minute: number, second: number) {
+		let time: number, doy: number;
+		time = hours * 3600 /* 60*60 */ + minute * 60 + second;
+		second = time % 60;
+		minute = (time / 60) % 60;
+		hours = (time / 3600) % 24;
+		doy = parseInt((time / 86400).toString());
+		return [hours, minute, second, doy];
+	}
 
 	/**
 	 * Get private data of solar hijri date

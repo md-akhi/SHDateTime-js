@@ -1,4 +1,4 @@
-import SHDate from "../src/index";
+import SHDate from "../src/base";
 
 // for (let day = 12; day <= 15; day++) {
 // 	let shdate = new SHDate(1401, 0, day, 0);
