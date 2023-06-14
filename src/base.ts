@@ -570,33 +570,31 @@ export default class SHDate {
 		return [hours, minute, second, doy];
 	}
 
+	/**
+	 * Get date/time information
+	 * @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
+	 * @return  array  an associative array of information related to the timestamp.
+	 * @since   1.0.0
+	 */
+	getDates(timestamp: any = this.getTime(), gmt: boolean = false) {
+		const d =
+			typeof timestamp === "undefined"
+				? new Date()
+				: timestamp instanceof Date
+				? new Date(timestamp) // Not provided
+				: new Date(timestamp * 1000); // Javascript Date() // UNIX timestamp (auto-convert to int)
 
-		/**
-		* Get date/time information
-		* @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
-		* @return  array  an associative array of information related to the timestamp.
-		* @since   1.0.0
-		*/
-	getdates(timestamp=false, gmt=false){
-		if(gmt)
-			//sscanf(gmdate('n=j=Y=H=i=s=w=U',this.time(timestamp)),'%d=%d=%d=%d=%d=%d=%d=%d',gMonth,gDay,gYear,$Hours,$minute,$second,gdow,timestamp);
-		else
-			//list($second,$minute,$Hours,gDay,gdow,gMonth,gYear,gdoy,gdfn,gmfn,timestamp) = array_values(getdate(this.time(timestamp)));
-		[shYear,shMonth,shDay=this.gregoriantosolar(gMonth,gDay,gYear);
-		shdow = this.gDayOfWeeks(gdow);//this.getDayOfWeek(shYear,shMonth,shDay);
-		return array(
-		'seconds' => second,
-		'minutes' => minute,
-		'hours' => Hours,
-		'mday' => shDay,
-		'wday' => shdow,
-		'mon' => shMonth,
-		'year' => shYear,
-		'yday' => this.getDayOfYear(shYear,shMonth,shDay),
-		'weekday' => this.getDayFullNames(shdow),
-		'month' => this.getMonthFullNames(shMonth),
-		0 => timestamp
-		);
+		return {
+			seconds: d.getSeconds(),
+			minutes: d.getMinutes(),
+			hours: d.getHours(),
+			mday: d.getDate(),
+			wday: d.getDay(),
+			mon: d.getMonth() + 1,
+			year: d.getFullYear(),
+			yday: 0, //r.yday = Math.floor((d - new Date(y, 0, 1)) / 86400000)
+			ts: parseInt((d.getTime() / 1000).toString())
+		};
 	}
 
 	/**

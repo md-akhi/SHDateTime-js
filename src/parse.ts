@@ -3,6 +3,7 @@ function isNumeric(value: string) {
 	return /^\d+\.\d+$/.test(value);
 }
 
+import SHDate from "./base.js";
 import Export_SHDate from "./base.js";
 
 class SHLexerConfig {
@@ -514,7 +515,7 @@ class SHLexer {
 				if ((match = input.match(Regex))) {
 					let str = input;
 					let len = str.length;
-					console.log(input, len, match, Regex);
+					//console.log(input, len, match, Regex);
 					if (GetName.length > 0) {
 						tokens.push(new SHToken(GetName, match[0], offset, position));
 						position++;
@@ -615,7 +616,6 @@ class SHLexer {
 			typeof this.tokens[this.position] !== "undefined"
 				? this.tokens[this.position++]
 				: null;
-
 		return this.lookahead !== null;
 	}
 
@@ -693,7 +693,18 @@ export default class SHParser {
 	 */
 	public Lexer;
 	time: any;
-	data: any;
+	data: any = {
+		DATE: "",
+		YEAR: "",
+		MONTH: "",
+		DAY: "",
+		HOURS: "",
+		MINUTES: "",
+		SECONDS: "",
+		DAY_OF_YEAR: "",
+		DAY_OF_WEEK: "",
+		TIMESTAMP: ""
+	};
 	Date: any;
 	/**
 	 * __construct
@@ -702,10 +713,8 @@ export default class SHParser {
 	 * @param  int time
 	 * @return array
 	 */
-	constructor(srt: any, time: any = null) {
-		if (time == null) {
-			time = Date.now();
-		}
+	constructor(srt: any, time: any = Date.now()) {
+		console.log(srt, time, Date.now());
 		this.time = time;
 		this.Lexer = new SHLexer(srt);
 		this.Date = new Export_SHDate();
@@ -1369,12 +1378,12 @@ export default class SHParser {
 										this.data["YEAR"],
 										this.data["MONTH"]
 									);
-									console.log(
-										this.Date.getDaysInMonth(
-											this.data["YEAR"],
-											this.data["MONTH"]
-										)
-									);
+									// console.log(
+									// 	this.Date.getDaysInMonth(
+									// 		this.data["YEAR"],
+									// 		this.data["MONTH"]
+									// 	)
+									// );
 									this.data["HOURS"] = 0;
 									this.data["MINUTES"] = 0;
 									this.data["SECONDS"] = 0;
@@ -2421,7 +2430,9 @@ export default class SHParser {
 	 * @return void
 	 */
 	setDateTime(time: any) {
-		let date = this.Date.getdate(time);
+		let date = this.Date.getDates(time);
+		console.log(date);
+		this.data["DATE"] = date;
 		this.data["YEAR"] = date["year"];
 		this.data["MONTH"] = date["mon"];
 		this.data["DAY"] = date["mday"];
@@ -2431,7 +2442,6 @@ export default class SHParser {
 		this.data["DAY_OF_YEAR"] = date["yday"];
 		this.data["DAY_OF_WEEK"] = date["wday"];
 		this.data["TIMESTAMP"] = date[0];
-		this.data["DATE"] = date;
 		//this.data["GDATE"] = this.getdate(time);
 	}
 
