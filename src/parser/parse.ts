@@ -522,7 +522,7 @@ export default class SHParser {
 		//Day-based Notations
 		if (this.isToken("NOW")) {
 			// Now - this is simply ignored
-			this.setDateTime(this.time);
+			this.data["NOW"] = true;
 			return true;
 		} else if (this.isToken("TODAY") || this.isToken("MIDNIGHT")) {
 			// The time is set to 00:00:00
@@ -534,12 +534,12 @@ export default class SHParser {
 			return true;
 		} else if (this.isToken("YESTERDAY")) {
 			// Midnight of yesterday
-			this.data["RDAY"] -= 1;
+			this.data["RYDAY"] = true;
 			this.restTime();
 			return true;
 		} else if (this.isToken("TOMORROW")) {
 			// Midnight of tomorrow
-			this.data["RDAY"] += 1;
+			this.data["RTDAY"] = true;
 			this.restTime();
 			return true;
 		} else if (this.minutes15Hour()) {
@@ -552,11 +552,12 @@ export default class SHParser {
 			return true;
 		} else if (this.handleRelTimeText()) {
 			return true;
-		} /* //todo
-		else if(this.isToken('ago')){ // Negates all the values of previously found relative time items.
+		} else if (this.isToken("ago")) {
+			// Negates all the values of previously found relative time items.
+			this.data["AGO"] = true;
 			this.nextToken();
 			return true;
-		}*/ else if ((dow = this.dayNeme())) {
+		} else if ((dow = this.dayNeme())) {
 			// Moves to the next day of this name.
 			let diffdow,
 				dowmonth = this.Date.getDayOfWeek(
@@ -746,27 +747,28 @@ export default class SHParser {
 							this.nextToken();
 							if (this.whiteSpace()) {
 								if (this.RelativeFormats() || this.DateFormats()) {
-									dow29month = this.Date.getDayOfWeek(
-										this.data["YEAR"],
-										this.data["MONTH"],
-										this.Date.getDaysInMonth(
-											this.data["YEAR"],
-											this.data["MONTH"]
-										)
-									);
-									if (dow < dow29month) {
-										diffdow = dow29month - dow;
-									} else if (dow > dow29month) {
-										diffdow = 7 - dow - dow29month;
-									} else {
-										diffdow = 0;
-									}
-									[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-										this.Date.getDaysOfDay(
-											this.data["YEAR"],
-											this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
-												diffdow
-										);
+									// dow29month = this.Date.getDayOfWeek(
+									// 	this.data["YEAR"],
+									// 	this.data["MONTH"],
+									// 	this.Date.getDaysInMonth(
+									// 		this.data["YEAR"],
+									// 		this.data["MONTH"]
+									// 	)
+									// );
+									// if (dow < dow29month) {
+									// 	diffdow = dow29month - dow;
+									// } else if (dow > dow29month) {
+									// 	diffdow = 7 - dow - dow29month;
+									// } else {
+									// 	diffdow = 0;
+									// }
+									// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+									// 	this.Date.getDaysOfDay(
+									// 		this.data["YEAR"],
+									// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
+									// 			diffdow
+									// 	);
+									this.data["LAST_WEEK_DAY_OF_THE_CURRENT_MONTH"] = true;
 									this.data["HOURS"] = 0;
 									this.data["MINUTES"] = 0;
 									this.data["SECONDS"] = 0;
@@ -806,6 +808,7 @@ export default class SHParser {
 													diffdow +
 													(int - 1) * 7
 											);
+										this.data["X-TH_WEEK_DAY_OF_THE_CURRENT_MONTH"] = true;
 										return true;
 									} else if (int == 0) {
 									} else if (int == -1) {

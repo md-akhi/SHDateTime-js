@@ -171,7 +171,7 @@ export default class SHDate {
 
 	strToTime(SHParser: any) {
 		let date = this;
-		console.log(SHParser, JSON.stringify(SHParser, null, 2));
+		console.log(JSON.stringify(SHParser, null, 2));
 	}
 	/**
 	 * update date
