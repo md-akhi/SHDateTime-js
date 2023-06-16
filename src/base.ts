@@ -9,7 +9,7 @@
  */
 
 import Word from "./word.js";
-
+import SHParser from "./parser/parse.js";
 interface VarSHDate {
 	[key: string]: number | undefined;
 	year?: number;
@@ -158,15 +158,21 @@ export default class SHDate {
 			}
 			// value
 			else this.setTime(mix);
-		else if (typeof mix == "string")
+		else if (typeof mix == "string") {
+			const [time = this.getTime()] = args;
 			// dateString
-			throw new Error("Not Implemented dateString");
-		else if (mix instanceof SHDate || mix instanceof Date)
+			this.strToTime(new SHParser(mix, time));
+		} else if (mix instanceof SHDate || mix instanceof Date)
 			// dateObject
 			this.setTime(mix.getTime());
 		else if (typeof mix == "boolean") this.setTime(this.#date.getTime());
+		return this;
 	}
 
+	strToTime(SHParser: any) {
+		let date = this;
+		console.log(SHParser, JSON.stringify(SHParser, null, 2));
+	}
 	/**
 	 * update date
 	 * @returns {null}
@@ -461,7 +467,9 @@ export default class SHDate {
 		const doy = (week - 1) * 7 + date - this.#dayOfWeek(year, 0, 4) + 2;
 		return this.#dateOfDoy(year, doy);
 	}
-
+	getWeekOfDay(year: number, week: number, date: number = 1) {
+		this.#weekOfDay(year, week, date);
+	}
 	/**
 	 * Get date of days of year (dodoy)
 	 * @param year - solar hijri year
@@ -576,24 +584,26 @@ export default class SHDate {
 	 * @return  array  an associative array of information related to the timestamp.
 	 * @since   1.0.0
 	 */
-	getDates(timestamp: any = this.getTime(), gmt: boolean = false) {
-		const d =
+	getDates(timestamp: any = this.getTime(), isGMT: boolean = false) {
+		const date =
 			typeof timestamp === "undefined"
-				? new Date()
-				: timestamp instanceof Date
-				? new Date(timestamp) // Not provided
-				: new Date(timestamp * 1000); // Javascript Date() // UNIX timestamp (auto-convert to int)
-
+				? new SHDate()
+				: timestamp instanceof SHDate
+				? timestamp // Not provided
+				: new SHDate(timestamp); // Javascript Date() // UNIX timestamp (auto-convert to int)
 		return {
-			seconds: d.getSeconds(),
-			minutes: d.getMinutes(),
-			hours: d.getHours(),
-			mday: d.getDate(),
-			wday: d.getDay(),
-			mon: d.getMonth() + 1,
-			year: d.getFullYear(),
-			yday: 0, //r.yday = Math.floor((d - new Date(y, 0, 1)) / 86400000)
-			ts: parseInt((d.getTime() / 1000).toString())
+			seconds: isGMT ? date.getUTCSeconds() : date.getSeconds(),
+			minutes: isGMT ? date.getUTCMinutes() : date.getMinutes(),
+			hours: isGMT ? date.getUTCHours() : date.getHours(),
+			mday: isGMT ? date.getUTCDate() : date.getDate(),
+			wday: isGMT ? date.getUTCDay() : date.getDay(),
+			mon: isGMT ? date.getUTCMonth() : date.getMonth(),
+			year: isGMT ? date.getUTCFullYear() : date.getFullYear(),
+			yday: this.#dayOfYear(
+				isGMT ? date.getUTCMonth() : date.getMonth(),
+				isGMT ? date.getUTCDate() : date.getDate()
+			),
+			ts: parseInt((date.getTime() / 1000).toString())
 		};
 	}
 
@@ -1519,12 +1529,12 @@ export class Export_SHDate extends SHDate {
 	}
 
 	getDayOfWeek(
-		shYear: number,
-		shMonth: number,
-		shDay: number,
+		Year: number,
+		Month: number,
+		Day: number,
 		FDOW = super.getFirstDayOfWeek()
 	) {
-		return super.getDayOfWeek(shYear, shMonth, shDay, FDOW);
+		return super.getDayOfWeek(Year, Month, Day, FDOW);
 	}
 
 	getDayOfYear(Month: number, Day: number) {
@@ -1533,5 +1543,8 @@ export class Export_SHDate extends SHDate {
 
 	getDaysOfDay(Year: number, doy: number) {
 		return super.getDaysOfDay(Year, doy);
+	}
+	getWeekOfDay(year: number, week: number, date: number = 1) {
+		super.getWeekOfDay(year, week, date);
 	}
 }

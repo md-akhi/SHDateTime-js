@@ -80,11 +80,6 @@ import SHDate from "../src/base";
 // 	});
 // }
 console.log(new SHDate().toString());
-import parse from "../src/parse.js";
-let parser = new parse("1395/12/1"); // Farvardin, 1 Day 1401
 console.log(
-	parser,
-	//new Date(parser.time),
-	//new SHDate(parser.time).toString(),
-	JSON.stringify(parser, null, 2)
+	new SHDate("1395/12/1") // Farvardin, 1 Day 1401
 );
