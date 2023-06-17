@@ -28,7 +28,31 @@ export default class SHParser {
 		DAY_OF_YEAR: "",
 		DAY_OF_WEEK: "",
 		TIMESTAMP: "",
-		Sign_Timestamp: ""
+		Sign_Timestamp: "",
+		RTDAY: "",
+		RYDAY: "",
+		FRAC: "",
+		PM: "",
+		AM: "",
+		NOW: "",
+		TODAY_MIDNIGHT: "",
+		NOON: "",
+		YESTERDAY: "",
+		TOMORROW: "",
+		AGO: "",
+		NEXT_DAY_OF_NAME: "",
+		MINUTES_15_PAST_SPECIFIED_HOUR: "",
+		MINUTES_15_BEFORE_SPECIFIED_HOUR: "",
+		FIRST_DAY_CURRENT_MONTH: "",
+		LAST_DAY_CURRENT_MONTH: "",
+		LAST_WEEK_DAY_CURRENT_MONTH: "",
+		TH_WEEK_DAY_CURRENT_MONTH: "",
+		SIGN_DATE: "",
+		TZ_SIGN_PLUS: "",
+		TZ_SIGN_DASH: "",
+		TZ_HOURS: "",
+		TZ_MINUTES: "",
+		TZ_NAME: ""
 	};
 	Date: any;
 	/**
@@ -42,7 +66,7 @@ export default class SHParser {
 		this.time = time;
 		this.Lexer = new SHLexer(srt);
 		this.Date = new Export_SHDate();
-		this.setDateTime(time);
+		// this.setDateTime(time);
 		do {
 			if (this.CompoundFormats()) {
 			} else if (this.RelativeFormats()) {
@@ -379,7 +403,7 @@ export default class SHParser {
 		let year,
 			month,
 			day,
-			h1t2,
+			h12,
 			min,
 			sec,
 			pos = this.getPosition();
@@ -388,7 +412,7 @@ export default class SHParser {
 				if ((day = this.dayMandatoryPrefix())) {
 					if (this.isToken("SIGN_TIME")) {
 						this.nextToken();
-						if ((h1t2 = this.hour12()) || (h1t2 = this.hour24())) {
+						if ((h12 = this.hour12()) || (h12 = this.hour24())) {
 							if (this.isToken("COLON")) {
 								this.nextToken();
 							}
@@ -400,7 +424,7 @@ export default class SHParser {
 									this.data["YEAR"] = year;
 									this.data["MONTH"] = month;
 									this.data["DAY"] = day;
-									this.data["HOURS"] = h1t2;
+									this.data["HOURS"] = h12;
 									this.data["MINUTES"] = min;
 									this.data["SECONDS"] = sec;
 									return true;
@@ -492,13 +516,14 @@ export default class SHParser {
 									if ((meridian = this.meridian())) {
 										if (meridian) {
 											this.data["HOURS"] = h12 + 12;
+											this.data["PM"] = true;
 										} else {
 											this.data["HOURS"] = h12;
+											this.data["AM"] = true;
 										}
 										this.data["MINUTES"] = min;
 										this.data["SECONDS"] = sec;
 										this.data["FRAC"] = frac;
-										this.data["AM_PM"] = meridian;
 										return true;
 									}
 								}
@@ -526,6 +551,7 @@ export default class SHParser {
 			return true;
 		} else if (this.isToken("TODAY") || this.isToken("MIDNIGHT")) {
 			// The time is set to 00:00:00
+			this.data["TODAY_MIDNIGHT"] = true;
 			this.restTime();
 			return true;
 		} else if (this.isToken("NOON")) {
@@ -559,24 +585,25 @@ export default class SHParser {
 			return true;
 		} else if ((dow = this.dayNeme())) {
 			// Moves to the next day of this name.
-			let diffdow,
-				dowmonth = this.Date.getDayOfWeek(
-					this.data["YEAR"],
-					this.data["MONTH"],
-					this.data["DAY"]
-				);
-			if (dow < dowmonth) {
-				diffdow = 7 - dowmonth - dow;
-			} else if (dow > dowmonth) {
-				diffdow = dow - dowmonth;
-			} else {
-				diffdow = 0;
-			}
-			[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-				this.Date.getDaysOfDay(
-					this.data["YEAR"],
-					this.Date.getDayOfYear(false, this.data["MONTH"], 1) + diffdow
-				);
+			// let diffdow,
+			// 	dowmonth = this.Date.getDayOfWeek(
+			// 		this.data["YEAR"],
+			// 		this.data["MONTH"],
+			// 		this.data["DAY"]
+			// 	);
+			// if (dow < dowmonth) {
+			// 	diffdow = 7 - dowmonth - dow;
+			// } else if (dow > dowmonth) {
+			// 	diffdow = dow - dowmonth;
+			// } else {
+			// 	diffdow = 0;
+			// }
+			// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+			// 	this.Date.getDaysOfDay(
+			// 		this.data["YEAR"],
+			// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) + diffdow
+			// 	);
+			this.data["NEXT_DAY_OF_NAME"] = dow;
 			return true;
 		} else if (this.handleRelTimeFormat()) {
 			return true;
@@ -607,6 +634,7 @@ export default class SHParser {
 							this.data["HOURS"] = h24;
 							this.data["MINUTES"] = 15;
 							this.data["SECONDS"] = 0;
+							this.data["MINUTES_15_PAST_SPECIFIED_HOUR"] = +15;
 							return true;
 						}
 					}
@@ -624,6 +652,7 @@ export default class SHParser {
 							if (!isNumeric(h24)) {
 								h24 = this.data["HOURS"];
 							}
+							this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
 							this.data["HOURS"] = h24 - 1;
 							this.data["MINUTES"] = 45;
 							this.data["SECONDS"] = 0;
@@ -651,7 +680,7 @@ export default class SHParser {
 		if ((int = this.int00() || this.int01To09() || this.int10To99())) {
 			if ((int2 = this.int0() || this.int1To9())) {
 				int += int2;
-				return true;
+				return int;
 			}
 		}
 		return false;
@@ -677,6 +706,7 @@ export default class SHParser {
 							this.nextToken();
 							if (this.whiteSpace()) {
 								if (this.RelativeFormats() || this.DateFormats()) {
+									this.data["FIRST_DAY_CURRENT_MONTH"] = true;
 									this.data["DAY"] = 1;
 									this.data["HOURS"] = 0;
 									this.data["MINUTES"] = 0;
@@ -699,10 +729,11 @@ export default class SHParser {
 							this.nextToken();
 							if (this.whiteSpace()) {
 								if (this.RelativeFormats() || this.DateFormats()) {
-									this.data["DAY"] = this.Date.getDaysInMonth(
-										this.data["YEAR"],
-										this.data["MONTH"]
-									);
+									this.data["LAST_DAY_CURRENT_MONTH"] = true;
+									// this.data["DAY"] = this.Date.getDaysInMonth(
+									// 	this.data["YEAR"],
+									// 	this.data["MONTH"]
+									// );
 									// console.log(
 									// 	this.Date.getDaysInMonth(
 									// 		this.data["YEAR"],
@@ -768,7 +799,7 @@ export default class SHParser {
 									// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
 									// 			diffdow
 									// 	);
-									this.data["LAST_WEEK_DAY_OF_THE_CURRENT_MONTH"] = true;
+									this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
 									this.data["HOURS"] = 0;
 									this.data["MINUTES"] = 0;
 									this.data["SECONDS"] = 0;
@@ -789,32 +820,32 @@ export default class SHParser {
 							if (this.whiteSpace()) {
 								if (this.RelativeFormats() || this.DateFormats()) {
 									if (int > 0) {
-										dow1month = this.Date.getDayOfWeek(
-											this.data["YEAR"],
-											this.data["MONTH"],
-											1
-										);
-										if (dow < dow1month) {
-											diffdow = dow1month - dow;
-										} else if (dow > dow1month) {
-											diffdow = 7 - dow - dow1month;
-										} else {
-											diffdow = 0;
-										}
-										[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-											this.Date.getDaysOfDay(
-												this.data["YEAR"],
-												this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
-													diffdow +
-													(int - 1) * 7
-											);
-										this.data["X-TH_WEEK_DAY_OF_THE_CURRENT_MONTH"] = true;
+										// dow1month = this.Date.getDayOfWeek(
+										// 	this.data["YEAR"],
+										// 	this.data["MONTH"],
+										// 	1
+										// );
+										// if (dow < dow1month) {
+										// 	diffdow = dow1month - dow;
+										// } else if (dow > dow1month) {
+										// 	diffdow = 7 - dow - dow1month;
+										// } else {
+										// 	diffdow = 0;
+										// }
+										// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+										// 	this.Date.getDaysOfDay(
+										// 		this.data["YEAR"],
+										// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
+										// 			diffdow +
+										// 			(int - 1) * 7
+										// 	);
 										return true;
 									} else if (int == 0) {
 									} else if (int == -1) {
 									} else if (int == -2) {
 									} else if (int == -3) {
 									}
+									this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
 									this.data["HOURS"] = 0;
 									this.data["MINUTES"] = 0;
 									this.data["SECONDS"] = 0;
@@ -1020,10 +1051,11 @@ export default class SHParser {
 			if ((meridian = this.meridian())) {
 				if (meridian) {
 					this.data["HOURS"] = h12 + 12;
+					this.data["PM"] = true;
 				} else {
 					this.data["HOURS"] = h12;
+					this.data["AM"] = true;
 				}
-				this.data["AM_PM"] = meridian;
 				return true;
 			}
 		}
@@ -1689,11 +1721,11 @@ export default class SHParser {
 		}
 		PLUS_DASH = false;
 		if (this.isToken("PLUS")) {
-			this.data["TZ_SIGN"] = "+";
+			this.data["TZ_SIGN_PLUS"] = true;
 			this.nextToken();
 			PLUS_DASH = true;
 		} else if (this.isToken("DASH")) {
-			this.data["TZ_SIGN"] = "-";
+			this.data["TZ_SIGN_DASH"] = true;
 			this.nextToken();
 			PLUS_DASH = true;
 		}
@@ -1748,25 +1780,25 @@ export default class SHParser {
 		return false;
 	}
 
-	/**
-	 * set Date/Time
-	 *
-	 * @param  int time
-	 * @return void
-	 */
-	setDateTime(time: any) {
-		//let date = this.Date.getDates(time);
-		// console.log(date);
-		// this.data["DATE"] = date;
-		// this.data["YEAR"] = date["year"];
-		// this.data["MONTH"] = date["mon"];
-		// this.data["DAY"] = date["mday"];
-		// this.data["HOURS"] = date["hours"];
-		// this.data["MINUTES"] = date["minutes"];
-		// this.data["SECONDS"] = date["seconds"];
-		// this.data["TIMESTAMP"] = time;
-		//this.data["GDATE"] = this.getdate(time);
-	}
+	// /**
+	//  * set Date/Time
+	//  *
+	//  * @param  int time
+	//  * @return void
+	//  */
+	// setDateTime(time: any) {
+	// 	//let date = this.Date.getDates(time);
+	// 	// console.log(date);
+	// 	// this.data["DATE"] = date;
+	// 	// this.data["YEAR"] = date["year"];
+	// 	// this.data["MONTH"] = date["mon"];
+	// 	// this.data["DAY"] = date["mday"];
+	// 	// this.data["HOURS"] = date["hours"];
+	// 	// this.data["MINUTES"] = date["minutes"];
+	// 	// this.data["SECONDS"] = date["seconds"];
+	// 	// this.data["TIMESTAMP"] = time;
+	// 	//this.data["GDATE"] = this.getdate(time);
+	// }
 
 	/**
 	 * is Token
@@ -1831,7 +1863,7 @@ export default class SHParser {
 	// ==================================   Used Symbols   ==================================
 	// ======================================================================================
 
-	/**
+	/** //todo transform to dir base
 	 * rest Time
 	 *
 	 * @param  int h Hours
@@ -1888,17 +1920,14 @@ export default class SHParser {
 	 * @return bool
 	 */
 	meridian() {
-		let str: any;
 		if (this.isToken("AM")) {
 			//00:00-11:59
-			str = 0;
 			this.nextToken();
-			return str;
+			return 0;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
-			str = 1;
 			this.nextToken();
-			return str;
+			return 1;
 		}
 		return false;
 	}
@@ -2041,9 +2070,7 @@ export default class SHParser {
 				this.int01To09() ||
 				this.int10To31())
 		) {
-			if (this.daySuffixTextual()) {
-				return int;
-			}
+			this.daySuffixTextual();
 			return int;
 		}
 		return false;
@@ -2071,64 +2098,52 @@ export default class SHParser {
 		switch (this.nameToken()) {
 			case "FARVARDIN":
 			case "INT_I":
-				int = 1;
 				this.nextToken();
-				return int;
+				return 1;
 			case "ORDIBEHESHT":
 			case "INT_II":
-				int = 2;
 				this.nextToken();
-				return int;
+				return 2;
 			case "KHORDAD":
 			case "INT_III":
-				int = 3;
 				this.nextToken();
-				return int;
+				return 3;
 			case "TIR":
 			case "INT_IV":
-				int = 4;
 				this.nextToken();
-				return int;
+				return 4;
 			case "AMORDAD":
 			case "INT_V":
-				int = 5;
 				this.nextToken();
-				return int;
+				return 5;
 			case "SHAHRIVAR":
 			case "INT_VI":
-				int = 6;
 				this.nextToken();
-				return int;
+				return 6;
 			case "MEHR":
 			case "INT_VII":
-				int = 7;
 				this.nextToken();
-				return int;
+				return 7;
 			case "ABAN":
 			case "INT_VIII":
-				int = 8;
 				this.nextToken();
-				return int;
+				return 8;
 			case "AZAR":
 			case "INT_IX":
-				int = 9;
 				this.nextToken();
-				return int;
+				return 9;
 			case "DEY":
 			case "INT_X":
-				int = 10;
 				this.nextToken();
-				return int;
+				return 10;
 			case "BAHMAN":
 			case "INT_XI":
-				int = 11;
 				this.nextToken();
-				return int;
+				return 11;
 			case "ESFAND":
 			case "INT_XII":
-				int = 12;
 				this.nextToken();
-				return int;
+				return 12;
 			default:
 				return false;
 		}
@@ -2219,36 +2234,28 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayNeme() {
-		let dow;
 		switch (this.nameToken()) {
 			case "SATURDAY":
-				dow = 0;
 				this.nextToken();
-				return dow;
+				return 0;
 			case "SUNDAY":
-				dow = 1;
 				this.nextToken();
-				return dow;
+				return 1;
 			case "MONDAY":
-				dow = 2;
 				this.nextToken();
-				return dow;
+				return 2;
 			case "TUESDAY":
-				dow = 3;
 				this.nextToken();
-				return dow;
+				return 3;
 			case "WEDNESDAY":
-				dow = 4;
 				this.nextToken();
-				return dow;
+				return 4;
 			case "THURSDAY":
-				dow = 5;
 				this.nextToken();
-				return dow;
+				return 5;
 			case "FRIDAY":
-				dow = 6;
 				this.nextToken();
-				return dow;
+				return 6;
 			default:
 				return false;
 		}
@@ -2274,15 +2281,12 @@ export default class SHParser {
 	 * @return bool
 	 */
 	signNumber() {
-		let sign;
 		if (this.isToken("PLUS")) {
-			sign = "+";
 			this.nextToken();
-			return sign;
+			return "+";
 		} else if (this.isToken("DASH")) {
-			sign = "-";
 			this.nextToken();
-			return sign;
+			return "-";
 		}
 		return false;
 	}
@@ -2303,7 +2307,7 @@ export default class SHParser {
 		return false;
 	}
 
-	/**
+	/** //todo
 	 * relative text
 	 *
 	 * @param  int int
@@ -2340,44 +2344,34 @@ export default class SHParser {
 	 * @return bool
 	 */
 	unit() {
-		var int;
 		switch (this.nameToken()) {
 			case "SECOND":
 				this.nextToken();
-				int = 59;
 				return 59;
 			case "MINUTE":
-				int = 60;
 				this.nextToken();
-				return int;
+				return 60;
 			case "HOUR":
-				int = 24;
 				this.nextToken();
-				return int;
+				return 24;
 			case "DAY":
-				int = 31;
 				this.nextToken();
-				return int;
+				return 31;
 			case "MONTH":
-				int = 12;
 				this.nextToken();
-				return int;
+				return 12;
 			case "YEAR":
-				int = 100;
 				this.nextToken();
-				return int;
+				return 100;
 			case "WEEKS":
-				int = 53;
 				this.nextToken();
-				return int;
+				return 53;
 			case "WEEKDAY":
-				int = 7;
 				this.nextToken();
-				return int;
+				return 7;
 			case "FORTNIGHT":
-				int = 14;
 				this.nextToken();
-				return int;
+				return 14;
 			default:
 				return false;
 		}
