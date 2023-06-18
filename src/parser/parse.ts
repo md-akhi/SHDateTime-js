@@ -585,7 +585,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	minutes15Hour() {
-		let h24,
+		let h24: any,
 			pos = this.getPosition();
 		if (this.isToken("BACK")) {
 			// 15 minutes past the specified hour
@@ -2401,7 +2401,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	firstToThirtyFirstTextual(): number | false {
+	firstToThirtyFirstTextual(): any {
 		switch (this.nameToken()) {
 			case "FIRST":
 				this.nextToken();
