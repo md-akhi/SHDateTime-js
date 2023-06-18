@@ -68,12 +68,10 @@ export default class SHParser {
 		this.Date = new Export_SHDate();
 		// this.setDateTime(time);
 		do {
-			if (this.CompoundFormats()) {
-			} else if (this.RelativeFormats()) {
-			} else if (this.DateFormats()) {
-			} else if (this.TimeFormats()) {
-			}
-			// this.CompoundFormats()||this.RelativeFormats()||this.DateFormats()||this.TimeFormats()
+			this.CompoundFormats() ||
+				this.RelativeFormats() ||
+				this.DateFormats() ||
+				this.TimeFormats();
 		} while (this.nextToken());
 		return this.data;
 	}
@@ -84,39 +82,28 @@ export default class SHParser {
 	 */
 	public CompoundFormats() {
 		// Localized Notations
-		if (this.commonLogFormat()) {
-			// dd/M/Y:HH:II:SS tspace tzcorrection
-			return true;
-		} else if (this.EXIF()) {
-			//  YY:MM:DD HH:II:SS
-			return true;
-		} else if (this.isoYearWeekDay()) {
-			//  YY-?"W"W-?[0-7]
-			return true;
-		} else if (this.MySQL()) {
-			//  YY-MM-DD HH:II:SS
-			return true;
-		} else if (this.postgreSQL()) {
-			// YY .? doy
-			return true;
-		} else if (this.SOAP()) {
-			//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
-			return true;
-		} else if (this.unixTimestamp()) {
-			// "@" "-"? [0-9]+
-			return true;
-		} else if (this.XMLRPC()) {
-			// & (Compact) YY MM DD "T" hh :? II :? SS
-			return true;
-		} else if (this.WDDX()) {
-			// YY "-" mm "-" dd "T" hh ":" ii ":" ss
-			return true;
-		} else if (this.MSSQL()) {
-			// time
-			return true;
-		}
-		return false;
-		// return this.commonLogFormat()||this.EXIF()||this.isoYearWeekDay()||this.MySQL()||this.postgreSQL()||this.SOAP()||this.unixTimestamp()||this.XMLRPC()||this.WDDX()||this.MSSQL()
+		// dd/M/Y:HH:II:SS tspace tzcorrection
+		//  YY:MM:DD HH:II:SS
+		//  YY-?"W"W-?[0-7]
+		//  YY-MM-DD HH:II:SS
+		// YY .? doy
+		//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
+		// "@" "-"? [0-9]+
+		// & (Compact) YY MM DD "T" hh :? II :? SS
+		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
+		// time
+		return (
+			this.commonLogFormat() ||
+			this.EXIF() ||
+			this.isoYearWeekDay() ||
+			this.MySQL() ||
+			this.postgreSQL() ||
+			this.SOAP() ||
+			this.unixTimestamp() ||
+			this.XMLRPC() ||
+			this.WDDX() ||
+			this.MSSQL()
+		);
 	}
 
 	/**
@@ -127,7 +114,6 @@ export default class SHParser {
 	commonLogFormat() {
 		let day, month, year, h24, min, sec;
 		let pos = this.getPosition();
-
 		day = this.dayOptionalPrefix();
 		if (day && this.isToken("SLASH")) {
 			this.nextToken();
@@ -158,7 +144,6 @@ export default class SHParser {
 				}
 			}
 		}
-
 		this.resetPosition(pos);
 		return false;
 	}
@@ -596,7 +581,7 @@ export default class SHParser {
 					this.whiteSpace() &&
 					(this.hour12Notation() || (h24 = this.hour24()))
 				) {
-					if (!isNumeric(h24)) {
+					if (!h24) {
 						h24 = this.data["HOURS"];
 					}
 					this.data["HOURS"] = h24;
@@ -616,7 +601,7 @@ export default class SHParser {
 					this.whiteSpace() &&
 					(this.hour12Notation() || (h24 = this.hour24()))
 				) {
-					if (!isNumeric(h24)) {
+					if (!h24) {
 						h24 = this.data["HOURS"];
 					}
 					this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
