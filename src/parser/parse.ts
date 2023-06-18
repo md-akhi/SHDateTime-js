@@ -73,6 +73,7 @@ export default class SHParser {
 			} else if (this.DateFormats()) {
 			} else if (this.TimeFormats()) {
 			}
+			// this.CompoundFormats()||this.RelativeFormats()||this.DateFormats()||this.TimeFormats()
 		} while (this.nextToken());
 		return this.data;
 	}
@@ -115,6 +116,7 @@ export default class SHParser {
 			return true;
 		}
 		return false;
+		// return this.commonLogFormat()||this.EXIF()||this.isoYearWeekDay()||this.MySQL()||this.postgreSQL()||this.SOAP()||this.unixTimestamp()||this.XMLRPC()||this.WDDX()||this.MSSQL()
 	}
 
 	/**
@@ -125,44 +127,38 @@ export default class SHParser {
 	commonLogFormat() {
 		let day, month, year, h24, min, sec;
 		let pos = this.getPosition();
-		if ((day = this.dayOptionalPrefix())) {
-			if (this.isToken("SLASH")) {
+
+		day = this.dayOptionalPrefix();
+		if (day && this.isToken("SLASH")) {
+			this.nextToken();
+			month = this.monthTextualShort();
+			if (month && this.isToken("SLASH")) {
 				this.nextToken();
-				if ((month = this.monthTextualShort())) {
-					if (this.isToken("SLASH")) {
+				year = this.year4MandatoryPrefix();
+				if (year && this.isToken("COLON")) {
+					this.nextToken();
+					h24 = this.hour24();
+					if (h24 && this.isToken("COLON")) {
 						this.nextToken();
-						if ((year = this.year4MandatoryPrefix())) {
-							if (this.isToken("COLON")) {
-								this.nextToken();
-								if ((h24 = this.hour24())) {
-									if (this.isToken("COLON")) {
-										this.nextToken();
-										if ((min = this.minutesMandatoryPrefix())) {
-											if (this.isToken("COLON")) {
-												this.nextToken();
-												if ((sec = this.secondsMandatoryPrefix())) {
-													if (this.whiteSpace()) {
-														if (this.TZCorrection()) {
-															this.data["YEAR"] = year;
-															this.data["MONTH"] = month;
-															this.data["DAY"] = day;
-															this.data["HOURS"] = h24;
-															this.data["MINUTES"] = min;
-															this.data["SECONDS"] = sec;
-															return true;
-														}
-													}
-												}
-											}
-										}
-									}
-								}
+						min = this.minutesMandatoryPrefix();
+						if (min && this.isToken("COLON")) {
+							this.nextToken();
+							sec = this.secondsMandatoryPrefix();
+							if (sec && this.whiteSpace() && this.TZCorrection()) {
+								this.data["YEAR"] = year;
+								this.data["MONTH"] = month;
+								this.data["DAY"] = day;
+								this.data["HOURS"] = h24;
+								this.data["MINUTES"] = min;
+								this.data["SECONDS"] = sec;
+								return true;
 							}
 						}
 					}
 				}
 			}
 		}
+
 		this.resetPosition(pos);
 		return false;
 	}
@@ -175,33 +171,28 @@ export default class SHParser {
 	EXIF() {
 		let pos, year, month, day, h24, min, sec;
 		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("COLON")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("COLON")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("COLON")) {
 				this.nextToken();
-				if ((month = this.monthMandatoryPrefix())) {
-					if (this.isToken("COLON")) {
+				day = this.dayMandatoryPrefix();
+				if (day && this.whiteSpace()) {
+					h24 = this.hour24();
+					if (h24 && this.isToken("COLON")) {
 						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							if (this.whiteSpace()) {
-								if ((h24 = this.hour24())) {
-									if (this.isToken("COLON")) {
-										this.nextToken();
-										if ((min = this.minutesMandatoryPrefix())) {
-											if (this.isToken("COLON")) {
-												this.nextToken();
-												if ((sec = this.secondsMandatoryPrefix())) {
-													this.data["YEAR"] = year;
-													this.data["MONTH"] = month;
-													this.data["DAY"] = day;
-													this.data["HOURS"] = h24;
-													this.data["MINUTES"] = min;
-													this.data["SECONDS"] = sec;
-													return true;
-												}
-											}
-										}
-									}
-								}
+						min = this.minutesMandatoryPrefix();
+						if (min && this.isToken("COLON")) {
+							this.nextToken();
+							if ((sec = this.secondsMandatoryPrefix())) {
+								this.data["YEAR"] = year;
+								this.data["MONTH"] = month;
+								this.data["DAY"] = day;
+								this.data["HOURS"] = h24;
+								this.data["MINUTES"] = min;
+								this.data["SECONDS"] = sec;
+								return true;
 							}
 						}
 					}
@@ -254,33 +245,28 @@ export default class SHParser {
 	MySQL() {
 		let pos, year, month, day, h24, min, sec;
 		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthMandatoryPrefix())) {
-					if (this.isToken("DASH")) {
+				day = this.dayMandatoryPrefix();
+				if (day && this.whiteSpace()) {
+					h24 = this.hour24();
+					if (h24 && this.isToken("COLON")) {
 						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							if (this.whiteSpace()) {
-								if ((h24 = this.hour24())) {
-									if (this.isToken("COLON")) {
-										this.nextToken();
-										if ((min = this.minutesMandatoryPrefix())) {
-											if (this.isToken("COLON")) {
-												this.nextToken();
-												if ((sec = this.secondsMandatoryPrefix())) {
-													this.data["YEAR"] = year;
-													this.data["MONTH"] = month;
-													this.data["DAY"] = day;
-													this.data["HOURS"] = h24;
-													this.data["MINUTES"] = min;
-													this.data["SECONDS"] = sec;
-													return true;
-												}
-											}
-										}
-									}
-								}
+						min = this.minutesMandatoryPrefix();
+						if (min && this.isToken("COLON")) {
+							this.nextToken();
+							if ((sec = this.secondsMandatoryPrefix())) {
+								this.data["YEAR"] = year;
+								this.data["MONTH"] = month;
+								this.data["DAY"] = day;
+								this.data["HOURS"] = h24;
+								this.data["MINUTES"] = min;
+								this.data["SECONDS"] = sec;
+								return true;
 							}
 						}
 					}
@@ -328,38 +314,32 @@ export default class SHParser {
 			sec,
 			frac,
 			pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthMandatoryPrefix())) {
-					if (this.isToken("DASH")) {
+				day = this.dayMandatoryPrefix();
+				if (day && this.isToken("SIGN_TIME")) {
+					this.nextToken();
+					h24 = this.hour24();
+					if (h24 && this.isToken("COLON")) {
 						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							if (this.isToken("SIGN_TIME")) {
-								this.nextToken();
-								if ((h24 = this.hour24())) {
-									if (this.isToken("COLON")) {
-										this.nextToken();
-										if ((min = this.minutesMandatoryPrefix())) {
-											if (this.isToken("COLON")) {
-												this.nextToken();
-												if ((sec = this.secondsMandatoryPrefix())) {
-													if ((frac = this.fraction())) {
-														this.TZCorrection();
-														this.data["YEAR"] = year;
-														this.data["MONTH"] = month;
-														this.data["DAY"] = day;
-														this.data["HOURS"] = h24;
-														this.data["MINUTES"] = min;
-														this.data["SECONDS"] = sec;
-														this.data["FRAC"] = frac;
-														return true;
-													}
-												}
-											}
-										}
-									}
-								}
+						min = this.minutesMandatoryPrefix();
+						if (min && this.isToken("COLON")) {
+							this.nextToken();
+							sec = this.secondsMandatoryPrefix();
+							if (sec && (frac = this.fraction())) {
+								this.TZCorrection();
+								this.data["YEAR"] = year;
+								this.data["MONTH"] = month;
+								this.data["DAY"] = day;
+								this.data["HOURS"] = h24;
+								this.data["MINUTES"] = min;
+								this.data["SECONDS"] = sec;
+								this.data["FRAC"] = frac;
+								return true;
 							}
 						}
 					}
@@ -407,30 +387,27 @@ export default class SHParser {
 			min,
 			sec,
 			pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if ((month = this.monthMandatoryPrefix())) {
-				if ((day = this.dayMandatoryPrefix())) {
-					if (this.isToken("SIGN_TIME")) {
+		year = this.year4MandatoryPrefix();
+		month = this.monthMandatoryPrefix();
+		day = this.dayMandatoryPrefix();
+		if (year && month && day && this.isToken("SIGN_TIME")) {
+			this.nextToken();
+			if ((h12 = this.hour12()) || (h12 = this.hour24())) {
+				if (this.isToken("COLON")) {
+					this.nextToken();
+				}
+				if ((min = this.minutesMandatoryPrefix())) {
+					if (this.isToken("COLON")) {
 						this.nextToken();
-						if ((h12 = this.hour12()) || (h12 = this.hour24())) {
-							if (this.isToken("COLON")) {
-								this.nextToken();
-							}
-							if ((min = this.minutesMandatoryPrefix())) {
-								if (this.isToken("COLON")) {
-									this.nextToken();
-								}
-								if ((sec = this.secondsMandatoryPrefix())) {
-									this.data["YEAR"] = year;
-									this.data["MONTH"] = month;
-									this.data["DAY"] = day;
-									this.data["HOURS"] = h12;
-									this.data["MINUTES"] = min;
-									this.data["SECONDS"] = sec;
-									return true;
-								}
-							}
-						}
+					}
+					if ((sec = this.secondsMandatoryPrefix())) {
+						this.data["YEAR"] = year;
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						this.data["HOURS"] = h12;
+						this.data["MINUTES"] = min;
+						this.data["SECONDS"] = sec;
+						return true;
 					}
 				}
 			}
@@ -452,34 +429,29 @@ export default class SHParser {
 			min,
 			sec,
 			pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthOptionalPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthOptionalPrefix())) {
-					if (this.isToken("DASH")) {
+				day = this.dayOptionalPrefix();
+				if (day && this.isToken("SIGN_TIME")) {
+					this.nextToken();
+					h12 = this.hour12();
+					if (h12 && this.isToken("COLON")) {
 						this.nextToken();
-						if ((day = this.dayOptionalPrefix())) {
-							if (this.isToken("SIGN_TIME")) {
-								this.nextToken();
-								if ((h12 = this.hour12())) {
-									if (this.isToken("COLON")) {
-										this.nextToken();
-										if ((min = this.minutesOptionalPrefix())) {
-											if (this.isToken("COLON")) {
-												this.nextToken();
-												if ((sec = this.secondsOptionalPrefix())) {
-													this.data["YEAR"] = year;
-													this.data["MONTH"] = month;
-													this.data["DAY"] = day;
-													this.data["HOURS"] = h12;
-													this.data["MINUTES"] = min;
-													this.data["SECONDS"] = sec;
-													return true;
-												}
-											}
-										}
-									}
-								}
+						min = this.minutesOptionalPrefix();
+						if (min && this.isToken("COLON")) {
+							this.nextToken();
+							if ((sec = this.secondsOptionalPrefix())) {
+								this.data["YEAR"] = year;
+								this.data["MONTH"] = month;
+								this.data["DAY"] = day;
+								this.data["HOURS"] = h12;
+								this.data["MINUTES"] = min;
+								this.data["SECONDS"] = sec;
+								return true;
 							}
 						}
 					}
@@ -503,32 +475,29 @@ export default class SHParser {
 			frac,
 			meridian,
 			pos = this.getPosition();
-		if ((h12 = this.hour12())) {
-			if (this.isToken("COLON")) {
+		h12 = this.hour12();
+		if (h12 && this.isToken("COLON")) {
+			this.nextToken();
+			min = this.minutesMandatoryPrefix();
+			if (min && this.isToken("COLON")) {
 				this.nextToken();
-				if ((min = this.minutesMandatoryPrefix())) {
-					if (this.isToken("COLON")) {
-						this.nextToken();
-						if ((sec = this.secondsMandatoryPrefix())) {
-							if (this.isToken("DOT") || this.isToken("COLON")) {
-								this.nextToken();
-								if ((frac = this.number())) {
-									if ((meridian = this.meridian())) {
-										if (meridian) {
-											this.data["HOURS"] = h12 + 12;
-											this.data["PM"] = true;
-										} else {
-											this.data["HOURS"] = h12;
-											this.data["AM"] = true;
-										}
-										this.data["MINUTES"] = min;
-										this.data["SECONDS"] = sec;
-										this.data["FRAC"] = frac;
-										return true;
-									}
-								}
-							}
+				sec = this.secondsMandatoryPrefix();
+				if (sec && (this.isToken("DOT") || this.isToken("COLON"))) {
+					this.nextToken();
+					frac = this.number();
+					meridian = this.meridian();
+					if (frac && meridian) {
+						if (meridian) {
+							this.data["HOURS"] = h12 + 12;
+							this.data["PM"] = true;
+						} else {
+							this.data["HOURS"] = h12;
+							this.data["AM"] = true;
 						}
+						this.data["MINUTES"] = min;
+						this.data["SECONDS"] = sec;
+						this.data["FRAC"] = frac;
+						return true;
 					}
 				}
 			}
@@ -568,15 +537,13 @@ export default class SHParser {
 			this.data["RTDAY"] = true;
 			this.restTime();
 			return true;
-		} else if (this.minutes15Hour()) {
-			return true;
-		} else if (this.setDayOfMonth()) {
-			return true;
-		} else if (this.setWeekDayOfMonth()) {
-			return true;
-		} else if (this.handleRelTimeNumber()) {
-			return true;
-		} else if (this.handleRelTimeText()) {
+		} else if (
+			this.minutes15Hour() ||
+			this.setDayOfMonth() ||
+			this.setWeekDayOfMonth() ||
+			this.handleRelTimeNumber() ||
+			this.handleRelTimeText()
+		) {
 			return true;
 		} else if (this.isToken("ago")) {
 			// Negates all the values of previously found relative time items.
@@ -623,45 +590,43 @@ export default class SHParser {
 		if (this.isToken("BACK")) {
 			// 15 minutes past the specified hour
 			this.nextToken();
-			if (this.whiteSpace()) {
-				if (this.isToken("OF")) {
-					this.nextToken();
-					if (this.whiteSpace()) {
-						if (this.hour12Notation() || (h24 = this.hour24())) {
-							if (!isNumeric(h24)) {
-								h24 = this.data["HOURS"];
-							}
-							this.data["HOURS"] = h24;
-							this.data["MINUTES"] = 15;
-							this.data["SECONDS"] = 0;
-							this.data["MINUTES_15_PAST_SPECIFIED_HOUR"] = +15;
-							return true;
-						}
+			if (this.whiteSpace() && this.isToken("OF")) {
+				this.nextToken();
+				if (
+					this.whiteSpace() &&
+					(this.hour12Notation() || (h24 = this.hour24()))
+				) {
+					if (!isNumeric(h24)) {
+						h24 = this.data["HOURS"];
 					}
+					this.data["HOURS"] = h24;
+					this.data["MINUTES"] = 15;
+					this.data["SECONDS"] = 0;
+					this.data["MINUTES_15_PAST_SPECIFIED_HOUR"] = +15;
+					return true;
 				}
 			}
 		} else if (this.isToken("FRONT")) {
 			// 15 minutes before the specified hour
 			h24 = false;
 			this.nextToken();
-			if (this.whiteSpace()) {
-				if (this.isToken("OF")) {
-					this.nextToken();
-					if (this.whiteSpace()) {
-						if (this.hour12Notation() || (h24 = this.hour24())) {
-							if (!isNumeric(h24)) {
-								h24 = this.data["HOURS"];
-							}
-							this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
-							this.data["HOURS"] = h24 - 1;
-							this.data["MINUTES"] = 45;
-							this.data["SECONDS"] = 0;
-							if (!this.Date.checktime(h24 - 1, 45, 0)) {
-								this.data["HOURS"] = this.Date.revTime(h24 - 1, 45, 0)[0];
-							}
-							return true;
-						}
+			if (this.whiteSpace() && this.isToken("OF")) {
+				this.nextToken();
+				if (
+					this.whiteSpace() &&
+					(this.hour12Notation() || (h24 = this.hour24()))
+				) {
+					if (!isNumeric(h24)) {
+						h24 = this.data["HOURS"];
 					}
+					this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
+					this.data["HOURS"] = h24 - 1;
+					this.data["MINUTES"] = 45;
+					this.data["SECONDS"] = 0;
+					if (!this.Date.checktime(h24 - 1, 45, 0)) {
+						this.data["HOURS"] = this.Date.revTime(h24 - 1, 45, 0)[0];
+					}
+					return true;
 				}
 			}
 		}
@@ -676,12 +641,11 @@ export default class SHParser {
 	 * @return bool
 	 */
 	setDayOfYear() {
-		let int, int2;
-		if ((int = this.int00() || this.int01To09() || this.int10To99())) {
-			if ((int2 = this.int0() || this.int1To9())) {
-				int += int2;
-				return int;
-			}
+		let int: any, int2;
+		int = this.int00() || this.int01To09() || this.int10To99();
+		int2 = this.int0() || this.int1To9();
+		if (int && int2) {
+			return (int += "" + int2);
 		}
 		return false;
 	}
@@ -698,55 +662,49 @@ export default class SHParser {
 		if (this.isToken("FIRST")) {
 			// Sets the day of the first of the current month. This phrase is best used together with a month name following it.
 			this.nextToken();
-			if (this.whiteSpace()) {
-				if (this.isToken("DAY")) {
+			if (this.whiteSpace() && this.isToken("DAY")) {
+				this.nextToken();
+				if (this.whiteSpace() && this.isToken("OF")) {
 					this.nextToken();
-					if (this.whiteSpace()) {
-						if (this.isToken("OF")) {
-							this.nextToken();
-							if (this.whiteSpace()) {
-								if (this.RelativeFormats() || this.DateFormats()) {
-									this.data["FIRST_DAY_CURRENT_MONTH"] = true;
-									this.data["DAY"] = 1;
-									this.data["HOURS"] = 0;
-									this.data["MINUTES"] = 0;
-									this.data["SECONDS"] = 0;
-									return true;
-								}
-							}
-						}
+					if (
+						this.whiteSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						this.data["FIRST_DAY_CURRENT_MONTH"] = true;
+						this.data["DAY"] = 1;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
 					}
 				}
 			}
 		} else if (this.isToken("LAST")) {
 			// Sets the day to the last day of the current month. This phrase is best used together with a month name following it.
 			this.nextToken();
-			if (this.whiteSpace()) {
-				if (this.isToken("DAY")) {
+			if (this.whiteSpace() && this.isToken("DAY")) {
+				this.nextToken();
+				if (this.whiteSpace() && this.isToken("OF")) {
 					this.nextToken();
-					if (this.whiteSpace()) {
-						if (this.isToken("OF")) {
-							this.nextToken();
-							if (this.whiteSpace()) {
-								if (this.RelativeFormats() || this.DateFormats()) {
-									this.data["LAST_DAY_CURRENT_MONTH"] = true;
-									// this.data["DAY"] = this.Date.getDaysInMonth(
-									// 	this.data["YEAR"],
-									// 	this.data["MONTH"]
-									// );
-									// console.log(
-									// 	this.Date.getDaysInMonth(
-									// 		this.data["YEAR"],
-									// 		this.data["MONTH"]
-									// 	)
-									// );
-									this.data["HOURS"] = 0;
-									this.data["MINUTES"] = 0;
-									this.data["SECONDS"] = 0;
-									return true;
-								}
-							}
-						}
+					if (
+						this.whiteSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						this.data["LAST_DAY_CURRENT_MONTH"] = true;
+						// this.data["DAY"] = this.Date.getDaysInMonth(
+						// 	this.data["YEAR"],
+						// 	this.data["MONTH"]
+						// );
+						// console.log(
+						// 	this.Date.getDaysInMonth(
+						// 		this.data["YEAR"],
+						// 		this.data["MONTH"]
+						// 	)
+						// );
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
 					}
 				}
 			}
@@ -772,39 +730,38 @@ export default class SHParser {
 			// Calculates the last week day of the current month.
 			this.nextToken();
 			if (this.whiteSpace()) {
-				if ((dow = this.dayNeme())) {
-					if (this.whiteSpace()) {
-						if (this.isToken("OF")) {
-							this.nextToken();
-							if (this.whiteSpace()) {
-								if (this.RelativeFormats() || this.DateFormats()) {
-									// dow29month = this.Date.getDayOfWeek(
-									// 	this.data["YEAR"],
-									// 	this.data["MONTH"],
-									// 	this.Date.getDaysInMonth(
-									// 		this.data["YEAR"],
-									// 		this.data["MONTH"]
-									// 	)
-									// );
-									// if (dow < dow29month) {
-									// 	diffdow = dow29month - dow;
-									// } else if (dow > dow29month) {
-									// 	diffdow = 7 - dow - dow29month;
-									// } else {
-									// 	diffdow = 0;
-									// }
-									// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-									// 	this.Date.getDaysOfDay(
-									// 		this.data["YEAR"],
-									// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
-									// 			diffdow
-									// 	);
-									this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
-									this.data["HOURS"] = 0;
-									this.data["MINUTES"] = 0;
-									this.data["SECONDS"] = 0;
-									return true;
-								}
+				dow = this.dayNeme();
+				if (dow && this.whiteSpace()) {
+					if (this.isToken("OF")) {
+						this.nextToken();
+						if (this.whiteSpace()) {
+							if (this.RelativeFormats() || this.DateFormats()) {
+								// dow29month = this.Date.getDayOfWeek(
+								// 	this.data["YEAR"],
+								// 	this.data["MONTH"],
+								// 	this.Date.getDaysInMonth(
+								// 		this.data["YEAR"],
+								// 		this.data["MONTH"]
+								// 	)
+								// );
+								// if (dow < dow29month) {
+								// 	diffdow = dow29month - dow;
+								// } else if (dow > dow29month) {
+								// 	diffdow = 7 - dow - dow29month;
+								// } else {
+								// 	diffdow = 0;
+								// }
+								// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+								// 	this.Date.getDaysOfDay(
+								// 		this.data["YEAR"],
+								// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
+								// 			diffdow
+								// 	);
+								this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
+								this.data["HOURS"] = 0;
+								this.data["MINUTES"] = 0;
+								this.data["SECONDS"] = 0;
+								return true;
 							}
 						}
 					}
@@ -813,44 +770,43 @@ export default class SHParser {
 		} else if ((int = this.ordinal())) {
 			// Calculates the x-th week day of the current month.
 			if (this.whiteSpace()) {
-				if ((dow = this.dayNeme())) {
-					if (this.whiteSpace()) {
-						if (this.isToken("OF")) {
-							this.nextToken();
-							if (this.whiteSpace()) {
-								if (this.RelativeFormats() || this.DateFormats()) {
-									if (int > 0) {
-										// dow1month = this.Date.getDayOfWeek(
-										// 	this.data["YEAR"],
-										// 	this.data["MONTH"],
-										// 	1
-										// );
-										// if (dow < dow1month) {
-										// 	diffdow = dow1month - dow;
-										// } else if (dow > dow1month) {
-										// 	diffdow = 7 - dow - dow1month;
-										// } else {
-										// 	diffdow = 0;
-										// }
-										// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-										// 	this.Date.getDaysOfDay(
-										// 		this.data["YEAR"],
-										// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
-										// 			diffdow +
-										// 			(int - 1) * 7
-										// 	);
-										return true;
-									} else if (int == 0) {
-									} else if (int == -1) {
-									} else if (int == -2) {
-									} else if (int == -3) {
-									}
-									this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
-									this.data["HOURS"] = 0;
-									this.data["MINUTES"] = 0;
-									this.data["SECONDS"] = 0;
+				dow = this.dayNeme();
+				if (dow && this.whiteSpace()) {
+					if (this.isToken("OF")) {
+						this.nextToken();
+						if (this.whiteSpace()) {
+							if (this.RelativeFormats() || this.DateFormats()) {
+								if (int > 0) {
+									// dow1month = this.Date.getDayOfWeek(
+									// 	this.data["YEAR"],
+									// 	this.data["MONTH"],
+									// 	1
+									// );
+									// if (dow < dow1month) {
+									// 	diffdow = dow1month - dow;
+									// } else if (dow > dow1month) {
+									// 	diffdow = 7 - dow - dow1month;
+									// } else {
+									// 	diffdow = 0;
+									// }
+									// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+									// 	this.Date.getDaysOfDay(
+									// 		this.data["YEAR"],
+									// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
+									// 			diffdow +
+									// 			(int - 1) * 7
+									// 	);
 									return true;
+								} else if (int == 0) {
+								} else if (int == -1) {
+								} else if (int == -2) {
+								} else if (int == -3) {
 								}
+								this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
+								this.data["HOURS"] = 0;
+								this.data["MINUTES"] = 0;
+								this.data["SECONDS"] = 0;
+								return true;
 							}
 						}
 					}
@@ -995,13 +951,12 @@ export default class SHParser {
 	handleRelTimeFormat() {
 		let int,
 			pos = this.getPosition();
-		if ((int = this.relText())) {
-			// Handles the special format "weekday + last/this/next week".
-			if (this.whiteSpace()) {
-				if (this.isToken("WEEK")) {
-					this.nextToken();
-					return true;
-				}
+		int = this.relText();
+		// Handles the special format "weekday + last/this/next week".
+		if (int && this.whiteSpace()) {
+			if (this.isToken("WEEK")) {
+				this.nextToken();
+				return true;
 			}
 		}
 		this.resetPosition(pos);
@@ -1015,12 +970,7 @@ export default class SHParser {
 	 */
 	TimeFormats() {
 		// hh [.:]? II? [.:]? SS? space? meridian
-		if (this.hour12Notation()) {
-			return true;
-		} else if (this.hour24Notation()) {
-			return true;
-		}
-		return false;
+		return this.hour12Notation() || this.hour24Notation();
 	}
 
 	/**
@@ -1120,26 +1070,15 @@ export default class SHParser {
 	 */
 	DateFormats() {
 		// Localized Notations
-		let year, month;
-		if (this.usaDate()) {
-			// mm / dd /? y?
-			return true;
-		} else if (this.year4Date()) {
-			return true;
-		} else if (this.yearMonthAbbrDayDashes()) {
-			return true;
-		} else if (this.year2MonthDay()) {
-			return true;
-		} else if (this.dayMonth2digit4Year()) {
-			return true;
-		} else if ((year = this.year4MandatoryPrefix())) {
-			this.data["YEAR"] = year;
-			return true;
-		} else if ((month = this.monthTextualFull())) {
-			this.data["MONTH"] = month;
-			return true;
-		}
-		return false;
+		return (
+			this.usaDate() ||
+			this.year4Date() ||
+			this.yearMonthAbbrDayDashes() ||
+			this.year2MonthDay() ||
+			this.dayMonth2digit4Year() ||
+			this.year4MandatoryPrefix() ||
+			(this.data["MONTH"] = this.monthTextualFull())
+		);
 	}
 
 	/**
@@ -1150,22 +1089,22 @@ export default class SHParser {
 	usaDate() {
 		let pos, year, month, day;
 		pos = this.getPosition();
-		if ((month = this.monthOptionalPrefix())) {
-			if (this.isToken("SLASH")) {
-				this.nextToken();
-				if ((day = this.dayOptionalPrefix())) {
-					if (this.isToken("SLASH")) {
-						this.nextToken();
-						if ((year = this.yearOptionalPrefix())) {
-							this.data["YEAR"] = year;
-						}
+		month = this.monthOptionalPrefix();
+		if (month && this.isToken("SLASH")) {
+			this.nextToken();
+			if ((day = this.dayOptionalPrefix())) {
+				if (this.isToken("SLASH")) {
+					this.nextToken();
+					if ((year = this.yearOptionalPrefix())) {
+						this.data["YEAR"] = year;
 					}
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
 				}
+				this.data["MONTH"] = month;
+				this.data["DAY"] = day;
+				return true;
 			}
 		}
+
 		this.resetPosition(pos);
 		return false;
 	}
@@ -1178,11 +1117,11 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year4MandatoryPrefix() {
-		let int2, int;
-		if ((int = this.year2MandatoryPrefix())) {
-			if ((int2 = this.year2MandatoryPrefix())) {
-				return (int += int2);
-			}
+		let y1, y2;
+		y1 = this.year2MandatoryPrefix();
+		y2 = this.year2MandatoryPrefix();
+		if (y1 && y2) {
+			return (this.data["YEAR"] = y1 + "" + y2);
 		}
 		return false;
 	}
@@ -1195,7 +1134,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	yearOptionalPrefix() {
-		let int, int2;
+		let int: any, int2;
 		if (
 			(int =
 				this.int00() ||
@@ -1212,7 +1151,7 @@ export default class SHParser {
 					this.int1To9() ||
 					this.int10To99())
 			) {
-				return (int += int2);
+				return (int += "" + int2);
 			}
 			return int;
 		}
@@ -1229,27 +1168,18 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year4Date() {
-		if (this.year4MonthDayDlashes()) {
-			// YY "/" mm "/" dd
-			return true;
-		}
-		if (this.year4MonthDay()) {
-			//ISO  YY "/"? MM "/"? DD
-			return true;
-		}
-		if (this.year4MonthGNU()) {
-			// YY "-" mm
-			return true;
-		}
-		if (this.year4TextualMonth()) {
-			// YY ([ \t.-])* m    Day reset to 1
-			return true;
-		}
-		if (this.year4SignMonthDay()) {
-			// [+-]? YY "-" MM "-" DD
-			return true;
-		}
-		return false;
+		// YY "/" mm "/" dd
+		//ISO  YY "/"? MM "/"? DD
+		// YY "-" mm
+		// YY ([ \t.-])* m    Day reset to 1
+		// [+-]? YY "-" MM "-" DD
+		return (
+			this.year4MonthDayDlashes() ||
+			this.year4MonthDay() ||
+			this.year4MonthGNU() ||
+			this.year4TextualMonth() ||
+			this.year4SignMonthDay()
+		);
 	}
 
 	/**
@@ -1261,19 +1191,17 @@ export default class SHParser {
 		// YY "/" mm "/" dd
 		let pos, year, month, day;
 		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("SLASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("SLASH")) {
+			this.nextToken();
+			month = this.monthOptionalPrefix();
+			if (month && this.isToken("SLASH")) {
 				this.nextToken();
-				if ((month = this.monthOptionalPrefix())) {
-					if (this.isToken("SLASH")) {
-						this.nextToken();
-						if ((day = this.dayOptionalPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((day = this.dayOptionalPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1319,14 +1247,13 @@ export default class SHParser {
 		// YY "-" mm
 		let pos, year, month, day;
 		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
-				this.nextToken();
-				if ((month = this.monthOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					return true;
-				}
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			if ((month = this.monthOptionalPrefix())) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				return true;
 			}
 		}
 		this.resetPosition(pos);
@@ -1374,19 +1301,17 @@ export default class SHParser {
 		if ((sign = this.signNumber())) {
 			this.data["SIGN_DATE"] = sign;
 		}
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthMandatoryPrefix())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1401,14 +1326,9 @@ export default class SHParser {
 	 * @return bool
 	 */
 	yearMonthAbbrDayDashes() {
-		if (this.yearMonthDayDashes()) {
-			// y "-" mm "-" dd
-			return true;
-		} else if (this.yearMonthAbbrDay()) {
-			// y "-" M "-" DD
-			return true;
-		}
-		return false;
+		// y "-" mm "-" dd
+		// y "-" M "-" DD
+		return this.yearMonthDayDashes() || this.yearMonthAbbrDay();
 	}
 
 	/**
@@ -1420,19 +1340,17 @@ export default class SHParser {
 		// y "-" mm "-" dd
 		let pos, year, month, day;
 		pos = this.getPosition();
-		if ((year = this.yearOptionalPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.yearOptionalPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthOptionalPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthOptionalPrefix())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
-						if ((day = this.dayOptionalPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((day = this.dayOptionalPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1451,19 +1369,17 @@ export default class SHParser {
 			month,
 			day,
 			pos = this.getPosition();
-		if ((year = this.yearOptionalPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.yearOptionalPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthTextualShort();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthTextualShort())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1482,19 +1398,17 @@ export default class SHParser {
 			month,
 			day,
 			pos = this.getPosition();
-		if ((year = this.year2MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
+		year = this.year2MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				if ((month = this.monthMandatoryPrefix())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
-						if ((day = this.dayMandatoryPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1511,18 +1425,13 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayMonth2digit4Year() {
-		if (this.dayMonth4Year()) {
-			return true;
-		} else if (this.dayMonth2Year()) {
-			return true;
-		} else if (this.dayTextualMonthYear()) {
-			return true;
-		} else if (this.textualMonth4Year()) {
-			return true;
-		} else if (this.monthAbbrDayYear()) {
-			return true;
-		}
-		return false;
+		return (
+			this.dayMonth4Year() ||
+			this.dayMonth2Year() ||
+			this.dayTextualMonthYear() ||
+			this.textualMonth4Year() ||
+			this.monthAbbrDayYear()
+		);
 	}
 
 	/**
@@ -1536,21 +1445,22 @@ export default class SHParser {
 			month,
 			day,
 			pos = this.getPosition();
-		if ((day = this.dayOptionalPrefix())) {
-			if (this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH")) {
-				if (this.isToken("DOT") || this.isToken("DASH")) {
-					this.nextToken();
-				}
-				if ((month = this.monthOptionalPrefix())) {
-					if (this.isToken("DOT") || this.isToken("DASH")) {
-						this.nextToken();
-						if ((year = this.year4MandatoryPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+		day = this.dayOptionalPrefix();
+		if (
+			day &&
+			(this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH"))
+		) {
+			if (this.isToken("DOT") || this.isToken("DASH")) {
+				this.nextToken();
+			}
+			month = this.monthOptionalPrefix();
+			if (month && (this.isToken("DOT") || this.isToken("DASH"))) {
+				this.nextToken();
+				if ((year = this.year4MandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1689,19 +1599,17 @@ export default class SHParser {
 			month,
 			day,
 			pos = this.getPosition();
-		if ((month = this.monthTextualShort())) {
-			if (this.isToken("DASH")) {
+		month = this.monthTextualShort();
+		if (month && this.isToken("DASH")) {
+			this.nextToken();
+			day = this.dayMandatoryPrefix();
+			if (day && this.isToken("DASH")) {
 				this.nextToken();
-				if ((day = this.dayMandatoryPrefix())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
-						if ((year = this.yearOptionalPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
+				if ((year = this.yearOptionalPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -1771,7 +1679,7 @@ export default class SHParser {
 				this.int0() ||
 				this.int1To9())
 		) {
-			num += int; //sprintf('%s%s',$num,int);
+			num += "" + int; //sprintf('%s%s',$num,int);
 			isInt = true;
 		}
 		if (isInt) {
@@ -2009,7 +1917,7 @@ export default class SHParser {
 		if (this.isToken("DOT")) {
 			this.nextToken();
 			var isInt = false;
-			let int, num;
+			let int, num: any;
 			while (
 				(int =
 					this.int10To99() ||
@@ -2018,11 +1926,11 @@ export default class SHParser {
 					this.int0() ||
 					this.int1To9())
 			) {
-				num = num + "" + int; //sprintf('%s%s',num,int);
+				num += "" + int; //sprintf('%s%s',num,int);
 				isInt = true;
 			}
 			if (isInt) {
-				return num;
+				return num * 1; //convert to int
 			}
 		}
 		return false;
@@ -2167,7 +2075,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	monthOptionalPrefix() {
+	monthOptionalPrefix(): number | false {
 		return (
 			this.int00() ||
 			this.int0() ||
@@ -2184,7 +2092,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	monthMandatoryPrefix() {
+	monthMandatoryPrefix(): number | false {
 		return (
 			this.int00() || this.int01To09() || this.int1To9() || this.int10To12()
 		);
@@ -2196,7 +2104,7 @@ export default class SHParser {
 	 * @param  {int} int
 	 * @return bool
 	 */
-	year2MandatoryPrefix() {
+	year2MandatoryPrefix(): number | false {
 		return this.int00() || this.int01To09() || this.int10To99();
 	}
 
@@ -2206,7 +2114,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	setWeekOfYear() {
+	setWeekOfYear(): number | false {
 		return this.int00() || this.int01To09() || this.int10To53();
 	}
 	// Relative
@@ -2216,7 +2124,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	spaceMore() {
+	spaceMore(): boolean {
 		var space;
 		while (this.whiteSpace()) {
 			space = true;
@@ -2233,7 +2141,7 @@ export default class SHParser {
 	 * @param  int dow
 	 * @return bool
 	 */
-	dayNeme() {
+	dayNeme(): number | false {
 		switch (this.nameToken()) {
 			case "SATURDAY":
 				this.nextToken();
@@ -2266,7 +2174,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	daytext() {
+	daytext(): boolean {
 		if (this.isToken("WEEKDAY")) {
 			this.nextToken();
 			return true;
@@ -2280,7 +2188,7 @@ export default class SHParser {
 	 * @param  string sign
 	 * @return bool
 	 */
-	signNumber() {
+	signNumber(): string | false {
 		if (this.isToken("PLUS")) {
 			this.nextToken();
 			return "+";
@@ -2297,14 +2205,8 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	ordinal() {
-		let int;
-		if ((int = this.firstToThirtyFirstTextual())) {
-			return int;
-		} else if ((int = this.relText())) {
-			return int;
-		}
-		return false;
+	ordinal(): number | false {
+		return this.firstToThirtyFirstTextual() || this.relText();
 	}
 
 	/** //todo
@@ -2313,25 +2215,20 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	relText() {
-		var int;
+	relText(): number | false {
 		switch (this.nameToken()) {
 			case "THIS":
-				int = 0;
 				this.nextToken();
-				return int;
+				return 0;
 			case "NEXT":
-				int = -1;
 				this.nextToken();
-				return int;
+				return -1;
 			case "PREVIOUS":
-				int = -2;
 				this.nextToken();
-				return int;
+				return -2;
 			case "LAST":
-				int = -3;
 				this.nextToken();
-				return int;
+				return -3;
 			default:
 				return false;
 		}
@@ -2343,7 +2240,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	unit() {
+	unit(): number | false {
 		switch (this.nameToken()) {
 			case "SECOND":
 				this.nextToken();
@@ -2387,85 +2284,65 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	oneToThirtyOneTextual() {
-		var int;
+	oneToThirtyOneTextual(): number | false {
 		switch (this.nameToken()) {
 			case "ONE":
-				int = 1;
 				this.nextToken();
-				return int;
+				return 1;
 			case "TWO":
-				int = 2;
 				this.nextToken();
-				return int;
+				return 2;
 			case "THREE":
-				int = 3;
 				this.nextToken();
-				return int;
+				return 3;
 			case "FOUR":
-				int = 4;
 				this.nextToken();
-				return int;
+				return 4;
 			case "FIVE":
-				int = 5;
 				this.nextToken();
-				return int;
+				return 5;
 			case "SIX":
-				int = 6;
 				this.nextToken();
-				return int;
+				return 6;
 			case "SEVEN":
-				int = 7;
 				this.nextToken();
-				return int;
+				return 7;
 			case "EIGH":
-				int = 8;
 				this.nextToken();
-				return int;
+				return 8;
 			case "NINE":
-				int = 9;
 				this.nextToken();
-				return int;
+				return 9;
 			case "TEN":
-				int = 10;
 				this.nextToken();
-				return int;
+				return 10;
 			case "ELEVEN":
-				int = 11;
 				this.nextToken();
-				return int;
+				return 11;
 			case "TWELVE":
-				int = 12;
 				this.nextToken();
-				return int;
+				return 12;
 			case "THIRTEEN":
-				int = 13;
 				this.nextToken();
-				return int;
+				return 13;
 			case "FOURTEEN":
-				int = 14;
 				this.nextToken();
-				return int;
+				return 14;
 			case "FIFTEEN":
-				int = 15;
 				this.nextToken();
-				return int;
+				return 15;
 			case "SIXTEEN":
-				int = 16;
 				this.nextToken();
-				return int;
+				return 16;
 			case "SEVENTEEN":
-				int = 17;
 				this.nextToken();
-				return int;
+				return 17;
 			case "EIGHTEEN":
-				int = 18;
 				this.nextToken();
-				return int;
+				return 18;
 			case "NINETEEN":
-				int = 19;
 				this.nextToken();
-				return int;
+				return 19;
 			case "TWENTY":
 				this.nextToken();
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
@@ -2473,58 +2350,46 @@ export default class SHParser {
 				}
 				switch (this.nameToken()) {
 					case "ONE":
-						int = 21;
 						this.nextToken();
-						return int;
+						return 21;
 					case "TWO":
-						int = 22;
 						this.nextToken();
-						return int;
+						return 22;
 					case "THREE":
-						int = 23;
 						this.nextToken();
-						return int;
+						return 23;
 					case "FOUR":
-						int = 24;
 						this.nextToken();
-						return int;
+						return 24;
 					case "FIVE":
-						int = 25;
 						this.nextToken();
-						return int;
+						return 25;
 					case "SIX":
-						int = 26;
 						this.nextToken();
-						return int;
+						return 26;
 					case "SEVEN":
-						int = 27;
 						this.nextToken();
-						return int;
+						return 27;
 					case "EIGH":
-						int = 28;
 						this.nextToken();
-						return int;
+						return 28;
 					case "NINE":
-						int = 29;
 						this.nextToken();
-						return int;
+						return 29;
 					default:
-						int = 20;
 						this.nextToken();
-						return int;
+						return 20;
 				}
 			case "THIRTY":
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
 					this.nextToken();
 				}
 				if (this.isToken("ONE")) {
-					int = 31;
 					this.nextToken();
-					return int;
+					return 31;
 				}
-				int = 30;
 				this.nextToken();
-				return int;
+				return 30;
 			default:
 				return false;
 		}
@@ -2536,89 +2401,68 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	firstToThirtyFirstTextual() {
-		var int;
+	firstToThirtyFirstTextual(): number | false {
 		switch (this.nameToken()) {
 			case "FIRST":
-				int = 1;
 				this.nextToken();
-				return int;
+				return 1;
 			case "SECOND":
-				int = 2;
 				this.nextToken();
-				return int;
+				return 2;
 			case "THIRD":
-				int = 3;
 				this.nextToken();
-				return int;
+				return 3;
 			case "FOURTH":
-				int = 4;
 				this.nextToken();
-				return int;
+				return 4;
 			case "FIFTH":
-				int = 5;
 				this.nextToken();
-				return int;
+				return 5;
 			case "SIXTH":
-				int = 6;
 				this.nextToken();
-				return int;
+				return 6;
 			case "SEVENTH":
-				int = 7;
 				this.nextToken();
-				return int;
+				return 7;
 			case "EIGHTH":
-				int = 8;
 				this.nextToken();
-				return int;
+				return 8;
 			case "NINTH":
-				int = 9;
 				this.nextToken();
-				return int;
+				return 9;
 			case "TENTH":
-				int = 10;
 				this.nextToken();
-				return int;
+				return 10;
 			case "ELEVENTH":
-				int = 11;
 				this.nextToken();
-				return int;
+				return 11;
 			case "TWELFTH":
-				int = 12;
 				this.nextToken();
-				return int;
+				return 12;
 			case "THIRTEENTH":
-				int = 13;
 				this.nextToken();
-				return int;
+				return 13;
 			case "FOURTEENTH":
-				int = 14;
 				this.nextToken();
-				return int;
+				return 14;
 			case "FIFTEENTH":
-				int = 15;
 				this.nextToken();
-				return int;
+				return 15;
 			case "SIXTEENTH":
-				int = 16;
 				this.nextToken();
-				return int;
+				return 16;
 			case "SEVENTEENTH":
-				int = 17;
 				this.nextToken();
-				return int;
+				return 17;
 			case "EIGHTEENTH":
-				int = 18;
 				this.nextToken();
-				return int;
+				return 18;
 			case "NINETEENTH":
-				int = 19;
 				this.nextToken();
-				return int;
+				return 19;
 			case "TWENTIETH":
-				int = 20;
 				this.nextToken();
-				return int;
+				return 20;
 			case "TWENTY": {
 				this.nextToken();
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
@@ -2626,59 +2470,46 @@ export default class SHParser {
 				}
 				switch (this.nameToken()) {
 					case "FIRST":
-						int = 21;
 						this.nextToken();
-						return int;
+						return 21;
 					case "SECOND":
-						int = 22;
 						this.nextToken();
-						return int;
+						return 22;
 					case "THIRD":
-						int = 23;
 						this.nextToken();
-						return int;
+						return 23;
 					case "FOURTH":
-						int = 24;
 						this.nextToken();
-						return int;
+						return 24;
 					case "FIFTH":
-						int = 25;
 						this.nextToken();
-						return int;
+						return 25;
 					case "SIXTH":
-						int = 26;
 						this.nextToken();
-						return int;
+						return 26;
 					case "SEVENTH":
-						int = 27;
 						this.nextToken();
-						return int;
+						return 27;
 					case "EIGHTH":
-						int = 28;
 						this.nextToken();
-						return int;
+						return 28;
 					case "NINTH":
-						int = 29;
 						this.nextToken();
-						return int;
+						return 29;
 				}
 				break;
 			}
 			case "THIRTIETH":
-				int = 30;
 				this.nextToken();
-				return int;
-			case "THIRTY": {
+				return 30;
+			case "THIRTY":
 				if (this.isToken("DASH") || this.isToken("SPACE")) {
 					this.nextToken();
 				}
 				if (this.isToken("FIRST")) {
-					int = 31;
 					this.nextToken();
-					return int;
+					return 31;
 				}
-				break;
-			}
 			default:
 				return false;
 		}
@@ -2690,7 +2521,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To99() {
+	int10To99(): number | false {
 		switch (this.nameToken()) {
 			case "INT_60":
 			case "INT_61":
@@ -2734,7 +2565,7 @@ export default class SHParser {
 			case "INT_99":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To59();
 		}
@@ -2746,7 +2577,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To59() {
+	int10To59(): number | false {
 		switch (this.nameToken()) {
 			case "INT_54":
 			case "INT_55":
@@ -2756,7 +2587,7 @@ export default class SHParser {
 			case "INT_59":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To53();
 		}
@@ -2768,7 +2599,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To53() {
+	int10To53(): number | false {
 		switch (this.nameToken()) {
 			case "INT_37":
 			case "INT_38":
@@ -2789,7 +2620,7 @@ export default class SHParser {
 			case "INT_53":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To36();
 		}
@@ -2801,7 +2632,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To36() {
+	int10To36(): number | false {
 		switch (this.nameToken()) {
 			case "INT_32":
 			case "INT_33":
@@ -2810,7 +2641,7 @@ export default class SHParser {
 			case "INT_36":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To31();
 		}
@@ -2822,7 +2653,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To31() {
+	int10To31(): number | false {
 		switch (this.nameToken()) {
 			case "INT_25":
 			case "INT_26":
@@ -2833,7 +2664,7 @@ export default class SHParser {
 			case "INT_31":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To24();
 		}
@@ -2845,11 +2676,11 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To24() {
+	int10To24(): number | false {
 		if (this.isToken("INT_24")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int;
+			return int * 1;
 		}
 		return this.int10To23();
 	}
@@ -2860,7 +2691,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To23() {
+	int10To23(): number | false {
 		switch (this.nameToken()) {
 			case "INT_13":
 			case "INT_14":
@@ -2875,7 +2706,7 @@ export default class SHParser {
 			case "INT_23":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int10To12();
 		}
@@ -2887,14 +2718,14 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To12() {
+	int10To12(): number | false {
 		switch (this.nameToken()) {
 			case "INT_10":
 			case "INT_11":
 			case "INT_12":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return false;
 		}
@@ -2906,7 +2737,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int01To09() {
+	int01To09(): number | false {
 		switch (this.nameToken()) {
 			case "INT_01":
 			case "INT_02":
@@ -2919,7 +2750,7 @@ export default class SHParser {
 			case "INT_09":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return false;
 		}
@@ -2931,13 +2762,13 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int1To9() {
+	int1To9(): number | false {
 		switch (this.nameToken()) {
 			case "INT_8":
 			case "INT_9":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return this.int1To7();
 		}
@@ -2949,7 +2780,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int1To7(): Number | false {
+	int1To7(): number | false {
 		switch (this.nameToken()) {
 			case "INT_1":
 			case "INT_2":
@@ -2960,7 +2791,7 @@ export default class SHParser {
 			case "INT_7":
 				const int = this.valueToken();
 				this.nextToken();
-				return int;
+				return int * 1;
 			default:
 				return false;
 		}
@@ -2972,11 +2803,11 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int00(): Number | false {
+	int00(): number | false {
 		if (this.isToken("INT_00")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int;
+			return int * 1;
 		}
 		return false;
 	}
@@ -2987,11 +2818,11 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int0(): Number | false {
+	int0(): number | false {
 		if (this.isToken("INT_0")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int;
+			return int * 1;
 		}
 		return false;
 	}
