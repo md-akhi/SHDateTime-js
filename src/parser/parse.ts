@@ -1,8 +1,3 @@
-//import SHDate from "./index.js";
-function isNumeric(value: string) {
-	return /^\d+\.\d+$/.test(value);
-}
-
 import { Export_SHDate } from "../base.js";
 
 import SHLexer from "./lexer.js";
@@ -2495,6 +2490,7 @@ export default class SHParser {
 					this.nextToken();
 					return 31;
 				}
+				return false;
 			default:
 				return false;
 		}

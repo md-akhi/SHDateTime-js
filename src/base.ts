@@ -161,7 +161,7 @@ export default class SHDate {
 		else if (typeof mix == "string") {
 			const [time = this.getTime()] = args;
 			// dateString
-			this.strToTime(new SHParser(mix, time));
+			this.strToTime(new SHParser(mix), time);
 		} else if (mix instanceof SHDate || mix instanceof Date)
 			// dateObject
 			this.setTime(mix.getTime());
@@ -169,9 +169,26 @@ export default class SHDate {
 		return this;
 	}
 
-	strToTime(SHParser: any) {
-		let date = this;
+	strToTime(SHParser: any, time: number) {
 		console.log(JSON.stringify(SHParser, null, 2));
+		let obj_len = Object.keys(SHParser).length;
+		while (obj_len-- >= 0) {
+			if (SHParser["YEAR"] !== "") {
+				this.setFullYear(SHParser["YEAR"] * 1);
+			} else if (SHParser["MONTH"] !== "") {
+				this.setMonth(SHParser["MONTH"] * 1);
+			} else if (SHParser["DAY"] !== "") {
+				this.setDate(SHParser["DAY"] * 1);
+			} else if (SHParser["HOURS"] !== "") {
+				this.setHours(SHParser["HOURS"] * 1);
+			} else if (SHParser["MINUTES"] !== "") {
+				this.setMinutes(SHParser["MINUTES"] * 1);
+			} else if (SHParser["SECONDS"] !== "") {
+				this.setSeconds(SHParser["SECONDS"] * 1);
+			}
+		}
+		console.log(this.setFullYear(SHParser["YEAR"] * 1), this.toString());
+		return this;
 	}
 	/**
 	 * update date
