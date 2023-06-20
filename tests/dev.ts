@@ -80,7 +80,7 @@ import SHDate from "../src/base";
 // 	});
 // }
 
-console.log(new SHDate().toString());
+console.log("now:" + new SHDate().toString());
 console.log(
-	new SHDate("1395/12/1") // Farvardin, 1 Day 1401
+	new SHDate("1395/12/01") // Farvardin, 1 Day 1401
 );

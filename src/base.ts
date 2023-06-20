@@ -161,7 +161,8 @@ export default class SHDate {
 		else if (typeof mix == "string") {
 			const [time = this.getTime()] = args;
 			// dateString
-			this.strToTime(new SHParser(mix), time);
+			this.setTime(time);
+			SHDate.parse(mix);
 		} else if (mix instanceof SHDate || mix instanceof Date)
 			// dateObject
 			this.setTime(mix.getTime());
@@ -169,27 +170,6 @@ export default class SHDate {
 		return this;
 	}
 
-	strToTime(SHParser: any, time: number) {
-		console.log(JSON.stringify(SHParser, null, 2));
-		let obj_len = Object.keys(SHParser).length;
-		while (obj_len-- >= 0) {
-			if (SHParser["YEAR"] !== "") {
-				this.setFullYear(SHParser["YEAR"] * 1);
-			} else if (SHParser["MONTH"] !== "") {
-				this.setMonth(SHParser["MONTH"] * 1);
-			} else if (SHParser["DAY"] !== "") {
-				this.setDate(SHParser["DAY"] * 1);
-			} else if (SHParser["HOURS"] !== "") {
-				this.setHours(SHParser["HOURS"] * 1);
-			} else if (SHParser["MINUTES"] !== "") {
-				this.setMinutes(SHParser["MINUTES"] * 1);
-			} else if (SHParser["SECONDS"] !== "") {
-				this.setSeconds(SHParser["SECONDS"] * 1);
-			}
-		}
-		console.log(this.setFullYear(SHParser["YEAR"] * 1), this.toString());
-		return this;
-	}
 	/**
 	 * update date
 	 * @returns {null}
@@ -1408,9 +1388,27 @@ export default class SHDate {
 	 * @returns {number} The number of milliseconds between that date and midnight, 11 Dey 1348.
 	 * @since x.y.z
 	 * https://gitcode.net/openthos/gecko-dev/-/blob/GECKO120_2012041106_RELBRANCH/js/src/jsdate.cpp#L911
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+	 * https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
+	 * https://maggiepint.com/2017/04/11/fixing-javascript-date-web-compatibility-and-reality/
 	 */
 	public static parse(str: string): number {
-		throw new Error("Not Implemented parse"); // TODO: implement
+		//throw new Error("Not Implemented parse"); // TODO: implement
+		let date = new SHDate();
+		console.log(JSON.stringify(SHParser, null, 2));
+		let data = Object.entries(new SHParser(str));
+		data.forEach(([key, value]) => {
+			if (value !== "") {
+				if (key == "YEAR") date.setFullYear(value as number);
+				else if (key == "MONTH") date.setMonth((value as number) - 1);
+				else if (key == "DAY") date.setDate(value as number);
+				else if (key == "HOURS") date.setHours(parseInt(value as string));
+				else if (key == "MINUTES") date.setMinutes(parseInt(value as string));
+				else if (key == "SECONDS") date.setSeconds(parseInt(value as string));
+			}
+		});
+		console.log(date.toString());
+		return date.getTime();
 	}
 
 	/**

@@ -125,7 +125,7 @@ export default class SHLexer {
 	 * @return bool
 	 */
 	public isNextToken(tokenName: any) {
-		return false !== this.lookahead && this.lookahead.getName() === tokenName;
+		return this.lookahead !== false && this.lookahead.getName() === tokenName;
 	}
 
 	/**
@@ -135,7 +135,7 @@ export default class SHLexer {
 	 */
 	public isNextTokenAny(tokenNames: any[]) {
 		return (
-			false !== this.lookahead &&
+			this.lookahead !== false &&
 			tokenNames.find((value: any[]) => value == this.lookahead.getName())
 		);
 	}
@@ -180,11 +180,9 @@ export default class SHLexer {
 	 * @return null|Token
 	 */
 	public peeks() {
-		if (typeof this.tokens[this.position + this.peek] !== "undefined") {
+		if (typeof this.tokens[this.position + this.peek] !== "undefined")
 			return this.tokens[this.position + this.peek++];
-		} else {
-			return null;
-		}
+		return false;
 	}
 
 	/**
@@ -199,7 +197,6 @@ export default class SHLexer {
 				break;
 			}
 		}
-
 		return token;
 	}
 
@@ -211,7 +208,6 @@ export default class SHLexer {
 	public glimpse() {
 		let peek = this.peeks();
 		this.peek = 0;
-
 		return peek;
 	}
 }

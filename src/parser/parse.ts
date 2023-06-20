@@ -14,40 +14,40 @@ export default class SHParser {
 	public Lexer;
 	time: any;
 	data: any = {
-		YEAR: "",
-		MONTH: "",
-		DAY: "",
-		HOURS: "",
-		MINUTES: "",
-		SECONDS: "",
-		DAY_OF_YEAR: "",
-		DAY_OF_WEEK: "",
-		TIMESTAMP: "",
-		Sign_Timestamp: "",
-		RTDAY: "",
-		RYDAY: "",
-		FRAC: "",
-		PM: "",
-		AM: "",
-		NOW: "",
-		TODAY_MIDNIGHT: "",
-		NOON: "",
-		YESTERDAY: "",
-		TOMORROW: "",
-		AGO: "",
-		NEXT_DAY_OF_NAME: "",
-		MINUTES_15_PAST_SPECIFIED_HOUR: "",
-		MINUTES_15_BEFORE_SPECIFIED_HOUR: "",
-		FIRST_DAY_CURRENT_MONTH: "",
-		LAST_DAY_CURRENT_MONTH: "",
-		LAST_WEEK_DAY_CURRENT_MONTH: "",
-		TH_WEEK_DAY_CURRENT_MONTH: "",
-		SIGN_DATE: "",
-		TZ_SIGN_PLUS: "",
-		TZ_SIGN_DASH: "",
-		TZ_HOURS: "",
-		TZ_MINUTES: "",
-		TZ_NAME: ""
+		// YEAR: "",
+		// MONTH: "",
+		// DAY: "",
+		// HOURS: "",
+		// MINUTES: "",
+		// SECONDS: "",
+		// DAY_OF_YEAR: "",
+		// DAY_OF_WEEK: "",
+		// TIMESTAMP: "",
+		// Sign_Timestamp: "",
+		// RTDAY: "",
+		// RYDAY: "",
+		// FRAC: "",
+		// PM: "",
+		// AM: "",
+		// NOW: "",
+		// TODAY_MIDNIGHT: "",
+		// NOON: "",
+		// YESTERDAY: "",
+		// TOMORROW: "",
+		// AGO: "",
+		// NEXT_DAY_OF_NAME: "",
+		// MINUTES_15_PAST_SPECIFIED_HOUR: "",
+		// MINUTES_15_BEFORE_SPECIFIED_HOUR: "",
+		// FIRST_DAY_CURRENT_MONTH: "",
+		// LAST_DAY_CURRENT_MONTH: "",
+		// LAST_WEEK_DAY_CURRENT_MONTH: "",
+		// TH_WEEK_DAY_CURRENT_MONTH: "",
+		// SIGN_DATE: "",
+		// TZ_SIGN_PLUS: "",
+		// TZ_SIGN_DASH: "",
+		// TZ_HOURS: "",
+		// TZ_MINUTES: "",
+		// TZ_NAME: ""
 	};
 	Date: any;
 	/**
@@ -621,11 +621,11 @@ export default class SHParser {
 	 * @return bool
 	 */
 	setDayOfYear() {
-		let int: any, int2;
-		int = this.int00() || this.int01To09() || this.int10To99();
-		int2 = this.int0() || this.int1To9();
-		if (int && int2) {
-			return (int += "" + int2);
+		let doy1: any, doy2;
+		doy1 = this.int00() || this.int01To09() || this.int10To99();
+		doy2 = this.int0() || this.int1To9();
+		if (doy1 && doy2) {
+			return parseInt(doy1 + "" + doy2);
 		}
 		return false;
 	}
@@ -1101,7 +1101,7 @@ export default class SHParser {
 		y1 = this.year2MandatoryPrefix();
 		y2 = this.year2MandatoryPrefix();
 		if (y1 && y2) {
-			return (this.data["YEAR"] = y1 + "" + y2);
+			return (this.data["YEAR"] = parseInt(y1 + "" + y2));
 		}
 		return false;
 	}
@@ -1114,9 +1114,9 @@ export default class SHParser {
 	 * @return bool
 	 */
 	yearOptionalPrefix() {
-		let int: any, int2;
+		let y1: any, y2;
 		if (
-			(int =
+			(y1 =
 				this.int00() ||
 				this.int0() ||
 				this.int01To09() ||
@@ -1124,16 +1124,16 @@ export default class SHParser {
 				this.int10To99())
 		) {
 			if (
-				(int2 =
+				(y2 =
 					this.int00() ||
 					this.int0() ||
 					this.int01To09() ||
 					this.int1To9() ||
 					this.int10To99())
 			) {
-				return (int += "" + int2);
+				return parseInt(y1 + "" + y2);
 			}
-			return int;
+			return y1;
 		}
 		return false;
 	}
@@ -1695,7 +1695,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	isToken(token: any) {
-		return this.Lexer.getLookahead().is(token);
+		if (this.Lexer.getLookahead() !== false)
+			return this.Lexer.getLookahead().is(token);
 	}
 
 	/**
@@ -1704,7 +1705,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	nameToken() {
-		if (this.Lexer.getLookahead()) {
+		if (this.Lexer.getLookahead() !== false) {
 			return this.Lexer.getLookahead().getName();
 		}
 		return false;
