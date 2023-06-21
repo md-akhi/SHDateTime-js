@@ -929,15 +929,11 @@ export default class SHParser {
 	 * @return bool
 	 */
 	handleRelTimeFormat() {
-		let int,
-			pos = this.getPosition();
-		int = this.relText();
+		let pos = this.getPosition();
 		// Handles the special format "weekday + last/this/next week".
-		if (int && this.whiteSpace()) {
-			if (this.isToken("WEEK")) {
-				this.nextToken();
-				return true;
-			}
+		if (this.relText() && this.whiteSpace() && this.isToken("WEEK")) {
+			this.nextToken();
+			return true;
 		}
 		this.resetPosition(pos);
 		return false;
