@@ -75,7 +75,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	public CompoundFormats() {
+	public CompoundFormats(): boolean {
 		// Localized Notations
 		// dd/M/Y:HH:II:SS tspace tzcorrection
 		//  YY:MM:DD HH:II:SS
@@ -100,6 +100,58 @@ export default class SHParser {
 			this.MSSQL()
 		);
 	}
+	//"2017-04-05T05:57:53.350Z"
+	//"2017-12-05T05:57:53.350Z"
+	// YYYY
+	// YYYY-MM
+	// YYYY-MM-DD
+	// YYYY-MM-DDTHH:mm:ss.sssZ
+
+	// THH:mm
+	// THH:mm:ss
+	// THH:mm:ss.sss
+
+	// "2019-01-01"
+	// "2019-01-01T00:00:00.000Z"
+	// "2019-01-01T00:00:00.000+00:00"
+	// "2019-01-01T00:00:00"
+	/*
+Date.parse("Jan 1, 1970"); // 0 in all implementations
+
+Date.parse("Thu, 01 Jan 1970 00:00:00"); // 0 in all implementations
+
+Date.parse("1970,1,1"); // 0 in Chrome and Firefox, NaN in Safari
+
+Date.parse("02 01 1970");
+2678400000 in Chrome and Firefox (Sun Feb 01 1970 00:00:00 GMT+0000);
+NaN in Safari
+
+With explicit timezone
+Date.parse("Thu, 01 Jan 1970 00:00:00 GMT+0300");
+-10800000 in all implementations in all timezones
+
+Single number
+Date.parse("0");
+946684800000 in Chrome (Sat Jan 01 2000 00:00:00 GMT+0000);
+NaN in Firefox;
+-62167219200000 in Safari (Sat Jan 01 0000 00:00:00 GMT+0000)
+
+Two-digit number that may be a month
+Date.parse("28"); // NaN in all implementations
+
+Two-digit year
+Date.parse("70/01/01"); // 0 in all implementations
+
+Out-of-bounds date components
+Date.parse("2014-25-23"); // NaN in all implementations
+Date.parse("Mar 32, 2014"); // NaN in all implementations
+Date.parse("2014/25/23"); // NaN in all implementations
+
+Date.parse("2014-02-30");
+NaN in Safari and Firefox;
+1393718400000 in Chrome (Sun Mar 02 2014 00:00:00 GMT+0000)
+Date.parse("02/30/2014"); // 1393718400000 in all implementations
+*/
 
 	/**
 	 * Common Log Format
