@@ -3,25 +3,16 @@
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
-import Language_fa_IR from "./i18n/fa_IR.js";
-import Language_en_US from "./i18n/en_US.js";
-
-/**
- * list of supported languages
- * @since 1.0.0
- */
-enum Language {
-	fa_IR = "fa_IR",
-	en_US = "en_US"
-}
+import Language from "./languages/language.js";
 
 /**
  * Word class
  * @since 1.0.0
  */
 export default class Word {
-	static LANGUAGE_WORD: string = Language.en_US;
+	static LANGUAGE_WORD: string = Language.WORD;
 	static FIRST_DAY_OF_WEEK: number = 0;
+
 	/**
 	 * cheeck Language
 	 * @param {string} language
@@ -29,14 +20,9 @@ export default class Word {
 	 * @since 1.0.0
 	 */
 	static checkLanguage(language: string = Word.LANGUAGE_WORD): boolean {
-		switch (language) {
-			case Language.fa_IR:
-			case Language.en_US:
-				return true;
-			default:
-				return false;
-		}
+		return Language.check(language);
 	}
+
 	/**
 	 * Get Language class
 	 * @param {string} language
@@ -44,14 +30,7 @@ export default class Word {
 	 * @since 1.0.0
 	 */
 	static getClassLanguage(language: string = Word.LANGUAGE_WORD): any {
-		switch (language) {
-			case Language.fa_IR:
-				return Language_fa_IR;
-			case Language.en_US:
-				return Language_en_US;
-			default:
-				return Language_en_US;
-		}
+		return Language.getClass(language);
 	}
 
 	/**
