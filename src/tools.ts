@@ -4,8 +4,7 @@
  * @link http://codehub.akhi.ir/js/SHDateTime
  */
 
-import Language_fa_IR from "./i18n/fa_IR.js";
-import Language_en_US from "./i18n/en_US.js";
+import Language from "./languages/language.js";
 
 /**
  * Convert a number to Persian digit
