@@ -78,24 +78,20 @@ export default class SHParser {
 	public CompoundFormats(): boolean {
 		// Localized Notations
 		// dd/M/Y:HH:II:SS tspace tzcorrection
-		//  YY:MM:DD HH:II:SS
 		//  YY-?"W"W-?[0-7]
 		//  YY-MM-DD HH:II:SS
 		// YY .? doy
 		//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
 		// "@" "-"? [0-9]+
-		// & (Compact) YY MM DD "T" hh :? II :? SS
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 		return (
 			this.commonLogFormat() ||
-			this.EXIF() ||
 			this.isoYearWeekDay() ||
 			this.MySQL() ||
 			this.postgreSQL() ||
 			this.SOAP() ||
 			this.unixTimestamp() ||
-			this.XMLRPC() ||
 			this.WDDX() ||
 			this.MSSQL()
 		);
@@ -209,48 +205,8 @@ export default class SHParser {
 	}
 
 	/**
-	 * EXIF (YYYY:MM:DD:HH:II:SS)
-	 *
-	 * @return bool
-	 */
-	EXIF() {
-		let pos, year, month, day, h24, min, sec;
-		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("COLON")) {
-			this.nextToken();
-			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("COLON")) {
-				this.nextToken();
-				day = this.dayMandatoryPrefix();
-				if (day && this.whiteSpace()) {
-					h24 = this.hour24();
-					if (h24 && this.isToken("COLON")) {
-						this.nextToken();
-						min = this.minutesMandatoryPrefix();
-						if (min && this.isToken("COLON")) {
-							this.nextToken();
-							if ((sec = this.secondsMandatoryPrefix())) {
-								this.data["YEAR"] = year;
-								this.data["MONTH"] = month;
-								this.data["DAY"] = day;
-								this.data["HOURS"] = h24;
-								this.data["MINUTES"] = min;
-								this.data["SECONDS"] = sec;
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
 	 * ISO year with ISO week (YYYY-W)
-	 * ISO year with ISO week and day (YYYY-W-D)
+	 * ISO year with ISO week and day (YYYY - W -? D?)
 	 *
 	 * @return bool
 	 */
@@ -396,7 +352,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Unix Timestamp (AT -+ts)
+	 * Unix Timestamp (@ -+ts)
 	 *
 	 * @return bool
 	 */
@@ -412,49 +368,6 @@ export default class SHParser {
 			if ((int = this.number())) {
 				this.data["Timestamp"] = int;
 				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * XMLRPC (YYYYMMDDTHH:II:SS)
-	 * XMLRPC (Compact) (YYYYMMDDTHHIISS)
-	 *
-	 * @return bool
-	 */
-	XMLRPC() {
-		let year,
-			month,
-			day,
-			h12,
-			min,
-			sec,
-			pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		month = this.monthMandatoryPrefix();
-		day = this.dayMandatoryPrefix();
-		if (year && month && day && this.isToken("SIGN_TIME")) {
-			this.nextToken();
-			if ((h12 = this.hour12()) || (h12 = this.hour24())) {
-				if (this.isToken("COLON")) {
-					this.nextToken();
-				}
-				if ((min = this.minutesMandatoryPrefix())) {
-					if (this.isToken("COLON")) {
-						this.nextToken();
-					}
-					if ((sec = this.secondsMandatoryPrefix())) {
-						this.data["YEAR"] = year;
-						this.data["MONTH"] = month;
-						this.data["DAY"] = day;
-						this.data["HOURS"] = h12;
-						this.data["MINUTES"] = min;
-						this.data["SECONDS"] = sec;
-						return true;
-					}
-				}
 			}
 		}
 		this.resetPosition(pos);
@@ -1058,12 +971,12 @@ export default class SHParser {
 	 * Hour, minutes and optional seconds, optional colon and dot
 	 * Hour, minutes, seconds and timezone
 	 * Hour, minutes, seconds and fraction
+		// 't'? HH [.:] II [.:]? SS? (frac | (space? ( tzcorrection | tz )))
 	 * Time zone information
 	 *
 	 * @return bool
 	 */
 	hour24Notation() {
-		// 't'? HH [.:] II [.:]? SS? (frac | (space? ( tzcorrection | tz )))
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
 		if (this.isToken("SIGN_TIME")) {
@@ -1659,7 +1572,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * TZCorrection
+	 * Time Zone Correction
 	 *
 	 * @return bool
 	 */
@@ -1667,6 +1580,49 @@ export default class SHParser {
 		let PLUS_DASH, h12, min;
 		if (this.isToken("UTC")) {
 			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "00";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("EDT")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "04";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("EST")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "05";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("CDT")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "05";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("CST")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "06";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("MDT")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "06";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("MST")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "07";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("PDT")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "07";
+			this.data["TZ_MINUTES"] = "00";
+		} else if (this.isToken("PST")) {
+			this.nextToken();
+			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_HOURS"] = "08";
+			this.data["TZ_MINUTES"] = "00";
 		}
 		PLUS_DASH = false;
 		if (this.isToken("PLUS")) {
@@ -1687,25 +1643,8 @@ export default class SHParser {
 				this.data["TZ_MINUTES"] = min;
 				return true;
 			}
-			return true;
 		}
 		return false;
-		/**=======================
-		 * todo        // Time zone abbreviations.
-  { "gmt", 10000 + 0 },
-  { "ut", 10000 + 0 },
-  { "utc", 10000 + 0 },
-  { "est", 10000 + 5 * 60 },s
-  { "edt", 10000 + 4 * 60 },
-  { "cst", 10000 + 6 * 60 },
-  { "cdt", 10000 + 5 * 60 },
-  { "mst", 10000 + 7 * 60 },
-  { "mdt", 10000 + 6 * 60 },
-  { "pst", 10000 + 8 * 60 },
-  { "pdt", 10000 + 7 * 60 },
-		 *
-		 *
-		 *========================**/
 	}
 
 	// Relative
@@ -1722,10 +1661,10 @@ export default class SHParser {
 			isInt,
 			int,
 			num: any,
-			signum = 1;
+			signNumber = 1; // +
 		if ((sign = this.signNumber()))
 			if (sign == "-") {
-				signum = -1;
+				signNumber = -1;
 			}
 		isInt = false;
 		while (
@@ -1740,7 +1679,7 @@ export default class SHParser {
 			isInt = true;
 		}
 		if (isInt) {
-			return num * signum;
+			return num * signNumber;
 		}
 		return false;
 	}

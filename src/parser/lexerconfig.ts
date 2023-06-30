@@ -237,7 +237,15 @@ export default class SHLexerConfig {
 		EVENING: "evening|eve",
 		NIGHT: "night",
 
-		UTC: "utc|gmt",
+		UTC: "utc|ut|gmt",
+		EST: "est",
+		EDT: "edt",
+		CST: "cst",
+		CDT: "cdt",
+		MST: "mst",
+		MDT: "mdt",
+		PST: "pst",
+		PDT: "pdt",
 
 		SIGN_TIME: "t|T",
 		SIGN_WEEK: "w|W",

@@ -1393,6 +1393,7 @@ export default class SHDate {
 	 * https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
 	 * https://maggiepint.com/2017/04/11/fixing-javascript-date-web-compatibility-and-reality/
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+	 * https://www.w3schools.com/js/js_date_formats.asp
 	 */
 	public static parse(str: string): number {
 		//throw new Error("Not Implemented parse"); // TODO: implement
