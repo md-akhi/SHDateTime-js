@@ -1,4 +1,3 @@
-export const solarWord = [
 	/*
 for (let year = 1380; year <= 1410; year += 1) {
 	[
@@ -68,6 +67,8 @@ for (let year = 1380; year <= 1410; year += 1) {
 	});
 }
 */
+export const solarWord = [
+
 	{
 		solar: [1380, 0, 1],
 		dsn: "Wed",

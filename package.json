@@ -6,6 +6,7 @@
     "date",
     "time",
     "datetime",
+    "date time",
     "shamsi hijri",
     "solar hijri",
     "iranian hijri",
@@ -28,6 +29,7 @@
     "tsc:mjs": "tsc --project tsconfig.mjs.json && echo {\"type\":\"module\"}>dist/mjs/package.json",
     "tsc:browser": "gulp combineTS && tsc --project tsconfig.browser.json",
     "tsc:test": "tsc --project tsconfig.test.json",
+    "test:build": "npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
     "prepare": "husky install"
   },
   "main": "./dist/cjs/index.js",

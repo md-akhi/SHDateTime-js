@@ -1,4 +1,3 @@
-export const solarDate = [
 	/*
 for (let year = 1200; year <= 1700; year += 3) {
 	[
@@ -75,12 +74,13 @@ for (let year = 1200; year <= 1700; year += 3) {
 			console.log("false");
 		} else
 			console.log(
-				//`${year}/${month}/${day}	`,
+				//`${year}/${month}/${day}	`,s
 				`{ solar:[${years},${months},${days}], Dow:${Dow}, Diy:${Diy}, Doy:${Doy}, Dim:${Dim}, Wiy:${Wiy}, Woy:[${Woy}], Leap:${Leap} }, `
 			);
 	});
 }
 */
+export const solarDate = [
 	{
 		solar: [1200, 0, 1],
 		Dow: 4,

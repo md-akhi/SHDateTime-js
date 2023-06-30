@@ -100,61 +100,74 @@ export default class SHParser {
 			this.MSSQL()
 		);
 	}
-	//"2017-04-05T05:57:53.350Z"
-	//"2017-12-05T05:57:53.350Z"
-	// YYYY
-	// YYYY-MM
-	// YYYY-MM-DD
 	// YYYY-MM-DDTHH:mm:ss.sssZ
-
+	// "1970-01-01 12:00:00Z"
+	// "2019-01-01T00:00:00.000+00:00"
+	// "2019-01-01T00:00:00"
+	// "70/01/01" // 0 in all implementations
+	// "Thu, 01 Jan 1970 00:00:00 GMT+0300"
+	// "0" //(Sat Jan 01 2000 00:00:00 GMT+0000) || (Sat Jan 01 0000 00:00:00 GMT+0000)
+	// YYYY
+	// "yyyy",
+	// YYYY = four-digit year or six digit year as +YYYYYY or -YYYYYY
+	// YYYY-MM
+	// YYYY-MM (eg 1997-07)
+	// YYYY-MM-DD
+	// YYYY-MM-DD (eg 1997-07-16)
+	//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
+	// "yyyy-MM-ddTHH:mm:ssZ",
+	// "yyyy-MM-ddTHH:mm:ssz",
+	// "yyyy-MM-ddTHH:mm:ss",
+	// "yyyy-MM-ddTHH:mm",
+	// "yyyy-MM-ddTHH:mmZ",
+	// "yyyy-MM-ddTHH:mmz",
+	// "ddd, MMM dd, yyyy H:mm:ss tt",
+	// "ddd MMM d yyyy HH:mm:ss zzz",
+	// "MMddyyyy",
+	// "ddMMyyyy",
+	// "Mddyyyy",
+	// "ddMyyyy",
+	// "Mdyyyy",
+	// "dMyyyy",
+	// "Mdyy",
+	// "dMyy",
+	// "d"
 	// THH:mm
 	// THH:mm:ss
 	// THH:mm:ss.sss
-
-	// "2019-01-01"
-	// "2019-01-01T00:00:00.000Z"
-	// "2019-01-01T00:00:00.000+00:00"
-	// "2019-01-01T00:00:00"
-	/*
-Date.parse("Jan 1, 1970"); // 0 in all implementations
-
-Date.parse("Thu, 01 Jan 1970 00:00:00"); // 0 in all implementations
-
-Date.parse("1970,1,1"); // 0 in Chrome and Firefox, NaN in Safari
-
-Date.parse("02 01 1970");
-2678400000 in Chrome and Firefox (Sun Feb 01 1970 00:00:00 GMT+0000);
-NaN in Safari
-
-With explicit timezone
-Date.parse("Thu, 01 Jan 1970 00:00:00 GMT+0300");
--10800000 in all implementations in all timezones
-
-Single number
-Date.parse("0");
-946684800000 in Chrome (Sat Jan 01 2000 00:00:00 GMT+0000);
-NaN in Firefox;
--62167219200000 in Safari (Sat Jan 01 0000 00:00:00 GMT+0000)
-
-Two-digit number that may be a month
-Date.parse("28"); // NaN in all implementations
-
-Two-digit year
-Date.parse("70/01/01"); // 0 in all implementations
-
-Out-of-bounds date components
-Date.parse("2014-25-23"); // NaN in all implementations
-Date.parse("Mar 32, 2014"); // NaN in all implementations
-Date.parse("2014/25/23"); // NaN in all implementations
-
-Date.parse("2014-02-30");
-NaN in Safari and Firefox;
-1393718400000 in Chrome (Sun Mar 02 2014 00:00:00 GMT+0000)
-Date.parse("02/30/2014"); // 1393718400000 in all implementations
-*/
+	// Thh:mmTZD (eg T19:20+01:00)
+	// Thh:mm:ssTZD (eg T19:20:30+01:00)
+	// Thh:mm:ss.sTZD (eg T19:20:30.45+01:00)
+	// dd-MMM-yyyy
+	// 02/30/2014   "02 01 1970" // (Sun Feb 01 1970 00:00:00 GMT+0000)
+	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
+	// dd-MMM-yy
+	// yyyy-MMM-dd
+	// yy-MMM-dd
+	// Thu Jan 01 1970 00:00:00 GMT+0000
+	// "Jan 1, 1970" // 0 in all implementations
+	// "Thu, 01 Jan 1970 00:00:00" // 0 in all implementations
+	// "01:00:00 GMT-0800 (PST)"
+	// "03:00:00 GMT-0700 (PDT)"
+	// "T19:00:00Z" default to 1970-01-01
+	// "T19:00:00+0700"   "T19:00:00+07:00".
+	// "1970-1-1"   "1970-01-01"
+	// TZD  = time zone designator (Z or +hh:mm or -hh:mm or missing for local)
+	// UT +00:19:32.13, from 1909 to 1937
+	/* Tue Oct 31 2000 09:41:40 GMT-0800 */
+	/* Tue Oct 31 2000 */
+	/* 09:41:40 GMT-0800 */
+	// 3/11/22 or 11.03.22 or 11Mar22
+	// 271821-04-20T00:00:00Z	271822 B.C.
+	// -000001-01-01T00:00:00Z	2 B.C.
+	// +000000-01-01T00:00:00Z	1 B.C.
+	// +000001-01-01T00:00:00Z	1 A.D.
+	// +001970-01-01T00:00:00Z	1970 A.D.
+	// +002009-12-15T00:00:00Z	2009 A.D.
+	// +275760-09-13T00:00:00Z	275760 A.D.
 
 	/**
-	 * Common Log Format
+	 * Common Log Format (dd/MMM/YYYY:HH:II:SS)
 	 *
 	 * @return bool
 	 */
@@ -196,7 +209,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * EXIF
+	 * EXIF (YYYY:MM:DD:HH:II:SS)
 	 *
 	 * @return bool
 	 */
@@ -236,8 +249,8 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * ISO year with ISO week
-	 * ISO year with ISO week and day
+	 * ISO year with ISO week (YYYY-W)
+	 * ISO year with ISO week and day (YYYY-W-D)
 	 *
 	 * @return bool
 	 */
@@ -270,7 +283,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * MySQL
+	 * MySQL (YYYY-MM-DD HH:II:SS)
 	 *
 	 * @return bool
 	 */
@@ -310,7 +323,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * PostgreSQL: Year with day-of-year
+	 * PostgreSQL: Year with day-of-year (YYYY.doy)
 	 *
 	 * @return bool
 	 */
@@ -333,7 +346,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * SOAP
+	 * SOAP (YYYY-MM-DDTHH:II:SS.frac Z)
 	 *
 	 * @return bool
 	 */
@@ -383,7 +396,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * Unix Timestamp
+	 * Unix Timestamp (AT -+ts)
 	 *
 	 * @return bool
 	 */
@@ -406,8 +419,8 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * XMLRPC
-	 * XMLRPC (Compact)
+	 * XMLRPC (YYYYMMDDTHH:II:SS)
+	 * XMLRPC (Compact) (YYYYMMDDTHHIISS)
 	 *
 	 * @return bool
 	 */
@@ -449,7 +462,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * WDDX
+	 * WDDX (YYYY-mm-ddThh:ii:ss)
 	 *
 	 * @return bool
 	 */
@@ -495,12 +508,12 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 
 	/**
-	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
+	 * MS SQL (Hour, minutes, seconds and fraction with meridian) (hh ":" II ":" SS [.:] [0-9]+ meridian)
 	 *
 	 * @return bool
 	 */
 	MSSQL() {
-		//hh ":" II ":" SS [.:] [0-9]+ meridian  |  in Time Formats
+		//
 		let h12,
 			min,
 			sec,
@@ -1187,20 +1200,20 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	}
 	/**
 	 * Four digit year, month and day with slashes
+		// YY "/" mm "/" dd
 	 * Four digit year and month (GNU)
+		//ISO  YY "/"? MM "/"? DD
 	 * Four digit year and textual month (Day reset to 1)
+		// YY "-" mm
+		// YY ([ \t.-])* m    Day reset to 1
 	 * Year (and just the year)
 	 * Four digit year, month and day with optional slashes
 	 * Four digit year with optional sign, month and day
+		// [+-]? YY "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
 	year4Date() {
-		// YY "/" mm "/" dd
-		//ISO  YY "/"? MM "/"? DD
-		// YY "-" mm
-		// YY ([ \t.-])* m    Day reset to 1
-		// [+-]? YY "-" MM "-" DD
 		return (
 			this.year4MonthDayDlashes() ||
 			this.year4MonthDay() ||
@@ -1212,11 +1225,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Four digit year, month and day with slashes
+	 * YY "/" mm "/" dd
 	 *
 	 * @return bool
 	 */
 	year4MonthDayDlashes() {
-		// YY "/" mm "/" dd
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
@@ -1239,11 +1252,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Four digit year, month and day
+		// YY "/"? MM "/"? DD
 	 *
 	 * @return bool
 	 */
 	year4MonthDay() {
-		// YY "/"? MM "/"? DD
 		let pos, year, month, day;
 		pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
@@ -1268,11 +1281,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Four digit year and month (GNU)
+		// YY "-" mm
 	 *
 	 * @return bool
 	 */
 	year4MonthGNU() {
-		// YY "-" mm
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
@@ -1290,11 +1303,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Four digit year and textual month (Day reset to 1)
+		// YY ([ \t.-])* m    Day reset to 1
 	 *
 	 * @return bool
 	 */
 	year4TextualMonth() {
-		// YY ([ \t.-])* m    Day reset to 1
 		let pos, year, month;
 		pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
@@ -1316,11 +1329,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Four digit year with optional sign, month and day
+		// [+-]? YY "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
 	year4SignMonthDay() {
-		// [+-]? YY "-" MM "-" DD
 		let year,
 			month,
 			day,
@@ -1349,23 +1362,23 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Year, month and day with dashes
+		// y "-" mm "-" dd
 	 * Year, month abbreviation and day
+		// y "-" M "-" DD
 	 *
 	 * @return bool
 	 */
 	yearMonthAbbrDayDashes() {
-		// y "-" mm "-" dd
-		// y "-" M "-" DD
 		return this.yearMonthDayDashes() || this.yearMonthAbbrDay();
 	}
 
 	/**
 	 * Year, month and day with dashes
+		// y "-" mm "-" dd
 	 *
 	 * @return bool
 	 */
 	yearMonthDayDashes() {
-		// y "-" mm "-" dd
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.yearOptionalPrefix();
@@ -1388,11 +1401,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Year, month abbreviation and day
+		// y "-" M "-" DD
 	 *
 	 * @return bool
 	 */
 	yearMonthAbbrDay() {
-		// y "-" M "-" DD
 		let year,
 			month,
 			day,
@@ -1417,11 +1430,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Two digit year, month and day with dashes
+		// yy "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
 	year2MonthDay() {
-		// yy "-" MM "-" DD
 		let year,
 			month,
 			day,
@@ -1464,11 +1477,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Day, month and four digit year, with dots, tabs or dashes
+		// dd [.\t-] mm [.-] YY
 	 *
 	 * @return bool
 	 */
 	dayMonth4Year() {
-		// dd [.\t-] mm [.-] YY
 		let year,
 			month,
 			day,
@@ -1498,11 +1511,11 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 
 	/**
 	 * Day, month and two digit year, with dots or tabs
+		//  dd [.\t] mm "." yy
 	 *
 	 * @return bool
 	 */
 	dayMonth2Year() {
-		//  dd [.\t] mm "." yy
 		let year,
 			month,
 			day,
@@ -1677,6 +1690,22 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 			return true;
 		}
 		return false;
+		/**=======================
+		 * todo        // Time zone abbreviations.
+  { "gmt", 10000 + 0 },
+  { "ut", 10000 + 0 },
+  { "utc", 10000 + 0 },
+  { "est", 10000 + 5 * 60 },s
+  { "edt", 10000 + 4 * 60 },
+  { "cst", 10000 + 6 * 60 },
+  { "cdt", 10000 + 5 * 60 },
+  { "mst", 10000 + 7 * 60 },
+  { "mdt", 10000 + 6 * 60 },
+  { "pst", 10000 + 8 * 60 },
+  { "pdt", 10000 + 7 * 60 },
+		 *
+		 *
+		 *========================**/
 	}
 
 	// Relative
@@ -1801,6 +1830,7 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	// ======================================================================================
 
 	/** //todo transform to dir base
+	 * todo change name to changeTime
 	 * rest Time
 	 *
 	 * @param  int h Hours
@@ -1888,12 +1918,13 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	 * @return bool
 	 */
 	minutesOptionalPrefix() {
-		return (this.data["MINUTES"] =
+		return (
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59());
+			this.int10To59()
+		);
 	}
 
 	/**
@@ -1904,12 +1935,13 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 	 * @return bool
 	 */
 	secondsOptionalPrefix() {
-		return (this.data["SECONDS"] =
+		return (
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59());
+			this.int10To59()
+		);
 	}
 
 	/**
@@ -1950,10 +1982,10 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
 			while (
 				(int =
 					this.int10To99() ||
-					this.int00() ||
 					this.int01To09() ||
-					this.int0() ||
-					this.int1To9())
+					this.int1To9() ||
+					this.int00() ||
+					this.int0())
 			) {
 				num += "" + int; //sprintf('%s%s',num,int);
 				isInt = true;
@@ -2866,23 +2898,5 @@ Date.parse("02/30/2014"); // 1393718400000 in all implementations
  *
  *
  *
- * "\"yyyy-MM-ddTHH:mm:ssZ\"",
-        "yyyy-MM-ddTHH:mm:ssZ",
-        "yyyy-MM-ddTHH:mm:ssz",
-        "yyyy-MM-ddTHH:mm:ss",
-        "yyyy-MM-ddTHH:mmZ",
-        "yyyy-MM-ddTHH:mmz",
-        "yyyy-MM-ddTHH:mm",
-        "ddd, MMM dd, yyyy H:mm:ss tt",
-        "ddd MMM d yyyy HH:mm:ss zzz",
-        "MMddyyyy",
-        "ddMMyyyy",
-        "Mddyyyy",
-        "ddMyyyy",
-        "Mdyyyy",
-        "dMyyyy",
-        "yyyy",
-        "Mdyy",
-        "dMyy",
-        "d"
+ *
  */

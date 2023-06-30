@@ -1,5 +1,4 @@
-export const gregorianAndSolar = [
-	/**
+/**
 for (let year = 1900; year < 2200; year += 7) {
 	[
 		[0, 1],
@@ -40,6 +39,7 @@ for (let year = 1900; year < 2200; year += 7) {
 	});
 }
  */
+export const gregorianAndSolar = [
 	{ gregorian: [1900, 0, 1], solar: [1278, 9, 11] },
 	{ gregorian: [1900, 0, 2], solar: [1278, 9, 12] },
 	{ gregorian: [1900, 0, 30], solar: [1278, 10, 10] },
@@ -730,8 +730,7 @@ for (let year = 1900; year < 2200; year += 7) {
 	{ gregorian: [2194, 11, 31], solar: [1573, 9, 11] }
 ];
 
-export const solarAndGregorian = [
-	/*
+/*
 for (let year = 1200; year < 1650; year += 7) {
 	[
 		[0, 1],
@@ -772,6 +771,7 @@ for (let year = 1200; year < 1650; year += 7) {
 	});
 }
 */
+export const solarAndGregorian = [
 	{ solar: [1200, 0, 1], gregorian: [1821, 2, 21] },
 	{ solar: [1200, 0, 2], gregorian: [1821, 2, 22] },
 	{ solar: [1200, 0, 31], gregorian: [1821, 3, 20] },
@@ -1814,8 +1814,7 @@ for (let year = 1200; year < 1650; year += 7) {
 	{ solar: [1649, 0, 1], gregorian: [2270, 2, 21] }
 ];
 
-export const leapYear = [
-	/*
+/*
 	for (let year = 1200; year <= 1700; year += 1) {
 	[
 		[0, 1],
@@ -1833,6 +1832,7 @@ export const leapYear = [
 	});
 }
 	*/
+export const leapYear = [
 	{ solar: [1200, 0, 1], Leap: false },
 	{ solar: [1201, 0, 1], Leap: true },
 	{ solar: [1202, 0, 1], Leap: false },

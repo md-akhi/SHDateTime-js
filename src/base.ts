@@ -66,6 +66,7 @@ export default class SHDate {
 	];
 
 	/**
+	 * first day of month
 	 * @type {number[]} days of year
 	 */
 	static DAY_OF_YEAR: number[] = [
@@ -170,7 +171,7 @@ export default class SHDate {
 		return this;
 	}
 
-	/**
+	/** //todo  change name to synceDate
 	 * update date
 	 * @returns {null}
 	 * @since 1.0.0
@@ -195,7 +196,7 @@ export default class SHDate {
 		this.#sh.date = date;
 		return;
 	}
-	/**
+	/** //todo  change name to synceTime
 	 * update time
 	 * @returns {null}
 	 * @since 1.2.2
@@ -694,7 +695,7 @@ export default class SHDate {
 					const [iso_week, iso_year] = this.#weekOfYear(year, month, date);
 					str.push(
 						iso_week.toString().padStart(2, "0"),
-						iso_year.toString().padStart(2, "0")
+						iso_year.toString().padStart(2, "0") // todo change number 2 to 4
 					);
 					break;
 				case "Dow": // day Of Week
