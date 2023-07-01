@@ -88,9 +88,8 @@ export default class SHParser {
 		return (
 			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
-			this.MySQL() ||
+			this.Y4M2D2WSH2I2S2() ||
 			this.postgreSQL() ||
-			this.SOAP() ||
 			this.unixTimestamp() ||
 			this.WDDX() ||
 			this.MSSQL()
@@ -240,11 +239,11 @@ export default class SHParser {
 	}
 
 	/**
-	 * MySQL (YYYY-MM-DD HH:II:SS)
+	 * Y4M2D2WSH2I2S2 (YYYY-MM-DD HH:II:SS)
 	 *
 	 * @return bool
 	 */
-	MySQL() {
+	Y4M2D2WSH2I2S2() {
 		let pos, year, month, day, h24, min, sec;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
@@ -303,56 +302,6 @@ export default class SHParser {
 	}
 
 	/**
-	 * SOAP (YYYY-MM-DDTHH:II:SS.frac Z)
-	 *
-	 * @return bool
-	 */
-	SOAP() {
-		let year,
-			month,
-			day,
-			h24,
-			min,
-			sec,
-			frac,
-			pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
-			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
-				day = this.dayMandatoryPrefix();
-				if (day && this.isToken("SIGN_TIME")) {
-					this.nextToken();
-					h24 = this.hour24();
-					if (h24 && this.isToken("COLON")) {
-						this.nextToken();
-						min = this.minutesMandatoryPrefix();
-						if (min && this.isToken("COLON")) {
-							this.nextToken();
-							sec = this.secondsMandatoryPrefix();
-							if (sec && (frac = this.fraction())) {
-								this.TZCorrection();
-								this.data["YEAR"] = year;
-								this.data["MONTH"] = month;
-								this.data["DAY"] = day;
-								this.data["HOURS"] = h24;
-								this.data["MINUTES"] = min;
-								this.data["SECONDS"] = sec;
-								this.data["FRAC"] = frac;
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
 	 * Unix Timestamp (@ -+ts)
 	 *
 	 * @return bool
@@ -376,7 +325,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * WDDX (YYYY-mm-ddThh:ii:ss)
+	 * WDDX (YYYY-mm-ddTh12:ii:ss)
 	 *
 	 * @return bool
 	 */
@@ -422,7 +371,8 @@ export default class SHParser {
 	}
 
 	/**
-	 * MS SQL (Hour, minutes, seconds and fraction with meridian) (hh ":" II ":" SS [.:] [0-9]+ meridian)
+	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
+	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
 	 *
 	 * @return bool
 	 */
@@ -498,8 +448,8 @@ export default class SHParser {
 			return true;
 		} else if (
 			this.minutes15Hour() ||
-			this.setDayOfMonth() ||
-			this.setWeekDayOfMonth() ||
+			this.firstCurrentMonthLast() ||
+			this.XWeekCurrentMonthLast() ||
 			this.handleRelTimeNumber() ||
 			this.handleRelTimeText()
 		) {
@@ -616,7 +566,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	setDayOfMonth() {
+	firstCurrentMonthLast() {
 		let pos = this.getPosition();
 		if (this.isToken("FIRST")) {
 			// Sets the day of the first of the current month. This phrase is best used together with a month name following it.
@@ -678,7 +628,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	setWeekDayOfMonth() {
+	XWeekCurrentMonthLast() {
 		let dow: any,
 			dow29month,
 			diffdow,
