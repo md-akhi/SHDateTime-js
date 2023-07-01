@@ -86,7 +86,7 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 		return (
-			this.commonLogFormat() ||
+			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
 			this.MySQL() ||
 			this.postgreSQL() ||
@@ -96,10 +96,6 @@ export default class SHParser {
 			this.MSSQL()
 		);
 	}
-	// YYYY-MM-DDTHH:mm:ss.sssZ
-	// "1970-01-01 12:00:00Z"
-	// "2019-01-01T00:00:00.000+00:00"
-	// "2019-01-01T00:00:00"
 	// "70/01/01" // 0 in all implementations
 	// "Thu, 01 Jan 1970 00:00:00 GMT+0300"
 	// "0" //(Sat Jan 01 2000 00:00:00 GMT+0000) || (Sat Jan 01 0000 00:00:00 GMT+0000)
@@ -110,13 +106,6 @@ export default class SHParser {
 	// YYYY-MM (eg 1997-07)
 	// YYYY-MM-DD
 	// YYYY-MM-DD (eg 1997-07-16)
-	//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
-	// "yyyy-MM-ddTHH:mm:ssZ",
-	// "yyyy-MM-ddTHH:mm:ssz",
-	// "yyyy-MM-ddTHH:mm:ss",
-	// "yyyy-MM-ddTHH:mm",
-	// "yyyy-MM-ddTHH:mmZ",
-	// "yyyy-MM-ddTHH:mmz",
 	// "ddd, MMM dd, yyyy H:mm:ss tt",
 	// "ddd MMM d yyyy HH:mm:ss zzz",
 	// "MMddyyyy",
@@ -138,7 +127,6 @@ export default class SHParser {
 	// 02/30/2014   "02 01 1970" // (Sun Feb 01 1970 00:00:00 GMT+0000)
 	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
 	// dd-MMM-yy
-	// yyyy-MMM-dd
 	// yy-MMM-dd
 	// Thu Jan 01 1970 00:00:00 GMT+0000
 	// "Jan 1, 1970" // 0 in all implementations
@@ -163,21 +151,25 @@ export default class SHParser {
 	// +275760-09-13T00:00:00Z	275760 A.D.
 
 	/**
-	 * Common Log Format (dd/MMM/YYYY:HH:II:SS)
+	 * Common Log Format (YYYY-MM-DDT:HH:II:SS)
+	 * YYYY-MM-DDTHH:mm:ss.sssZ
+	 * YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
+	 * "yyyy-MM-ddTHH:mm"
+	 * "yyyy-MM-ddTHH:mmZ"
 	 *
 	 * @return bool
 	 */
-	commonLogFormat() {
-		let day, month, year, h24, min, sec;
-		let pos = this.getPosition();
-		day = this.dayOptionalPrefix();
-		if (day && this.isToken("SLASH")) {
+	Y4M2D2TH2I2S2FracTZ() {
+		let pos, year, month, day, h24, min, sec, frac, tz;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
 			this.nextToken();
-			month = this.monthTextualShort();
-			if (month && this.isToken("SLASH")) {
+			month = this.monthMandatoryPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-				year = this.year4MandatoryPrefix();
-				if (year && this.isToken("COLON")) {
+				day = this.dayMandatoryPrefix();
+				if (day && this.isToken("SIGN_TIME")) {
 					this.nextToken();
 					h24 = this.hour24();
 					if (h24 && this.isToken("COLON")) {
@@ -185,16 +177,25 @@ export default class SHParser {
 						min = this.minutesMandatoryPrefix();
 						if (min && this.isToken("COLON")) {
 							this.nextToken();
-							sec = this.secondsMandatoryPrefix();
-							if (sec && this.whiteSpace() && this.TZCorrection()) {
+							if ((sec = this.secondsMandatoryPrefix())) {
 								this.data["YEAR"] = year;
 								this.data["MONTH"] = month;
 								this.data["DAY"] = day;
 								this.data["HOURS"] = h24;
 								this.data["MINUTES"] = min;
 								this.data["SECONDS"] = sec;
+								if ((frac = this.fraction())) {
+									this.data["fraction"] = frac;
+								}
+								if ((tz = this.TZCorrection())) {
+									this.data["TZ"] = tz;
+								}
 								return true;
 							}
+							if ((tz = this.TZCorrection())) {
+								this.data["TZ"] = tz;
+							}
+							return true;
 						}
 					}
 				}
