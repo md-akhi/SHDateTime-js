@@ -945,8 +945,7 @@ export default class SHParser {
 								this.data["FRAC"] = frac;
 							}
 							this.whiteSpace();
-							this.TZCorrection();
-							this.timeZone();
+							this.TZCorrection() || this.timeZone();
 						}
 					}
 					this.data["HOURS"] = h24;
@@ -988,7 +987,7 @@ export default class SHParser {
 
 	/**
 	 * American month, day and optional year
-	 *
+	 * M{1,2}/D{1,2}/Y{1,2}
 	 * @return bool
 	 */
 	usaDate() {
@@ -1002,14 +1001,13 @@ export default class SHParser {
 					this.nextToken();
 					if ((year = this.yearOptionalPrefix())) {
 						this.data["YEAR"] = year;
-					}
+					} else return false;
 				}
 				this.data["MONTH"] = month;
 				this.data["DAY"] = day;
 				return true;
 			}
 		}
-
 		this.resetPosition(pos);
 		return false;
 	}
@@ -1017,7 +1015,7 @@ export default class SHParser {
 	/**
 	 * year
 	 * a number with exactly four digits
-	 *
+	 * [0-9]{4}
 	 * @param  int $int
 	 * @return bool
 	 */
@@ -1034,7 +1032,7 @@ export default class SHParser {
 	/**
 	 * year
 	 *  a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
-	 *
+	 * 0?[0-9]{2,4}
 	 * @param  int int
 	 * @return bool
 	 */
@@ -1116,7 +1114,7 @@ export default class SHParser {
 
 	/**
 	 * Four digit year, month and day
-		// YY "/"? MM "/"? DD
+	 * YY "/"? MM "/"? DD
 	 *
 	 * @return bool
 	 */
@@ -1294,7 +1292,7 @@ export default class SHParser {
 
 	/**
 	 * Two digit year, month and day with dashes
-		// yy "-" MM "-" DD
+	 * yy "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
