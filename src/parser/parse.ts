@@ -977,7 +977,7 @@ export default class SHParser {
 		return (
 			this.usaDate() ||
 			this.year4Date() ||
-			this.yearMonthAbbrDayDashes() ||
+			this.Date1AbbrDashes() ||
 			this.year2MonthDay() ||
 			this.dayMonth2digit4Year() ||
 			this.year4MandatoryPrefix() ||
@@ -1077,30 +1077,32 @@ export default class SHParser {
 	 */
 	year4Date() {
 		return (
-			this.year4MonthDayDlashes() ||
-			this.year4MonthDay() ||
+			this.dateSlash() ||
+			this.dateDash() ||
 			this.year4MonthGNU() ||
 			this.year4TextualMonth() ||
-			this.year4SignMonthDay()
+			this.DateSign()
 		);
 	}
 
 	/**
 	 * Four digit year, month and day with slashes
 	 * YY "/" mm "/" dd
+	 * Four digit year, month and day
+	 * YY "/" MM "/" DD
 	 *
 	 * @return bool
 	 */
-	year4MonthDayDlashes() {
+	dateSlash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
 		if (year && this.isToken("SLASH")) {
 			this.nextToken();
-			month = this.monthOptionalPrefix();
+			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
 			if (month && this.isToken("SLASH")) {
 				this.nextToken();
-				if ((day = this.dayOptionalPrefix())) {
+				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
@@ -1113,23 +1115,23 @@ export default class SHParser {
 	}
 
 	/**
+	 * Four digit year, month and day with Dash
+	 * YY "-" mm "-" dd
 	 * Four digit year, month and day
-	 * YY "/"? MM "/"? DD
+	 * YY "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
-	year4MonthDay() {
+	dateDash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("SLASH")) {
+		year = this.year4MandatoryPrefix();
+		if (year && this.isToken("DASH")) {
+			this.nextToken();
+			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			if (month && this.isToken("DASH")) {
 				this.nextToken();
-			}
-			if ((month = this.monthMandatoryPrefix())) {
-				if (this.isToken("SLASH")) {
-					this.nextToken();
-				}
-				if ((day = this.dayMandatoryPrefix())) {
+				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
@@ -1195,29 +1197,13 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	year4SignMonthDay() {
-		let year,
-			month,
-			day,
-			sign,
+	DateSign() {
+		let sign,
 			pos = this.getPosition();
 		if ((sign = this.signNumber())) {
 			this.data["SIGN_DATE"] = sign;
 		}
-		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
-			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
-				if ((day = this.dayMandatoryPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
+		if (this.dateDash()) return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -1230,8 +1216,8 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	yearMonthAbbrDayDashes() {
-		return this.yearMonthDayDashes() || this.yearMonthAbbrDay();
+	Date1AbbrDashes() {
+		return this.Date1Dash() || this.Date1Abbr();
 	}
 
 	/**
@@ -1240,7 +1226,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	yearMonthDayDashes() {
+	Date1Dash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.yearOptionalPrefix();
@@ -1267,7 +1253,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	yearMonthAbbrDay() {
+	Date1Abbr() {
 		let year,
 			month,
 			day,
@@ -1527,51 +1513,61 @@ export default class SHParser {
 	 */
 	TZCorrection() {
 		let PLUS_DASH, h12, min;
-		if (this.isToken("UTC")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "00";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("EDT")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "04";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("EST")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "05";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("CDT")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "05";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("CST")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "06";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("MDT")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "06";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("MST")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "07";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("PDT")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "07";
-			this.data["TZ_MINUTES"] = "00";
-		} else if (this.isToken("PST")) {
-			this.nextToken();
-			this.data["TZ_SIGN_PLUS"] = true;
-			this.data["TZ_HOURS"] = "08";
-			this.data["TZ_MINUTES"] = "00";
+		switch (this.nameToken()) {
+			case "UTC":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "00";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "EDT":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "04";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "EST":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "05";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "CDT":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "05";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "CST":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "06";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "MDT":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "06";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "MST":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "07";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "PDT":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "07";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
+			case "PST":
+				this.nextToken();
+				this.data["TZ_SIGN_PLUS"] = true;
+				this.data["TZ_HOURS"] = "08";
+				this.data["TZ_MINUTES"] = "00";
+				return true;
 		}
 		PLUS_DASH = false;
 		if (this.isToken("PLUS")) {
@@ -1653,98 +1649,9 @@ export default class SHParser {
 	// 	//this.data["GDATE"] = this.getdate(time);
 	// }
 
-	/**
-	 * is Token
-	 *
-	 * @param  string token
-	 * @return bool
-	 */
-	isToken(token: any) {
-		if (this.Lexer.getLookahead() !== false)
-			return this.Lexer.getLookahead().is(token);
-	}
-
-	/**
-	 * name Token
-	 *
-	 * @return bool
-	 */
-	nameToken() {
-		if (this.Lexer.getLookahead() !== false) {
-			return this.Lexer.getLookahead().getName();
-		}
-		return false;
-	}
-
-	/**
-	 * value Token
-	 *
-	 * @return bool
-	 */
-	valueToken() {
-		return this.Lexer.getLookahead().getValue();
-	}
-
-	/**
-	 * next Token
-	 *
-	 * @return bool
-	 */
-	nextToken() {
-		return this.Lexer.moveNext();
-	}
-
-	/**
-	 * get Position
-	 *
-	 * @return bool
-	 */
-	getPosition() {
-		return this.Lexer.getPosition();
-	}
-
-	/**
-	 * reset Position
-	 *
-	 * @param  int pos Position
-	 * @return bool
-	 */
-	resetPosition(pos: any) {
-		return this.Lexer.resetPosition(pos);
-	}
-
 	// ======================================================================================
 	// ==================================   Used Symbols   ==================================
 	// ======================================================================================
-
-	/** //todo transform to dir base
-	 * todo change name to changeTime
-	 * rest Time
-	 *
-	 * @param  int h Hours
-	 * @param  int m Minutes
-	 * @param  int s Seconds
-	 * @return bool
-	 */
-	restTime(h = 0, m = 0, s = 0) {
-		this.data["HOURS"] = h;
-		this.data["MINUTES"] = m;
-		this.data["SECONDS"] = s;
-		return true;
-	}
-
-	/**
-	 * white Space
-	 *
-	 * @return bool
-	 */
-	whiteSpace() {
-		if (this.isToken("SPACE")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * hours
@@ -1761,11 +1668,28 @@ export default class SHParser {
 	 * hours
 	 * a number between 01 and 24 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 *
+	 *
 	 * @param  int int
 	 * @return bool
 	 */
 	hour24() {
 		return this.int01To09() || this.int10To24();
+	}
+
+	/** //todo transform to dir base
+	 * todo change name to changeTime
+	 * rest Time
+	 *
+	 * @param  int h Hours
+	 * @param  int m Minutes
+	 * @param  int s Seconds
+	 * @return bool
+	 */
+	restTime(h = 0, m = 0, s = 0) {
+		this.data["HOURS"] = h;
+		this.data["MINUTES"] = m;
+		this.data["SECONDS"] = s;
+		return true;
 	}
 
 	/**
@@ -1790,6 +1714,7 @@ export default class SHParser {
 	/**
 	 * minutes
 	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 * [0-9]{2}
 	 *
 	 * @param  int int
 	 * @return bool
@@ -1801,6 +1726,7 @@ export default class SHParser {
 	/**
 	 * minutes
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
+	 * [0-9]{1,2}
 	 *
 	 * @param  int int
 	 * @return bool
@@ -1817,7 +1743,20 @@ export default class SHParser {
 
 	/**
 	 * seconds
+	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
+	 * [0-9]{2}
+	 *
+	 * @param  int int
+	 * @return bool
+	 */
+	secondsMandatoryPrefix() {
+		return this.int00() || this.int01To09() || this.int10To59();
+	}
+
+	/**
+	 * seconds
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
+	 * [0-9]{1,2}
 	 *
 	 * @param  int int
 	 * @return bool
@@ -1830,17 +1769,6 @@ export default class SHParser {
 			this.int01To09() ||
 			this.int10To59()
 		);
-	}
-
-	/**
-	 * seconds
-	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
-	 *
-	 * @param  int int
-	 * @return bool
-	 */
-	secondsMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To59();
 	}
 
 	/**
@@ -1866,7 +1794,8 @@ export default class SHParser {
 		if (this.isToken("DOT")) {
 			this.nextToken();
 			var isInt = false;
-			let int, num: any;
+			let int,
+				num: any = ".";
 			while (
 				(int =
 					this.int10To99() ||
@@ -1879,7 +1808,7 @@ export default class SHParser {
 				isInt = true;
 			}
 			if (isInt) {
-				return num * 1; //convert to int
+				return num; //convert to int
 			}
 		}
 		return false;
@@ -1893,16 +1822,11 @@ export default class SHParser {
 	 */
 	daySuffixTextual() {
 		switch (this.nameToken()) {
-			case "st":
-				this.nextToken();
-				return true;
-			case "nd":
-				this.nextToken();
-				return true;
-			case "rd":
-				this.nextToken();
-				return true;
-			case "th":
+			case "SUFFIXES":
+				// case "ST":
+				// case "ND":
+				// case "RD":
+				// case "TH":
 				this.nextToken();
 				return true;
 			default:
@@ -2069,12 +1993,25 @@ export default class SHParser {
 	// Relative
 
 	/**
+	 * white Space
+	 *
+	 * @return bool
+	 */
+	whiteSpace() {
+		if (this.isToken("SPACE")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Space +
 	 *
 	 * @return bool
 	 */
-	spaceMore(): boolean {
-		var space;
+	whiteSpaceMore(): boolean {
+		let space = false;
 		while (this.whiteSpace()) {
 			space = true;
 		}
@@ -2171,13 +2108,13 @@ export default class SHParser {
 				return 0;
 			case "NEXT":
 				this.nextToken();
-				return -1;
+				return 1;
 			case "PREVIOUS":
 				this.nextToken();
-				return -2;
+				return -1;
 			case "LAST":
 				this.nextToken();
-				return -3;
+				return 2;
 			default:
 				return false;
 		}
@@ -2221,6 +2158,66 @@ export default class SHParser {
 			default:
 				return false;
 		}
+	}
+
+	/**
+	 * is Token
+	 *
+	 * @param  string token
+	 * @return bool
+	 */
+	isToken(token: any) {
+		if (this.Lexer.getLookahead() !== false)
+			return this.Lexer.getLookahead().is(token);
+	}
+
+	/**
+	 * name Token
+	 *
+	 * @return bool
+	 */
+	nameToken() {
+		if (this.Lexer.getLookahead() !== false) {
+			return this.Lexer.getLookahead().getName();
+		}
+		return false;
+	}
+
+	/**
+	 * value Token
+	 *
+	 * @return bool
+	 */
+	valueToken() {
+		return this.Lexer.getLookahead().getValue();
+	}
+
+	/**
+	 * next Token
+	 *
+	 * @return bool
+	 */
+	nextToken() {
+		return this.Lexer.moveNext();
+	}
+
+	/**
+	 * get Position
+	 *
+	 * @return bool
+	 */
+	getPosition() {
+		return this.Lexer.getPosition();
+	}
+
+	/**
+	 * reset Position
+	 *
+	 * @param  int pos Position
+	 * @return bool
+	 */
+	resetPosition(pos: any) {
+		return this.Lexer.resetPosition(pos);
 	}
 
 	// =================================================================================

@@ -168,10 +168,11 @@ export default class SHLexerConfig {
 		THIRTIETH: "thirtieth",
 
 		// ********** suffixes **********
-		ST: "st",
-		ND: "nd",
-		RD: "rd",
-		TH: "th",
+		SUFFIXES: "st|nd|rd|th",
+		// ST: "st",
+		// ND: "nd",
+		// RD: "rd",
+		// TH: "th",
 
 		// ********** common rules **********
 
