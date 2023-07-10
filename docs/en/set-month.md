@@ -39,11 +39,11 @@ The current day of month will have an impact on the behavior of this method. Con
 Using setMonth()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setMonth(6);
 
 //Watch out for end of month transitions
-var endOfMonth = new Date(2016, 7, 31);
+var endOfMonth = new SHDate(2016, 7, 31);
 endOfMonth.setMonth(1);
 console.log(endOfMonth); //Wed Mar 02 2016 00:00:00
 ```

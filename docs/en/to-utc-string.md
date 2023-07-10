@@ -38,7 +38,7 @@ Prior to ECMAScript 2018, the format of the return value varied according to the
 Using toUTCString()
 
 ```js
-let today = new Date("Wed, 14 Jun 2017 00:00:00 PDT");
+let today = new SHDate("Wed, 14 Jun 2017 00:00:00 PDT");
 let UTCstring = today.toUTCString(); // Wed, 14 Jun 2017 07:00:00 GMT
 ```
 

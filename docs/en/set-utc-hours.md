@@ -43,7 +43,7 @@ If a parameter you specify is outside of the expected range, setUTCHours() attem
 # Examples
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setUTCHours(8);
 ```
 

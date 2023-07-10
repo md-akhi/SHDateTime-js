@@ -23,7 +23,7 @@ Using getSeconds()
 The second statement below assigns the value 30 to the variable seconds, based on the value of the Date object Xmas95.
 
 ```js
-var Xmas95 = new Date("December 25, 1995 23:15:30");
+var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
 var seconds = Xmas95.getSeconds();
 
 console.log(seconds); // 30

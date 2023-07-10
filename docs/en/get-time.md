@@ -21,18 +21,18 @@ A number representing the milliseconds elapsed between 1 January 1970 00:00:00 U
 
 # Reduced time precision
 
-To offer protection against timing attacks and fingerprinting, the precision of new Date().getTime() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.
+To offer protection against timing attacks and fingerprinting, the precision of new SHDate().getTime() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.
 
 ```js
 // reduced time precision (2ms) in Firefox 60
-new Date().getTime();
+new SHDate().getTime();
 // 1519211809934
 // 1519211810362
 // 1519211811670
 // ...
 
 // reduced time precision with `privacy.resistFingerprinting` enabled
-new Date().getTime();
+new SHDate().getTime();
 // 1519129853500
 // 1519129858900
 // 1519129864400
@@ -47,9 +47,9 @@ Using getTime() for copying dates
 Constructing a date object with the identical time value.
 
 ```js
-// Since month is zero based, birthday will be January 10, 1995
-var birthday = new Date(1994, 12, 10);
-var copy = new Date();
+// Since month is zero based, birthday will be January 10, 1390
+var birthday = new SHDate(1389, 12, 10);
+var copy = new SHDate();
 copy.setTime(birthday.getTime());
 
 Measuring execution time
@@ -57,11 +57,11 @@ Subtracting two subsequent getTime() calls on newly generated Date objects, give
 
 var end, start;
 
-start = new Date();
+start = new SHDate();
 for (var i = 0; i < 1000; i++) {
 Math.sqrt(i);
 }
-end = new Date();
+end = new SHDate();
 
 console.log('Operation took ' + (end.getTime() - start.getTime()) + ' msec');
 ```

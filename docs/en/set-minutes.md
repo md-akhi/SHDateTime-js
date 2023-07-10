@@ -41,7 +41,7 @@ If a parameter you specify is outside of the expected range, setMinutes() attemp
 Using setMinutes()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setMinutes(45);
 ```
 

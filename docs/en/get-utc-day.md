@@ -15,7 +15,7 @@ Examples
 Using getUTCDay()
 The following example assigns the weekday portion of the current date to the variable weekday.
 
-var today = new Date();
+var today = new SHDate();
 var weekday = today.getUTCDay();
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCDay

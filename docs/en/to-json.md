@@ -24,8 +24,8 @@ Date instances refer to a specific point in time. Calling toJSON() returns a str
 # Examples
 
 ```js
-var jsonDate = new Date().toJSON();
-var backToDate = new Date(jsonDate);
+var jsonDate = new SHDate().toJSON();
+var backToDate = new SHDate(jsonDate);
 
 console.log(jsonDate); //2015-10-26T07:46:36.611Z
 ```

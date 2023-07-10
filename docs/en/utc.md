@@ -67,7 +67,7 @@ Using SHDate.UTC()
 The following statement creates a Date object with the arguments treated as UTC instead of local:
 
 ```js
-let utcDate = new Date(SHDate.UTC(2018, 11, 1, 0, 0, 0));
+let utcDate = new SHDate(SHDate.UTC(2018, 11, 1, 0, 0, 0));
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC

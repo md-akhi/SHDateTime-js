@@ -37,7 +37,7 @@ If a parameter you specify is outside of the expected range, setSeconds() attemp
 Using setSeconds()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setSeconds(30);
 ```
 

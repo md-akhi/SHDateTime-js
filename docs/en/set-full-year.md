@@ -41,7 +41,7 @@ If a parameter you specify is outside of the expected range, setFullYear() attem
 Using setFullYear()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setFullYear(1997);
 ```
 

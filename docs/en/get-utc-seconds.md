@@ -23,7 +23,7 @@ Using getUTCSeconds()
 The following example assigns the seconds portion of the current time to the variable seconds.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var seconds = today.getUTCSeconds();
 ```
 

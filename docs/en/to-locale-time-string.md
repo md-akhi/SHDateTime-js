@@ -39,7 +39,7 @@ Using toLocaleTimeString()
 Basic use of this method without specifying a locale returns a formatted string in the default locale and with default options.
 
 ```js
-var date = new Date(SHDate.UTC(2012, 11, 12, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
 
 // toLocaleTimeString() without arguments depends on the implementation,
 // the default locale, and the default time zone
@@ -49,7 +49,7 @@ console.log(date.toLocaleTimeString());
 Using locales
 This example shows some of the variations in localized time formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
 
-var date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // formats below assume the local time zone of the locale;
 // America/Los_Angeles for the US
@@ -78,7 +78,7 @@ console.log(date.toLocaleTimeString(['ban', 'id']));
 Using options
 The results provided by toLocaleTimeString() can be customized using the options argument:
 
-var date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // an application may want to use UTC and make that visible
 var options = { timeZone: 'UTC', timeZoneName: 'short' };

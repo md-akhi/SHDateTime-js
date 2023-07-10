@@ -50,7 +50,7 @@ E.g. "Sat Sep 01 2018 14:53:26 GMT+1400 (LINT)"
 
 Until ECMAScript 2018 (edition 9), the format of the string returned by SHDate.prototype.toString was implementation dependent. Therefore it should not be relied upon to be in the specified format.
 
-The toString() method is automatically called when a date is to be represented as a text value, e.g. console.log(new Date()), or when a date is used in a string concatenation, such as var today = 'Today is ' + new Date().
+The toString() method is automatically called when a date is to be represented as a text value, e.g. console.log(new SHDate()), or when a date is used in a string concatenation, such as var today = 'Today is ' + new SHDate().
 
 toString() is a generic method, it does not require that its this is a Date instance. However, it must have an internal [[TimeValue]] property that can't be constructed using native javascript, so it's effectively limited to use with Date instances. If called on a non–Date instance, a TypeError is thrown.
 
@@ -60,7 +60,7 @@ Using toString()
 The following assigns the toString() value of a Date object to myVar:
 
 ```js
-var x = new Date();
+var x = new SHDate();
 var myVar = x.toString(); // assigns a string value to myVar in the same format as:
 // Mon Sep 08 1998 14:36:22 GMT-0700 (PDT)
 ```

@@ -23,7 +23,7 @@ Using getUTCHours()
 The following example assigns the hours portion of the current time to the variable hours.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var hours = today.getUTCHours();
 ```
 

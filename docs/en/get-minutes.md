@@ -23,7 +23,7 @@ Using getMinutes()
 The second statement below assigns the value 15 to the variable minutes, based on the value of the Date object Xmas95.
 
 ```js
-var Xmas95 = new Date("December 25, 1995 23:15:30");
+var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
 var minutes = Xmas95.getMinutes();
 
 console.log(minutes); // 15

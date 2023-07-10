@@ -45,7 +45,7 @@ If a parameter you specify is outside of the expected range, setHours() attempts
 Using setHours()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setHours(7);
 ```
 

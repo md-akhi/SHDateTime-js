@@ -29,7 +29,7 @@ If a parameter you specify is outside of the expected range, setUTCMilliseconds(
 # Examples
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setUTCMilliseconds(500);
 ```
 

@@ -18,7 +18,7 @@ Examples
 Using getUTCFullYear()
 The following example assigns the four-digit value of the current year to the variable year.
 
-var today = new Date();
+var today = new SHDate();
 var year = today.getUTCFullYear();
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear

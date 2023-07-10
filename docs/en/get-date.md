@@ -22,8 +22,8 @@ An integer number, between 1 and 31, representing the day of the month for the g
 The second statement below assigns the value 25 to the variable day, based on the value of the Date object Xmas95.
 
 ```js
-var Xmas95 = new Date("December 25, 1995 23:15:30");
-var day = Xmas95.getDate();
+var Xdey95 = new SHDate("Dey 25, 1390 23:15:30");
+var day = Xdey95.getDate();
 
 console.log(day); // 25
 ```

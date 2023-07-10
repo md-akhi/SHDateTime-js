@@ -39,7 +39,7 @@ Using toLocaleDateString()
 In basic use without specifying a locale, a formatted string in the default locale and with default options is returned.
 
 ```js
-const date = new Date(SHDate.UTC(2012, 11, 12, 3, 0, 0));
+const date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
 
 // toLocaleDateString() without arguments depends on the implementation,
 // the default locale, and the default time zone
@@ -51,7 +51,7 @@ The locales and options arguments are not supported in all browsers yet. To chec
 
 function toLocaleDateStringSupportsLocales() {
 try {
-new Date().toLocaleDateString('i');
+new SHDate().toLocaleDateString('i');
 } catch (e) {
 return e.name === 'RangeError';
 }
@@ -61,7 +61,7 @@ return false;
 Using locales
 This example shows some of the variations in localized date formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
 
-const date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+const date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // formats below assume the local time zone of the locale;
 // America/Los_Angeles for the US
@@ -99,7 +99,7 @@ console.log(date.toLocaleDateString(['ban', 'id']));
 Using options
 The results provided by toLocaleDateString() can be customized using the options argument:
 
-const date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+const date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // request a weekday along with a long date
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

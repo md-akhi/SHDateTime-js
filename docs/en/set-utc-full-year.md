@@ -39,7 +39,7 @@ If a parameter you specify is outside of the expected range, setUTCFullYear() at
 # Examples
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setUTCFullYear(1997);
 ```
 

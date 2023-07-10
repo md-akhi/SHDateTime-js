@@ -23,7 +23,7 @@ Using getUTCMonth()
 The following example assigns the month portion of the current date to the variable month.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var month = today.getUTCMonth();
 ```
 

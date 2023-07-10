@@ -37,7 +37,7 @@ Using toLocaleString()
 In basic use without specifying a locale, a formatted string in the default locale and with default options is returned.
 
 ```js
-let date = new Date(SHDate.UTC(2012, 11, 12, 3, 0, 0));
+let date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
 
 // toLocaleString() without arguments depends on the
 // implementation, the default locale, and the default time zone
@@ -49,7 +49,7 @@ The locales and options arguments are not supported in all browsers yet. To chec
 
 function toLocaleStringSupportsLocales() {
 try {
-new Date().toLocaleString('i');
+new SHDate().toLocaleString('i');
 } catch (e) {
 return e.name === 'RangeError';
 }
@@ -59,7 +59,7 @@ return false;
 Using locales
 This example shows some of the variations in localized date and time formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
 
-let date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+let date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // Formats below assume the local time zone of the locale;
 // America/Los_Angeles for the US
@@ -93,7 +93,7 @@ console.log(date.toLocaleString(['ban', 'id']));
 Using options
 The results provided by toLocaleString() can be customized using the options argument:
 
-let date = new Date(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+let date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // Request a weekday along with a long date
 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -119,7 +119,7 @@ Most notably, the IE and Edge browsers insert bidirectional control characters a
 
 For this reason, you cannot expect to be able to compare the results of toLocaleString() to a static value:
 
-"1/1/2019, 01:00:00" === new Date("2019-01-01T01:00:00Z").toLocaleString("en-US");
+"1/1/2019, 01:00:00" === new SHDate("2019-01-01T01:00:00Z").toLocaleString("en-US");
 // true in Firefox and others
 // false in IE and Edge
 ```

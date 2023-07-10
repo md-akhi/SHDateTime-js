@@ -25,7 +25,7 @@ Using getUTCMilliseconds()
 The following example assigns the milliseconds portion of the current time to the variable milliseconds.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var milliseconds = today.getUTCMilliseconds();
 ```
 

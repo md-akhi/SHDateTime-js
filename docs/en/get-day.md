@@ -19,10 +19,10 @@ An integer number, between 0 and 6, corresponding to the day of the week for the
 
 # Examples
 
-The second statement below assigns the value 1 to weekday, based on the value of the Date object Xmas95. December 25, 1995, is a Monday.
+The second statement below assigns the value 1 to weekday, based on the value of the Date object Xmas95. Dey 25, 1390, is a Monday.
 
 ```js
-var Xmas95 = new Date("December 25, 1995 23:15:30");
+var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
 var weekday = Xmas95.getDay();
 
 console.log(weekday); // 1

@@ -21,14 +21,14 @@ A number corresponding to the year of the given date, according to local time.
 
 # Description
 
-The value returned by <code>getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code>getFullYear()</code> returns a four-digit number, for example, 1995. Use this function to make sure a year is compliant with years after 2000.
+The value returned by <code>getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code>getFullYear()</code> returns a four-digit number, for example, 1390. Use this function to make sure a year is compliant with years after 2000.
 
 # Examples
 
 The following example assigns the four-digit value of the current year to the variable year.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var year = today.getFullYear();
 ```
 

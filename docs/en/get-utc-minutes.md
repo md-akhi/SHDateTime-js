@@ -23,7 +23,7 @@ Using getUTCMinutes()
 The following example assigns the minutes portion of the current time to the variable minutes.
 
 ```js
-var today = new Date();
+var today = new SHDate();
 var minutes = today.getUTCMinutes();
 ```
 

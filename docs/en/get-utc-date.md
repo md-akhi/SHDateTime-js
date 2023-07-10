@@ -15,7 +15,7 @@ Examples
 Using getUTCDate()
 The following example assigns the day of month of the current date to the variable dayOfMonth.
 
-var today = new Date();
+var today = new SHDate();
 var dayOfMonth = today.getUTCDate();
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCDate

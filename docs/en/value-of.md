@@ -28,7 +28,7 @@ This method is usually called internally by JavaScript and not explicitly in cod
 # Examples
 
 ```js
-var x = new Date(56, 6, 17);
+var x = new SHDate(56, 6, 17);
 var myVar = x.valueOf(); // assigns -424713600000 to myVar
 ```
 

@@ -31,7 +31,7 @@ If a parameter you specify is outside of the expected range, setUTCDate() attemp
 # Examples
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setUTCDate(20);
 ```
 

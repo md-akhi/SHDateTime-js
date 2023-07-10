@@ -29,8 +29,8 @@ Use the setTime() method to help assign a date and time to another Date object.
 # Examples
 
 ```js
-var theBigDay = new Date("July 1, 1999");
-var sameAsBigDay = new Date();
+var theBigDay = new SHDate("July 1, 1999");
+var sameAsBigDay = new SHDate();
 sameAsBigDay.setTime(theBigDay.getTime());
 ```
 

@@ -31,7 +31,7 @@ If you specify a number outside the expected range, the date information in the 
 Using setMilliseconds()
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setMilliseconds(100);
 ```
 

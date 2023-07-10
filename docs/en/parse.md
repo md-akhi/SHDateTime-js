@@ -17,7 +17,7 @@ SHDate.parse(dateString)
 
 Implicit call:
 
-new Date(dateString)
+new SHDate(dateString)
 
 # Parameters
 
@@ -51,25 +51,25 @@ The ECMAScript specification states: If the String does not conform to the stand
 However, invalid values in date strings not recognized as simplified ISO format as defined by ECMA-262 may or may not result in NaN, depending on the browser and values provided, e.g.:
 
 // Non-ISO string with invalid date values
-new Date('23/25/2014');
+new SHDate('23/25/2014');
 
 will be treated as a local date of 25 November, 2015 in Firefox 30 and an invalid date in Safari 7.
 
 However, if the string is recognized as an ISO format string and it contains invalid values, it will return NaN in all browsers compliant with ES5 and later:
 
 // ISO string with invalid values
-new Date('2014-25-23').toISOString();
+new SHDate('2014-25-23').toISOString();
 // throws "RangeError: invalid date" in all ES5-compliant browsers
 
 SpiderMonkey's implementation-specific heuristic can be found in jsdate.cpp. The string "10 06 2014" is an example of a non-conforming ISO format and thus falls back to a custom routine. See also this rough outline on how the parsing works.
 
-new Date('10 06 2014');
+new SHDate('10 06 2014');
 
 will be treated as a local date of 6 October, 2014, and not 10 June, 2014.
 
 Other examples:
 
-new Date('foo-bar 2014').toString();
+new SHDate('foo-bar 2014').toString();
 // returns: "Invalid Date"
 
 SHDate.parse('foo-bar 2014');

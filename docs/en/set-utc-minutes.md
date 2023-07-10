@@ -39,7 +39,7 @@ If a parameter you specify is outside of the expected range, setUTCMinutes() att
 # Examples
 
 ```js
-var theBigDay = new Date();
+var theBigDay = new SHDate();
 theBigDay.setUTCMinutes(43);
 ```
 

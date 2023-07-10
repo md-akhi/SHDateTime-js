@@ -27,7 +27,7 @@ JavaScript calls the <code>\[@@toPrimitive]()</code> method to convert an object
 Returning date primitives
 
 ```js
-const testDate = new Date(1590757517834);
+const testDate = new SHDate(1590757517834);
 // "Date Fri May 29 2020 14:05:17 GMT+0100 (British Summer Time)"
 
 testDate[Symbol.toPrimitive]("string");
