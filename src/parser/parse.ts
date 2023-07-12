@@ -96,7 +96,8 @@ export default class SHParser {
 		);
 	}
 	// "70/01/01" // 0 in all implementations
-	// "Thu, 01 Jan 1970 00:00:00 GMT+0300"
+	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
+	// "Jan 1, 1970" // 0 in all implementations
 	// "0" //(Sat Jan 01 2000 00:00:00 GMT+0000) || (Sat Jan 01 0000 00:00:00 GMT+0000)
 	// YYYY
 	// "yyyy",
@@ -105,8 +106,20 @@ export default class SHParser {
 	// YYYY-MM (eg 1997-07)
 	// YYYY-MM-DD
 	// YYYY-MM-DD (eg 1997-07-16)
+	// "1970-1-1"   "1970-01-01"
+
+	// dd-MMM-yyyy
+	// dd-MMM-yy
+	// yy-MMM-dd
 	// "ddd, MMM dd, yyyy H:mm:ss tt",
 	// "ddd MMM d yyyy HH:mm:ss zzz",
+	// "Thu, 01 Jan 1970 00:00:00 GMT+0300"
+	// Thu Jan 01 1970 00:00:00 GMT+0000
+	// "Thu, 01 Jan 1970 00:00:00" // 0 in all implementations
+	/* Tue Oct 31 2000 09:41:40 GMT-0800 */
+	/* Tue Oct 31 2000 */
+	// 11.03.22 or 11Mar22
+
 	// "MMddyyyy",
 	// "ddMMyyyy",
 	// "Mddyyyy",
@@ -116,31 +129,20 @@ export default class SHParser {
 	// "Mdyy",
 	// "dMyy",
 	// "d"
-	// THH:mm
-	// THH:mm:ss
-	// THH:mm:ss.sss
-	// Thh:mmTZD (eg T19:20+01:00)
-	// Thh:mm:ssTZD (eg T19:20:30+01:00)
-	// Thh:mm:ss.sTZD (eg T19:20:30.45+01:00)
-	// dd-MMM-yyyy
-	// 02/30/2014   "02 01 1970" // (Sun Feb 01 1970 00:00:00 GMT+0000)
-	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
-	// dd-MMM-yy
-	// yy-MMM-dd
-	// Thu Jan 01 1970 00:00:00 GMT+0000
-	// "Jan 1, 1970" // 0 in all implementations
-	// "Thu, 01 Jan 1970 00:00:00" // 0 in all implementations
-	// "01:00:00 GMT-0800 (PST)"
-	// "03:00:00 GMT-0700 (PDT)"
-	// "T19:00:00Z" default to 1970-01-01
-	// "T19:00:00+0700"   "T19:00:00+07:00".
-	// "1970-1-1"   "1970-01-01"
+
 	// TZD  = time zone designator (Z or +hh:mm or -hh:mm or missing for local)
 	// UT +00:19:32.13, from 1909 to 1937
-	/* Tue Oct 31 2000 09:41:40 GMT-0800 */
-	/* Tue Oct 31 2000 */
+	// THH:mm
+	// Thh:mm TZD (eg T19:20+01:00)
+	// THH:mm:ss
+	// Thh:mm:ss TZD (eg T19:20:30+01:00)
+	// "01:00:00 GMT-0800 (PST)"
+	// "03:00:00 GMT-0700 (PDT)"
 	/* 09:41:40 GMT-0800 */
-	// 3/11/22 or 11.03.22 or 11Mar22
+	// "T19:00:00Z" default to 1970-01-01
+	// "T19:00:00+0700"   "T19:00:00+07:00".
+	// THH:mm:ss.sss
+	// Thh:mm:ss.s TZD (eg T19:20:30.45+01:00)
 	// 271821-04-20T00:00:00Z	271822 B.C.
 	// -000001-01-01T00:00:00Z	2 B.C.
 	// +000000-01-01T00:00:00Z	1 B.C.

@@ -82,13 +82,14 @@ for (let year = 1200; year <= 1700; year += 20) {
 			Dim,
 			Wiy,
 			Woy,
-			Leap
-		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=Leap");
+			dsn,
+			msn
+		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=dsn=msn");
 		if (month == 11 && day !== parseInt(days)) {
 			console.log("");
 		} else
 			console.log(
-				`{ solar:"${years}-${months}-${days}T${hours}:${minutes}:${seconds}" , time:${shdate.getTime()} },`
+				`{ solar:"${days} ${msn} ,${years}" , time:${shdate.getTime()} },`
 			);
 	});
 }
