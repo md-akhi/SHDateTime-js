@@ -440,12 +440,12 @@ export default class SHParser {
 			return true;
 		} else if (this.isToken("YESTERDAY")) {
 			// Midnight of yesterday
-			this.data["RYDAY"] = true;
+			this.data["YESTERDAY"] = true;
 			this.restTime();
 			return true;
 		} else if (this.isToken("TOMORROW")) {
 			// Midnight of tomorrow
-			this.data["RTDAY"] = true;
+			this.data["TOMORROW"] = true;
 			this.restTime();
 			return true;
 		} else if (
@@ -456,7 +456,7 @@ export default class SHParser {
 			this.handleRelTimeText()
 		) {
 			return true;
-		} else if (this.isToken("ago")) {
+		} else if (this.isToken("AGO")) {
 			// Negates all the values of previously found relative time items.
 			this.data["AGO"] = true;
 			this.nextToken();
@@ -642,39 +642,38 @@ export default class SHParser {
 			this.nextToken();
 			if (this.whiteSpace()) {
 				dow = this.dayNeme();
-				if (dow && this.whiteSpace()) {
-					if (this.isToken("OF")) {
-						this.nextToken();
-						if (this.whiteSpace()) {
-							if (this.RelativeFormats() || this.DateFormats()) {
-								// dow29month = this.Date.getDayOfWeek(
-								// 	this.data["YEAR"],
-								// 	this.data["MONTH"],
-								// 	this.Date.getDaysInMonth(
-								// 		this.data["YEAR"],
-								// 		this.data["MONTH"]
-								// 	)
-								// );
-								// if (dow < dow29month) {
-								// 	diffdow = dow29month - dow;
-								// } else if (dow > dow29month) {
-								// 	diffdow = 7 - dow - dow29month;
-								// } else {
-								// 	diffdow = 0;
-								// }
-								// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-								// 	this.Date.getDaysOfDay(
-								// 		this.data["YEAR"],
-								// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
-								// 			diffdow
-								// 	);
-								this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
-								this.data["HOURS"] = 0;
-								this.data["MINUTES"] = 0;
-								this.data["SECONDS"] = 0;
-								return true;
-							}
-						}
+				if (dow && this.whiteSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.whiteSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						// dow29month = this.Date.getDayOfWeek(
+						// 	this.data["YEAR"],
+						// 	this.data["MONTH"],
+						// 	this.Date.getDaysInMonth(
+						// 		this.data["YEAR"],
+						// 		this.data["MONTH"]
+						// 	)
+						// );
+						// if (dow < dow29month) {
+						// 	diffdow = dow29month - dow;
+						// } else if (dow > dow29month) {
+						// 	diffdow = 7 - dow - dow29month;
+						// } else {
+						// 	diffdow = 0;
+						// }
+						// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+						// 	this.Date.getDaysOfDay(
+						// 		this.data["YEAR"],
+						// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
+						// 			diffdow
+						// 	);
+						this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
 					}
 				}
 			}
@@ -682,44 +681,43 @@ export default class SHParser {
 			// Calculates the x-th week day of the current month.
 			if (this.whiteSpace()) {
 				dow = this.dayNeme();
-				if (dow && this.whiteSpace()) {
-					if (this.isToken("OF")) {
-						this.nextToken();
-						if (this.whiteSpace()) {
-							if (this.RelativeFormats() || this.DateFormats()) {
-								if (int > 0) {
-									// dow1month = this.Date.getDayOfWeek(
-									// 	this.data["YEAR"],
-									// 	this.data["MONTH"],
-									// 	1
-									// );
-									// if (dow < dow1month) {
-									// 	diffdow = dow1month - dow;
-									// } else if (dow > dow1month) {
-									// 	diffdow = 7 - dow - dow1month;
-									// } else {
-									// 	diffdow = 0;
-									// }
-									// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-									// 	this.Date.getDaysOfDay(
-									// 		this.data["YEAR"],
-									// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
-									// 			diffdow +
-									// 			(int - 1) * 7
-									// 	);
-									return true;
-								} else if (int == 0) {
-								} else if (int == -1) {
-								} else if (int == -2) {
-								} else if (int == -3) {
-								}
-								this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
-								this.data["HOURS"] = 0;
-								this.data["MINUTES"] = 0;
-								this.data["SECONDS"] = 0;
-								return true;
-							}
+				if (dow && this.whiteSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.whiteSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						if (int > 0) {
+							// dow1month = this.Date.getDayOfWeek(
+							// 	this.data["YEAR"],
+							// 	this.data["MONTH"],
+							// 	1
+							// );
+							// if (dow < dow1month) {
+							// 	diffdow = dow1month - dow;
+							// } else if (dow > dow1month) {
+							// 	diffdow = 7 - dow - dow1month;
+							// } else {
+							// 	diffdow = 0;
+							// }
+							// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+							// 	this.Date.getDaysOfDay(
+							// 		this.data["YEAR"],
+							// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
+							// 			diffdow +
+							// 			(int - 1) * 7
+							// 	);
+							return true;
+						} else if (int == 0) {
+						} else if (int == -1) {
+						} else if (int == -2) {
+						} else if (int == -3) {
 						}
+						this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
 					}
 				}
 			}
@@ -799,56 +797,48 @@ export default class SHParser {
 			int: any,
 			diffdoy,
 			pos = this.getPosition();
-		if ((int = this.ordinal())) {
+		if ((int = this.ordinal()) && this.whiteSpace() && (rel = this.unit())) {
 			// Handles relative time items where the value is text.
-			if (this.whiteSpace()) {
-				if ((rel = this.unit())) {
-					if (this.isToken("WEEK") || rel == 53) {
-						diffdoy = int * 7;
-					} else if (rel == 59) {
-						// SECONDS
-						[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-							this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
-					} else if (rel == 60) {
-						// MINUTES
-						[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-							this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
-					} else if (rel == 24) {
-						// todo add with date
-						[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-							this.Date.revTime(
-								int,
-								this.data["MINUTES"],
-								this.data["SECONDS"]
-							);
-					} else if (rel == 31) {
-						// DAY
-						diffdoy = int;
-					} else if (rel == 12) {
-						// todo calc with month with year
-						diffdoy = int * 30.5;
-					} else if (rel == 100) {
-						// YEAR
-						if (int < 0) this.data["YEAR"] -= int;
-						if (int > 0) this.data["YEAR"] += int;
-					} else if (rel == 7) {
-						// todo day of week		weekday
-					} else if (rel == 14) {
-						// FORTNIGHT
-						diffdoy = int * 14;
-					}
-					[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-						this.Date.getDaysOfDay(
-							this.data["YEAR"],
-							this.Date.getDayOfYear(
-								this.data["YEAR"],
-								this.data["MONTH"],
-								this.data["DAY"]
-							) + diffdoy
-						);
-					return true;
-				}
+			if (this.isToken("WEEK") || rel == 53) {
+				diffdoy = int * 7;
+			} else if (rel == 59) {
+				// SECONDS
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
+			} else if (rel == 60) {
+				// MINUTES
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
+			} else if (rel == 24) {
+				// todo add with date
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(int, this.data["MINUTES"], this.data["SECONDS"]);
+			} else if (rel == 31) {
+				// DAY
+				diffdoy = int;
+			} else if (rel == 12) {
+				// todo calc with month with year
+				diffdoy = int * 30.5;
+			} else if (rel == 100) {
+				// YEAR
+				if (int < 0) this.data["YEAR"] -= int;
+				if (int > 0) this.data["YEAR"] += int;
+			} else if (rel == 7) {
+				// todo day of week		weekday
+			} else if (rel == 14) {
+				// FORTNIGHT
+				diffdoy = int * 14;
 			}
+			[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+				this.Date.getDaysOfDay(
+					this.data["YEAR"],
+					this.Date.getDayOfYear(
+						this.data["YEAR"],
+						this.data["MONTH"],
+						this.data["DAY"]
+					) + diffdoy
+				);
+			return true;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -929,7 +919,18 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	hour24Notation() {
+	hour24Notation(
+		isSign: boolean = false,
+		isH24: boolean = false,
+		isII: boolean = false,
+		isSS: boolean = false,
+		isDot: boolean = false,
+		isColon: boolean = false,
+		isSpace: boolean = false,
+		isFrac: boolean = false,
+		isTZ: boolean = false,
+		isTZC: boolean = false
+	) {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
 		if (this.isToken("SIGN_TIME")) {
