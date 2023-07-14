@@ -164,20 +164,15 @@ export default class SHParser {
 		let pos, year, month, day, h24, min, sec, frac, tz;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				day = this.dayMandatoryPrefix();
-				if (day && this.isToken("SIGN_TIME")) {
-					this.nextToken();
+				if (day && this.isTKSignTime()) {
 					h24 = this.hour24();
-					if (h24 && this.isToken("COLON")) {
-						this.nextToken();
+					if (h24 && this.isTKColon()) {
 						min = this.minutesMandatoryPrefix();
-						if (min && this.isToken("COLON")) {
-							this.nextToken();
+						if (min && this.isTKColon()) {
 							if ((sec = this.secondsMandatoryPrefix())) {
 								this.data["YEAR"] = year;
 								this.data["MONTH"] = month;
@@ -218,14 +213,11 @@ export default class SHParser {
 			year,
 			pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DASH")) {
-				this.nextToken();
+			if (this.isTKDash()) {
 			}
 			if (this.isToken("SIGN_WEEK")) {
-				this.nextToken();
 				if ((week = this.setWeekOfYear())) {
-					if (this.isToken("DASH")) {
-						this.nextToken();
+					if (this.isTKDash()) {
 					}
 					if ((dow = this.int1To7() || this.int0())) {
 						this.data["DAY_OF_WEEK"] = dow;
@@ -249,19 +241,15 @@ export default class SHParser {
 		let pos, year, month, day, h24, min, sec;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				day = this.dayMandatoryPrefix();
 				if (day && this.whiteSpace()) {
 					h24 = this.hour24();
-					if (h24 && this.isToken("COLON")) {
-						this.nextToken();
+					if (h24 && this.isTKColon()) {
 						min = this.minutesMandatoryPrefix();
-						if (min && this.isToken("COLON")) {
-							this.nextToken();
+						if (min && this.isTKColon()) {
 							if ((sec = this.secondsMandatoryPrefix())) {
 								this.data["YEAR"] = year;
 								this.data["MONTH"] = month;
@@ -290,8 +278,7 @@ export default class SHParser {
 			doy,
 			pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isToken("DOT")) {
-				this.nextToken();
+			if (this.isTKDot()) {
 			}
 			if ((doy = this.setDayOfYear())) {
 				this.data["YEAR"] = year;
@@ -340,20 +327,15 @@ export default class SHParser {
 			sec,
 			pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthOptionalPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				day = this.dayOptionalPrefix();
-				if (day && this.isToken("SIGN_TIME")) {
-					this.nextToken();
+				if (day && this.isTKSignTime()) {
 					h12 = this.hour12();
-					if (h12 && this.isToken("COLON")) {
-						this.nextToken();
+					if (h12 && this.isTKColon()) {
 						min = this.minutesOptionalPrefix();
-						if (min && this.isToken("COLON")) {
-							this.nextToken();
+						if (min && this.isTKColon()) {
 							if ((sec = this.secondsOptionalPrefix())) {
 								this.data["YEAR"] = year;
 								this.data["MONTH"] = month;
@@ -387,14 +369,11 @@ export default class SHParser {
 			meridian,
 			pos = this.getPosition();
 		h12 = this.hour12();
-		if (h12 && this.isToken("COLON")) {
-			this.nextToken();
+		if (h12 && this.isTKColon()) {
 			min = this.minutesMandatoryPrefix();
-			if (min && this.isToken("COLON")) {
-				this.nextToken();
+			if (min && this.isTKColon()) {
 				sec = this.secondsMandatoryPrefix();
-				if (sec && (this.isToken("DOT") || this.isToken("COLON"))) {
-					this.nextToken();
+				if (sec && (this.isTKDot() || this.isTKColon())) {
 					frac = this.number();
 					meridian = this.meridian();
 					if (frac && meridian) {
@@ -880,12 +859,10 @@ export default class SHParser {
 		let pos, h12, min, sec, meridian;
 		pos = this.getPosition();
 		if ((h12 = this.hour12())) {
-			if (this.isToken("COLON") || this.isToken("DOT")) {
-				this.nextToken();
+			if (this.isTKColon() || this.isTKDot()) {
 				if ((min = this.minutesMandatoryPrefix())) {
 					this.data["MINUTES"] = min;
-					if (this.isToken("COLON") || this.isToken("DOT")) {
-						this.nextToken();
+					if (this.isTKColon() || this.isTKDot()) {
 						if ((sec = this.secondsMandatoryPrefix())) {
 							this.data["SECONDS"] = sec;
 						}
@@ -933,15 +910,12 @@ export default class SHParser {
 	) {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
-		if (this.isToken("SIGN_TIME")) {
-			this.nextToken();
+		if (this.isTKSignTime()) {
 		}
 		if ((h24 = this.hour24())) {
-			if (this.isToken("DOT") || this.isToken("COLON")) {
-				this.nextToken();
+			if (this.isTKColon()) {
 				if ((min = this.minutesMandatoryPrefix())) {
-					if (this.isToken("DOT") || this.isToken("COLON")) {
-						this.nextToken();
+					if (this.isTKColon()) {
 						if ((sec = this.secondsMandatoryPrefix())) {
 							this.data["SECONDS"] = sec;
 							if ((frac = this.fraction())) {
@@ -1129,11 +1103,9 @@ export default class SHParser {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1156,8 +1128,7 @@ export default class SHParser {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			if ((month = this.monthOptionalPrefix())) {
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
@@ -1178,9 +1149,8 @@ export default class SHParser {
 		let pos, year, month;
 		pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
-			while (this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH")) {
-				if (this.isToken("DOT") || this.isToken("DASH")) {
-					this.nextToken();
+			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
+				if (this.isTKDot() || this.isTKDash()) {
 				}
 			}
 			if ((month = this.monthTextualFull())) {
@@ -1233,11 +1203,9 @@ export default class SHParser {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.yearOptionalPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthOptionalPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				if ((day = this.dayOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1262,11 +1230,9 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		year = this.yearOptionalPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthTextualShort();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1291,11 +1257,9 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		year = this.year2MandatoryPrefix();
-		if (year && this.isToken("DASH")) {
-			this.nextToken();
+		if (year && this.isTKDash()) {
 			month = this.monthMandatoryPrefix();
-			if (month && this.isToken("DASH")) {
-				this.nextToken();
+			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1338,16 +1302,11 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		day = this.dayOptionalPrefix();
-		if (
-			day &&
-			(this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH"))
-		) {
-			if (this.isToken("DOT") || this.isToken("DASH")) {
-				this.nextToken();
+		if (day && (this.whiteSpace() || this.isTKDot() || this.isTKDash())) {
+			if (this.isTKDot() || this.isTKDash()) {
 			}
 			month = this.monthOptionalPrefix();
-			if (month && (this.isToken("DOT") || this.isToken("DASH"))) {
-				this.nextToken();
+			if (month && (this.isTKDot() || this.isTKDash())) {
 				if ((year = this.year4MandatoryPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1372,13 +1331,11 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		if ((day = this.dayOptionalPrefix())) {
-			if (this.whiteSpace() || this.isToken("DOT")) {
-				if (this.isToken("DOT")) {
-					this.nextToken();
+			if (this.whiteSpace() || this.isTKDot()) {
+				if (this.isTKDot()) {
 				}
 				if ((month = this.monthOptionalPrefix())) {
-					if (this.isToken("DOT")) {
-						this.nextToken();
+					if (this.isTKDot()) {
 						if ((year = this.year2MandatoryPrefix())) {
 							this.data["YEAR"] = year;
 							this.data["MONTH"] = month;
@@ -1405,20 +1362,14 @@ export default class SHParser {
 			pos = this.getPosition();
 		if ((day = this.dayOptionalPrefix())) {
 			// dd ([ \t.-])* m ([ \t.-])* y
-			while (this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH")) {
-				if (this.isToken("DOT") || this.isToken("DASH")) {
-					this.nextToken();
+			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
+				if (this.isTKDot() || this.isTKDash()) {
 				}
 			}
 			if ((month = this.monthTextualFull())) {
 				// d ([ .\t-])* m
-				while (
-					this.whiteSpace() ||
-					this.isToken("DOT") ||
-					this.isToken("DASH")
-				) {
-					if (this.isToken("DOT") || this.isToken("DASH")) {
-						this.nextToken();
+				while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
+					if (this.isTKDot() || this.isTKDash()) {
 					}
 				}
 				if ((year = this.yearOptionalPrefix())) {
@@ -1445,9 +1396,8 @@ export default class SHParser {
 			pos = this.getPosition();
 		if ((month = this.monthTextualFull())) {
 			// m ([ \t.-])* YY         Day reset to 1
-			while (this.whiteSpace() || this.isToken("DOT") || this.isToken("DASH")) {
-				if (this.isToken("DOT") || this.isToken("DASH")) {
-					this.nextToken();
+			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
+				if (this.isTKDot() || this.isTKDash()) {
 				}
 			}
 			if ((year = this.year4MandatoryPrefix())) {
@@ -1460,11 +1410,10 @@ export default class SHParser {
 				while (
 					this.whiteSpace() ||
 					this.daySuffixTextual() ||
-					this.isToken("COMMA") ||
-					this.isToken("DOT")
+					this.isTKComma() ||
+					this.isTKDot()
 				) {
-					if (this.isToken("DOT") || this.isToken("COMMA")) {
-						this.nextToken();
+					if (this.isTKDot() || this.isTKComma()) {
 					}
 				}
 				if ((year = this.yearOptionalPrefix())) {
@@ -1492,11 +1441,9 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		month = this.monthTextualShort();
-		if (month && this.isToken("DASH")) {
-			this.nextToken();
+		if (month && this.isTKDash()) {
 			day = this.dayMandatoryPrefix();
-			if (day && this.isToken("DASH")) {
-				this.nextToken();
+			if (day && this.isTKDash()) {
 				if ((year = this.yearOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1577,15 +1524,13 @@ export default class SHParser {
 			this.data["TZ_SIGN_PLUS"] = true;
 			this.nextToken();
 			PLUS_DASH = true;
-		} else if (this.isToken("DASH")) {
+		} else if (this.isTKDash()) {
 			this.data["TZ_SIGN_DASH"] = true;
-			this.nextToken();
 			PLUS_DASH = true;
 		}
 		if (PLUS_DASH && (h12 = this.hour12())) {
 			this.data["TZ_HOURS"] = h12;
-			if (this.isToken("COLON")) {
-				this.nextToken();
+			if (this.isTKColon()) {
 			}
 			if ((min = this.minutesMandatoryPrefix())) {
 				this.data["TZ_MINUTES"] = min;
@@ -1794,8 +1739,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	fraction() {
-		if (this.isToken("DOT")) {
-			this.nextToken();
+		if (this.isTKDot()) {
 			var isInt = false;
 			let int,
 				num: any = ".";
@@ -2001,11 +1945,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	whiteSpace() {
-		if (this.isToken("SPACE")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
+		return this.isTKSpace();
 	}
 
 	/**
@@ -2081,8 +2021,7 @@ export default class SHParser {
 		if (this.isToken("PLUS")) {
 			this.nextToken();
 			return "+";
-		} else if (this.isToken("DASH")) {
-			this.nextToken();
+		} else if (this.isTKDash()) {
 			return "-";
 		}
 		return false;
@@ -2223,6 +2162,53 @@ export default class SHParser {
 		return this.Lexer.resetPosition(pos);
 	}
 
+	isTKColon() {
+		if (this.isToken("COLON")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKDot() {
+		if (this.isToken("DOT")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKDash() {
+		if (this.isToken("DASH")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKComma() {
+		if (this.isToken("COMMA")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKSpace() {
+		if (this.isToken("SPACE")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKSignTime() {
+		if (this.isToken("SIGN_TIME")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
 	// =================================================================================
 	// ==================================   numeric   ==================================
 	// =================================================================================
@@ -2294,9 +2280,7 @@ export default class SHParser {
 				return 19;
 			case "TWENTY":
 				this.nextToken();
-				if (this.isToken("DASH") || this.isToken("SPACE")) {
-					this.nextToken();
-				}
+				this.isTKDash() || this.isTKSpace();
 				switch (this.nameToken()) {
 					case "ONE":
 						this.nextToken();
@@ -2330,9 +2314,8 @@ export default class SHParser {
 						return 20;
 				}
 			case "THIRTY":
-				if (this.isToken("DASH") || this.isToken("SPACE")) {
-					this.nextToken();
-				}
+				this.isTKDash() || this.isTKSpace();
+
 				if (this.isToken("ONE")) {
 					this.nextToken();
 					return 31;
@@ -2414,9 +2397,7 @@ export default class SHParser {
 				return 20;
 			case "TWENTY": {
 				this.nextToken();
-				if (this.isToken("DASH") || this.isToken("SPACE")) {
-					this.nextToken();
-				}
+				this.isTKDash() || this.isTKSpace();
 				switch (this.nameToken()) {
 					case "FIRST":
 						this.nextToken();
@@ -2452,9 +2433,7 @@ export default class SHParser {
 				this.nextToken();
 				return 30;
 			case "THIRTY":
-				if (this.isToken("DASH") || this.isToken("SPACE")) {
-					this.nextToken();
-				}
+				this.isTKDash() || this.isTKSpace();
 				if (this.isToken("FIRST")) {
 					this.nextToken();
 					return 31;
