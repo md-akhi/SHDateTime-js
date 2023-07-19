@@ -896,18 +896,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	hour24Notation(
-		isSign: boolean = false,
-		isH24: boolean = false,
-		isII: boolean = false,
-		isSS: boolean = false,
-		isDot: boolean = false,
-		isColon: boolean = false,
-		isSpace: boolean = false,
-		isFrac: boolean = false,
-		isTZ: boolean = false,
-		isTZC: boolean = false
-	) {
+	hour24Notation() {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
 		if (this.isTKSignTime()) {
@@ -944,6 +933,99 @@ export default class SHParser {
 		return false;
 	}
 
+	extime(
+		isH24: boolean = false,
+		isII: boolean = false,
+		isSS: boolean = false,
+		isFrac: boolean = false,
+		isMeridian: boolean = false,
+		isTZ: boolean = false,
+		isTZC: boolean = false,
+		isSign: boolean = false,
+		isDot: boolean = false,
+		isColon: boolean = false,
+		isSpace: boolean = false
+	) {
+		let pos, h12, h24, min, sec, frac, meridian;
+		pos = this.getPosition();
+		if (isSign && this.isTKSignTime()) {
+		} else if (isSign) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isH24 && (h24 = this.hour24())) {
+			this.data["HOURS"] = h24;
+		} else if (!isH24 && (h12 = this.hour12())) {
+			this.data["HOURS"] = h12;
+		} else if ((isH24 && h24) || (!isH24 && h12)) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isDot && this.isTKDot()) {
+		} else if (isDot) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isColon && this.isTKColon()) {
+		} else if (isColon) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isII && (min = this.minutesMandatoryPrefix())) {
+			this.data["MINUTES"] = min;
+		} else if (isII && (min = this.minutesOptionalPrefix())) {
+			this.data["MINUTES"] = min;
+		} else if (isII) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isDot && this.isTKDot()) {
+		} else if (isDot) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isColon && this.isTKColon()) {
+		} else if (isColon) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isSS && (sec = this.secondsMandatoryPrefix())) {
+			this.data["SECONDS"] = sec;
+		} else if (isSS && (sec = this.secondsOptionalPrefix())) {
+			this.data["SECONDS"] = sec;
+		} else if (isSS) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isMeridian && (meridian = this.meridian())) {
+			if (meridian) {
+				this.data["PM"] = true;
+			} else {
+				this.data["AM"] = true;
+			}
+		} else if (isMeridian) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isFrac && (frac = this.fraction())) {
+			this.data["FRAC"] = frac;
+		} else if (isFrac) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (isSpace && this.isTKSpace()) {
+		} else if (isSpace) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if ((isTZC && this.TZCorrection()) || (isTZ && this.timeZone())) {
+		} else if (isTZ || isTZC) {
+			this.resetPosition(pos);
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Date Formats
 	 *
@@ -952,7 +1034,7 @@ export default class SHParser {
 	DateFormats() {
 		// Localized Notations
 		return (
-			this.usaDate() ||
+			//this.usaDate() ||
 			this.year4Date() ||
 			this.Date1AbbrDashes() ||
 			this.year2MonthDay() ||
@@ -967,27 +1049,27 @@ export default class SHParser {
 	 * M{1,2}/D{1,2}/Y{1,2}
 	 * @return bool
 	 */
-	usaDate() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		month = this.monthOptionalPrefix();
-		if (month && this.isToken("SLASH")) {
-			this.nextToken();
-			if ((day = this.dayOptionalPrefix())) {
-				if (this.isToken("SLASH")) {
-					this.nextToken();
-					if ((year = this.yearOptionalPrefix())) {
-						this.data["YEAR"] = year;
-					} else return false;
-				}
-				this.data["MONTH"] = month;
-				this.data["DAY"] = day;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
+	// usaDate() {
+	// 	let pos, year, month, day;
+	// 	pos = this.getPosition();
+	// 	month = this.monthOptionalPrefix();
+	// 	if (month && this.isToken("SLASH")) {
+	// 		this.nextToken();
+	// 		if ((day = this.dayOptionalPrefix())) {
+	// 			if (this.isToken("SLASH")) {
+	// 				this.nextToken();
+	// 				if ((year = this.yearOptionalPrefix())) {
+	// 					this.data["YEAR"] = year;
+	// 				} else return false;
+	// 			}
+	// 			this.data["MONTH"] = month;
+	// 			this.data["DAY"] = day;
+	// 			return true;
+	// 		}
+	// 	}
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
 
 	/**
 	 * year
@@ -1150,8 +1232,8 @@ export default class SHParser {
 		pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
 			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
-				if (this.isTKDot() || this.isTKDash()) {
-				}
+				// if (this.isTKDot() || this.isTKDash()) {
+				// }
 			}
 			if ((month = this.monthTextualFull())) {
 				this.data["YEAR"] = year;
