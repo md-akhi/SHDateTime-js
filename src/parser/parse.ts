@@ -95,6 +95,11 @@ export default class SHParser {
 			this.MSSQL()
 		);
 	}
+	// https://www.php.net/manual/en/datetime.formats.time.php
+	// https://www.php.net/manual/en/datetime.formats.date.php
+	// https://www.php.net/manual/en/datetime.formats.compound.php
+	// https://www.php.net/manual/en/datetime.formats.relative.php
+
 	// "70/01/01" // 0 in all implementations
 	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
 	// "Jan 1, 1970" // 0 in all implementations
