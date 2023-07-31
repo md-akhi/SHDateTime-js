@@ -221,7 +221,7 @@ export default class SHParser {
 			if (this.isTKDash()) {
 			}
 			if (this.isToken("SIGN_WEEK")) {
-				if ((week = this.setWeekOfYear())) {
+				if ((week = this.weekOfYear())) {
 					if (this.isTKDash()) {
 					}
 					if ((dow = this.int1To7() || this.int0())) {
@@ -939,14 +939,17 @@ export default class SHParser {
 	}
 
 	extime(
-		isH24: boolean = false,
+		isSign: boolean = false,
+		isHH: boolean = false,
+		ishh: boolean = false,
 		isII: boolean = false,
+		isii: boolean = false,
 		isSS: boolean = false,
+		isss: boolean = false,
 		isFrac: boolean = false,
 		isMeridian: boolean = false,
 		isTZ: boolean = false,
 		isTZC: boolean = false,
-		isSign: boolean = false,
 		isDot: boolean = false,
 		isColon: boolean = false,
 		isSpace: boolean = false
@@ -958,11 +961,15 @@ export default class SHParser {
 			this.resetPosition(pos);
 			return false;
 		}
-		if (isH24 && (h24 = this.hour24())) {
+		if (isHH && (h24 = this.hour24())) {
 			this.data["HOURS"] = h24;
-		} else if (!isH24 && (h12 = this.hour12())) {
+		} else if (isHH && h24) {
+			this.resetPosition(pos);
+			return false;
+		}
+		if (ishh && (h12 = this.hour12())) {
 			this.data["HOURS"] = h12;
-		} else if ((isH24 && h24) || (!isH24 && h12)) {
+		} else if (ishh && h12) {
 			this.resetPosition(pos);
 			return false;
 		}
@@ -1004,9 +1011,9 @@ export default class SHParser {
 		}
 		if (isMeridian && (meridian = this.meridian())) {
 			if (meridian) {
-				this.data["PM"] = true;
+				this.data["MERIDIAN"] = "PM";
 			} else {
-				this.data["AM"] = true;
+				this.data["MERIDIAN"] = "AM";
 			}
 		} else if (isMeridian) {
 			this.resetPosition(pos);
@@ -1544,7 +1551,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Time Zone Correction
+	 * Time Zone Correction {"GMT"? [+-] hh ":"? MM?}
 	 *
 	 * @return bool
 	 */
@@ -1552,6 +1559,7 @@ export default class SHParser {
 		let PLUS_DASH, h12, min;
 		switch (this.nameToken()) {
 			case "UTC":
+			case "GMT":
 				this.nextToken();
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "00";
@@ -1605,11 +1613,12 @@ export default class SHParser {
 				this.data["TZ_HOURS"] = "08";
 				this.data["TZ_MINUTES"] = "00";
 				return true;
+			default:
+				this.data["TZ_NAME"] = this.valueToken();
 		}
 		PLUS_DASH = false;
-		if (this.isToken("PLUS")) {
+		if (this.isTKPlus()) {
 			this.data["TZ_SIGN_PLUS"] = true;
-			this.nextToken();
 			PLUS_DASH = true;
 		} else if (this.isTKDash()) {
 			this.data["TZ_SIGN_DASH"] = true;
@@ -1627,10 +1636,23 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * timeZone {"("? [A-Za-z]{1,6} ")"? | [A-Z][a-z]+([_/][A-Z][a-z]+)+}
+	 *
+	 * @return bool
+	 */
+	timeZone() {
+		if (this.isToken("TZ")) {
+			this.data["TZ_NAME"] = this.valueToken();
+			return true;
+		}
+		return false;
+	}
+
 	// Relative
 
 	/**
-	 * number
+	 * number {[+-]?[0-9]+}
 	 *
 	 * @param  int $num
 	 * @param  string sign
@@ -1689,7 +1711,7 @@ export default class SHParser {
 	// ======================================================================================
 
 	/**
-	 * hours
+	 * hours (hh) {"0"?[1-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with a optional 0 prefix before numbers 0-9
 	 *
 	 * @param  int int
@@ -1700,7 +1722,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * hours
+	 * hours (HH) {[01][0-9] | "2"[0-4]}
 	 * a number between 01 and 24 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 *
 	 *
@@ -1728,7 +1750,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * meridian am/pm indicator
+	 * meridian am/pm indicator [AaPp] .? [Mm] .?
 	 *
 	 * @param  int str
 	 * @return bool
@@ -1736,18 +1758,20 @@ export default class SHParser {
 	meridian() {
 		if (this.isToken("AM")) {
 			//00:00-11:59
+			this.data["MERIDIAN"] = "AM";
 			this.nextToken();
 			return 0;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
 			this.nextToken();
+			this.data["MERIDIAN"] = "PM";
 			return 1;
 		}
 		return false;
 	}
 
 	/**
-	 * minutes
+	 * minutes (II) [0-5][0-9]
 	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 * [0-9]{2}
 	 *
@@ -1759,7 +1783,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * minutes
+	 * minutes (ii)
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
 	 * [0-9]{1,2}
 	 *
@@ -1777,7 +1801,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * seconds
+	 * seconds (SS) 	[0-5][0-9]
 	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 * [0-9]{2}
 	 *
@@ -1789,7 +1813,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * seconds
+	 * seconds (ss)
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
 	 * [0-9]{1,2}
 	 *
@@ -1807,29 +1831,15 @@ export default class SHParser {
 	}
 
 	/**
-	 * timeZone
-	 *
-	 * @return bool
-	 */
-	timeZone() {
-		if (this.isToken("TZ")) {
-			this.data["TZ_NAME"] = this.valueToken();
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * fraction
+	 * fraction (frac) {. [0-9]+}
 	 *
 	 * @param  int num
 	 * @return bool
 	 */
 	fraction() {
 		if (this.isTKDot()) {
-			var isInt = false;
 			let int,
-				num: any = ".";
+				isFrac = false;
 			while (
 				(int =
 					this.int10To99() ||
@@ -1838,19 +1848,17 @@ export default class SHParser {
 					this.int00() ||
 					this.int0())
 			) {
-				num += "" + int; //sprintf('%s%s',num,int);
-				isInt = true;
+				this.data["FRACTION"] += "" + int; //sprintf('%s%s',num,int);
+				isFrac = true;
 			}
-			if (isInt) {
-				return num; //convert to int
-			}
+			return true && isFrac;
 		}
 		return false;
 	}
 
 	// date
 	/**
-	 * daySuffixTextual
+	 * daySuffixTextual (daysuf) {"st" | "nd" | "rd" | "th"}
 	 *
 	 * @return bool
 	 */
@@ -1869,7 +1877,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * day
+	 * day (dd) {([0-2]?[0-9] | "3"[01]) daysuf?}
 	 * a number between 1 and 31 inclusive, with an optional 0 prefix before numbers 0-9
 	 *
 	 * @param  int int
@@ -1892,7 +1900,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * day
+	 * day (DD) {"0" [0-9] | [1-2][0-9] | "3" [01]}
 	 * a number between 01 and 31 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 *
 	 * @param  int int
@@ -1903,7 +1911,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Textual month (and just the month)
+	 * Textual month (and just the month) (m) {'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december' | 'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'sept' | 'oct' | 'nov' | 'dec' | "I" | "II" | "III" | "IV" | "V" | "VI" | "VII" | "VIII" | "IX" | "X" | "XI" | "XII"}
 	 *
 	 * @param  int int
 	 * @return bool
@@ -1965,7 +1973,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Textual abbreviation month  (and just the month)
+	 * Textual abbreviation month (M)  (and just the month) {'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'sept' | 'oct' | 'nov' | 'dec'}
 	 *
 	 * @param  int int
 	 * @return bool
@@ -1976,7 +1984,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * month
+	 * month (mm) {	"0"? [0-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with an optional 0 prefix before numbers 0-9
 	 *
 	 * @param  int int
@@ -1993,7 +2001,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * month
+	 * month (MM) {	"0" [0-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with an mandatory 0 prefix before numbers 0-9
 	 *
 	 * @param  int int
@@ -2006,7 +2014,7 @@ export default class SHParser {
 	}
 
 	/**
-	 *	a number with exactly two digits
+	 *	a number with exactly two digits (YY)
 	 *
 	 * @param  {int} int
 	 * @return bool
@@ -2021,13 +2029,13 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	setWeekOfYear(): number | false {
+	weekOfYear(): number | false {
 		return this.int00() || this.int01To09() || this.int10To53();
 	}
 	// Relative
 
 	/**
-	 * white Space
+	 * white Space {[ \t]}
 	 *
 	 * @return bool
 	 */
@@ -2036,7 +2044,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Space +
+	 * Space {[ \t]+}
 	 *
 	 * @return bool
 	 */
@@ -2105,8 +2113,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	signNumber(): string | false {
-		if (this.isToken("PLUS")) {
-			this.nextToken();
+		if (this.isTKPlus()) {
 			return "+";
 		} else if (this.isTKDash()) {
 			return "-";
@@ -2267,6 +2274,14 @@ export default class SHParser {
 
 	isTKDash() {
 		if (this.isToken("DASH")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKPlus() {
+		if (this.isToken("PLUS")) {
 			this.nextToken();
 			return true;
 		}
