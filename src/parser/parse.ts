@@ -1783,7 +1783,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * minutes (ii)
+	 * minutes (ii) {	[0-5]?[0-9]}
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
 	 * [0-9]{1,2}
 	 *
@@ -1801,7 +1801,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * seconds (SS) 	[0-5][0-9]
+	 * seconds (SS) {[0-5][0-9]}
 	 * a number between 01 and 59 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 * [0-9]{2}
 	 *
@@ -1813,7 +1813,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * seconds (ss)
+	 * seconds (ss) {([0-5]?[0-9])|60}
 	 * a number between 1 and 59 inclusive, with an optional 0 prefix before numbers 0-9
 	 * [0-9]{1,2}
 	 *
@@ -1831,7 +1831,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * fraction (frac) {. [0-9]+}
+	 * fraction (frac) {.[0-9]+}
 	 *
 	 * @param  int num
 	 * @return bool
@@ -1911,7 +1911,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Textual month (and just the month) (m) {'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december' | 'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'sept' | 'oct' | 'nov' | 'dec' | "I" | "II" | "III" | "IV" | "V" | "VI" | "VII" | "VIII" | "IX" | "X" | "XI" | "XII"}
+	 * Textual month (and just the month) (m)
 	 *
 	 * @param  int int
 	 * @return bool
@@ -2157,13 +2157,19 @@ export default class SHParser {
 	}
 
 	/**
-	 * unit
+	 * unit {'ms' | 'µs' | (( 'msec' | 'millisecond' | 'µsec' | 'microsecond' | 'usec' | 'sec' | 'second' | 'min' | 'minute' | 'hour' | 'day' | 'fortnight' | 'forthnight' | 'month' | 'year') 's'?) | 'weeks' | daytext}
 	 *
 	 * @param  int int
 	 * @return bool
 	 */
 	unit(): number | false {
 		switch (this.nameToken()) {
+			case "MICROSECOND":
+				this.nextToken();
+				return false; // todo
+			case "MILLISECOND":
+				this.nextToken();
+				return false; // todo
 			case "SECOND":
 				this.nextToken();
 				return 59;

@@ -197,6 +197,8 @@ export default class SHLexerConfig {
 		THURSDAY: "thursday|thu",
 		FRIDAY: "friday|fri|weekend",
 
+		MICROSECOND: "microsecond|usec",
+		MILLISECOND: "millisecond|msec|ms|µsec|µs",
 		HOUR: "hours?",
 		MINUTE: "minutes?|min|mins",
 		DAY: "days?",
