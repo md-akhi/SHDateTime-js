@@ -904,8 +904,7 @@ export default class SHParser {
 	hour24Notation() {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
-		if (this.isTKSignTime()) {
-		}
+		this.isTKSignTime();
 		if ((h24 = this.hour24())) {
 			if (this.isTKColon()) {
 				if ((min = this.minutesMandatoryPrefix())) {
@@ -1125,9 +1124,9 @@ export default class SHParser {
 					this.int1To9() ||
 					this.int10To99())
 			) {
-				return parseInt(y1 + "" + y2);
+				return (this.data["YEAR"] = parseInt(y1 + "" + y2));
 			}
-			return y1;
+			return (this.data["YEAR"] = y1);
 		}
 		return false;
 	}
@@ -1779,7 +1778,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	minutesMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To59();
+		return (this.data["MINUTES"] =
+			this.int00() || this.int01To09() || this.int10To59());
 	}
 
 	/**
@@ -1791,13 +1791,12 @@ export default class SHParser {
 	 * @return bool
 	 */
 	minutesOptionalPrefix() {
-		return (
+		return (this.data["MINUTES"] =
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59()
-		);
+			this.int10To59());
 	}
 
 	/**
@@ -1809,7 +1808,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	secondsMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To59();
+		return (this.data["SECONDS"] =
+			this.int00() || this.int01To09() || this.int10To59());
 	}
 
 	/**
@@ -1821,13 +1821,12 @@ export default class SHParser {
 	 * @return bool
 	 */
 	secondsOptionalPrefix() {
-		return (
+		return (this.data["SECONDS"] =
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59()
-		);
+			this.int10To59());
 	}
 
 	/**
@@ -1894,7 +1893,7 @@ export default class SHParser {
 				this.int10To31())
 		) {
 			this.daySuffixTextual();
-			return int;
+			return (this.data["DAY"] = int);
 		}
 		return false;
 	}
@@ -1907,7 +1906,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To31();
+		return (this.data["DAY"] =
+			this.int00() || this.int01To09() || this.int10To31());
 	}
 
 	/**
@@ -1991,13 +1991,12 @@ export default class SHParser {
 	 * @return bool
 	 */
 	monthOptionalPrefix(): number | false {
-		return (
+		return (this.data["MONTH"] =
 			this.int00() ||
 			this.int0() ||
 			this.int01To09() ||
 			this.int1To9() ||
-			this.int10To12()
-		);
+			this.int10To12());
 	}
 
 	/**
@@ -2008,9 +2007,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	monthMandatoryPrefix(): number | false {
-		return (
-			this.int00() || this.int01To09() || this.int1To9() || this.int10To12()
-		);
+		return (this.data["MONTH"] =
+			this.int00() || this.int01To09() || this.int1To9() || this.int10To12());
 	}
 
 	/**

@@ -1401,16 +1401,28 @@ export default class SHDate {
 		console.log(JSON.stringify(SHParser, null, 2));
 		let data = Object.entries(new SHParser(str));
 		data.forEach(([key, value]) => {
-			if (value !== "") {
-				if (key == "YEAR") date.setFullYear(value as number);
-				else if (key == "MONTH") date.setMonth((value as number) - 1);
-				else if (key == "DAY") date.setDate(value as number);
-				else if (key == "HOURS") date.setHours(parseInt(value as string));
-				else if (key == "MINUTES") date.setMinutes(parseInt(value as string));
-				else if (key == "SECONDS") date.setSeconds(parseInt(value as string));
+			switch (key) {
+				case "YEAR":
+					date.setFullYear(value as number);
+					break;
+				case "MONTH":
+					date.setMonth((value as number) - 1);
+					break;
+				case "DAY":
+					date.setDate(value as number);
+					break;
+				case "HOURS":
+					date.setHours(parseInt(value as string));
+					break;
+				case "MINUTES":
+					date.setMinutes(parseInt(value as string));
+					break;
+				case "SECONDS":
+					date.setSeconds(parseInt(value as string));
+					break;
 			}
 		});
-		console.log(date.toString());
+		console.log(data, str, date.toString());
 		return date.getTime();
 	}
 
