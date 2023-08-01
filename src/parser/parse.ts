@@ -2022,7 +2022,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * week of year
+	 * week of year (W)
 	 *
 	 * @param  int int
 	 * @return bool
@@ -2042,7 +2042,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Space {[ \t]+}
+	 * white Space More {[ \t]+}
 	 *
 	 * @return bool
 	 */
