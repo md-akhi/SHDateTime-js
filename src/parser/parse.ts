@@ -86,8 +86,39 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
-		// standardsFormats() {}
-		// compoundLocalizedNotations() {}
+		// standardsFormats() {
+		/**
+			 * ATOM	"2022-06-02T16:58:35+00:00"
+COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
+ISO8601	"2022-06-02T16:58:35+0000"
+» RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
+» RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
+» RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
+» RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
+» RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
+» RFC 3339	"2022-06-02T16:58:35+00:00"
+» RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
+» RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
+RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
+W3C	"2022-06-02T16:58:35+00:00"
+			 */
+		//}
+		// compoundLocalizedNotations() {
+		/**
+			 * Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
+EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"
+ISO year with ISO week	YY "-"? "W" W	"2008W27", "2008-W28"
+ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
+MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
+PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
+SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
+Unix Timestamp	"@" "-"? [0-9]+	"@1215282385"
+Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
+XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
+XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
+WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
+			 */
+		//}
 		return (
 			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
