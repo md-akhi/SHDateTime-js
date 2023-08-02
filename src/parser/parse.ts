@@ -85,14 +85,17 @@ export default class SHParser {
 		// "@" "-"? [0-9]+
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
+
+		// standardsFormats() {}
+		// compoundLocalizedNotations() {}
 		return (
 			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
 			this.Y4M2D2WSH2I2S2() ||
 			this.postgreSQL() ||
 			this.unixTimestamp() ||
-			this.WDDX() ||
-			this.MSSQL()
+			this.WDDX()
+			// this.MSSQL()
 		);
 	}
 	// https://www.php.net/manual/en/datetime.formats.time.php
@@ -173,31 +176,12 @@ export default class SHParser {
 			month = this.monthMandatoryPrefix();
 			if (month && this.isTKDash()) {
 				day = this.dayMandatoryPrefix();
-				if (day && this.isTKSignTime()) {
-					h24 = this.hour24();
-					if (h24 && this.isTKColon()) {
-						min = this.minutesMandatoryPrefix();
-						if (min && this.isTKColon()) {
-							if ((sec = this.secondsMandatoryPrefix())) {
-								this.data["YEAR"] = year;
-								this.data["MONTH"] = month;
-								this.data["DAY"] = day;
-								this.data["HOURS"] = h24;
-								this.data["MINUTES"] = min;
-								this.data["SECONDS"] = sec;
-								if ((frac = this.fraction())) {
-									this.data["fraction"] = frac;
-								}
-								if ((tz = this.TZCorrection())) {
-									this.data["TZ"] = tz;
-								}
-								return true;
-							}
-							if ((tz = this.TZCorrection())) {
-								this.data["TZ"] = tz;
-							}
-							return true;
-						}
+				if (day) {
+					if (this.time24Notation()) {
+						this.data["YEAR"] = year;
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						return true;
 					}
 				}
 			}
@@ -207,8 +191,8 @@ export default class SHParser {
 	}
 
 	/**
-	 * ISO year with ISO week (YYYY-W)
-	 * ISO year with ISO week and day (YYYY - W -? D?)
+	 * ISO year with ISO week (YYYY-Ww)
+	 * ISO year with ISO week and day (YYYY - Ww -? D?) {W=[1-5][0-9], D=[0-7]}
 	 *
 	 * @return bool
 	 */
@@ -218,12 +202,9 @@ export default class SHParser {
 			year,
 			pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isTKDash()) {
-			}
-			if (this.isToken("SIGN_WEEK")) {
+			if (this.isTKDash() && this.isToken("SIGN_WEEK")) {
 				if ((week = this.weekOfYear())) {
-					if (this.isTKDash()) {
-					}
+					this.isTKDash();
 					if ((dow = this.int1To7() || this.int0())) {
 						this.data["DAY_OF_WEEK"] = dow;
 					}
@@ -251,20 +232,11 @@ export default class SHParser {
 			if (month && this.isTKDash()) {
 				day = this.dayMandatoryPrefix();
 				if (day && this.whiteSpace()) {
-					h24 = this.hour24();
-					if (h24 && this.isTKColon()) {
-						min = this.minutesMandatoryPrefix();
-						if (min && this.isTKColon()) {
-							if ((sec = this.secondsMandatoryPrefix())) {
-								this.data["YEAR"] = year;
-								this.data["MONTH"] = month;
-								this.data["DAY"] = day;
-								this.data["HOURS"] = h24;
-								this.data["MINUTES"] = min;
-								this.data["SECONDS"] = sec;
-								return true;
-							}
-						}
+					if (this.time24Notation()) {
+						this.data["YEAR"] = year;
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						return true;
 					}
 				}
 			}
@@ -282,14 +254,14 @@ export default class SHParser {
 		let year,
 			doy,
 			pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isTKDot()) {
-			}
-			if ((doy = this.setDayOfYear())) {
-				this.data["YEAR"] = year;
-				this.data["DAY_OF_YEAR"] = doy;
-				return true;
-			}
+		if (
+			(year = this.year4MandatoryPrefix()) &&
+			this.isTKDot() &&
+			(doy = this.dayOfYear())
+		) {
+			this.data["YEAR"] = year;
+			this.data["DAY_OF_YEAR"] = doy;
+			return true;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -336,21 +308,12 @@ export default class SHParser {
 			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
 				day = this.dayOptionalPrefix();
-				if (day && this.isTKSignTime()) {
-					h12 = this.hour12();
-					if (h12 && this.isTKColon()) {
-						min = this.minutesOptionalPrefix();
-						if (min && this.isTKColon()) {
-							if ((sec = this.secondsOptionalPrefix())) {
-								this.data["YEAR"] = year;
-								this.data["MONTH"] = month;
-								this.data["DAY"] = day;
-								this.data["HOURS"] = h12;
-								this.data["MINUTES"] = min;
-								this.data["SECONDS"] = sec;
-								return true;
-							}
-						}
+				if (day) {
+					if (this.time12Notation()) {
+						this.data["YEAR"] = year;
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						return true;
 					}
 				}
 			}
@@ -365,44 +328,24 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	MSSQL() {
-		//
-		let h12,
-			min,
-			sec,
-			frac,
-			meridian,
-			pos = this.getPosition();
-		h12 = this.hour12();
-		if (h12 && this.isTKColon()) {
-			min = this.minutesMandatoryPrefix();
-			if (min && this.isTKColon()) {
-				sec = this.secondsMandatoryPrefix();
-				if (sec && (this.isTKDot() || this.isTKColon())) {
-					frac = this.number();
-					meridian = this.meridian();
-					if (frac && meridian) {
-						if (meridian) {
-							this.data["HOURS"] = h12 + 12;
-							this.data["PM"] = true;
-						} else {
-							this.data["HOURS"] = h12;
-							this.data["AM"] = true;
-						}
-						this.data["MINUTES"] = min;
-						this.data["SECONDS"] = sec;
-						this.data["FRAC"] = frac;
-						return true;
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
+	// MSSQL() {
+	// 	//
+	// 	let h12,
+	// 		min,
+	// 		sec,
+	// 		frac,
+	// 		meridian,
+	// 		pos = this.getPosition();
+	// 	if (this.time12Notation()) {
+	//		return true;
+	// 	}
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
 
 	/**
 	 * Relative Formats
+	 * DayBasedNotations
 	 *
 	 * @return bool
 	 */
@@ -489,7 +432,7 @@ export default class SHParser {
 				this.nextToken();
 				if (
 					this.whiteSpace() &&
-					(this.hour12Notation() || (h24 = this.hour24()))
+					(this.time12Notation() || (h24 = this.hour24()))
 				) {
 					if (!h24) {
 						h24 = this.data["HOURS"];
@@ -509,7 +452,7 @@ export default class SHParser {
 				this.nextToken();
 				if (
 					this.whiteSpace() &&
-					(this.hour12Notation() || (h24 = this.hour24()))
+					(this.time12Notation() || (h24 = this.hour24()))
 				) {
 					if (!h24) {
 						h24 = this.data["HOURS"];
@@ -535,7 +478,7 @@ export default class SHParser {
 	 * @param  int $int
 	 * @return bool
 	 */
-	setDayOfYear() {
+	dayOfYear() {
 		let doy1: any, doy2;
 		doy1 = this.int00() || this.int01To09() || this.int10To99();
 		doy2 = this.int0() || this.int1To9();
@@ -724,8 +667,8 @@ export default class SHParser {
 			// Handles relative time items where the value is a number.
 			if (this.whiteSpace()) {
 			}
-			if ((rel = this.unit() || this.isToken("WEEK"))) {
-				if (this.isToken("WEEK") || rel == 53) {
+			if ((rel = this.unit() || this.isTKWeek())) {
+				if (this.isTKWeek() || rel == 53) {
 					diffdow = int * 7;
 				} else if (rel == 59) {
 					// SECONDS
@@ -783,7 +726,7 @@ export default class SHParser {
 			pos = this.getPosition();
 		if ((int = this.ordinal()) && this.whiteSpace() && (rel = this.unit())) {
 			// Handles relative time items where the value is text.
-			if (this.isToken("WEEK") || rel == 53) {
+			if (this.isTKWeek() || rel == 53) {
 				diffdoy = int * 7;
 			} else if (rel == 59) {
 				// SECONDS
@@ -836,8 +779,7 @@ export default class SHParser {
 	handleRelTimeFormat() {
 		let pos = this.getPosition();
 		// Handles the special format "weekday + last/this/next week".
-		if (this.relText() && this.whiteSpace() && this.isToken("WEEK")) {
-			this.nextToken();
+		if (this.relText() && this.whiteSpace() && this.isTKWeek()) {
 			return true;
 		}
 		this.resetPosition(pos);
@@ -850,40 +792,39 @@ export default class SHParser {
 	 * @return bool
 	 */
 	TimeFormats() {
-		// hh [.:]? II? [.:]? SS? space? meridian
-		return this.hour12Notation() || this.hour24Notation();
+		return this.time24Notation() || this.time12Notation();
 	}
 
 	/**
 	 * Hour, optional minutes and seconds, with meridian
-	 *
+	 * T? hh [.:]? MM? [.:]? II? frac? space? meridian
 	 *
 	 * @return bool
 	 */
-	hour12Notation() {
-		let pos, h12, min, sec, meridian;
+	time12Notation() {
+		let pos, h12, min, sec, frac, meridian;
 		pos = this.getPosition();
+		this.isTKSignTime();
 		if ((h12 = this.hour12())) {
-			if (this.isTKColon() || this.isTKDot()) {
-				if ((min = this.minutesMandatoryPrefix())) {
-					this.data["MINUTES"] = min;
-					if (this.isTKColon() || this.isTKDot()) {
-						if ((sec = this.secondsMandatoryPrefix())) {
-							this.data["SECONDS"] = sec;
-						}
+			this.isTKColon() || this.isTKDot();
+			if ((min = this.minutesMandatoryPrefix())) {
+				this.data["MINUTES"] = min;
+				this.isTKColon() || this.isTKDot();
+				if ((sec = this.secondsMandatoryPrefix())) {
+					this.data["SECONDS"] = sec;
+					if ((frac = this.fraction())) {
+						this.data["FRAC"] = frac;
 					}
 				}
 			}
-			if (this.whiteSpace()) {
-				this.nextToken();
-			}
+			this.whiteSpace();
 			if ((meridian = this.meridian())) {
-				if (meridian) {
-					this.data["HOURS"] = h12 + 12;
-					this.data["PM"] = true;
-				} else {
+				if ((this.data["MERIDIAN"] = "AM")) {
 					this.data["HOURS"] = h12;
 					this.data["AM"] = true;
+				} else {
+					this.data["HOURS"] = h12 + 12;
+					this.data["PM"] = true;
 				}
 				return true;
 			}
@@ -896,35 +837,26 @@ export default class SHParser {
 	 * Hour, minutes and optional seconds, optional colon and dot
 	 * Hour, minutes, seconds and timezone
 	 * Hour, minutes, seconds and fraction
-		// 't'? HH [.:] II [.:]? SS? (frac | (space? ( tzcorrection | tz )))
+		// 't'? HH [.:] MM [.:]? II? (frac | (space? ( tzcorrection | tz )))
 	 * Time zone information
 	 *
 	 * @return bool
 	 */
-	hour24Notation() {
+	time24Notation() {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
 		this.isTKSignTime();
 		if ((h24 = this.hour24())) {
-			if (this.isTKColon()) {
-				if ((min = this.minutesMandatoryPrefix())) {
-					if (this.isTKColon()) {
-						if ((sec = this.secondsMandatoryPrefix())) {
-							this.data["SECONDS"] = sec;
-							if ((frac = this.fraction())) {
-								this.data["FRAC"] = frac;
-							}
-							this.whiteSpace();
-							this.TZCorrection() || this.timeZone();
-						}
-					}
-					this.data["HOURS"] = h24;
-					this.data["MINUTES"] = min;
-					return true;
-				}
-			} else if ((min = this.minutesMandatoryPrefix())) {
+			this.isTKColon() || this.isTKDot();
+			if ((min = this.minutesMandatoryPrefix())) {
+				this.isTKColon() || this.isTKDot();
 				if ((sec = this.secondsMandatoryPrefix())) {
 					this.data["SECONDS"] = sec;
+					if ((frac = this.fraction())) {
+						this.data["FRAC"] = frac;
+					}
+					this.whiteSpace();
+					this.TZCorrection() || this.timeZone();
 				}
 				this.data["HOURS"] = h24;
 				this.data["MINUTES"] = min;
@@ -937,106 +869,6 @@ export default class SHParser {
 		return false;
 	}
 
-	extime(
-		isSign: boolean = false,
-		isHH: boolean = false,
-		ishh: boolean = false,
-		isII: boolean = false,
-		isii: boolean = false,
-		isSS: boolean = false,
-		isss: boolean = false,
-		isFrac: boolean = false,
-		isMeridian: boolean = false,
-		isTZ: boolean = false,
-		isTZC: boolean = false,
-		isDot: boolean = false,
-		isColon: boolean = false,
-		isSpace: boolean = false
-	) {
-		let pos, h12, h24, min, sec, frac, meridian;
-		pos = this.getPosition();
-		if (isSign && this.isTKSignTime()) {
-		} else if (isSign) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isHH && (h24 = this.hour24())) {
-			this.data["HOURS"] = h24;
-		} else if (isHH && h24) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (ishh && (h12 = this.hour12())) {
-			this.data["HOURS"] = h12;
-		} else if (ishh && h12) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isDot && this.isTKDot()) {
-		} else if (isDot) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isColon && this.isTKColon()) {
-		} else if (isColon) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isII && (min = this.minutesMandatoryPrefix())) {
-			this.data["MINUTES"] = min;
-		} else if (isII && (min = this.minutesOptionalPrefix())) {
-			this.data["MINUTES"] = min;
-		} else if (isII) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isDot && this.isTKDot()) {
-		} else if (isDot) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isColon && this.isTKColon()) {
-		} else if (isColon) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isSS && (sec = this.secondsMandatoryPrefix())) {
-			this.data["SECONDS"] = sec;
-		} else if (isSS && (sec = this.secondsOptionalPrefix())) {
-			this.data["SECONDS"] = sec;
-		} else if (isSS) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isMeridian && (meridian = this.meridian())) {
-			if (meridian) {
-				this.data["MERIDIAN"] = "PM";
-			} else {
-				this.data["MERIDIAN"] = "AM";
-			}
-		} else if (isMeridian) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isFrac && (frac = this.fraction())) {
-			this.data["FRAC"] = frac;
-		} else if (isFrac) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if (isSpace && this.isTKSpace()) {
-		} else if (isSpace) {
-			this.resetPosition(pos);
-			return false;
-		}
-		if ((isTZC && this.TZCorrection()) || (isTZ && this.timeZone())) {
-		} else if (isTZ || isTZC) {
-			this.resetPosition(pos);
-			return false;
-		}
-		return true;
-	}
-
 	/**
 	 * Date Formats
 	 *
@@ -1044,6 +876,9 @@ export default class SHParser {
 	 */
 	DateFormats() {
 		// Localized Notations
+
+		// dateLocalizedNotations() {}
+		// ISO8601Notations() {}
 		return (
 			//this.usaDate() ||
 			this.year4Date() ||
@@ -1167,11 +1002,9 @@ export default class SHParser {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isToken("SLASH")) {
-			this.nextToken();
+		if (year && this.isTKSlash()) {
 			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
-			if (month && this.isToken("SLASH")) {
-				this.nextToken();
+			if (month && this.isTKSlash()) {
 				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1221,12 +1054,10 @@ export default class SHParser {
 		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			if ((month = this.monthOptionalPrefix())) {
-				this.data["YEAR"] = year;
-				this.data["MONTH"] = month;
-				return true;
-			}
+		if (year && this.isTKDash() && (month = this.monthOptionalPrefix())) {
+			this.data["YEAR"] = year;
+			this.data["MONTH"] = month;
+			return true;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -1242,10 +1073,7 @@ export default class SHParser {
 		let pos, year, month;
 		pos = this.getPosition();
 		if ((year = this.year4MandatoryPrefix())) {
-			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
-				// if (this.isTKDot() || this.isTKDash()) {
-				// }
-			}
+			while (this.whiteSpace() || this.isTKDot() || this.isTKDash());
 			if ((month = this.monthTextualFull())) {
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
@@ -1266,9 +1094,7 @@ export default class SHParser {
 	DateSign() {
 		let sign,
 			pos = this.getPosition();
-		if ((sign = this.signNumber())) {
-			this.data["SIGN_DATE"] = sign;
-		}
+		if ((sign = this.signNumber())) this.data["SIGN_DATE"] = sign;
 		if (this.dateDash()) return true;
 		this.resetPosition(pos);
 		return false;
@@ -1612,8 +1438,6 @@ export default class SHParser {
 				this.data["TZ_HOURS"] = "08";
 				this.data["TZ_MINUTES"] = "00";
 				return true;
-			default:
-				this.data["TZ_NAME"] = this.valueToken();
 		}
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
@@ -1759,12 +1583,12 @@ export default class SHParser {
 			//00:00-11:59
 			this.data["MERIDIAN"] = "AM";
 			this.nextToken();
-			return 0;
+			return true;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
 			this.nextToken();
 			this.data["MERIDIAN"] = "PM";
-			return 1;
+			return true;
 		}
 		return false;
 	}
@@ -2310,6 +2134,22 @@ export default class SHParser {
 
 	isTKSignTime() {
 		if (this.isToken("SIGN_TIME")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKWeek() {
+		if (this.isToken("WEEK")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKSlash() {
+		if (this.isToken("SLASH")) {
 			this.nextToken();
 			return true;
 		}
