@@ -58,18 +58,170 @@ export default class SHParser {
 	 * @return array
 	 */
 	constructor(srt: any, time: any = Date.now()) {
-		this.time = time;
+		//this.time = time;
 		this.Lexer = new SHLexer(srt);
 		this.Date = new Export_SHDate();
-		// this.setDateTime(time);
 		do {
-			this.CompoundFormats() ||
-				this.RelativeFormats() ||
-				this.DateFormats() ||
-				this.TimeFormats();
+			this.DateFormats() ||
+				this.TimeFormats() ||
+				this.CompoundFormats() ||
+				this.RelativeFormats();
 		} while (this.nextToken());
 		return this.data;
 	}
+
+	/**
+	 * is Token
+	 *
+	 * @param  string token
+	 * @return bool
+	 */
+	isToken(token: any) {
+		if (this.Lexer.getLookahead() !== false)
+			return this.Lexer.getLookahead().is(token);
+	}
+
+	/**
+	 * name Token
+	 *
+	 * @return bool
+	 */
+	nameToken() {
+		if (this.Lexer.getLookahead() !== false) {
+			return this.Lexer.getLookahead().getName();
+		}
+		return false;
+	}
+
+	/**
+	 * value Token
+	 *
+	 * @return bool
+	 */
+	valueToken() {
+		return this.Lexer.getLookahead().getValue();
+	}
+
+	/**
+	 * next Token
+	 *
+	 * @return bool
+	 */
+	nextToken() {
+		return this.Lexer.moveNext();
+	}
+
+	/**
+	 * get Position
+	 *
+	 * @return bool
+	 */
+	getPosition() {
+		return this.Lexer.getPosition();
+	}
+
+	/**
+	 * reset Position
+	 *
+	 * @param  int pos Position
+	 * @return bool
+	 */
+	resetPosition(pos: any) {
+		return this.Lexer.resetPosition(pos);
+	}
+
+	isTKColon() {
+		if (this.isToken("COLON")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKDot() {
+		if (this.isToken("DOT")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKDash() {
+		if (this.isToken("DASH")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKPlus() {
+		if (this.isToken("PLUS")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKComma() {
+		if (this.isToken("COMMA")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * white Space {[ \t]}
+	 *
+	 * @return bool
+	 */
+	isTKSpace() {
+		if (this.isToken("SPACE")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * white Space More {[ \t]+}
+	 *
+	 * @return bool
+	 */
+	isTKSpaceMore(): boolean {
+		let space = false;
+		while (this.isTKSpace()) {
+			space = true;
+		}
+		if (space) {
+			return true;
+		}
+		return false;
+	}
+
+	isTKSignTime() {
+		if (this.isToken("SIGN_TIME")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKWeek() {
+		if (this.isToken("WEEK")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKSlash() {
+		if (this.isToken("SLASH")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Compound Formats
 	 *
@@ -86,25 +238,9 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
-		// standardsFormats() {
-		//}
-		// compoundLocalizedNotations() {
-		/**
-			 * Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
-EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"
-ISO year with ISO week	YY "-"? "W" W	"2008W27", "2008-W28"
-ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
-MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
-PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
-SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
-Unix Timestamp	"@" "-"? [0-9]+	"@1215282385"
-Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
-XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
-XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
-WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
-			 */
-		//}
 		return (
+			this.standardsFormats() ||
+			this.compoundLocalizedNotations() ||
 			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
 			this.Y4M2D2WSH2I2S2() ||
@@ -123,12 +259,8 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
 	// "Jan 1, 1970" // 0 in all implementations
 	// "0" //(Sat Jan 01 2000 00:00:00 GMT+0000) || (Sat Jan 01 0000 00:00:00 GMT+0000)
-	// YYYY
-	// "yyyy",
 	// YYYY = four-digit year or six digit year as +YYYYYY or -YYYYYY
-	// YYYY-MM
 	// YYYY-MM (eg 1997-07)
-	// YYYY-MM-DD
 	// YYYY-MM-DD (eg 1997-07-16)
 	// "1970-1-1"   "1970-01-01"
 
@@ -175,6 +307,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	// +002009-12-15T00:00:00Z	2009 A.D.
 	// +275760-09-13T00:00:00Z	275760 A.D.
 	standardsFormats() {
+		return false;
 		this.ATOM();
 		this.COOKIE();
 		this.ISO8601();
@@ -193,31 +326,72 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 */
 
 	// ATOM	"2022-06-02T16:58:35+00:00"
-	ATOM() {}
+	ATOM() {
+		return false;
+	}
 	// ISO8601	"2022-06-02T16:58:35+0000"
-	ISO8601() {}
+	ISO8601() {
+		return false;
+	}
 	// RFC 3339	"2022-06-02T16:58:35+00:00"
-	RFC3339() {}
+	RFC3339() {
+		return false;
+	}
 	// W3C	"2022-06-02T16:58:35+00:00"
-	W3C() {}
+	W3C() {
+		return false;
+	}
 	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
-	RFC3339Extended() {}
+	RFC3339Extended() {
+		return false;
+	}
 	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
-	COOKIE() {}
+	COOKIE() {
+		return false;
+	}
 	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
-	RFC850() {}
+	RFC850() {
+		return false;
+	}
 	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
-	RFC7231() {}
+	RFC7231() {
+		return false;
+	}
 	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
-	RFC822() {}
+	RFC822() {
+		return false;
+	}
 	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
-	RFC1036() {}
+	RFC1036() {
+		return false;
+	}
 	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RFC1123() {}
+	RFC1123() {
+		return false;
+	}
 	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RFC2822() {}
+	RFC2822() {
+		return false;
+	}
 	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RSS() {}
+	RSS() {
+		return false;
+	}
+
+	compoundLocalizedNotations() {
+		return false;
+		// Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
+		// EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"
+		// ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
+		// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
+		// PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
+		// SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
+		// Unix Timestamp	"@" "-"? [0-9]+	"@1215282385"
+		// Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
+		// XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
+		// XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
+		// WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
+	}
 
 	/**
 	 * Common Log Format (YYYY-MM-DDT:HH:II:SS)
@@ -291,7 +465,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			month = this.monthMandatoryPrefix();
 			if (month && this.isTKDash()) {
 				day = this.dayMandatoryPrefix();
-				if (day && this.whiteSpace()) {
+				if (day && this.isTKSpace()) {
 					if (this.time24Notation()) {
 						this.data["YEAR"] = year;
 						this.data["MONTH"] = month;
@@ -488,10 +662,10 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("BACK")) {
 			// 15 minutes past the specified hour
 			this.nextToken();
-			if (this.whiteSpace() && this.isToken("OF")) {
+			if (this.isTKSpace() && this.isToken("OF")) {
 				this.nextToken();
 				if (
-					this.whiteSpace() &&
+					this.isTKSpace() &&
 					(this.time12Notation() || (h24 = this.hour24()))
 				) {
 					if (!h24) {
@@ -508,10 +682,10 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			// 15 minutes before the specified hour
 			h24 = false;
 			this.nextToken();
-			if (this.whiteSpace() && this.isToken("OF")) {
+			if (this.isTKSpace() && this.isToken("OF")) {
 				this.nextToken();
 				if (
-					this.whiteSpace() &&
+					this.isTKSpace() &&
 					(this.time12Notation() || (h24 = this.hour24()))
 				) {
 					if (!h24) {
@@ -540,10 +714,11 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 */
 	dayOfYear() {
 		let doy1: any, doy2;
-		doy1 = this.int00() || this.int01To09() || this.int10To99();
+		doy1 = this.year2MandatoryPrefix();
 		doy2 = this.int0() || this.int1To9();
-		if (doy1 && doy2) {
-			return parseInt(doy1 + "" + doy2);
+		if (doy1) {
+			if (doy2) return parseInt(doy1 + "" + doy2);
+			return parseInt(doy1);
 		}
 		return false;
 	}
@@ -560,12 +735,12 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("FIRST")) {
 			// Sets the day of the first of the current month. This phrase is best used together with a month name following it.
 			this.nextToken();
-			if (this.whiteSpace() && this.isToken("DAY")) {
+			if (this.isTKSpace() && this.isToken("DAY")) {
 				this.nextToken();
-				if (this.whiteSpace() && this.isToken("OF")) {
+				if (this.isTKSpace() && this.isToken("OF")) {
 					this.nextToken();
 					if (
-						this.whiteSpace() &&
+						this.isTKSpace() &&
 						(this.RelativeFormats() || this.DateFormats())
 					) {
 						this.data["FIRST_DAY_CURRENT_MONTH"] = true;
@@ -580,12 +755,12 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		} else if (this.isToken("LAST")) {
 			// Sets the day to the last day of the current month. This phrase is best used together with a month name following it.
 			this.nextToken();
-			if (this.whiteSpace() && this.isToken("DAY")) {
+			if (this.isTKSpace() && this.isToken("DAY")) {
 				this.nextToken();
-				if (this.whiteSpace() && this.isToken("OF")) {
+				if (this.isTKSpace() && this.isToken("OF")) {
 					this.nextToken();
 					if (
-						this.whiteSpace() &&
+						this.isTKSpace() &&
 						(this.RelativeFormats() || this.DateFormats())
 					) {
 						this.data["LAST_DAY_CURRENT_MONTH"] = true;
@@ -627,12 +802,12 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("LAST")) {
 			// Calculates the last week day of the current month.
 			this.nextToken();
-			if (this.whiteSpace()) {
+			if (this.isTKSpace()) {
 				dow = this.dayNeme();
-				if (dow && this.whiteSpace() && this.isToken("OF")) {
+				if (dow && this.isTKSpace() && this.isToken("OF")) {
 					this.nextToken();
 					if (
-						this.whiteSpace() &&
+						this.isTKSpace() &&
 						(this.RelativeFormats() || this.DateFormats())
 					) {
 						// dow29month = this.Date.getDayOfWeek(
@@ -666,12 +841,12 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			}
 		} else if ((int = this.ordinal())) {
 			// Calculates the x-th week day of the current month.
-			if (this.whiteSpace()) {
+			if (this.isTKSpace()) {
 				dow = this.dayNeme();
-				if (dow && this.whiteSpace() && this.isToken("OF")) {
+				if (dow && this.isTKSpace() && this.isToken("OF")) {
 					this.nextToken();
 					if (
-						this.whiteSpace() &&
+						this.isTKSpace() &&
 						(this.RelativeFormats() || this.DateFormats())
 					) {
 						if (int > 0) {
@@ -725,7 +900,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			pos = this.getPosition();
 		if ((int = this.number())) {
 			// Handles relative time items where the value is a number.
-			if (this.whiteSpace()) {
+			if (this.isTKSpace()) {
 			}
 			if ((rel = this.unit() || this.isTKWeek())) {
 				if (this.isTKWeek() || rel == 53) {
@@ -784,7 +959,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			int: any,
 			diffdoy,
 			pos = this.getPosition();
-		if ((int = this.ordinal()) && this.whiteSpace() && (rel = this.unit())) {
+		if ((int = this.ordinal()) && this.isTKSpace() && (rel = this.unit())) {
 			// Handles relative time items where the value is text.
 			if (this.isTKWeek() || rel == 53) {
 				diffdoy = int * 7;
@@ -839,7 +1014,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	handleRelTimeFormat() {
 		let pos = this.getPosition();
 		// Handles the special format "weekday + last/this/next week".
-		if (this.relText() && this.whiteSpace() && this.isTKWeek()) {
+		if (this.relText() && this.isTKSpace() && this.isTKWeek()) {
 			return true;
 		}
 		this.resetPosition(pos);
@@ -877,7 +1052,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 					}
 				}
 			}
-			this.whiteSpace();
+			this.isTKSpace();
 			if ((meridian = this.meridian())) {
 				if ((this.data["MERIDIAN"] = "AM")) {
 					this.data["HOURS"] = h12;
@@ -915,7 +1090,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 					if ((frac = this.fraction())) {
 						this.data["FRAC"] = frac;
 					}
-					this.whiteSpace();
+					this.isTKSpace();
 					this.TZCorrection() || this.timeZone();
 				}
 				this.data["HOURS"] = h24;
@@ -924,495 +1099,6 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			}
 		} else if (this.TZCorrection() || this.timeZone()) {
 			return true;
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Date Formats
-	 *
-	 * @return bool
-	 */
-	DateFormats() {
-		// Localized Notations
-
-		// dateLocalizedNotations() {}
-		// ISO8601Notations() {}
-		return (
-			//this.usaDate() ||
-			this.year4Date() ||
-			this.Date1AbbrDashes() ||
-			this.year2MonthDay() ||
-			this.dayMonth2digit4Year() ||
-			this.year4MandatoryPrefix() ||
-			(this.data["MONTH"] = this.monthTextualFull())
-		);
-	}
-
-	/**
-	 * American month, day and optional year
-	 * M{1,2}/D{1,2}/Y{1,2}
-	 * @return bool
-	 */
-	// usaDate() {
-	// 	let pos, year, month, day;
-	// 	pos = this.getPosition();
-	// 	month = this.monthOptionalPrefix();
-	// 	if (month && this.isToken("SLASH")) {
-	// 		this.nextToken();
-	// 		if ((day = this.dayOptionalPrefix())) {
-	// 			if (this.isToken("SLASH")) {
-	// 				this.nextToken();
-	// 				if ((year = this.yearOptionalPrefix())) {
-	// 					this.data["YEAR"] = year;
-	// 				} else return false;
-	// 			}
-	// 			this.data["MONTH"] = month;
-	// 			this.data["DAY"] = day;
-	// 			return true;
-	// 		}
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
-
-	/**
-	 * year
-	 * a number with exactly four digits
-	 * [0-9]{4}
-	 * @param  int $int
-	 * @return bool
-	 */
-	year4MandatoryPrefix() {
-		let y1, y2;
-		y1 = this.year2MandatoryPrefix();
-		y2 = this.year2MandatoryPrefix();
-		if (y1 && y2) {
-			return (this.data["YEAR"] = parseInt(y1 + "" + y2));
-		}
-		return false;
-	}
-
-	/**
-	 * year
-	 *  a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
-	 * 0?[0-9]{2,4}
-	 * @param  int int
-	 * @return bool
-	 */
-	yearOptionalPrefix() {
-		let y1: any, y2;
-		if (
-			(y1 =
-				this.int00() ||
-				this.int0() ||
-				this.int01To09() ||
-				this.int1To9() ||
-				this.int10To99())
-		) {
-			if (
-				(y2 =
-					this.int00() ||
-					this.int0() ||
-					this.int01To09() ||
-					this.int1To9() ||
-					this.int10To99())
-			) {
-				return (this.data["YEAR"] = parseInt(y1 + "" + y2));
-			}
-			return (this.data["YEAR"] = y1);
-		}
-		return false;
-	}
-	/**
-	 * Four digit year, month and day with slashes
-		// YY "/" mm "/" dd
-	 * Four digit year and month (GNU)
-		//ISO  YY "/"? MM "/"? DD
-	 * Four digit year and textual month (Day reset to 1)
-		// YY "-" mm
-		// YY ([ \t.-])* m    Day reset to 1
-	 * Year (and just the year)
-	 * Four digit year, month and day with optional slashes
-	 * Four digit year with optional sign, month and day
-		// [+-]? YY "-" MM "-" DD
-	 *
-	 * @return bool
-	 */
-	year4Date() {
-		return (
-			this.dateSlash() ||
-			this.dateDash() ||
-			//this.year4MonthGNU() ||
-			this.year4TextualMonth() ||
-			this.DateSign()
-		);
-	}
-
-	/**
-	 * Four digit year, month and day with slashes
-	 * YY "/" mm "/" dd
-	 * Four digit year, month and day
-	 * YY "/" MM "/" DD
-	 *
-	 * @return bool
-	 */
-	dateSlash() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isTKSlash()) {
-			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
-			if (month && this.isTKSlash()) {
-				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Four digit year, month and day with Dash
-	 * YY "-" mm "-" dd
-	 * Four digit year, month and day
-	 * YY "-" MM "-" DD
-	 * Four digit year and month (GNU)
-		// YY "-" mm
-	 *
-	 * @return bool
-	 */
-	dateDash() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
-			if (month && this.isTKDash()) {
-				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
-					this.data["DAY"] = day;
-				}
-				this.data["YEAR"] = year;
-				this.data["MONTH"] = month;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Four digit year and textual month (Day reset to 1)
-		// YY ([ \t.-])* m    Day reset to 1
-	 *
-	 * @return bool
-	 */
-	year4TextualMonth() {
-		let pos, year, month;
-		pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			while (this.whiteSpace() || this.isTKDot() || this.isTKDash());
-			if ((month = this.monthTextualFull())) {
-				this.data["YEAR"] = year;
-				this.data["MONTH"] = month;
-				this.data["DAY"] = 1;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Four digit year with optional sign, month and day
-		// [+-]? YY "-" MM "-" DD
-	 *
-	 * @return bool
-	 */
-	DateSign() {
-		let sign,
-			pos = this.getPosition();
-		if ((sign = this.signNumber())) this.data["SIGN_DATE"] = sign;
-		if (this.dateDash()) return true;
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Year, month and day with dashes
-		// y "-" mm "-" dd
-	 * Year, month abbreviation and day
-		// y "-" M "-" DD
-	 *
-	 * @return bool
-	 */
-	Date1AbbrDashes() {
-		return this.Date1Dash() || this.Date1Abbr();
-	}
-
-	/**
-	 * Year, month and day with dashes
-		// y "-" mm "-" dd
-	 *
-	 * @return bool
-	 */
-	Date1Dash() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		year = this.yearOptionalPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthOptionalPrefix();
-			if (month && this.isTKDash()) {
-				if ((day = this.dayOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Year, month abbreviation and day
-		// y "-" M "-" DD
-	 *
-	 * @return bool
-	 */
-	Date1Abbr() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		year = this.yearOptionalPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthTextualShort();
-			if (month && this.isTKDash()) {
-				if ((day = this.dayMandatoryPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Two digit year, month and day with dashes
-	 * yy "-" MM "-" DD
-	 *
-	 * @return bool
-	 */
-	year2MonthDay() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		year = this.year2MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthMandatoryPrefix();
-			if (month && this.isTKDash()) {
-				if ((day = this.dayMandatoryPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Day, month and four digit year, with dots, tabs or dashes
-	 * Day, month and two digit year, with dots or tabs
-	 * Day, textual month and year
-	 * Day and textual month
-	 *
-	 * @return bool
-	 */
-	dayMonth2digit4Year() {
-		return (
-			this.dayMonth4Year() ||
-			this.dayMonth2Year() ||
-			this.dayTextualMonthYear() ||
-			this.textualMonth4Year() ||
-			this.monthAbbrDayYear()
-		);
-	}
-
-	/**
-	 * Day, month and four digit year, with dots, tabs or dashes
-		// dd [.\t-] mm [.-] YY
-	 *
-	 * @return bool
-	 */
-	dayMonth4Year() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		day = this.dayOptionalPrefix();
-		if (day && (this.whiteSpace() || this.isTKDot() || this.isTKDash())) {
-			if (this.isTKDot() || this.isTKDash()) {
-			}
-			month = this.monthOptionalPrefix();
-			if (month && (this.isTKDot() || this.isTKDash())) {
-				if ((year = this.year4MandatoryPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Day, month and two digit year, with dots or tabs
-		//  dd [.\t] mm "." yy
-	 *
-	 * @return bool
-	 */
-	dayMonth2Year() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		if ((day = this.dayOptionalPrefix())) {
-			if (this.whiteSpace() || this.isTKDot()) {
-				if (this.isTKDot()) {
-				}
-				if ((month = this.monthOptionalPrefix())) {
-					if (this.isTKDot()) {
-						if ((year = this.year2MandatoryPrefix())) {
-							this.data["YEAR"] = year;
-							this.data["MONTH"] = month;
-							this.data["DAY"] = day;
-							return true;
-						}
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Day, textual month and year
-	 *
-	 * @return bool
-	 */
-	dayTextualMonthYear() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		if ((day = this.dayOptionalPrefix())) {
-			// dd ([ \t.-])* m ([ \t.-])* y
-			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
-				if (this.isTKDot() || this.isTKDash()) {
-				}
-			}
-			if ((month = this.monthTextualFull())) {
-				// d ([ .\t-])* m
-				while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
-					if (this.isTKDot() || this.isTKDash()) {
-					}
-				}
-				if ((year = this.yearOptionalPrefix())) {
-					this.data["YEAR"] = year;
-				}
-				this.data["MONTH"] = month;
-				this.data["DAY"] = day;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Textual month and four digit year (Day reset to 1)
-	 *
-	 * @return bool
-	 */
-	textualMonth4Year() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		if ((month = this.monthTextualFull())) {
-			// m ([ \t.-])* YY         Day reset to 1
-			while (this.whiteSpace() || this.isTKDot() || this.isTKDash()) {
-				if (this.isTKDot() || this.isTKDash()) {
-				}
-			}
-			if ((year = this.year4MandatoryPrefix())) {
-				this.data["YEAR"] = year;
-				this.data["MONTH"] = month;
-				this.data["DAY"] = 1;
-				return true;
-			} else if ((day = this.dayOptionalPrefix())) {
-				// m ([ .\t-])* dd [,.stndrh\t ]+? y?
-				while (
-					this.whiteSpace() ||
-					this.daySuffixTextual() ||
-					this.isTKComma() ||
-					this.isTKDot()
-				) {
-					if (this.isTKDot() || this.isTKComma()) {
-					}
-				}
-				if ((year = this.yearOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					return true;
-				}
-				this.data["MONTH"] = month;
-				this.data["DAY"] = day;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Month abbreviation, day and year
-	 *
-	 * @return bool
-	 */
-	monthAbbrDayYear() {
-		// M "-" DD "-" y
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		month = this.monthTextualShort();
-		if (month && this.isTKDash()) {
-			day = this.dayMandatoryPrefix();
-			if (day && this.isTKDash()) {
-				if ((year = this.yearOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
 		}
 		this.resetPosition(pos);
 		return false;
@@ -1483,16 +1169,15 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		}
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
-			this.data["TZ_SIGN_PLUS"] = true;
+			this.data["TZ_SIGN"] = "+";
 			PLUS_DASH = true;
 		} else if (this.isTKDash()) {
-			this.data["TZ_SIGN_DASH"] = true;
+			this.data["TZ_SIGN"] = "-";
 			PLUS_DASH = true;
 		}
 		if (PLUS_DASH && (h12 = this.hour12())) {
 			this.data["TZ_HOURS"] = h12;
-			if (this.isTKColon()) {
-			}
+			this.isTKColon();
 			if ((min = this.minutesMandatoryPrefix())) {
 				this.data["TZ_MINUTES"] = min;
 				return true;
@@ -1535,12 +1220,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			}
 		isInt = false;
 		while (
-			(int =
-				this.int10To99() ||
-				this.int00() ||
-				this.int01To09() ||
-				this.int0() ||
-				this.int1To9())
+			(int = this.year2MandatoryPrefix() || this.int1To9() || this.int0())
 		) {
 			num += "" + int; //sprintf('%s%s',$num,int);
 			isInt = true;
@@ -1583,7 +1263,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	hour12() {
-		return this.int01To09() || this.int1To9() || this.int10To12();
+		return this.int10To12() || this.int1To9() || this.int01To09();
 	}
 
 	/**
@@ -1595,7 +1275,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	hour24() {
-		return this.int01To09() || this.int10To24();
+		return this.int10To24() || this.int01To09();
 	}
 
 	/** //todo transform to dir base
@@ -1644,8 +1324,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	minutesMandatoryPrefix() {
-		return (this.data["MINUTES"] =
-			this.int00() || this.int01To09() || this.int10To59());
+		return this.int00() || this.int01To09() || this.int10To59();
 	}
 
 	/**
@@ -1657,12 +1336,13 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	minutesOptionalPrefix() {
-		return (this.data["MINUTES"] =
+		return (
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59());
+			this.int10To59()
+		);
 	}
 
 	/**
@@ -1674,8 +1354,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	secondsMandatoryPrefix() {
-		return (this.data["SECONDS"] =
-			this.int00() || this.int01To09() || this.int10To59());
+		return this.int00() || this.int01To09() || this.int10To59();
 	}
 
 	/**
@@ -1687,12 +1366,13 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	secondsOptionalPrefix() {
-		return (this.data["SECONDS"] =
+		return (
 			this.int00() ||
 			this.int0() ||
 			this.int1To9() ||
 			this.int01To09() ||
-			this.int10To59());
+			this.int10To59()
+		);
 	}
 
 	/**
@@ -1721,24 +1401,276 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		return false;
 	}
 
-	// date
 	/**
-	 * daySuffixTextual (daysuf) {"st" | "nd" | "rd" | "th"}
+	 * Date Formats
 	 *
 	 * @return bool
 	 */
-	daySuffixTextual() {
-		switch (this.nameToken()) {
-			case "SUFFIXES":
-				// case "ST":
-				// case "ND":
-				// case "RD":
-				// case "TH":
-				this.nextToken();
-				return true;
-			default:
-				return false;
+	DateFormats() {
+		// Localized Notations
+
+		// dateLocalizedNotations() {}
+		// ISO8601Notations() {}
+		return (
+			this.dateWithSlash() || // YY "/" mm "/" dd
+			this.dedateWithSlash() || // dd "/" mm "/" YY
+			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
+			this.dateWithDash() || // YY "-" mm		Day reset to 1
+			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
+			this.DateSign() || // [+-]? YY "-" MM "-" DD
+			this.Date1Dash() || // y "-" mm "-" dd
+			this.Date1Abbr() || // y "-" M "-" DD
+			this.dateYear2WithDash() ||
+			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
+			this.dayMonth2Year() || // Day, month and two digit year, with dots or tabs
+			this.dayTextualMonthYear() || // Day, textual month and year
+			this.textualMonth4Year() || // Day and textual month
+			this.textualMonth4Year2() ||
+			this.textualMonthDayYear1() ||
+			this.monthAbbrDayYear() ||
+			this.year4MandatoryPrefix() ||
+			this.dateMonthTextual()
+		);
+	}
+
+	/**
+	 * Four digit year, month and day with slashes
+	 * YY "/" mm "/" dd
+	 * Four digit year, month and day
+	 * YY "/" MM "/" DD
+	 *
+	 * @return bool
+	 */
+	dateWithSlash() {
+		let pos, year, month, day;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year && this.isTKSlash()) {
+			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			if (month && this.isTKSlash()) {
+				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
 		}
+		this.resetPosition(pos);
+		return false;
+	}
+	dedateWithSlash() {
+		let pos, year, month, day;
+		pos = this.getPosition();
+		day = this.dayMandatoryPrefix() || this.dayOptionalPrefix();
+		if (day && this.isTKSlash()) {
+			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			if (month && this.isTKSlash()) {
+				year = this.year4MandatoryPrefix();
+				if (year) {
+					this.data["DAY"] = day;
+					this.data["MONTH"] = month;
+					this.data["YEAR"] = year;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	/**
+	 * Four digit year and month (GNU)
+	 * ISO  YY "/"? MM "/"? DD
+	 *
+	 * @return bool
+	 */
+	dateWithOutSlash() {
+		let pos, year, month, day;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year) {
+			this.isTKSlash();
+			month = this.monthMandatoryPrefix();
+			if (month) {
+				this.isTKSlash();
+				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year, month and day with Dash
+	 * YY "-" mm "-" dd
+	 * Four digit year, month and day
+	 * YY "-" MM "-" DD
+	 * Four digit year and month (GNU)
+		// YY "-" mm
+	 *
+	 * @return bool
+	 */
+	dateWithDash() {
+		let pos, year, month, day;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year && this.isTKDash()) {
+			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			if (month && this.isTKDash()) {
+				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
+					this.data["DAY"] = day;
+				}
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Four digit year and textual month (Day reset to 1)
+		// YY ([ \t.-])* m    Day reset to 1
+	 *
+	 * @return bool
+	 */
+	year4TextualMonth() {
+		let pos, year, month;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year) {
+			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			month = this.monthTextual();
+			if (month) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				this.data["DAY"] = 1;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+		 * Four digit year with optional sign, month and day
+			// [+-]? YY "-" MM "-" DD
+		 *
+		 * @return bool
+		 */
+	DateSign() {
+		let sign,
+			pos = this.getPosition();
+		sign = this.signNumber();
+		if (sign) this.data["SIGN_DATE"] = sign;
+		if (this.dateWithDash()) return true;
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Year, month and day with dashes
+		// y "-" mm "-" dd
+	 *
+	 * @return bool
+	 */
+	Date1Dash() {
+		let pos, year, month, day;
+		pos = this.getPosition();
+		year = this.yearOptionalPrefix();
+		if (year && this.isTKDash()) {
+			month = this.monthOptionalPrefix();
+			if (month && this.isTKDash()) {
+				if ((day = this.dayOptionalPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+		 * Year, month abbreviation and day
+			// y "-" M "-" DD
+		 *
+		 * @return bool
+		 */
+	Date1Abbr() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		year = this.yearOptionalPrefix();
+		if (year && this.isTKDash()) {
+			month = this.monthTextual();
+			if (month && this.isTKDash()) {
+				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * year
+	 * a number with exactly four digits
+	 * [0-9]{4}
+	 * @param  int $int
+	 * @return bool
+	 */
+	year4MandatoryPrefix() {
+		let y1, y2;
+		y1 = this.year2MandatoryPrefix();
+		if (y1) {
+			y2 = this.year2MandatoryPrefix();
+			if (y2) return parseInt(y1 + "" + y2);
+		}
+		return false;
+	}
+
+	/**
+	 *	a number with exactly two digits (YY)
+	 *
+	 * @param  {int} int
+	 * @return bool
+	 */
+	year2MandatoryPrefix(): number | false {
+		return this.int10To99() || this.int01To09() || this.int00();
+	}
+
+	/**
+	 * year
+	 *  a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
+	 * 0?[0-9]{1,4}
+	 * @param  int int
+	 * @return bool
+	 */
+	yearOptionalPrefix() {
+		let y1: any, y2;
+		y1 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+		if (y1) {
+			y2 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+			if (y2) {
+				return parseInt(y1 + "" + y2);
+			}
+			return y1;
+		}
+		return false;
 	}
 
 	/**
@@ -1750,16 +1682,10 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 */
 	dayOptionalPrefix() {
 		let int;
-		if (
-			(int =
-				this.int00() ||
-				this.int0() ||
-				this.int1To9() ||
-				this.int01To09() ||
-				this.int10To31())
-		) {
+		int = this.dayMandatoryPrefix() || this.int1To9() || this.int0();
+		if (int) {
 			this.daySuffixTextual();
-			return (this.data["DAY"] = int);
+			return int;
 		}
 		return false;
 	}
@@ -1772,17 +1698,276 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	dayMandatoryPrefix() {
-		return (this.data["DAY"] =
-			this.int00() || this.int01To09() || this.int10To31());
+		return this.int00() || this.int01To09() || this.int10To31();
 	}
 
 	/**
+	 * daySuffixTextual (daysuf) {"st" | "nd" | "rd" | "th"}
+	 *
+	 * @return bool
+	 */
+	daySuffixTextual() {
+		if (this.isToken("SUFFIXES")) {
+			this.data["SUFFIXES"] = this.valueToken();
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Two digit year, month and day with dashes
+	 * yy "-" MM "-" DD
+	 *
+	 * @return bool
+	 */
+	dateYear2WithDash() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		year = this.year2MandatoryPrefix();
+		if (year && this.isTKDash()) {
+			month = this.monthMandatoryPrefix();
+			if (month && this.isTKDash()) {
+				day = this.dayMandatoryPrefix();
+				if (day) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Day, month and four digit year, with dots, tabs or dashes
+		// dd [.\t-] mm [.-] YY
+	 *
+	 * @return bool
+	 */
+	dayMonth4Year() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		day = this.dayOptionalPrefix();
+		if (day && (this.isTKSpace() || this.isTKDot() || this.isTKDash())) {
+			month = this.monthOptionalPrefix();
+			if (month && (this.isTKDot() || this.isTKDash())) {
+				if ((year = this.year4MandatoryPrefix())) {
+					this.data["DAY"] = day;
+					this.data["MONTH"] = month;
+					this.data["YEAR"] = year;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Day, month and two digit year, with dots or tabs
+		//  dd [.\t] mm "." yy
+	 *
+	 * @return bool
+	 */
+	dayMonth2Year() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		day = this.dayOptionalPrefix();
+		if (day && (this.isTKSpace() || this.isTKDot())) {
+			month = this.monthOptionalPrefix();
+			if (month && this.isTKDot()) {
+				year = this.year2MandatoryPrefix();
+				if (year) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Day, textual month and year
+			// dd ([ \t.-])* m ([ \t.-])* y
+				// d ([ .\t-])* m
+	 *
+	 * @return bool
+	 */
+	dayTextualMonthYear() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		day = this.dayOptionalPrefix();
+		if (day) {
+			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			month = this.monthTextual();
+			if (month) {
+				while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+				year = this.yearOptionalPrefix();
+				if (year) {
+					this.data["YEAR"] = year;
+				}
+				this.data["MONTH"] = month;
+				this.data["DAY"] = day;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Textual month and four digit year (Day reset to 1)
+	 * m ([ \t.-])* YY         Day reset to 1
+	 *
+	 * @return bool
+	 */
+	textualMonth4Year() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		month = this.monthTextual();
+		if (month) {
+			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			year = this.year4MandatoryPrefix();
+			if (year) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				this.data["DAY"] = 1;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	textualMonth4Year2() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year) {
+			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			month = this.monthTextual();
+			if (month) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				this.data["DAY"] = 1;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	/**
+	 * Textual month and year
+	 * m ([ .\t-])* dd [,.stndrh\t ]+? y?
+	 *
+	 * @return bool
+	 */
+	textualMonthDayYear1() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		month = this.monthTextual();
+		if (month) {
+			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			day = this.dayOptionalPrefix();
+			if (day) {
+				do {
+					if (
+						!(
+							this.isTKSpace() ||
+							this.daySuffixTextual() ||
+							this.isTKComma() ||
+							this.isTKDot()
+						)
+					) {
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						return true;
+					}
+				} while (
+					this.isTKSpace() ||
+					this.daySuffixTextual() ||
+					this.isTKComma() ||
+					this.isTKDot()
+				);
+				year = this.yearOptionalPrefix();
+				if (year) {
+					this.data["YEAR"] = year;
+				}
+				this.data["MONTH"] = month;
+				this.data["DAY"] = day;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Month abbreviation, day and year
+		// M "-" DD "-" y
+	 *
+	 * @return bool
+	 */
+	monthAbbrDayYear() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		month = this.monthTextual();
+		if (month && this.isTKDash()) {
+			day = this.dayMandatoryPrefix();
+			if (day && this.isTKDash()) {
+				year = this.yearOptionalPrefix();
+				if (year) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	dateMonthTextual() {
+		let month,
+			pos = this.getPosition();
+		month = this.monthTextual();
+		if (month) {
+			this.data["MONTH"] = month;
+			return true;
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	/**
+	 * Textual abbreviation month (M)  (and just the month)
+	 *
 	 * Textual month (and just the month) (m)
 	 *
 	 * @param  int int
 	 * @return bool
 	 */
-	monthTextualFull() {
+	monthTextual() {
 		var int;
 		switch (this.nameToken()) {
 			case "FARVARDIN":
@@ -1839,17 +2024,6 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	}
 
 	/**
-	 * Textual abbreviation month (M)  (and just the month) {'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'sept' | 'oct' | 'nov' | 'dec'}
-	 *
-	 * @param  int int
-	 * @return bool
-	 */
-	monthTextualShort() {
-		// abbreviated month
-		return this.monthTextualFull();
-	}
-
-	/**
 	 * month (mm) {	"0"? [0-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with an optional 0 prefix before numbers 0-9
 	 *
@@ -1857,12 +2031,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	monthOptionalPrefix(): number | false {
-		return (this.data["MONTH"] =
-			this.int00() ||
-			this.int0() ||
-			this.int01To09() ||
-			this.int1To9() ||
-			this.int10To12());
+		return this.monthMandatoryPrefix() || this.int1To9() || this.int0();
 	}
 
 	/**
@@ -1873,18 +2042,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	monthMandatoryPrefix(): number | false {
-		return (this.data["MONTH"] =
-			this.int00() || this.int01To09() || this.int1To9() || this.int10To12());
-	}
-
-	/**
-	 *	a number with exactly two digits (YY)
-	 *
-	 * @param  {int} int
-	 * @return bool
-	 */
-	year2MandatoryPrefix(): number | false {
-		return this.int00() || this.int01To09() || this.int10To99();
+		return this.int10To12() || this.int01To09() || this.int00();
 	}
 
 	/**
@@ -1894,34 +2052,10 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * @return bool
 	 */
 	weekOfYear(): number | false {
-		return this.int00() || this.int01To09() || this.int10To53();
+		return this.int10To53() || this.int01To09() || this.int00();
 	}
+
 	// Relative
-
-	/**
-	 * white Space {[ \t]}
-	 *
-	 * @return bool
-	 */
-	whiteSpace() {
-		return this.isTKSpace();
-	}
-
-	/**
-	 * white Space More {[ \t]+}
-	 *
-	 * @return bool
-	 */
-	whiteSpaceMore(): boolean {
-		let space = false;
-		while (this.whiteSpace()) {
-			space = true;
-		}
-		if (space) {
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * day neme
@@ -2066,137 +2200,6 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		}
 	}
 
-	/**
-	 * is Token
-	 *
-	 * @param  string token
-	 * @return bool
-	 */
-	isToken(token: any) {
-		if (this.Lexer.getLookahead() !== false)
-			return this.Lexer.getLookahead().is(token);
-	}
-
-	/**
-	 * name Token
-	 *
-	 * @return bool
-	 */
-	nameToken() {
-		if (this.Lexer.getLookahead() !== false) {
-			return this.Lexer.getLookahead().getName();
-		}
-		return false;
-	}
-
-	/**
-	 * value Token
-	 *
-	 * @return bool
-	 */
-	valueToken() {
-		return this.Lexer.getLookahead().getValue();
-	}
-
-	/**
-	 * next Token
-	 *
-	 * @return bool
-	 */
-	nextToken() {
-		return this.Lexer.moveNext();
-	}
-
-	/**
-	 * get Position
-	 *
-	 * @return bool
-	 */
-	getPosition() {
-		return this.Lexer.getPosition();
-	}
-
-	/**
-	 * reset Position
-	 *
-	 * @param  int pos Position
-	 * @return bool
-	 */
-	resetPosition(pos: any) {
-		return this.Lexer.resetPosition(pos);
-	}
-
-	isTKColon() {
-		if (this.isToken("COLON")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKDot() {
-		if (this.isToken("DOT")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKDash() {
-		if (this.isToken("DASH")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKPlus() {
-		if (this.isToken("PLUS")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKComma() {
-		if (this.isToken("COMMA")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKSpace() {
-		if (this.isToken("SPACE")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKSignTime() {
-		if (this.isToken("SIGN_TIME")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKWeek() {
-		if (this.isToken("WEEK")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
-
-	isTKSlash() {
-		if (this.isToken("SLASH")) {
-			this.nextToken();
-			return true;
-		}
-		return false;
-	}
 	// =================================================================================
 	// ==================================   numeric   ==================================
 	// =================================================================================
@@ -2482,7 +2485,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_99":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To59();
 		}
@@ -2504,7 +2507,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_59":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To53();
 		}
@@ -2537,7 +2540,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_53":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To36();
 		}
@@ -2558,7 +2561,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_36":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To31();
 		}
@@ -2581,7 +2584,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_31":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To24();
 		}
@@ -2597,7 +2600,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("INT_24")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int * 1;
+			return int;
 		}
 		return this.int10To23();
 	}
@@ -2623,7 +2626,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_23":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int10To12();
 		}
@@ -2642,7 +2645,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_12":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return false;
 		}
@@ -2667,7 +2670,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_09":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return false;
 		}
@@ -2685,7 +2688,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_9":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return this.int1To7();
 		}
@@ -2708,7 +2711,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			case "INT_7":
 				const int = this.valueToken();
 				this.nextToken();
-				return int * 1;
+				return int;
 			default:
 				return false;
 		}
@@ -2724,7 +2727,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("INT_00")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int * 1;
+			return int;
 		}
 		return false;
 	}
@@ -2739,7 +2742,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		if (this.isToken("INT_0")) {
 			const int = this.valueToken();
 			this.nextToken();
-			return int * 1;
+			return int;
 		}
 		return false;
 	}
