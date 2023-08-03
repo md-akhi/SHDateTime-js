@@ -1044,7 +1044,7 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		return (
 			this.dateSlash() ||
 			this.dateDash() ||
-			this.year4MonthGNU() ||
+			//this.year4MonthGNU() ||
 			this.year4TextualMonth() ||
 			this.DateSign()
 		);
@@ -1082,6 +1082,8 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	 * YY "-" mm "-" dd
 	 * Four digit year, month and day
 	 * YY "-" MM "-" DD
+	 * Four digit year and month (GNU)
+		// YY "-" mm
 	 *
 	 * @return bool
 	 */
@@ -1093,31 +1095,12 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
-					return true;
 				}
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				return true;
 			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Four digit year and month (GNU)
-		// YY "-" mm
-	 *
-	 * @return bool
-	 */
-	year4MonthGNU() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash() && (month = this.monthOptionalPrefix())) {
-			this.data["YEAR"] = year;
-			this.data["MONTH"] = month;
-			return true;
 		}
 		this.resetPosition(pos);
 		return false;
