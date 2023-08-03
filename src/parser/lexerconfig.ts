@@ -240,7 +240,7 @@ export default class SHLexerConfig {
 		EVENING: "evening|eve",
 		NIGHT: "night",
 
-		UTC: "utc|ut|gmt",
+		UTC: "utc|gmt|ut",
 		EST: "est",
 		EDT: "edt",
 		CST: "cst",

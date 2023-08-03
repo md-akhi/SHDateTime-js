@@ -87,21 +87,6 @@ export default class SHParser {
 		// time
 
 		// standardsFormats() {
-		/**
-			 * ATOM	"2022-06-02T16:58:35+00:00"
-COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
-ISO8601	"2022-06-02T16:58:35+0000"
-» RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
-» RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
-» RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
-» RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
-» RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
-» RFC 3339	"2022-06-02T16:58:35+00:00"
-» RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
-» RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
-RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
-W3C	"2022-06-02T16:58:35+00:00"
-			 */
 		//}
 		// compoundLocalizedNotations() {
 		/**
@@ -189,6 +174,50 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 	// +001970-01-01T00:00:00Z	1970 A.D.
 	// +002009-12-15T00:00:00Z	2009 A.D.
 	// +275760-09-13T00:00:00Z	275760 A.D.
+	standardsFormats() {
+		this.ATOM();
+		this.COOKIE();
+		this.ISO8601();
+		this.RFC822();
+		this.RFC850();
+		this.RFC1036();
+		this.RFC1123();
+		this.RFC2822();
+		this.RFC3339();
+		this.RFC3339Extended();
+		this.RFC7231();
+		this.RSS();
+		this.W3C();
+	}
+	/**
+	 */
+
+	// ATOM	"2022-06-02T16:58:35+00:00"
+	ATOM() {}
+	// ISO8601	"2022-06-02T16:58:35+0000"
+	ISO8601() {}
+	// RFC 3339	"2022-06-02T16:58:35+00:00"
+	RFC3339() {}
+	// W3C	"2022-06-02T16:58:35+00:00"
+	W3C() {}
+	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
+	RFC3339Extended() {}
+	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
+	COOKIE() {}
+	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
+	RFC850() {}
+	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
+	RFC7231() {}
+	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
+	RFC822() {}
+	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
+	RFC1036() {}
+	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
+	RFC1123() {}
+	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
+	RFC2822() {}
+	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
+	RSS() {}
 
 	/**
 	 * Common Log Format (YYYY-MM-DDT:HH:II:SS)
@@ -1415,7 +1444,6 @@ WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		let PLUS_DASH, h12, min;
 		switch (this.nameToken()) {
 			case "UTC":
-			case "GMT":
 				this.nextToken();
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "00";
