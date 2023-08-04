@@ -242,7 +242,7 @@ export default class SHParser {
 		return (
 			this.standardsFormats() ||
 			this.compoundLocalizedNotations() ||
-			this.Y4M2D2TH2I2S2FracTZ() ||
+			this.CommonLogFormat() ||
 			this.isoYearWeekDay() ||
 			this.dateWithSpaceTime() ||
 			this.postgreSQL() ||
@@ -358,7 +358,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	Y4M2D2TH2I2S2FracTZ() {
+	CommonLogFormat() {
 		let pos, year, month, day, h24, min, sec, frac, tz;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
@@ -636,7 +636,7 @@ export default class SHParser {
 		let doy1: any,
 			doy2,
 			pos = this.getPosition();
-		doy1 = this.year2MandatoryPrefix();
+		doy1 = this.int00To99();
 		doy2 = this.int0() || this.int1To9();
 		if (doy1) {
 			if (doy2) return parseInt(doy1 + "" + doy2);
@@ -1140,7 +1140,7 @@ export default class SHParser {
 		sign = this.signNumber() || "";
 		isInt = true;
 		do {
-			int = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+			int = this.int00To99() || this.int1To9() || this.int0();
 			if (int) num += "" + int; //sprintf('%s%s',$num,int);
 			else isInt = false;
 		} while (isInt);
@@ -1244,7 +1244,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	minutesMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To59();
+		return this.int10To59() || this.int01To09() || this.int00();
 	}
 
 	/**
@@ -1257,11 +1257,11 @@ export default class SHParser {
 	 */
 	minutesOptionalPrefix() {
 		return (
-			this.int00() ||
-			this.int0() ||
-			this.int1To9() ||
+			this.int10To59() ||
 			this.int01To09() ||
-			this.int10To59()
+			this.int1To9() ||
+			this.int00() ||
+			this.int0()
 		);
 	}
 
@@ -1274,7 +1274,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	secondsMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To59();
+		return this.int10To59() || this.int01To09() || this.int00();
 	}
 
 	/**
@@ -1287,11 +1287,11 @@ export default class SHParser {
 	 */
 	secondsOptionalPrefix() {
 		return (
-			this.int00() ||
-			this.int0() ||
-			this.int1To9() ||
+			this.int10To59() ||
 			this.int01To09() ||
-			this.int10To59()
+			this.int1To9() ||
+			this.int00() ||
+			this.int0()
 		);
 	}
 
@@ -1337,7 +1337,7 @@ export default class SHParser {
 			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
 			this.dateWithDash() || // YY "-" mm		Day reset to 1
 			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
-			this.DateSign() || // [+-]? YY "-" MM "-" DD
+			this.DateWithSignDash() || // [+-]? YY "-" MM "-" DD
 			this.Date1Dash() || // y "-" mm "-" dd
 			this.Date1Abbr() || // y "-" M "-" DD
 			this.dateYear2WithDash() ||
@@ -1484,11 +1484,9 @@ export default class SHParser {
 		 *
 		 * @return bool
 		 */
-	DateSign() {
-		let sign,
-			pos = this.getPosition();
-		sign = this.signNumber();
-		if (sign) this.data["SIGN_DATE"] = sign;
+	DateWithSignDash() {
+		let pos = this.getPosition();
+		this.data["SIGN_DATE"] = this.signNumber();
 		if (this.dateWithDash()) return true;
 		this.resetPosition(pos);
 		return false;
@@ -1535,6 +1533,33 @@ export default class SHParser {
 			month = this.monthTextual();
 			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix())) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+	/**
+		 * day, month abbreviation and Year
+			// DD "-" M "-" y
+		 *
+		 * @return bool
+		 */
+	deDate1Abbr() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		day = this.dayMandatoryPrefix();
+		if (day && this.isTKDash()) {
+			month = this.monthTextual();
+			if (month && this.isTKDash()) {
+				year = this.yearOptionalPrefix();
+				if (year) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
@@ -1608,11 +1633,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year2MandatoryPrefix(): number | false {
-		let pos = this.getPosition(),
-			int = this.int10To99() || this.int01To09() || this.int00();
-		if (int) return int;
-		this.resetPosition(pos);
-		return false;
+		return this.int00To99();
 	}
 
 	/**
@@ -1626,9 +1647,9 @@ export default class SHParser {
 		let y1: any,
 			y2,
 			pos = this.getPosition();
-		y1 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+		y1 = this.int00To99() || this.int1To9() || this.int0();
 		if (y1) {
-			y2 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+			y2 = this.int00To99() || this.int1To9() || this.int0();
 			if (y2) {
 				return parseInt(y1 + "" + y2);
 			}
@@ -2400,6 +2421,15 @@ export default class SHParser {
 		}
 	}
 
+	/**
+	 * a number between zero and ninety nine
+	 *
+	 * @param  int int
+	 * @return bool
+	 */
+	int00To99() {
+		return this.int10To99() || this.int01To09() || this.int00();
+	}
 	/**
 	 * a number between ten and ninety nine
 	 *
