@@ -1398,7 +1398,6 @@ export default class SHDate {
 	public static parse(str: string): number {
 		//throw new Error("Not Implemented parse"); // TODO: implement
 		let date = new SHDate();
-		console.log(JSON.stringify(SHParser, null, 2));
 		let data = Object.entries(new SHParser(str));
 		data.forEach(([key, value]) => {
 			switch (key) {
@@ -1422,6 +1421,7 @@ export default class SHDate {
 					break;
 			}
 		});
+		//console.log(JSON.stringify(SHParser, null, 2));
 		console.log(data, str, date.toString());
 		return date.getTime();
 	}

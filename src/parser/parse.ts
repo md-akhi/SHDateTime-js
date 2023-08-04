@@ -87,6 +87,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	nameToken() {
+		console.log(this.Lexer.getLookahead());
 		if (this.Lexer.getLookahead() !== false) {
 			return this.Lexer.getLookahead().getName();
 		}
@@ -243,7 +244,7 @@ export default class SHParser {
 			this.compoundLocalizedNotations() ||
 			this.Y4M2D2TH2I2S2FracTZ() ||
 			this.isoYearWeekDay() ||
-			this.Y4M2D2WSH2I2S2() ||
+			this.dateWithSpaceTime() ||
 			this.postgreSQL() ||
 			this.unixTimestamp() ||
 			this.WDDX()
@@ -307,74 +308,29 @@ export default class SHParser {
 	// +002009-12-15T00:00:00Z	2009 A.D.
 	// +275760-09-13T00:00:00Z	275760 A.D.
 	standardsFormats() {
-		return false;
-		this.ATOM();
-		this.COOKIE();
-		this.ISO8601();
-		this.RFC822();
-		this.RFC850();
-		this.RFC1036();
-		this.RFC1123();
-		this.RFC2822();
-		this.RFC3339();
-		this.RFC3339Extended();
-		this.RFC7231();
-		this.RSS();
-		this.W3C();
+		return this.dateTimeTZ() || this.dateAbbrTimeTZ();
 	}
 	/**
 	 */
 
-	// ATOM	"2022-06-02T16:58:35+00:00"
-	ATOM() {
-		return false;
-	}
+	// Atom	"2022-06-02T16:58:35+00:00"
 	// ISO8601	"2022-06-02T16:58:35+0000"
-	ISO8601() {
-		return false;
-	}
 	// RFC 3339	"2022-06-02T16:58:35+00:00"
-	RFC3339() {
-		return false;
-	}
 	// W3C	"2022-06-02T16:58:35+00:00"
-	W3C() {
-		return false;
-	}
 	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
-	RFC3339Extended() {
+	dateTimeTZ() {
+		if (this.dateWithDash()) if (this.time24Notation()) return true;
 		return false;
 	}
 	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
-	COOKIE() {
-		return false;
-	}
 	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
-	RFC850() {
-		return false;
-	}
 	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
-	RFC7231() {
-		return false;
-	}
 	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
-	RFC822() {
-		return false;
-	}
 	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
-	RFC1036() {
-		return false;
-	}
 	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RFC1123() {
-		return false;
-	}
 	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RFC2822() {
-		return false;
-	}
 	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
-	RSS() {
+	dateAbbrTimeTZ() {
 		return false;
 	}
 
@@ -453,28 +409,14 @@ export default class SHParser {
 	}
 
 	/**
-	 * Y4M2D2WSH2I2S2 (YYYY-MM-DD HH:II:SS)
+	 * dateWithSpaceTime (YYYY-MM-DD HH:II:SS)
 	 *
 	 * @return bool
 	 */
-	Y4M2D2WSH2I2S2() {
-		let pos, year, month, day, h24, min, sec;
-		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthMandatoryPrefix();
-			if (month && this.isTKDash()) {
-				day = this.dayMandatoryPrefix();
-				if (day && this.isTKSpace()) {
-					if (this.time24Notation()) {
-						this.data["YEAR"] = year;
-						this.data["MONTH"] = month;
-						this.data["DAY"] = day;
-						return true;
-					}
-				}
-			}
-		}
+	dateWithSpaceTime() {
+		let pos = this.getPosition();
+		if (this.dateWithDash())
+			if (this.isTKSpace()) if (this.time24Notation()) return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -507,15 +449,13 @@ export default class SHParser {
 	 * @return bool
 	 */
 	unixTimestamp() {
-		let sign,
-			int,
+		let int,
 			pos = this.getPosition();
 		if (this.isToken("AT")) {
 			this.nextToken();
-			if ((sign = this.signNumber())) {
-				this.data["Sign_Timestamp"] = sign;
-			}
-			if ((int = this.number())) {
+			//this.data["Sign_Timestamp"] = this.signNumber() || "";
+			int = this.number();
+			if (int) {
 				this.data["Timestamp"] = int;
 				return true;
 			}
@@ -530,28 +470,8 @@ export default class SHParser {
 	 * @return bool
 	 */
 	WDDX() {
-		let year,
-			month,
-			day,
-			h12,
-			min,
-			sec,
-			pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthOptionalPrefix();
-			if (month && this.isTKDash()) {
-				day = this.dayOptionalPrefix();
-				if (day) {
-					if (this.time12Notation()) {
-						this.data["YEAR"] = year;
-						this.data["MONTH"] = month;
-						this.data["DAY"] = day;
-						return true;
-					}
-				}
-			}
-		}
+		let pos = this.getPosition();
+		if (this.dateWithDash()) if (this.time12Notation()) return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -713,13 +633,16 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayOfYear() {
-		let doy1: any, doy2;
+		let doy1: any,
+			doy2,
+			pos = this.getPosition();
 		doy1 = this.year2MandatoryPrefix();
 		doy2 = this.int0() || this.int1To9();
 		if (doy1) {
 			if (doy2) return parseInt(doy1 + "" + doy2);
 			return parseInt(doy1);
 		}
+		this.resetPosition(pos);
 		return false;
 	}
 
@@ -1213,21 +1136,18 @@ export default class SHParser {
 			isInt,
 			int,
 			num: any,
-			signNumber = 1; // +
-		if ((sign = this.signNumber()))
-			if (sign == "-") {
-				signNumber = -1;
-			}
-		isInt = false;
-		while (
-			(int = this.year2MandatoryPrefix() || this.int1To9() || this.int0())
-		) {
-			num += "" + int; //sprintf('%s%s',$num,int);
-			isInt = true;
-		}
-		if (isInt) {
-			return num * signNumber;
-		}
+			pos = this.getPosition();
+		sign = this.signNumber() || "";
+		isInt = true;
+		do {
+			int = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
+			if (int) num += "" + int; //sprintf('%s%s',$num,int);
+			else isInt = false;
+		} while (isInt);
+		console.log(int, num);
+		return sign + num;
+
+		this.resetPosition(pos);
 		return false;
 	}
 
@@ -1626,6 +1546,41 @@ export default class SHParser {
 		return false;
 	}
 
+	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
+	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
+	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
+	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
+	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
+	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
+	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
+	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
+
+	dateWithAbbrTimeTZ() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		if (this.dayNeme()) this.isTKComma();
+		this.isTKSpace();
+		day = this.dayMandatoryPrefix();
+		if (day) {
+			this.isTKDash() || this.isTKSpace();
+			month = this.monthTextual();
+			if (month) {
+				this.isTKDash() || this.isTKSpace();
+				year = this.year4MandatoryPrefix() || this.year2MandatoryPrefix();
+				if (year && this.isTKSpace() && this.time24Notation()) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
 	/**
 	 * year
 	 * a number with exactly four digits
@@ -1634,12 +1589,15 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year4MandatoryPrefix() {
-		let y1, y2;
+		let y1,
+			y2,
+			pos = this.getPosition();
 		y1 = this.year2MandatoryPrefix();
 		if (y1) {
 			y2 = this.year2MandatoryPrefix();
 			if (y2) return parseInt(y1 + "" + y2);
 		}
+		this.resetPosition(pos);
 		return false;
 	}
 
@@ -1650,7 +1608,11 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year2MandatoryPrefix(): number | false {
-		return this.int10To99() || this.int01To09() || this.int00();
+		let pos = this.getPosition(),
+			int = this.int10To99() || this.int01To09() || this.int00();
+		if (int) return int;
+		this.resetPosition(pos);
+		return false;
 	}
 
 	/**
@@ -1661,7 +1623,9 @@ export default class SHParser {
 	 * @return bool
 	 */
 	yearOptionalPrefix() {
-		let y1: any, y2;
+		let y1: any,
+			y2,
+			pos = this.getPosition();
 		y1 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
 		if (y1) {
 			y2 = this.year2MandatoryPrefix() || this.int1To9() || this.int0();
@@ -1670,6 +1634,7 @@ export default class SHParser {
 			}
 			return y1;
 		}
+		this.resetPosition(pos);
 		return false;
 	}
 
