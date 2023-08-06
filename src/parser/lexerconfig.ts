@@ -1,9 +1,10 @@
 import SHTokenDefn from "./tokendefn.js";
 export default class SHLexerConfig {
 	static SINGLE_QUOTE: any = `\'`;
-	static COMMA: any = ",";
+	static COMMA: any = `,`;
 	static DOT: any = `.`;
-	static SPACE: any = `\s`;
+	static SPACE: any = ` 	`;
+	static SPACE2: any = `\t|\s`;
 	static UNKNOWN_CHAR: any = `[^${SHLexerConfig.SPACE}${SHLexerConfig.DOT}]`;
 
 	static tokenDefinitions: any = {
@@ -167,12 +168,15 @@ export default class SHLexerConfig {
 		TWENTIETH: "twentieth",
 		THIRTIETH: "thirtieth",
 
-		// ********** suffixes **********
-		SUFFIXES: "st|nd|rd|th",
-		// ST: "st",
-		// ND: "nd",
-		// RD: "rd",
-		// TH: "th",
+		// ********** date rules **********
+
+		SATURDAY: "saturday|sat",
+		SUNDAY: "sunday|sun",
+		MONDAY: "monday|mon",
+		TUESDAY: "tuesday|tue",
+		WEDNESDAY: "wednesday|wed",
+		THURSDAY: "thursday|thu",
+		FRIDAY: "friday|fri|weekend",
 
 		// ********** common rules **********
 
@@ -187,15 +191,15 @@ export default class SHLexerConfig {
 		END: "end",
 		PREVIOUS: "previous",
 
-		// ********** date rules **********
+		// ********** suffixes **********
 
-		SATURDAY: "saturday|sat",
-		SUNDAY: "sunday|sun",
-		MONDAY: "monday|mon",
-		TUESDAY: "tuesday|tue",
-		WEDNESDAY: "wednesday|wed",
-		THURSDAY: "thursday|thu",
-		FRIDAY: "friday|fri|weekend",
+		SUFFIXES: "st|nd|rd|th",
+		// ST: "st",
+		// ND: "nd",
+		// RD: "rd",
+		// TH: "th",
+
+		// ********** month rules **********
 
 		MICROSECOND: "microsecond|usec",
 		MILLISECOND: "millisecond|msec|ms|µsec|µs",
@@ -316,13 +320,14 @@ export default class SHLexerConfig {
 		PLUS: `\\+`,
 		SLASH: `\/`,
 		COLON: ":",
-		DOT: `${SHLexerConfig.DOT}`,
 		COMMA: SHLexerConfig.COMMA,
 		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
-		SPACE: SHLexerConfig.SPACE,
+		SPACE: `[${SHLexerConfig.SPACE}]|${SHLexerConfig.SPACE2}`,
 
 		//UNKNOWN: SHLexerConfig.UNKNOWN_CHAR,
-		UNKNOWN_CHAR: SHLexerConfig.UNKNOWN_CHAR //  fragment
+		UNKNOWN_CHAR: SHLexerConfig.UNKNOWN_CHAR, //  fragment
+
+		DOT: `${SHLexerConfig.DOT}`
 	};
 
 	definitions: any[] = [];

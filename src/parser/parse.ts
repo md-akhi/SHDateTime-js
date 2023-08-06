@@ -62,10 +62,9 @@ export default class SHParser {
 		this.Lexer = new SHLexer(srt);
 		this.Date = new Export_SHDate();
 		do {
-			this.DateFormats() ||
-				this.TimeFormats() ||
-				this.CompoundFormats() ||
-				this.RelativeFormats();
+			//this.DateFormats() ||
+			this.TimeFormats() || this.CompoundFormats();
+			//||	this.RelativeFormats();
 		} while (this.nextToken());
 		return this.data;
 	}
@@ -239,17 +238,15 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
-		return (
-			this.standardsFormats() ||
-			this.compoundLocalizedNotations() ||
-			this.CommonLogFormat() ||
-			this.isoYearWeekDay() ||
-			this.dateWithSpaceTime() ||
-			this.postgreSQL() ||
-			this.unixTimestamp() ||
-			this.WDDX()
-			// this.MSSQL()
-		);
+		return this.standardsFormats(); //||
+		// this.compoundLocalizedNotations() ||
+		// this.CommonLogFormat() ||
+		// this.isoYearWeekDay() ||
+		// this.dateWithSpaceTime() ||
+		// this.postgreSQL() ||
+		// this.unixTimestamp() ||
+		// this.WDDX()
+		// this.MSSQL()
 	}
 	// https://www.php.net/manual/en/datetime.formats.time.php
 	// https://www.php.net/manual/en/datetime.formats.date.php
@@ -308,7 +305,7 @@ export default class SHParser {
 	// +002009-12-15T00:00:00Z	2009 A.D.
 	// +275760-09-13T00:00:00Z	275760 A.D.
 	standardsFormats() {
-		return this.dateTimeTZ() || this.dateAbbrTimeTZ();
+		return this.dateTimeTZ() || this.dateWithAbbrTimeTZ();
 	}
 	/**
 	 */
@@ -320,17 +317,6 @@ export default class SHParser {
 	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
 	dateTimeTZ() {
 		if (this.dateWithDash()) if (this.time24Notation()) return true;
-		return false;
-	}
-	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
-	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
-	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
-	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
-	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
-	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
-	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
-	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
-	dateAbbrTimeTZ() {
 		return false;
 	}
 
@@ -1340,6 +1326,7 @@ export default class SHParser {
 			this.DateWithSignDash() || // [+-]? YY "-" MM "-" DD
 			this.Date1Dash() || // y "-" mm "-" dd
 			this.Date1Abbr() || // y "-" M "-" DD
+			this.deDate1Abbr() || // DD "-" M "-" y
 			this.dateYear2WithDash() ||
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			this.dayMonth2Year() || // Day, month and two digit year, with dots or tabs
@@ -1379,6 +1366,15 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
+	/**
+	 * day, month and Four digit year with slashes
+	 * dd "/" mm "/" YY
+	 * day, month and Four digit year
+	 * DD "/" MM "/" YY
+	 *
+	 * @return bool
+	 */
 	dedateWithSlash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
@@ -1585,20 +1581,22 @@ export default class SHParser {
 			month,
 			day,
 			pos = this.getPosition();
-		if (this.dayNeme()) this.isTKComma();
-		this.isTKSpace();
-		day = this.dayMandatoryPrefix();
-		if (day) {
-			this.isTKDash() || this.isTKSpace();
-			month = this.monthTextual();
-			if (month) {
+		if (this.dayNeme()) {
+			this.isTKComma();
+			this.isTKSpace();
+			day = this.dayMandatoryPrefix();
+			if (day) {
 				this.isTKDash() || this.isTKSpace();
-				year = this.year4MandatoryPrefix() || this.year2MandatoryPrefix();
-				if (year && this.isTKSpace() && this.time24Notation()) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
+				month = this.monthTextual();
+				if (month) {
+					this.isTKDash() || this.isTKSpace();
+					year = this.year4MandatoryPrefix() || this.year2MandatoryPrefix();
+					if (year && this.isTKSpace() && this.time24Notation()) {
+						this.data["YEAR"] = year;
+						this.data["MONTH"] = month;
+						this.data["DAY"] = day;
+						return true;
+					}
 				}
 			}
 		}

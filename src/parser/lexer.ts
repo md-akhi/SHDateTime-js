@@ -46,6 +46,7 @@ export default class SHLexer {
 				const GetRegex = tokenDefinition.getRegex();
 				const GetName = tokenDefinition.getName();
 				const Regex: RegExp = new RegExp("^" + GetRegex, "i");
+				console.log(GetRegex, GetName, Regex);
 				if ((match = input.match(Regex))) {
 					let str = input;
 					let len = str.length;
@@ -57,6 +58,7 @@ export default class SHLexer {
 					input = input.substr(GetRegex.length);
 					anyMatch = true;
 					offset += GetRegex.length;
+					console.log(match, str, input);
 					break;
 				}
 			}
@@ -66,6 +68,7 @@ export default class SHLexer {
 			//inputlen--;
 		}
 
+		console.log(JSON.stringify(tokens, null, 2));
 		return tokens;
 	}
 
