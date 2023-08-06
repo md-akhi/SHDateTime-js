@@ -86,7 +86,6 @@ export default class SHParser {
 	 * @return bool
 	 */
 	nameToken() {
-		console.log(this.Lexer.getLookahead());
 		if (this.Lexer.getLookahead() !== false) {
 			return this.Lexer.getLookahead().getName();
 		}
@@ -245,7 +244,7 @@ export default class SHParser {
 		// this.dateWithSpaceTime() ||
 		// this.postgreSQL() ||
 		// this.unixTimestamp() ||
-		// this.WDDX()
+		// this.WDDX() ||
 		// this.MSSQL()
 	}
 	// https://www.php.net/manual/en/datetime.formats.time.php
@@ -324,15 +323,15 @@ export default class SHParser {
 		return false;
 		// Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
 		// EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"
-		// ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
 		// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
-		// PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
+		// WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
 		// SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
 		// Unix Timestamp	"@" "-"? [0-9]+	"@1215282385"
 		// Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
 		// XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
 		// XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
-		// WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
+		// ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
+		// PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
 	}
 
 	/**

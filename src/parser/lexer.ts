@@ -46,19 +46,22 @@ export default class SHLexer {
 				const GetRegex = tokenDefinition.getRegex();
 				const GetName = tokenDefinition.getName();
 				const Regex: RegExp = new RegExp("^" + GetRegex, "i");
-				console.log(GetRegex, GetName, Regex);
-				if ((match = input.match(Regex))) {
+				match = input.match(Regex);
+				// console.log(input, GetName, match);
+				if (match) {
 					let str = input;
-					let len = str.length;
+					let len = match[0].length;
 					//console.log(input, len, match, Regex);
 					if (GetName.length > 0) {
 						tokens.push(new SHToken(GetName, match[0], offset, position));
 						position++;
 					}
-					input = input.substr(GetRegex.length);
+					// console.log(str, GetName, match, offset, position);
+					// console.log(input);
+					input = input.substr(len);
+					// console.log(input);
 					anyMatch = true;
-					offset += GetRegex.length;
-					console.log(match, str, input);
+					offset += len;
 					break;
 				}
 			}
@@ -68,7 +71,7 @@ export default class SHLexer {
 			//inputlen--;
 		}
 
-		console.log(JSON.stringify(tokens, null, 2));
+		// console.log(JSON.stringify(tokens, null, 2));
 		return tokens;
 	}
 

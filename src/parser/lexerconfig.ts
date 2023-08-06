@@ -3,9 +3,7 @@ export default class SHLexerConfig {
 	static SINGLE_QUOTE: any = `\'`;
 	static COMMA: any = `,`;
 	static DOT: any = `.`;
-	static SPACE: any = ` 	`;
-	static SPACE2: any = `\t|\s`;
-	static UNKNOWN_CHAR: any = `[^${SHLexerConfig.SPACE}${SHLexerConfig.DOT}]`;
+	static SPACE: any = `[ \t\s]`;
 
 	static tokenDefinitions: any = {
 		// ********* numeric rules **********
@@ -322,12 +320,9 @@ export default class SHLexerConfig {
 		COLON: ":",
 		COMMA: SHLexerConfig.COMMA,
 		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
-		SPACE: `[${SHLexerConfig.SPACE}]|${SHLexerConfig.SPACE2}`,
-
-		//UNKNOWN: SHLexerConfig.UNKNOWN_CHAR,
-		UNKNOWN_CHAR: SHLexerConfig.UNKNOWN_CHAR, //  fragment
-
-		DOT: `${SHLexerConfig.DOT}`
+		SPACE: `${SHLexerConfig.SPACE}`,
+		DOT: `${SHLexerConfig.DOT}`,
+		UNKNOWN_CHAR: `[^ \t\s${SHLexerConfig.DOT}]` //  fragment
 	};
 
 	definitions: any[] = [];
