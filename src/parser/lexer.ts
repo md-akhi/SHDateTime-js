@@ -39,6 +39,7 @@ export default class SHLexer {
 		let offset: any = 0;
 		let position: any = 0;
 		let match: any = null;
+		input = input.toLowerCase();
 		let i = input.length;
 		while (i-- >= 0) {
 			let anyMatch = false;
