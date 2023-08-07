@@ -462,156 +462,6 @@ export default class SHParser {
 	}
 
 	/**
-	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
-	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
-	 *
-	 * @return bool
-	 */
-	// MSSQL() {
-	// 	//
-	// 	let h12,
-	// 		min,
-	// 		sec,
-	// 		frac,
-	// 		meridian,
-	// 		pos = this.getPosition();
-	// 	if (this.time12Notation()) {
-	//		return true;
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
-
-	/**
-	 * Relative Formats
-	 * DayBasedNotations
-	 *
-	 * @return bool
-	 */
-	RelativeFormats() {
-		let dow: any;
-		//Day-based Notations
-		if (this.isToken("NOW")) {
-			// Now - this is simply ignored
-			this.data["NOW"] = true;
-			return true;
-		} else if (this.isToken("TODAY") || this.isToken("MIDNIGHT")) {
-			// The time is set to 00:00:00
-			this.data["TODAY_MIDNIGHT"] = true;
-			this.restTime();
-			return true;
-		} else if (this.isToken("NOON")) {
-			// The time is set to 12:00:00
-			this.restTime(12);
-			return true;
-		} else if (this.isToken("YESTERDAY")) {
-			// Midnight of yesterday
-			this.data["YESTERDAY"] = true;
-			this.restTime();
-			return true;
-		} else if (this.isToken("TOMORROW")) {
-			// Midnight of tomorrow
-			this.data["TOMORROW"] = true;
-			this.restTime();
-			return true;
-		} else if (
-			this.minutes15Hour() ||
-			this.firstCurrentMonthLast() ||
-			this.XWeekCurrentMonthLast() ||
-			this.handleRelTimeNumber() ||
-			this.handleRelTimeText()
-		) {
-			return true;
-		} else if (this.isToken("AGO")) {
-			// Negates all the values of previously found relative time items.
-			this.data["AGO"] = true;
-			this.nextToken();
-			return true;
-		} else if ((dow = this.dayNeme())) {
-			// Moves to the next day of this name.
-			// let diffdow,
-			// 	dowmonth = this.Date.getDayOfWeek(
-			// 		this.data["YEAR"],
-			// 		this.data["MONTH"],
-			// 		this.data["DAY"]
-			// 	);
-			// if (dow < dowmonth) {
-			// 	diffdow = 7 - dowmonth - dow;
-			// } else if (dow > dowmonth) {
-			// 	diffdow = dow - dowmonth;
-			// } else {
-			// 	diffdow = 0;
-			// }
-			// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-			// 	this.Date.getDaysOfDay(
-			// 		this.data["YEAR"],
-			// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) + diffdow
-			// 	);
-			this.data["NEXT_DAY_OF_NAME"] = dow;
-			return true;
-		} else if (this.handleRelTimeFormat()) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 15 minutes past the specified hour
-	 * 15 minutes before the specified hour
-	 *
-	 * @return bool
-	 */
-	minutes15Hour() {
-		let h24: any,
-			pos = this.getPosition();
-		if (this.isToken("BACK")) {
-			// 15 minutes past the specified hour
-			this.nextToken();
-			if (this.isTKSpace() && this.isToken("OF")) {
-				this.nextToken();
-				if (
-					this.isTKSpace() &&
-					(this.time12Notation() || (h24 = this.hour24()))
-				) {
-					if (!h24) {
-						h24 = this.data["HOURS"];
-					}
-					this.data["HOURS"] = h24;
-					this.data["MINUTES"] = 15;
-					this.data["SECONDS"] = 0;
-					this.data["MINUTES_15_PAST_SPECIFIED_HOUR"] = +15;
-					return true;
-				}
-			}
-		} else if (this.isToken("FRONT")) {
-			// 15 minutes before the specified hour
-			h24 = false;
-			this.nextToken();
-			if (this.isTKSpace() && this.isToken("OF")) {
-				this.nextToken();
-				if (
-					this.isTKSpace() &&
-					(this.time12Notation() || (h24 = this.hour24()))
-				) {
-					if (!h24) {
-						h24 = this.data["HOURS"];
-					}
-					this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
-					this.data["HOURS"] = h24 - 1;
-					this.data["MINUTES"] = 45;
-					this.data["SECONDS"] = 0;
-					if (!this.Date.checktime(h24 - 1, 45, 0)) {
-						this.data["HOURS"] = this.Date.revTime(h24 - 1, 45, 0)[0];
-					}
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
 	 * day Of Year
 	 *
 	 * @param  int $int
@@ -632,302 +482,25 @@ export default class SHParser {
 	}
 
 	/**
-	 * Sets the day of the first of the current month.		=>
-	 * Sets the day to the last day of the current month.	=>
-	 * 		=> This phrase is best used together with a month name following it.
+	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
+	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
 	 *
 	 * @return bool
 	 */
-	firstCurrentMonthLast() {
-		let pos = this.getPosition();
-		if (this.isToken("FIRST")) {
-			// Sets the day of the first of the current month. This phrase is best used together with a month name following it.
-			this.nextToken();
-			if (this.isTKSpace() && this.isToken("DAY")) {
-				this.nextToken();
-				if (this.isTKSpace() && this.isToken("OF")) {
-					this.nextToken();
-					if (
-						this.isTKSpace() &&
-						(this.RelativeFormats() || this.DateFormats())
-					) {
-						this.data["FIRST_DAY_CURRENT_MONTH"] = true;
-						this.data["DAY"] = 1;
-						this.data["HOURS"] = 0;
-						this.data["MINUTES"] = 0;
-						this.data["SECONDS"] = 0;
-						return true;
-					}
-				}
-			}
-		} else if (this.isToken("LAST")) {
-			// Sets the day to the last day of the current month. This phrase is best used together with a month name following it.
-			this.nextToken();
-			if (this.isTKSpace() && this.isToken("DAY")) {
-				this.nextToken();
-				if (this.isTKSpace() && this.isToken("OF")) {
-					this.nextToken();
-					if (
-						this.isTKSpace() &&
-						(this.RelativeFormats() || this.DateFormats())
-					) {
-						this.data["LAST_DAY_CURRENT_MONTH"] = true;
-						// this.data["DAY"] = this.Date.getDaysInMonth(
-						// 	this.data["YEAR"],
-						// 	this.data["MONTH"]
-						// );
-						// console.log(
-						// 	this.Date.getDaysInMonth(
-						// 		this.data["YEAR"],
-						// 		this.data["MONTH"]
-						// 	)
-						// );
-						this.data["HOURS"] = 0;
-						this.data["MINUTES"] = 0;
-						this.data["SECONDS"] = 0;
-						return true;
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Calculates the x-th week day of the current month.
-	 * Calculates the last week day of the current month.
-	 *
-	 * @return bool
-	 */
-	XWeekCurrentMonthLast() {
-		let dow: any,
-			dow29month,
-			diffdow,
-			int: any,
-			dow1month,
-			pos = this.getPosition();
-		if (this.isToken("LAST")) {
-			// Calculates the last week day of the current month.
-			this.nextToken();
-			if (this.isTKSpace()) {
-				dow = this.dayNeme();
-				if (dow && this.isTKSpace() && this.isToken("OF")) {
-					this.nextToken();
-					if (
-						this.isTKSpace() &&
-						(this.RelativeFormats() || this.DateFormats())
-					) {
-						// dow29month = this.Date.getDayOfWeek(
-						// 	this.data["YEAR"],
-						// 	this.data["MONTH"],
-						// 	this.Date.getDaysInMonth(
-						// 		this.data["YEAR"],
-						// 		this.data["MONTH"]
-						// 	)
-						// );
-						// if (dow < dow29month) {
-						// 	diffdow = dow29month - dow;
-						// } else if (dow > dow29month) {
-						// 	diffdow = 7 - dow - dow29month;
-						// } else {
-						// 	diffdow = 0;
-						// }
-						// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-						// 	this.Date.getDaysOfDay(
-						// 		this.data["YEAR"],
-						// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
-						// 			diffdow
-						// 	);
-						this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
-						this.data["HOURS"] = 0;
-						this.data["MINUTES"] = 0;
-						this.data["SECONDS"] = 0;
-						return true;
-					}
-				}
-			}
-		} else if ((int = this.ordinal())) {
-			// Calculates the x-th week day of the current month.
-			if (this.isTKSpace()) {
-				dow = this.dayNeme();
-				if (dow && this.isTKSpace() && this.isToken("OF")) {
-					this.nextToken();
-					if (
-						this.isTKSpace() &&
-						(this.RelativeFormats() || this.DateFormats())
-					) {
-						if (int > 0) {
-							// dow1month = this.Date.getDayOfWeek(
-							// 	this.data["YEAR"],
-							// 	this.data["MONTH"],
-							// 	1
-							// );
-							// if (dow < dow1month) {
-							// 	diffdow = dow1month - dow;
-							// } else if (dow > dow1month) {
-							// 	diffdow = 7 - dow - dow1month;
-							// } else {
-							// 	diffdow = 0;
-							// }
-							// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-							// 	this.Date.getDaysOfDay(
-							// 		this.data["YEAR"],
-							// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
-							// 			diffdow +
-							// 			(int - 1) * 7
-							// 	);
-							return true;
-						} else if (int == 0) {
-						} else if (int == -1) {
-						} else if (int == -2) {
-						} else if (int == -3) {
-						}
-						this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
-						this.data["HOURS"] = 0;
-						this.data["MINUTES"] = 0;
-						this.data["SECONDS"] = 0;
-						return true;
-					}
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Handles relative time items where the value is a number.
-	 *
-	 * @return bool
-	 */
-	handleRelTimeNumber() {
-		let int: any,
-			rel,
-			diffdow,
-			pos = this.getPosition();
-		if ((int = this.number())) {
-			// Handles relative time items where the value is a number.
-			if (this.isTKSpace()) {
-			}
-			if ((rel = this.unit() || this.isTKWeek())) {
-				if (this.isTKWeek() || rel == 53) {
-					diffdow = int * 7;
-				} else if (rel == 59) {
-					// SECONDS
-					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-						this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
-				} else if (rel == 60) {
-					// MINUTES
-					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-						this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
-				} else if (rel == 24) {
-					// todo add with date
-					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-						this.Date.revTime(int, this.data["MINUTES"], this.data["SECONDS"]);
-				} else if (rel == 31) {
-					// DAY
-					diffdow = int;
-				} else if (rel == 12) {
-					// todo calc with month with year
-					diffdow = int * 30.5;
-				} else if (rel == 100) {
-					// YEAR
-					if (int < 0) this.data["YEAR"] -= int;
-					if (int > 0) this.data["YEAR"] += int;
-				} else if (rel == 7) {
-					// todo day of week		weekday
-				} else if (rel == 14) {
-					// FORTNIGHT
-					diffdow = int * 14;
-				}
-				[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-					this.Date.getDaysOfDay(
-						this.data["YEAR"],
-						this.Date.getDayOfYear(
-							this.data["YEAR"],
-							this.data["MONTH"],
-							this.data["DAY"]
-						) + diffdow
-					);
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Handles relative time items where the value is text.
-	 *
-	 * @return bool
-	 */
-	handleRelTimeText() {
-		let rel,
-			int: any,
-			diffdoy,
-			pos = this.getPosition();
-		if ((int = this.ordinal()) && this.isTKSpace() && (rel = this.unit())) {
-			// Handles relative time items where the value is text.
-			if (this.isTKWeek() || rel == 53) {
-				diffdoy = int * 7;
-			} else if (rel == 59) {
-				// SECONDS
-				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-					this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
-			} else if (rel == 60) {
-				// MINUTES
-				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-					this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
-			} else if (rel == 24) {
-				// todo add with date
-				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
-					this.Date.revTime(int, this.data["MINUTES"], this.data["SECONDS"]);
-			} else if (rel == 31) {
-				// DAY
-				diffdoy = int;
-			} else if (rel == 12) {
-				// todo calc with month with year
-				diffdoy = int * 30.5;
-			} else if (rel == 100) {
-				// YEAR
-				if (int < 0) this.data["YEAR"] -= int;
-				if (int > 0) this.data["YEAR"] += int;
-			} else if (rel == 7) {
-				// todo day of week		weekday
-			} else if (rel == 14) {
-				// FORTNIGHT
-				diffdoy = int * 14;
-			}
-			[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
-				this.Date.getDaysOfDay(
-					this.data["YEAR"],
-					this.Date.getDayOfYear(
-						this.data["YEAR"],
-						this.data["MONTH"],
-						this.data["DAY"]
-					) + diffdoy
-				);
-			return true;
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Handles the special format "weekday + last/this/next week".
-	 *
-	 * @return bool
-	 */
-	handleRelTimeFormat() {
-		let pos = this.getPosition();
-		// Handles the special format "weekday + last/this/next week".
-		if (this.relText() && this.isTKSpace() && this.isTKWeek()) {
-			return true;
-		}
-		this.resetPosition(pos);
-		return false;
-	}
+	// MSSQL() {
+	// 	//
+	// 	let h12,
+	// 		min,
+	// 		sec,
+	// 		frac,
+	// 		meridian,
+	// 		pos = this.getPosition();
+	// 	if (this.time12Notation()) {
+	//		return true;
+	// 	}
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
 
 	/**
 	 * TimeFormats
@@ -1625,7 +1198,7 @@ export default class SHParser {
 
 	/**
 	 *	a number with exactly two digits (YY)
-	 *
+	 *	[0-9]{2}
 	 * @param  {int} int
 	 * @return bool
 	 */
@@ -2183,6 +1756,432 @@ export default class SHParser {
 		}
 	}
 
+	/**
+	 * Relative Formats
+	 * DayBasedNotations
+	 *
+	 * @return bool
+	 */
+	RelativeFormats() {
+		let dow: any;
+		//Day-based Notations
+		if (this.isToken("NOW")) {
+			// Now - this is simply ignored
+			this.data["NOW"] = true;
+			return true;
+		} else if (this.isToken("TODAY") || this.isToken("MIDNIGHT")) {
+			// The time is set to 00:00:00
+			this.data["TODAY_MIDNIGHT"] = true;
+			this.restTime();
+			return true;
+		} else if (this.isToken("NOON")) {
+			// The time is set to 12:00:00
+			this.restTime(12);
+			return true;
+		} else if (this.isToken("YESTERDAY")) {
+			// Midnight of yesterday
+			this.data["YESTERDAY"] = true;
+			this.restTime();
+			return true;
+		} else if (this.isToken("TOMORROW")) {
+			// Midnight of tomorrow
+			this.data["TOMORROW"] = true;
+			this.restTime();
+			return true;
+		} else if (
+			this.minutes15Hour() ||
+			this.firstCurrentMonthLast() ||
+			this.XWeekCurrentMonthLast() ||
+			this.handleRelTimeNumber() ||
+			this.handleRelTimeText()
+		) {
+			return true;
+		} else if (this.isToken("AGO")) {
+			// Negates all the values of previously found relative time items.
+			this.data["AGO"] = true;
+			this.nextToken();
+			return true;
+		} else if ((dow = this.dayNeme())) {
+			// Moves to the next day of this name.
+			// let diffdow,
+			// 	dowmonth = this.Date.getDayOfWeek(
+			// 		this.data["YEAR"],
+			// 		this.data["MONTH"],
+			// 		this.data["DAY"]
+			// 	);
+			// if (dow < dowmonth) {
+			// 	diffdow = 7 - dowmonth - dow;
+			// } else if (dow > dowmonth) {
+			// 	diffdow = dow - dowmonth;
+			// } else {
+			// 	diffdow = 0;
+			// }
+			// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+			// 	this.Date.getDaysOfDay(
+			// 		this.data["YEAR"],
+			// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) + diffdow
+			// 	);
+			this.data["NEXT_DAY_OF_NAME"] = dow;
+			return true;
+		} else if (this.handleRelTimeFormat()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 15 minutes past the specified hour
+	 * 15 minutes before the specified hour
+	 *
+	 * @return bool
+	 */
+	minutes15Hour() {
+		let h24: any,
+			pos = this.getPosition();
+		if (this.isToken("BACK")) {
+			// 15 minutes past the specified hour
+			this.nextToken();
+			if (this.isTKSpace() && this.isToken("OF")) {
+				this.nextToken();
+				if (
+					this.isTKSpace() &&
+					(this.time12Notation() || (h24 = this.hour24()))
+				) {
+					if (!h24) {
+						h24 = this.data["HOURS"];
+					}
+					this.data["HOURS"] = h24;
+					this.data["MINUTES"] = 15;
+					this.data["SECONDS"] = 0;
+					this.data["MINUTES_15_PAST_SPECIFIED_HOUR"] = +15;
+					return true;
+				}
+			}
+		} else if (this.isToken("FRONT")) {
+			// 15 minutes before the specified hour
+			h24 = false;
+			this.nextToken();
+			if (this.isTKSpace() && this.isToken("OF")) {
+				this.nextToken();
+				if (
+					this.isTKSpace() &&
+					(this.time12Notation() || (h24 = this.hour24()))
+				) {
+					if (!h24) {
+						h24 = this.data["HOURS"];
+					}
+					this.data["MINUTES_15_BEFORE_SPECIFIED_HOUR"] = -15;
+					this.data["HOURS"] = h24 - 1;
+					this.data["MINUTES"] = 45;
+					this.data["SECONDS"] = 0;
+					if (!this.Date.checktime(h24 - 1, 45, 0)) {
+						this.data["HOURS"] = this.Date.revTime(h24 - 1, 45, 0)[0];
+					}
+					return true;
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Sets the day of the first of the current month.		=>
+	 * Sets the day to the last day of the current month.	=>
+	 * 		=> This phrase is best used together with a month name following it.
+	 *
+	 * @return bool
+	 */
+	firstCurrentMonthLast() {
+		let pos = this.getPosition();
+		if (this.isToken("FIRST")) {
+			// Sets the day of the first of the current month. This phrase is best used together with a month name following it.
+			this.nextToken();
+			if (this.isTKSpace() && this.isToken("DAY")) {
+				this.nextToken();
+				if (this.isTKSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.isTKSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						this.data["FIRST_DAY_CURRENT_MONTH"] = true;
+						this.data["DAY"] = 1;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
+					}
+				}
+			}
+		} else if (this.isToken("LAST")) {
+			// Sets the day to the last day of the current month. This phrase is best used together with a month name following it.
+			this.nextToken();
+			if (this.isTKSpace() && this.isToken("DAY")) {
+				this.nextToken();
+				if (this.isTKSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.isTKSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						this.data["LAST_DAY_CURRENT_MONTH"] = true;
+						// this.data["DAY"] = this.Date.getDaysInMonth(
+						// 	this.data["YEAR"],
+						// 	this.data["MONTH"]
+						// );
+						// console.log(
+						// 	this.Date.getDaysInMonth(
+						// 		this.data["YEAR"],
+						// 		this.data["MONTH"]
+						// 	)
+						// );
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
+					}
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Calculates the x-th week day of the current month.
+	 * Calculates the last week day of the current month.
+	 *
+	 * @return bool
+	 */
+	XWeekCurrentMonthLast() {
+		let dow: any,
+			dow29month,
+			diffdow,
+			int: any,
+			dow1month,
+			pos = this.getPosition();
+		if (this.isToken("LAST")) {
+			// Calculates the last week day of the current month.
+			this.nextToken();
+			if (this.isTKSpace()) {
+				dow = this.dayNeme();
+				if (dow && this.isTKSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.isTKSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						// dow29month = this.Date.getDayOfWeek(
+						// 	this.data["YEAR"],
+						// 	this.data["MONTH"],
+						// 	this.Date.getDaysInMonth(
+						// 		this.data["YEAR"],
+						// 		this.data["MONTH"]
+						// 	)
+						// );
+						// if (dow < dow29month) {
+						// 	diffdow = dow29month - dow;
+						// } else if (dow > dow29month) {
+						// 	diffdow = 7 - dow - dow29month;
+						// } else {
+						// 	diffdow = 0;
+						// }
+						// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+						// 	this.Date.getDaysOfDay(
+						// 		this.data["YEAR"],
+						// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) -
+						// 			diffdow
+						// 	);
+						this.data["LAST_WEEK_DAY_CURRENT_MONTH"] = true;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
+					}
+				}
+			}
+		} else if ((int = this.ordinal())) {
+			// Calculates the x-th week day of the current month.
+			if (this.isTKSpace()) {
+				dow = this.dayNeme();
+				if (dow && this.isTKSpace() && this.isToken("OF")) {
+					this.nextToken();
+					if (
+						this.isTKSpace() &&
+						(this.RelativeFormats() || this.DateFormats())
+					) {
+						if (int > 0) {
+							// dow1month = this.Date.getDayOfWeek(
+							// 	this.data["YEAR"],
+							// 	this.data["MONTH"],
+							// 	1
+							// );
+							// if (dow < dow1month) {
+							// 	diffdow = dow1month - dow;
+							// } else if (dow > dow1month) {
+							// 	diffdow = 7 - dow - dow1month;
+							// } else {
+							// 	diffdow = 0;
+							// }
+							// [this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+							// 	this.Date.getDaysOfDay(
+							// 		this.data["YEAR"],
+							// 		this.Date.getDayOfYear(false, this.data["MONTH"], 1) +
+							// 			diffdow +
+							// 			(int - 1) * 7
+							// 	);
+							return true;
+						} else if (int == 0) {
+						} else if (int == -1) {
+						} else if (int == -2) {
+						} else if (int == -3) {
+						}
+						this.data["X-TH_WEEK_DAY_CURRENT_MONTH"] = dow;
+						this.data["HOURS"] = 0;
+						this.data["MINUTES"] = 0;
+						this.data["SECONDS"] = 0;
+						return true;
+					}
+				}
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Handles relative time items where the value is a number.
+	 *
+	 * @return bool
+	 */
+	handleRelTimeNumber() {
+		let int: any,
+			rel,
+			diffdow,
+			pos = this.getPosition();
+		if ((int = this.number())) {
+			// Handles relative time items where the value is a number.
+			if (this.isTKSpace()) {
+			}
+			if ((rel = this.unit() || this.isTKWeek())) {
+				if (this.isTKWeek() || rel == 53) {
+					diffdow = int * 7;
+				} else if (rel == 59) {
+					// SECONDS
+					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+						this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
+				} else if (rel == 60) {
+					// MINUTES
+					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+						this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
+				} else if (rel == 24) {
+					// todo add with date
+					[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+						this.Date.revTime(int, this.data["MINUTES"], this.data["SECONDS"]);
+				} else if (rel == 31) {
+					// DAY
+					diffdow = int;
+				} else if (rel == 12) {
+					// todo calc with month with year
+					diffdow = int * 30.5;
+				} else if (rel == 100) {
+					// YEAR
+					if (int < 0) this.data["YEAR"] -= int;
+					if (int > 0) this.data["YEAR"] += int;
+				} else if (rel == 7) {
+					// todo day of week		weekday
+				} else if (rel == 14) {
+					// FORTNIGHT
+					diffdow = int * 14;
+				}
+				[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+					this.Date.getDaysOfDay(
+						this.data["YEAR"],
+						this.Date.getDayOfYear(
+							this.data["YEAR"],
+							this.data["MONTH"],
+							this.data["DAY"]
+						) + diffdow
+					);
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Handles relative time items where the value is text.
+	 *
+	 * @return bool
+	 */
+	handleRelTimeText() {
+		let rel,
+			int: any,
+			diffdoy,
+			pos = this.getPosition();
+		if ((int = this.ordinal()) && this.isTKSpace() && (rel = this.unit())) {
+			// Handles relative time items where the value is text.
+			if (this.isTKWeek() || rel == 53) {
+				diffdoy = int * 7;
+			} else if (rel == 59) {
+				// SECONDS
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(this.data["HOURS"], this.data["MINUTES"], int);
+			} else if (rel == 60) {
+				// MINUTES
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(this.data["HOURS"], int, this.data["SECONDS"]);
+			} else if (rel == 24) {
+				// todo add with date
+				[this.data["HOURS"], this.data["MINUTES"], this.data["SECONDS"]] =
+					this.Date.revTime(int, this.data["MINUTES"], this.data["SECONDS"]);
+			} else if (rel == 31) {
+				// DAY
+				diffdoy = int;
+			} else if (rel == 12) {
+				// todo calc with month with year
+				diffdoy = int * 30.5;
+			} else if (rel == 100) {
+				// YEAR
+				if (int < 0) this.data["YEAR"] -= int;
+				if (int > 0) this.data["YEAR"] += int;
+			} else if (rel == 7) {
+				// todo day of week		weekday
+			} else if (rel == 14) {
+				// FORTNIGHT
+				diffdoy = int * 14;
+			}
+			[this.data["YEAR"], this.data["MONTH"], this.data["DAY"]] =
+				this.Date.getDaysOfDay(
+					this.data["YEAR"],
+					this.Date.getDayOfYear(
+						this.data["YEAR"],
+						this.data["MONTH"],
+						this.data["DAY"]
+					) + diffdoy
+				);
+			return true;
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Handles the special format "weekday + last/this/next week".
+	 *
+	 * @return bool
+	 */
+	handleRelTimeFormat() {
+		let pos = this.getPosition();
+		// Handles the special format "weekday + last/this/next week".
+		if (this.relText() && this.isTKSpace() && this.isTKWeek()) {
+			return true;
+		}
+		this.resetPosition(pos);
+		return false;
+	}
 	// =================================================================================
 	// ==================================   numeric   ==================================
 	// =================================================================================
