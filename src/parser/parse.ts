@@ -896,9 +896,8 @@ export default class SHParser {
 			this.dateWithDash() || // YY "-" mm		Day reset to 1
 			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
 			this.DateWithSignDash() || // [+-]? YY "-" MM "-" DD
-			this.Date1Dash() || // y "-" mm "-" dd
+			//this.Date1Dash() || // y "-" mm "-" dd
 			this.Date1Abbr() || // y "-" M "-" DD
-			this.deDate1Abbr() || // DD "-" M "-" y
 			this.dateYear2WithDash() ||
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			this.dayMonth2Year() || // Day, month and two digit year, with dots or tabs
@@ -925,9 +924,10 @@ export default class SHParser {
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
 		if (year && this.isTKSlash()) {
-			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			month = this.monthOptionalPrefix();
 			if (month && this.isTKSlash()) {
-				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
+				day = this.dayOptionalPrefix();
+				if (day) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
@@ -950,9 +950,9 @@ export default class SHParser {
 	dedateWithSlash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
-		day = this.dayMandatoryPrefix() || this.dayOptionalPrefix();
+		day = this.dayOptionalPrefix();
 		if (day && this.isTKSlash()) {
-			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			month = this.monthOptionalPrefix();
 			if (month && this.isTKSlash()) {
 				year = this.year4MandatoryPrefix();
 				if (year) {
@@ -966,6 +966,32 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
+	/**
+	 * Year, month and day with dashes
+		// y "-" mm "-" dd
+	 *
+	 * @return bool
+	 */
+	// Date1Dash() {
+	// 	let pos, year, month, day;
+	// 	pos = this.getPosition();
+	// 	year = this.yearOptionalPrefix();
+	// 	if (year && this.isTKDash()) {
+	// 		month = this.monthOptionalPrefix();
+	// 		if (month && this.isTKDash()) {
+	// 			if ((day = this.dayOptionalPrefix())) {
+	// 				this.data["YEAR"] = year;
+	// 				this.data["MONTH"] = month;
+	// 				this.data["DAY"] = day;
+	// 				return true;
+	// 			}
+	// 		}
+	// 	}
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
+
 	/**
 	 * Four digit year and month (GNU)
 	 * ISO  YY "/"? MM "/"? DD
@@ -1008,9 +1034,9 @@ export default class SHParser {
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
 		if (year && this.isTKDash()) {
-			month = this.monthMandatoryPrefix() || this.monthOptionalPrefix();
+			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
-				if ((day = this.dayMandatoryPrefix() || this.dayOptionalPrefix())) {
+				if ((day = this.dayOptionalPrefix())) {
 					this.data["DAY"] = day;
 				}
 				this.data["YEAR"] = year;
@@ -1047,40 +1073,15 @@ export default class SHParser {
 	}
 
 	/**
-		 * Four digit year with optional sign, month and day
-			// [+-]? YY "-" MM "-" DD
-		 *
-		 * @return bool
-		 */
+	 * Four digit year with optional sign, month and day
+	 * [+-]? YY "-" MM "-" DD
+	 *
+	 * @return bool
+	 */
 	DateWithSignDash() {
 		let pos = this.getPosition();
 		this.data["SIGN_DATE"] = this.signNumber();
 		if (this.dateWithDash()) return true;
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Year, month and day with dashes
-		// y "-" mm "-" dd
-	 *
-	 * @return bool
-	 */
-	Date1Dash() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		year = this.yearOptionalPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthOptionalPrefix();
-			if (month && this.isTKDash()) {
-				if ((day = this.dayOptionalPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
 		this.resetPosition(pos);
 		return false;
 	}
@@ -1101,33 +1102,6 @@ export default class SHParser {
 			month = this.monthTextual();
 			if (month && this.isTKDash()) {
 				if ((day = this.dayMandatoryPrefix())) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-	/**
-		 * day, month abbreviation and Year
-			// DD "-" M "-" y
-		 *
-		 * @return bool
-		 */
-	deDate1Abbr() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		day = this.dayMandatoryPrefix();
-		if (day && this.isTKDash()) {
-			month = this.monthTextual();
-			if (month && this.isTKDash()) {
-				year = this.yearOptionalPrefix();
-				if (year) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
