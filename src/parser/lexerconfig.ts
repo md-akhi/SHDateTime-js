@@ -230,7 +230,7 @@ export default class SHLexerConfig {
 
 		// ********** time rules **********
 
-		AT: "at|@",
+		AT: "@",
 		BACK: "back",
 		FRONT: "front",
 		AM: "a" + SHLexerConfig.DOT + "?m" + SHLexerConfig.DOT + "?",

@@ -1402,22 +1402,22 @@ export default class SHDate {
 		data.forEach(([key, value]) => {
 			switch (key) {
 				case "YEAR":
-					date.setFullYear(value as number);
+					date.setFullYear(parseInt(value));
 					break;
 				case "MONTH":
-					date.setMonth((value as number) - 1);
+					date.setMonth(parseInt(value) - 1);
 					break;
 				case "DAY":
-					date.setDate(value as number);
+					date.setDate(parseInt(value));
 					break;
 				case "HOURS":
-					date.setHours(parseInt(value as string));
+					date.setHours(parseInt(value));
 					break;
 				case "MINUTES":
-					date.setMinutes(parseInt(value as string));
+					date.setMinutes(parseInt(value));
 					break;
 				case "SECONDS":
-					date.setSeconds(parseInt(value as string));
+					date.setSeconds(parseInt(value));
 					break;
 			}
 		});

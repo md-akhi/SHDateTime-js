@@ -62,9 +62,8 @@ export default class SHParser {
 		this.Lexer = new SHLexer(srt);
 		this.Date = new Export_SHDate();
 		do {
-			//this.DateFormats() ||
-			this.TimeFormats() || this.CompoundFormats();
-			//||	this.RelativeFormats();
+			this.CompoundFormats() || this.DateFormats() || this.TimeFormats();
+			// ||this.RelativeFormats();
 		} while (this.nextToken());
 		return this.data;
 	}
@@ -237,15 +236,17 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
-		return this.standardsFormats(); //||
-		// this.compoundLocalizedNotations() ||
-		// this.CommonLogFormat() ||
-		// this.isoYearWeekDay() ||
-		// this.dateWithSpaceTime() ||
-		// this.postgreSQL() ||
-		// this.unixTimestamp() ||
-		// this.WDDX() ||
-		// this.MSSQL()
+		return (
+			this.standardsFormats() ||
+			this.compoundLocalizedNotations() ||
+			this.CommonLogFormat() ||
+			this.isoYearWeekDay() ||
+			this.dateWithSpaceTime() ||
+			this.postgreSQL() ||
+			this.unixTimestamp() ||
+			this.WDDX()
+			// ||this.MSSQL()
+		);
 	}
 	// https://www.php.net/manual/en/datetime.formats.time.php
 	// https://www.php.net/manual/en/datetime.formats.date.php
@@ -366,7 +367,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * ISO year with ISO week (YYYY-Ww)
+	 * ISO year with ISO week (YYYY-?Ww)
 	 * ISO year with ISO week and day (YYYY - Ww -? D?) {W=[1-5][0-9], D=[0-7]}
 	 *
 	 * @return bool
@@ -376,11 +377,18 @@ export default class SHParser {
 			week,
 			year,
 			pos = this.getPosition();
-		if ((year = this.year4MandatoryPrefix())) {
-			if (this.isTKDash() && this.isToken("SIGN_WEEK")) {
-				if ((week = this.weekOfYear())) {
+		year = this.year4MandatoryPrefix();
+		if (year) {
+			this.isTKDash();
+			if (this.isToken("SIGN_WEEK")) {
+				this.nextToken();
+				week = this.weekOfYear();
+				console.log(week, this.nameToken());
+				if (week) {
 					this.isTKDash();
-					if ((dow = this.int1To7() || this.int0())) {
+					console.log(this.nameToken());
+					dow = this.int1To7() || this.int0();
+					if (dow) {
 						this.data["DAY_OF_WEEK"] = dow;
 					}
 					this.data["WEEK_OF_YEAR"] = week;
@@ -482,27 +490,6 @@ export default class SHParser {
 	}
 
 	/**
-	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
-	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
-	 *
-	 * @return bool
-	 */
-	// MSSQL() {
-	// 	//
-	// 	let h12,
-	// 		min,
-	// 		sec,
-	// 		frac,
-	// 		meridian,
-	// 		pos = this.getPosition();
-	// 	if (this.time12Notation()) {
-	//		return true;
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
-
-	/**
 	 * TimeFormats
 	 *
 	 * @return bool
@@ -514,6 +501,8 @@ export default class SHParser {
 	/**
 	 * Hour, optional minutes and seconds, with meridian
 	 * T? hh [.:]? MM? [.:]? II? frac? space? meridian
+	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
+	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
 	 *
 	 * @return bool
 	 */
@@ -562,13 +551,16 @@ export default class SHParser {
 		let pos, h24, min, sec, frac;
 		pos = this.getPosition();
 		this.isTKSignTime();
-		if ((h24 = this.hour24())) {
-			this.isTKColon() || this.isTKDot();
-			if ((min = this.minutesMandatoryPrefix())) {
+		h24 = this.hour24();
+		if (h24 && (this.isTKColon() || this.isTKDot())) {
+			min = this.minutesMandatoryPrefix();
+			if (min) {
 				this.isTKColon() || this.isTKDot();
-				if ((sec = this.secondsMandatoryPrefix())) {
+				sec = this.secondsMandatoryPrefix();
+				if (sec) {
 					this.data["SECONDS"] = sec;
-					if ((frac = this.fraction())) {
+					frac = this.fraction();
+					if (frac) {
 						this.data["FRAC"] = frac;
 					}
 					this.isTKSpace();
@@ -693,17 +685,18 @@ export default class SHParser {
 		let sign,
 			isInt,
 			int,
-			num: any,
+			num: string = "",
 			pos = this.getPosition();
-		sign = this.signNumber() || "";
+		sign = this.signNumber();
 		isInt = true;
 		do {
 			int = this.int00To99() || this.int1To9() || this.int0();
-			if (int) num += "" + int; //sprintf('%s%s',$num,int);
+			if (int) num += int; //sprintf('%s%s',$num,int);
 			else isInt = false;
 		} while (isInt);
-		console.log(int, num);
-		return sign + num;
+		if (!isInt) {
+			return sign + num;
+		}
 
 		this.resetPosition(pos);
 		return false;
@@ -781,13 +774,13 @@ export default class SHParser {
 	meridian() {
 		if (this.isToken("AM")) {
 			//00:00-11:59
-			this.data["MERIDIAN"] = "AM";
+			this.data["MERIDIAN"] = "0";
 			this.nextToken();
 			return true;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
 			this.nextToken();
-			this.data["MERIDIAN"] = "PM";
+			this.data["MERIDIAN"] = "1";
 			return true;
 		}
 		return false;
@@ -893,12 +886,9 @@ export default class SHParser {
 			this.dateWithSlash() || // YY "/" mm "/" dd
 			this.dedateWithSlash() || // dd "/" mm "/" YY
 			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
-			this.dateWithDash() || // YY "-" mm		Day reset to 1
+			this.dateWithDash() || // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
 			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
-			this.DateWithSignDash() || // [+-]? YY "-" MM "-" DD
-			//this.Date1Dash() || // y "-" mm "-" dd
 			this.Date1Abbr() || // y "-" M "-" DD
-			this.dateYear2WithDash() ||
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			this.dayMonth2Year() || // Day, month and two digit year, with dots or tabs
 			this.dayTextualMonthYear() || // Day, textual month and year
@@ -968,31 +958,6 @@ export default class SHParser {
 	}
 
 	/**
-	 * Year, month and day with dashes
-		// y "-" mm "-" dd
-	 *
-	 * @return bool
-	 */
-	// Date1Dash() {
-	// 	let pos, year, month, day;
-	// 	pos = this.getPosition();
-	// 	year = this.yearOptionalPrefix();
-	// 	if (year && this.isTKDash()) {
-	// 		month = this.monthOptionalPrefix();
-	// 		if (month && this.isTKDash()) {
-	// 			if ((day = this.dayOptionalPrefix())) {
-	// 				this.data["YEAR"] = year;
-	// 				this.data["MONTH"] = month;
-	// 				this.data["DAY"] = day;
-	// 				return true;
-	// 			}
-	// 		}
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
-
-	/**
 	 * Four digit year and month (GNU)
 	 * ISO  YY "/"? MM "/"? DD
 	 *
@@ -1020,19 +985,24 @@ export default class SHParser {
 	}
 
 	/**
+	 * Four digit year with optional sign, month and day
+	 * [+-]? YY "-" MM "-" DD
 	 * Four digit year, month and day with Dash
 	 * YY "-" mm "-" dd
 	 * Four digit year, month and day
 	 * YY "-" MM "-" DD
 	 * Four digit year and month (GNU)
-		// YY "-" mm
+	 * YY "-" mm
+	 * Two digit year, month and day with dashes
+	 * yy "-" MM "-" DD
 	 *
 	 * @return bool
 	 */
 	dateWithDash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
-		year = this.year4MandatoryPrefix();
+		this.data["SIGN_DATE"] = this.signNumber();
+		year = this.year4MandatoryPrefix() || this.year2MandatoryPrefix();
 		if (year && this.isTKDash()) {
 			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
@@ -1068,20 +1038,6 @@ export default class SHParser {
 				return true;
 			}
 		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Four digit year with optional sign, month and day
-	 * [+-]? YY "-" MM "-" DD
-	 *
-	 * @return bool
-	 */
-	DateWithSignDash() {
-		let pos = this.getPosition();
-		this.data["SIGN_DATE"] = this.signNumber();
-		if (this.dateWithDash()) return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -1246,34 +1202,6 @@ export default class SHParser {
 	}
 
 	/**
-	 * Two digit year, month and day with dashes
-	 * yy "-" MM "-" DD
-	 *
-	 * @return bool
-	 */
-	dateYear2WithDash() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		year = this.year2MandatoryPrefix();
-		if (year && this.isTKDash()) {
-			month = this.monthMandatoryPrefix();
-			if (month && this.isTKDash()) {
-				day = this.dayMandatoryPrefix();
-				if (day) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
 	 * Day, month and four digit year, with dots, tabs or dashes
 		// dd [.\t-] mm [.-] YY
 	 *
@@ -1384,6 +1312,7 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
 	textualMonth4Year2() {
 		let year,
 			month,
@@ -1403,6 +1332,7 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
 	/**
 	 * Textual month and year
 	 * m ([ .\t-])* dd [,.stndrh\t ]+? y?
