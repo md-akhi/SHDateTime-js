@@ -81,7 +81,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 			Doy,
 			Dim,
 			Wiy,
-			Woy,
+			[Woyw, Woyy],
 			dsn,
 			msn
 		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=dsn=msn");
@@ -89,7 +89,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 			console.log("");
 		} else
 			console.log(
-				`{ solar:"${days} ${msn} ,${years}" , time:${shdate.getTime()} },`
+				`{ solar:"${years}W${Woyw}-${Dow}" , time:${shdate.getTime()} },`
 			);
 	});
 }
