@@ -220,6 +220,22 @@ export default class SHParser {
 		return false;
 	}
 
+	isTKSignWeek() {
+		if (this.isToken("SIGN_WEEK")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
+	isTKAT() {
+		if (this.isToken("AT")) {
+			this.nextToken();
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Compound Formats
 	 *
@@ -380,13 +396,10 @@ export default class SHParser {
 		year = this.year4MandatoryPrefix();
 		if (year) {
 			this.isTKDash();
-			if (this.isToken("SIGN_WEEK")) {
-				this.nextToken();
+			if (this.isTKSignWeek()) {
 				week = this.weekOfYear();
-				console.log(week, this.nameToken());
 				if (week) {
 					this.isTKDash();
-					console.log(this.nameToken());
 					dow = this.int1To7() || this.int0();
 					if (dow) {
 						this.data["DAY_OF_WEEK"] = dow;
@@ -408,8 +421,8 @@ export default class SHParser {
 	 */
 	dateWithSpaceTime() {
 		let pos = this.getPosition();
-		if (this.dateWithDash())
-			if (this.isTKSpace()) if (this.time24Notation()) return true;
+		if (this.dateWithDash() && this.isTKSpace() && this.time24Notation())
+			return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -423,48 +436,13 @@ export default class SHParser {
 		let year,
 			doy,
 			pos = this.getPosition();
-		if (
-			(year = this.year4MandatoryPrefix()) &&
-			this.isTKDot() &&
-			(doy = this.dayOfYear())
-		) {
+		year = this.year4MandatoryPrefix();
+		doy = this.dayOfYear();
+		if (year && this.isTKDot() && doy) {
 			this.data["YEAR"] = year;
 			this.data["DAY_OF_YEAR"] = doy;
 			return true;
 		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * Unix Timestamp (@ -+ts)
-	 *
-	 * @return bool
-	 */
-	unixTimestamp() {
-		let int,
-			pos = this.getPosition();
-		if (this.isToken("AT")) {
-			this.nextToken();
-			//this.data["Sign_Timestamp"] = this.signNumber() || "";
-			int = this.number();
-			if (int) {
-				this.data["Timestamp"] = int;
-				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * WDDX (YYYY-mm-ddTh12:ii:ss)
-	 *
-	 * @return bool
-	 */
-	WDDX() {
-		let pos = this.getPosition();
-		if (this.dateWithDash()) if (this.time12Notation()) return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -482,8 +460,56 @@ export default class SHParser {
 		doy1 = this.int00To99();
 		doy2 = this.int0() || this.int1To9();
 		if (doy1) {
-			if (doy2) return parseInt(doy1 + "" + doy2);
+			if (doy2) return parseInt(doy1 + doy2);
 			return parseInt(doy1);
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * Unix Timestamp (@[-+][0-9]+)
+	 *
+	 * @return bool
+	 */
+	unixTimestamp() {
+		let int,
+			pos = this.getPosition();
+		if (this.isTKAT()) {
+			int = this.number();
+			if (int) {
+				this.data["Timestamp"] = int;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
+	/**
+	 * WDDX (YYYY-mm-ddTh12:ii:ss)
+	 *
+	 * @return bool
+	 */
+	WDDX() {
+		let h12,
+			min,
+			sec,
+			pos = this.getPosition();
+		if (this.dateWithDash()) {
+			h12 = this.hour12();
+			if (h12 && this.isTKColon()) {
+				min = this.minutesOptionalPrefix();
+				if (min && this.isTKColon()) {
+					sec = this.secondsOptionalPrefix();
+					if (sec) {
+						this.data["SECONDS"] = sec;
+						this.data["MINUTES"] = min;
+						this.data["HOURS"] = h12;
+						return true;
+					}
+				}
+			}
 		}
 		this.resetPosition(pos);
 		return false;
@@ -510,20 +536,25 @@ export default class SHParser {
 		let pos, h12, min, sec, frac, meridian;
 		pos = this.getPosition();
 		this.isTKSignTime();
-		if ((h12 = this.hour12())) {
+		h12 = this.hour12();
+		if (h12) {
 			this.isTKColon() || this.isTKDot();
-			if ((min = this.minutesMandatoryPrefix())) {
+			min = this.minutesMandatoryPrefix();
+			if (min) {
 				this.data["MINUTES"] = min;
 				this.isTKColon() || this.isTKDot();
-				if ((sec = this.secondsMandatoryPrefix())) {
+				sec = this.secondsMandatoryPrefix();
+				if (sec) {
 					this.data["SECONDS"] = sec;
-					if ((frac = this.fraction())) {
+					frac = this.fraction();
+					if (frac) {
 						this.data["FRAC"] = frac;
 					}
 				}
 			}
 			this.isTKSpace();
-			if ((meridian = this.meridian())) {
+			meridian = this.meridian();
+			if (meridian) {
 				if ((this.data["MERIDIAN"] = "AM")) {
 					this.data["HOURS"] = h12;
 					this.data["AM"] = true;
@@ -553,10 +584,10 @@ export default class SHParser {
 		this.isTKSignTime();
 		h24 = this.hour24();
 		if (h24 && (this.isTKColon() || this.isTKDot())) {
-			min = this.minutesMandatoryPrefix();
+			min = this.minutesOptionalPrefix();
 			if (min) {
 				this.isTKColon() || this.isTKDot();
-				sec = this.secondsMandatoryPrefix();
+				sec = this.secondsOptionalPrefix();
 				if (sec) {
 					this.data["SECONDS"] = sec;
 					frac = this.fraction();
@@ -571,6 +602,7 @@ export default class SHParser {
 				return true;
 			}
 		} else if (this.TZCorrection() || this.timeZone()) {
+			//Time zone information
 			return true;
 		}
 		this.resetPosition(pos);

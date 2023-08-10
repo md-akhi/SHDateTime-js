@@ -7,7 +7,6 @@ export default class SHLexerConfig {
 
 	static tokenDefinitions: any = {
 		// ********* numeric rules **********
-
 		INT_00: "00",
 		INT_01: "01",
 		INT_02: "02",
@@ -191,18 +190,15 @@ export default class SHLexerConfig {
 
 		// ********** suffixes **********
 
-		SUFFIXES: "st|nd|rd|th",
-		// ST: "st",
-		// ND: "nd",
-		// RD: "rd",
-		// TH: "th",
+		SUFFIXES: "st|nd|rd|th", //[stndrh]
+		// ST: "st", ND: "nd", RD: "rd", TH: "th",
 
 		// ********** month rules **********
 
 		MICROSECOND: "microsecond|usec",
 		MILLISECOND: "millisecond|msec|ms|µsec|µs",
 		HOUR: "hours?",
-		MINUTE: "minutes?|min|mins",
+		MINUTE: "minutes?|mins?",
 		DAY: "days?",
 		WEEKDAY: "weekdays?",
 		WEEK: "weeks?",
@@ -226,7 +222,7 @@ export default class SHLexerConfig {
 		AZAR: "azar?",
 		DEY: "dey",
 		BAHMAN: "bahman|bah",
-		ESFAND: "es(f|p)and|esf|esp",
+		ESFAND: "es[fp]{1}and|es[fp]{1}",
 
 		// ********** time rules **********
 
@@ -252,8 +248,8 @@ export default class SHLexerConfig {
 		PST: "pst",
 		PDT: "pdt",
 
-		SIGN_TIME: "t|T",
-		SIGN_WEEK: "w|W",
+		SIGN_TIME: "[Tt]",
+		SIGN_WEEK: "[Ww]",
 
 		// ********** date rules **********
 
