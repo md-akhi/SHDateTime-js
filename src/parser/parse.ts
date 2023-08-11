@@ -128,7 +128,12 @@ export default class SHParser {
 		return this.Lexer.resetPosition(pos);
 	}
 
-	isTKColon() {
+	/**
+	 * Colon
+	 *
+	 * @return bool
+	 */
+	isTKColon(): boolean {
 		if (this.isToken("COLON")) {
 			this.nextToken();
 			return true;
@@ -136,7 +141,12 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKDot() {
+	/**
+	 * Dot
+	 *
+	 * @return bool
+	 */
+	isTKDot(): boolean {
 		if (this.isToken("DOT")) {
 			this.nextToken();
 			return true;
@@ -144,7 +154,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKDash() {
+	isTKDash(): boolean {
 		if (this.isToken("DASH")) {
 			this.nextToken();
 			return true;
@@ -152,7 +162,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKPlus() {
+	isTKPlus(): boolean {
 		if (this.isToken("PLUS")) {
 			this.nextToken();
 			return true;
@@ -160,7 +170,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKComma() {
+	isTKComma(): boolean {
 		if (this.isToken("COMMA")) {
 			this.nextToken();
 			return true;
@@ -173,13 +183,14 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	isTKSpace() {
+	isTKSpace(): boolean {
 		if (this.isToken("SPACE")) {
 			this.nextToken();
 			return true;
 		}
 		return false;
 	}
+
 	/**
 	 * white Space More {[ \t]+}
 	 *
@@ -196,7 +207,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKSignTime() {
+	isTKSignTime(): boolean {
 		if (this.isToken("SIGN_TIME")) {
 			this.nextToken();
 			return true;
@@ -204,7 +215,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKWeek() {
+	isTKWeek(): boolean {
 		if (this.isToken("WEEK")) {
 			this.nextToken();
 			return true;
@@ -212,7 +223,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKSlash() {
+	isTKSlash(): boolean {
 		if (this.isToken("SLASH")) {
 			this.nextToken();
 			return true;
@@ -220,7 +231,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKSignWeek() {
+	isTKSignWeek(): boolean {
 		if (this.isToken("SIGN_WEEK")) {
 			this.nextToken();
 			return true;
@@ -228,7 +239,7 @@ export default class SHParser {
 		return false;
 	}
 
-	isTKAT() {
+	isTKAT(): boolean {
 		if (this.isToken("AT")) {
 			this.nextToken();
 			return true;
