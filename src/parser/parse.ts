@@ -50,6 +50,7 @@ export default class SHParser {
 		// TZ_NAME: ""
 	};
 	Date: any;
+
 	/**
 	 * __construct
 	 *
@@ -448,11 +449,13 @@ export default class SHParser {
 			doy,
 			pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		doy = this.dayOfYear();
-		if (year && this.isTKDot() && doy) {
-			this.data["YEAR"] = year;
-			this.data["DAY_OF_YEAR"] = doy;
-			return true;
+		if (year && this.isTKDot()) {
+			doy = this.dayOfYear();
+			if (doy) {
+				this.data["YEAR"] = year;
+				this.data["DAY_OF_YEAR"] = doy;
+				return true;
+			}
 		}
 		this.resetPosition(pos);
 		return false;
@@ -539,7 +542,7 @@ export default class SHParser {
 	 * Hour, optional minutes and seconds, with meridian
 	 * T? hh [.:]? MM? [.:]? II? frac? space? meridian
 	 * MS SQL (Hour, minutes, seconds and fraction with meridian)
-	 * (hh ":" II ":" SS [.:] [0-9]+ meridian)
+	 * hh ":" II ":" SS [.:] [0-9]+ meridian
 	 *
 	 * @return bool
 	 */
