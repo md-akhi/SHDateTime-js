@@ -1397,27 +1397,69 @@ export default class SHDate {
 	 */
 	public static parse(str: string): number {
 		//throw new Error("Not Implemented parse"); // TODO: implement
-		let date = new SHDate();
-		let data = Object.entries(new SHParser(str));
-		data.forEach(([key, value]) => {
+		let year: number,
+			month: number,
+			day: number,
+			hours: number,
+			doy: number,
+			week: number,
+			time: number,
+			date: SHDate = new SHDate();
+		const data: any = Object.entries(new SHParser(str));
+		data.forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
-					date.setFullYear(parseInt(value));
-					break;
-				case "MONTH":
-					date.setMonth(parseInt(value) - 1);
-					break;
-				case "DAY":
-					date.setDate(parseInt(value));
+					year = parseInt(value);
+					date.setFullYear(
+						year,
+						(data["MONTH"] || false) - 1,
+						data["DAY"] || false
+					);
 					break;
 				case "HOURS":
-					date.setHours(parseInt(value));
+					hours = parseInt(value);
+					date.setHours(
+						hours,
+						data["MINUTES"] || false,
+						data["SECONDS"] || false,
+						data["FRAC"] || false
+					);
 					break;
-				case "MINUTES":
-					date.setMinutes(parseInt(value));
+				case "TIMESTAMP":
+					time = parseInt(value);
+					date.setTime(time);
 					break;
-				case "SECONDS":
-					date.setSeconds(parseInt(value));
+				case "DAY_OF_YEAR":
+					doy = parseInt(value);
+					[year, month, day] = date.#dateOfDoy(year, doy);
+					date.setFullYear(year, month, day);
+					break;
+				case "WEEK_OF_YEAR":
+					week = parseInt(value);
+					[year, month, day] = date.#weekOfDay(
+						year,
+						week,
+						data["DAY_OF_WEEK"] || false
+					);
+					date.setFullYear(year, month, day);
+					break;
+				case "NOW":
+					time = parseInt(value);
+					date.setTime(SHDate.now());
+					break;
+				case "TODAY_MIDNIGHT":
+					date.restTime();
+					break;
+				case "NOON":
+					date.restTime(12);
+					break;
+				case "YESTERDAY":
+					date.setDate(date.getDate() - 1);
+					date.restTime();
+					break;
+				case "TOMORROW":
+					date.setDate(date.getDate() + 1);
+					date.restTime();
 					break;
 			}
 		});
@@ -1511,6 +1553,20 @@ export default class SHDate {
 	}
 	getFirstDayOfWeek(): number {
 		return this.#config.first_day_of_week;
+	}
+
+	/**
+	 *
+	 * rest Time
+	 *
+	 * @param  int h Hours
+	 * @param  int m Minutes
+	 * @param  int s Seconds
+	 * @return bool
+	 */
+	public restTime(h = 0, m = 0, s = 0, f = 0) {
+		this.setHours(h, m, s, f);
+		return true;
 	}
 
 	setConfig(...args: any[]): void {

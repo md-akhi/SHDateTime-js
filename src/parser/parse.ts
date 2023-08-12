@@ -492,7 +492,7 @@ export default class SHParser {
 		if (this.isTKAT()) {
 			int = this.number();
 			if (int) {
-				this.data["Timestamp"] = int;
+				this.data["TIMESTAMP"] = int;
 				return true;
 			}
 		}
@@ -632,58 +632,67 @@ export default class SHParser {
 		let PLUS_DASH, h12, min;
 		switch (this.nameToken()) {
 			case "UTC":
-				this.nextToken();
+				this.data["TZ"] = "UTC";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "00";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "EDT":
-				this.nextToken();
+				this.data["TZ"] = "EDT";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "04";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "EST":
-				this.nextToken();
+				this.data["TZ"] = "EST";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "05";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "CDT":
-				this.nextToken();
+				this.data["TZ"] = "CDT";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "05";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "CST":
-				this.nextToken();
+				this.data["TZ"] = "CST";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "06";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "MDT":
-				this.nextToken();
+				this.data["TZ"] = "MDT";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "06";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "MST":
-				this.nextToken();
+				this.data["TZ"] = "MST";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "07";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "PDT":
-				this.nextToken();
+				this.data["TZ"] = "PDT";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "07";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 			case "PST":
-				this.nextToken();
+				this.data["TZ"] = "PST";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "08";
 				this.data["TZ_MINUTES"] = "00";
+				this.nextToken();
 				return true;
 		}
 		PLUS_DASH = false;
@@ -694,10 +703,12 @@ export default class SHParser {
 			this.data["TZ_SIGN"] = "-";
 			PLUS_DASH = true;
 		}
-		if (PLUS_DASH && (h12 = this.hour12())) {
+		h12 = this.hour12();
+		if (PLUS_DASH && h12) {
 			this.data["TZ_HOURS"] = h12;
 			this.isTKColon();
-			if ((min = this.minutesMandatoryPrefix())) {
+			min = this.minutesMandatoryPrefix();
+			if (min) {
 				this.data["TZ_MINUTES"] = min;
 				return true;
 			}
@@ -787,28 +798,11 @@ export default class SHParser {
 	 * hours (HH) {[01][0-9] | "2"[0-4]}
 	 * a number between 01 and 24 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 *
-	 *
 	 * @param  int int
 	 * @return bool
 	 */
 	hour24() {
 		return this.int10To24() || this.int01To09();
-	}
-
-	/** //todo transform to dir base
-	 * todo change name to changeTime
-	 * rest Time
-	 *
-	 * @param  int h Hours
-	 * @param  int m Minutes
-	 * @param  int s Seconds
-	 * @return bool
-	 */
-	restTime(h = 0, m = 0, s = 0) {
-		this.data["HOURS"] = h;
-		this.data["MINUTES"] = m;
-		this.data["SECONDS"] = s;
-		return true;
 	}
 
 	/**
@@ -1722,21 +1716,17 @@ export default class SHParser {
 		} else if (this.isToken("TODAY") || this.isToken("MIDNIGHT")) {
 			// The time is set to 00:00:00
 			this.data["TODAY_MIDNIGHT"] = true;
-			this.restTime();
 			return true;
 		} else if (this.isToken("NOON")) {
 			// The time is set to 12:00:00
-			this.restTime(12);
 			return true;
 		} else if (this.isToken("YESTERDAY")) {
 			// Midnight of yesterday
 			this.data["YESTERDAY"] = true;
-			this.restTime();
 			return true;
 		} else if (this.isToken("TOMORROW")) {
 			// Midnight of tomorrow
 			this.data["TOMORROW"] = true;
-			this.restTime();
 			return true;
 		} else if (
 			this.minutes15Hour() ||
