@@ -69,7 +69,7 @@
 			);
 	});
 }*/
-export const solarString4y2m2dT2h2m2s = [
+export const SolarString4y2m2dT2h2m2s = [
 	{ solar: "1200-00-01T00:00:00", time: -4695161144000 },
 	{ solar: "1200-00-02T00:00:00", time: -4695074744000 },
 	{ solar: "1200-00-03T00:00:00", time: -4694988344000 },
@@ -1530,7 +1530,7 @@ export const solarString4y2m2dT2h2m2s = [
 }
  */
 
-export const dateAber = [
+export const DateAber = [
 	{ solar: "01 Far ,1200", time: -4695161144000 },
 	{ solar: "02 Far ,1200", time: -4695074744000 },
 	{ solar: "03 Far ,1200", time: -4694988344000 },
