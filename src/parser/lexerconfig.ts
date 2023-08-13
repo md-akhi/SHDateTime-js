@@ -6,6 +6,13 @@ export default class SHLexerConfig {
 	static SPACE: any = `[ \t\s]`;
 
 	static tokenDefinitions: any = {
+		DASH: `\-`, // MINUS
+		PLUS: `\\+`,
+		SLASH: `\/`,
+		COLON: ":",
+		COMMA: SHLexerConfig.COMMA,
+		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
+		SPACE: `${SHLexerConfig.SPACE}`,
 		// ********* numeric rules **********
 		INT_00: "00",
 		INT_01: "01",
@@ -238,7 +245,7 @@ export default class SHLexerConfig {
 		EVENING: "evening|eve",
 		NIGHT: "night",
 
-		UTC: "utc|gmt|ut",
+		UTC: "utc|gmt",
 		EST: "est",
 		EDT: "edt",
 		CST: "cst",
@@ -253,15 +260,15 @@ export default class SHLexerConfig {
 
 		// ********** date rules **********
 
-		INT_IV: "iv", // 4
 		INT_VIII: "viii", // 8
 		INT_VII: "vii", // 7
 		INT_VI: "vi", // 6
 		INT_V: "v", // 5
-		INT_IX: "ix", // 9
 		INT_XII: "xii", // 12
 		INT_XI: "xi", // 11
 		INT_X: "x", // 10
+		INT_IX: "ix", // 9
+		INT_IV: "iv", // 4
 		INT_III: "iii", // 3
 		INT_II: "ii", // 2
 		INT_I: "i", // 1
@@ -310,13 +317,6 @@ export default class SHLexerConfig {
 
 		//"TZ"		:	'\(?[A-Za-z]{3,6}\)?|[A-Z][a-z]+([_\/][A-Z][a-z]+)+',
 
-		DASH: `\-`, // MINUS
-		PLUS: `\\+`,
-		SLASH: `\/`,
-		COLON: ":",
-		COMMA: SHLexerConfig.COMMA,
-		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
-		SPACE: `${SHLexerConfig.SPACE}`,
 		DOT: `${SHLexerConfig.DOT}`,
 		UNKNOWN_CHAR: `[^ \t\s${SHLexerConfig.DOT}]` //  fragment
 	};

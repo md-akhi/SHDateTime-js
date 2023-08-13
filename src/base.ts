@@ -1412,17 +1412,17 @@ export default class SHDate {
 					year = parseInt(value);
 					date.setFullYear(
 						year,
-						(data["MONTH"] || false) - 1,
-						data["DAY"] || false
+						data["MONTH"] - 1 || date.getMonth(),
+						data["DAY"] || date.getDate()
 					);
 					break;
 				case "HOURS":
 					hours = parseInt(value);
 					date.setHours(
 						hours,
-						data["MINUTES"] || false,
-						data["SECONDS"] || false,
-						data["FRAC"] || false
+						data["MINUTES"] || date.getMinutes(),
+						data["SECONDS"] || date.getSeconds(),
+						data["FRAC"] || date.getMilliseconds()
 					);
 					break;
 				case "TIMESTAMP":
@@ -1439,7 +1439,7 @@ export default class SHDate {
 					[year, month, day] = date.#weekOfDay(
 						year,
 						week,
-						data["DAY_OF_WEEK"] || false
+						data["DAY_OF_WEEK"] || date.getDay()
 					);
 					date.setFullYear(year, month, day);
 					break;
@@ -1464,7 +1464,7 @@ export default class SHDate {
 			}
 		});
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(data, str, date.toString());
+		console.log(data, str, date.toString(), date.getTime());
 		return date.getTime();
 	}
 

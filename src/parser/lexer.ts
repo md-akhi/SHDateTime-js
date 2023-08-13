@@ -50,9 +50,8 @@ export default class SHLexer {
 				match = input.match(Regex);
 				// console.log(input, GetName, match);
 				if (match) {
-					let str = input;
 					let len = match[0].length;
-					//console.log(input, len, match, Regex);
+					// console.log(input, len, match, Regex);
 					if (GetName.length > 0) {
 						tokens.push(new SHToken(GetName, match[0], offset, position));
 						position++;

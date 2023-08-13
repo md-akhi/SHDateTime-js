@@ -3,7 +3,6 @@ import { it, describe } from "mocha";
 
 import * as UntilString from "./Until-String.js";
 import SHDate from "../src/base.js";
-const date = new SHDate();
 
 describe("String", () => {
 	it("correctly Date YYYY/MM/DD T HH:II:SS", () => {

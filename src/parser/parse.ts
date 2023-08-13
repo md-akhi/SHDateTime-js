@@ -896,15 +896,8 @@ export default class SHParser {
 		if (this.isTKDot()) {
 			let int,
 				isFrac = false;
-			while (
-				(int =
-					this.int10To99() ||
-					this.int01To09() ||
-					this.int1To9() ||
-					this.int00() ||
-					this.int0())
-			) {
-				this.data["FRACTION"] += "" + int; //sprintf('%s%s',num,int);
+			while ((int = this.int00To99() || this.int1To9() || this.int0())) {
+				this.data["FRACTION"] += int; //sprintf('%s%s',num,int);
 				isFrac = true;
 			}
 			return true && isFrac;
@@ -1150,7 +1143,7 @@ export default class SHParser {
 	 * year
 	 * a number with exactly four digits
 	 * [0-9]{4}
-	 * @param  int $int
+	 *
 	 * @return bool
 	 */
 	year4MandatoryPrefix() {
@@ -1160,7 +1153,7 @@ export default class SHParser {
 		y1 = this.year2MandatoryPrefix();
 		if (y1) {
 			y2 = this.year2MandatoryPrefix();
-			if (y2) return parseInt(y1 + "" + y2);
+			if (y2) return y1 + y2;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -1169,8 +1162,8 @@ export default class SHParser {
 	/**
 	 *	a number with exactly two digits (YY)
 	 *	[0-9]{2}
-	 * @param  {int} int
-	 * @return bool
+	 *
+	 * @return false|number
 	 */
 	year2MandatoryPrefix(): number | false {
 		return this.int00To99();
@@ -1178,10 +1171,10 @@ export default class SHParser {
 
 	/**
 	 * year
-	 *  a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
+	 * a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
 	 * 0?[0-9]{1,4}
-	 * @param  int int
-	 * @return bool
+	 *
+	 * @return false|string
 	 */
 	yearOptionalPrefix() {
 		let y1: any,
@@ -1191,7 +1184,7 @@ export default class SHParser {
 		if (y1) {
 			y2 = this.int00To99() || this.int1To9() || this.int0();
 			if (y2) {
-				return parseInt(y1 + "" + y2);
+				return parseInt(y1 + y2);
 			}
 			return y1;
 		}
@@ -1203,7 +1196,6 @@ export default class SHParser {
 	 * day (dd) {([0-2]?[0-9] | "3"[01]) daysuf?}
 	 * a number between 1 and 31 inclusive, with an optional 0 prefix before numbers 0-9
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	dayOptionalPrefix() {
@@ -1220,7 +1212,6 @@ export default class SHParser {
 	 * day (DD) {"0" [0-9] | [1-2][0-9] | "3" [01]}
 	 * a number between 01 and 31 inclusive, with a mandatory 0 prefix before numbers 0-9
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	dayMandatoryPrefix() {
@@ -1243,7 +1234,7 @@ export default class SHParser {
 
 	/**
 	 * Day, month and four digit year, with dots, tabs or dashes
-		// dd [.\t-] mm [.-] YY
+	 * dd [.\t-] mm [.-] YY
 	 *
 	 * @return bool
 	 */
@@ -1270,7 +1261,7 @@ export default class SHParser {
 
 	/**
 	 * Day, month and two digit year, with dots or tabs
-		//  dd [.\t] mm "." yy
+	 *  dd [.\t] mm "." yy
 	 *
 	 * @return bool
 	 */
@@ -1298,8 +1289,8 @@ export default class SHParser {
 
 	/**
 	 * Day, textual month and year
-			// dd ([ \t.-])* m ([ \t.-])* y
-				// d ([ .\t-])* m
+	 * dd ([ \t.-])* m ([ \t.-])* y
+	 * d ([ .\t-])* m
 	 *
 	 * @return bool
 	 */
@@ -1423,7 +1414,7 @@ export default class SHParser {
 
 	/**
 	 * Month abbreviation, day and year
-		// M "-" DD "-" y
+	 * M "-" DD "-" y
 	 *
 	 * @return bool
 	 */
@@ -1448,6 +1439,7 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
 	dateMonthTextual() {
 		let month,
 			pos = this.getPosition();
@@ -1459,13 +1451,12 @@ export default class SHParser {
 		this.resetPosition(pos);
 		return false;
 	}
+
 	/**
 	 * Textual abbreviation month (M)  (and just the month)
-	 *
 	 * Textual month (and just the month) (m)
 	 *
-	 * @param  int int
-	 * @return bool
+	 * @return false|number
 	 */
 	monthTextual() {
 		var int;
@@ -1527,7 +1518,6 @@ export default class SHParser {
 	 * month (mm) {	"0"? [0-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with an optional 0 prefix before numbers 0-9
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	monthOptionalPrefix(): number | false {
@@ -1538,7 +1528,6 @@ export default class SHParser {
 	 * month (MM) {	"0" [0-9] | "1"[0-2]}
 	 * a number between 1 and 12 inclusive, with an mandatory 0 prefix before numbers 0-9
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	monthMandatoryPrefix(): number | false {
@@ -1560,7 +1549,6 @@ export default class SHParser {
 	/**
 	 * day neme
 	 *
-	 * @param  int dow
 	 * @return bool
 	 */
 	dayNeme(): number | false {
@@ -1607,7 +1595,6 @@ export default class SHParser {
 	/**
 	 * number sign
 	 *
-	 * @param  string sign
 	 * @return bool
 	 */
 	signNumber(): string | false {
@@ -1632,7 +1619,6 @@ export default class SHParser {
 	/** //todo
 	 * relative text
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	relText(): number | false {
@@ -1657,7 +1643,6 @@ export default class SHParser {
 	/**
 	 * unit {'ms' | 'µs' | (( 'msec' | 'millisecond' | 'µsec' | 'microsecond' | 'usec' | 'sec' | 'second' | 'min' | 'minute' | 'hour' | 'day' | 'fortnight' | 'forthnight' | 'month' | 'year') 's'?) | 'weeks' | daytext}
 	 *
-	 * @param  int int
 	 * @return bool
 	 */
 	unit(): number | false {
