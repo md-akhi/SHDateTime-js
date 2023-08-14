@@ -1,4 +1,4 @@
-import { Export_SHDate } from "../base.js";
+import SHDate from "../base.js";
 
 import SHLexer from "./lexer.js";
 
@@ -61,7 +61,7 @@ export default class SHParser {
 	constructor(srt: any, time: any = Date.now()) {
 		//this.time = time;
 		this.Lexer = new SHLexer(srt);
-		this.Date = new Export_SHDate();
+		this.Date = new SHDate();
 		do {
 			this.CompoundFormats() || this.DateFormats() || this.TimeFormats();
 			// ||this.RelativeFormats();
@@ -264,22 +264,9 @@ export default class SHParser {
 		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
-		return (
-			this.standardsFormats() ||
-			this.compoundLocalizedNotations() ||
-			this.CommonLogFormat() ||
-			this.isoYearWeekDay() ||
-			this.dateWithSpaceTime() ||
-			this.postgreSQL() ||
-			this.unixTimestamp() ||
-			this.WDDX()
-			// ||this.MSSQL()
-		);
+		return this.standardsFormats() || this.compoundLocalizedNotations();
 	}
-	// https://www.php.net/manual/en/datetime.formats.time.php
-	// https://www.php.net/manual/en/datetime.formats.date.php
-	// https://www.php.net/manual/en/datetime.formats.compound.php
-	// https://www.php.net/manual/en/datetime.formats.relative.php
+	// https://www.php.net/manual/en/datetime.formats.php
 
 	// "70/01/01" // 0 in all implementations
 	// "1970,1,1" // 0 in Chrome and Firefox, NaN in Safari
@@ -335,8 +322,6 @@ export default class SHParser {
 	standardsFormats() {
 		return this.dateTimeTZ() || this.dateWithAbbrTimeTZ();
 	}
-	/**
-	 */
 
 	// Atom	"2022-06-02T16:58:35+00:00"
 	// ISO8601	"2022-06-02T16:58:35+0000"
@@ -344,49 +329,43 @@ export default class SHParser {
 	// W3C	"2022-06-02T16:58:35+00:00"
 	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
 	dateTimeTZ() {
-		if (this.dateWithDash()) if (this.time24Notation()) return true;
+		if (this.dateWithDash() && this.time24Notation()) return true;
 		return false;
 	}
 
 	compoundLocalizedNotations() {
-		return false;
-		// Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
-		// EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"
-		// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
-		// WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37"
-		// SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
-		// Unix Timestamp	"@" "-"? [0-9]+	"@1215282385"
-		// Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
+		return (
+			this.CommonLogFormat() || // Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
+			this.isoYearWeekDay() || // ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
+			this.dateWithSpaceTime() || // EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
+			this.postgreSQL() || // PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
+			this.unixTimestamp() || // Unix Timestamp	"@" "-"? [0-9]+	"@1215282385" // Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
+			this.WDDX() // WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37" // SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
+		);
+		// ||this.MSSQL()
 		// XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
 		// XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
-		// ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
-		// PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
 	}
 
 	/**
-	 * Common Log Format (YYYY-MM-DDT:HH:II:SS)
-	 * YYYY-MM-DDTHH:mm:ss.sssZ
-	 * YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
-	 * "yyyy-MM-ddTHH:mm"
-	 * "yyyy-MM-ddTHH:mmZ"
+	 * Common Log Format (YYYY/MM/DDT:HH:II:SS)
+	 * YY "/" MM "/" DD "T" HH ":" II ":" SS frac tzcorrection?
 	 *
 	 * @return bool
 	 */
 	CommonLogFormat() {
-		let pos, year, month, day, h24, min, sec, frac, tz;
+		let pos, year, month, day;
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
-		if (year && this.isTKDash()) {
+		if (year && this.isTKSlash()) {
 			month = this.monthMandatoryPrefix();
-			if (month && this.isTKDash()) {
+			if (month && this.isTKSlash()) {
 				day = this.dayMandatoryPrefix();
-				if (day) {
-					if (this.time24Notation()) {
-						this.data["YEAR"] = year;
-						this.data["MONTH"] = month;
-						this.data["DAY"] = day;
-						return true;
-					}
+				if (day && this.time24Notation()) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}
@@ -510,7 +489,7 @@ export default class SHParser {
 			min,
 			sec,
 			pos = this.getPosition();
-		if (this.dateWithDash()) {
+		if (this.dateWithDash() && this.isTKSignTime()) {
 			h12 = this.hour12();
 			if (h12 && this.isTKColon()) {
 				min = this.minutesOptionalPrefix();
@@ -847,13 +826,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	minutesOptionalPrefix() {
-		return (
-			this.int10To59() ||
-			this.int01To09() ||
-			this.int1To9() ||
-			this.int00() ||
-			this.int0()
-		);
+		return this.minutesMandatoryPrefix() || this.int1To9() || this.int0();
 	}
 
 	/**
@@ -877,13 +850,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	secondsOptionalPrefix() {
-		return (
-			this.int10To59() ||
-			this.int01To09() ||
-			this.int1To9() ||
-			this.int00() ||
-			this.int0()
-		);
+		return this.secondsMandatoryPrefix() || this.int1To9() || this.int0();
 	}
 
 	/**
@@ -913,13 +880,12 @@ export default class SHParser {
 	DateFormats() {
 		// Localized Notations
 
-		// dateLocalizedNotations() {}
-		// ISO8601Notations() {}
+		return this.dateLocalizedNotations() || this.ISO8601Notations();
+	}
+
+	dateLocalizedNotations() {
 		return (
-			this.dateWithSlash() || // YY "/" mm "/" dd
 			this.dedateWithSlash() || // dd "/" mm "/" YY
-			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
-			this.dateWithDash() || // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
 			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
 			this.Date1Abbr() || // y "-" M "-" DD
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
@@ -932,6 +898,14 @@ export default class SHParser {
 			this.year4MandatoryPrefix() ||
 			this.dateMonthTextual()
 		);
+	}
+
+	ISO8601Notations() {
+		return (
+			this.dateWithSlash() || // YY "/" mm "/" dd
+			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
+			this.dateWithDash()
+		); // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
 	}
 
 	/**
@@ -1039,7 +1013,8 @@ export default class SHParser {
 		if (year && this.isTKDash()) {
 			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
-				if ((day = this.dayOptionalPrefix())) {
+				day = this.dayOptionalPrefix();
+				if (day) {
 					this.data["DAY"] = day;
 				}
 				this.data["YEAR"] = year;
