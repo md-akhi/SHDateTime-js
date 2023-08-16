@@ -815,11 +815,17 @@ export default class SHDate {
 	 */
 	setFullYear(
 		year: number,
-		month: number = this.getMonth(),
-		date: number = this.getDate()
+		month: number | false = false,
+		date: number | false = false
 	): number {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		this.#date.setFullYear(gyear, gmonth, gdate);
+		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+			year,
+			month || this.getMonth(),
+			date || this.getDate()
+		);
+		if (date) this.#date.setFullYear(gyear, gmonth, gdate);
+		else if (month) this.#date.setFullYear(gyear, gmonth);
+		else this.#date.setFullYear(gyear);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -838,7 +844,9 @@ export default class SHDate {
 		date: number = this.getUTCDate()
 	): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		if (date) this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		else if (month) this.#date.setUTCFullYear(gyear, gmonth);
+		else this.#date.setUTCFullYear(gyear);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -850,13 +858,15 @@ export default class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setMonth(month: number, date: number = this.getDate()): number {
+	setMonth(month: number, date: number | false = false): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getFullYear(),
 			month,
-			date
+			date || this.getDate()
 		);
-		this.#date.setFullYear(gyear, gmonth, gdate);
+		if (date) this.#date.setMonth(gmonth, gdate);
+		else this.#date.setMonth(gmonth);
+		this.#date.setMonth(gmonth, gdate);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -868,13 +878,14 @@ export default class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
-	setUTCMonth(month: number, date: number = this.getUTCDate()): number {
+	setUTCMonth(month: number, date: number | false = false): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getUTCFullYear(),
 			month,
-			date
+			date || this.getUTCDate()
 		);
-		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		if (date) this.#date.setUTCMonth(gmonth, gdate);
+		else this.#date.setUTCMonth(gmonth);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -891,7 +902,7 @@ export default class SHDate {
 			this.getMonth(),
 			date
 		);
-		this.#date.setFullYear(gyear, gmonth, gdate);
+		this.#date.setDate(gdate);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -908,7 +919,7 @@ export default class SHDate {
 			this.getUTCMonth(),
 			date
 		);
-		this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		this.#date.setUTCDate(gdate);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -925,11 +936,21 @@ export default class SHDate {
 	 */
 	public setHours(
 		hours: number,
-		minutes: number = this.getMinutes(),
-		seconds: number = this.getSeconds(),
-		milliseconds: number = this.getMilliseconds()
+		minutes: number | false = false,
+		seconds: number | false = false,
+		milliseconds: number | false = false
 	): number {
-		this.#date.setHours(hours, minutes, seconds, milliseconds);
+		if (milliseconds)
+			this.#date.setHours(
+				hours,
+				minutes || this.getMinutes(),
+				seconds || this.getSeconds(),
+				milliseconds
+			);
+		else if (seconds)
+			this.#date.setHours(hours, minutes || this.getMinutes(), seconds);
+		else if (minutes) this.#date.setHours(hours, minutes);
+		else this.#date.setHours(hours);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -946,11 +967,21 @@ export default class SHDate {
 	 */
 	public setUTCHours(
 		hours: number,
-		minutes: number = this.getUTCMinutes(),
-		seconds: number = this.getUTCSeconds(),
-		milliseconds: number = this.getUTCMilliseconds()
+		minutes: number | false = false,
+		seconds: number | false = false,
+		milliseconds: number | false = false
 	): number {
-		this.#date.setUTCHours(hours, minutes, seconds, milliseconds);
+		if (milliseconds)
+			this.#date.setUTCHours(
+				hours,
+				minutes || this.getMinutes(),
+				seconds || this.getSeconds(),
+				milliseconds
+			);
+		else if (seconds)
+			this.#date.setUTCHours(hours, minutes || this.getMinutes(), seconds);
+		else if (minutes) this.#date.setHours(hours, minutes);
+		else this.#date.setUTCHours(hours);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -966,10 +997,17 @@ export default class SHDate {
 	 */
 	public setMinutes(
 		minutes: number,
-		seconds: number = this.getSeconds(),
-		milliseconds: number = this.getMilliseconds()
+		seconds: number | false = false,
+		milliseconds: number | false = false
 	): number {
-		this.#date.setMinutes(minutes, seconds, milliseconds);
+		if (milliseconds)
+			this.#date.setMinutes(
+				minutes,
+				seconds || this.getSeconds(),
+				milliseconds
+			);
+		else if (seconds) this.#date.setMinutes(minutes, seconds);
+		else this.#date.setMinutes(minutes);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -985,10 +1023,17 @@ export default class SHDate {
 	 */
 	public setUTCMinutes(
 		minutes: number,
-		seconds: number = this.getUTCSeconds(),
-		milliseconds: number = this.getUTCMilliseconds()
+		seconds: number | false = false,
+		milliseconds: number | false = false
 	): number {
-		this.#date.setUTCMinutes(minutes, seconds, milliseconds);
+		if (milliseconds)
+			this.#date.setUTCMinutes(
+				minutes,
+				seconds || this.getUTCSeconds(),
+				milliseconds
+			);
+		else if (seconds) this.#date.setUTCMinutes(minutes, seconds);
+		else this.#date.setUTCMinutes(minutes);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -1003,9 +1048,10 @@ export default class SHDate {
 	 */
 	public setSeconds(
 		seconds: number,
-		milliseconds: number = this.getMilliseconds()
+		milliseconds: number | false = false
 	): number {
-		this.#date.setSeconds(seconds, milliseconds);
+		if (milliseconds) this.#date.setSeconds(seconds, milliseconds);
+		else this.#date.setSeconds(seconds);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -1019,33 +1065,34 @@ export default class SHDate {
 	 */
 	public setUTCSeconds(
 		seconds: number,
-		milliseconds: number = this.getUTCMilliseconds()
+		milliseconds: number | false = false
 	): number {
-		this.#date.setUTCSeconds(seconds, milliseconds);
+		if (milliseconds) this.#date.setUTCSeconds(seconds, milliseconds);
+		else this.#date.setUTCSeconds(seconds);
 		this.#updateTime();
 		return this.getTime();
 	}
 
 	/**
 	 * 	Sets the milliseconds value in the Date object using local time.
-	 * @param {number} ms — A number between 0 and 999, representing the milliseconds.
+	 * @param {number} milliseconds — A number between 0 and 999, representing the milliseconds.
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	public setMilliseconds(ms: number): number {
-		this.#date.setMilliseconds(ms);
+	public setMilliseconds(milliseconds: number): number {
+		this.#date.setMilliseconds(milliseconds);
 		this.#updateTime();
 		return this.getTime();
 	}
 
 	/**
 	 * 	Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).
-	 * @param {number} ms — A number between 0 and 999, representing the milliseconds.
+	 * @param {number} milliseconds — A number between 0 and 999, representing the milliseconds.
 	 * @returns {object} The number of milliseconds between 11 Dey 1348 00:00:00 UTC and the updated date.
 	 * @since 1.0.0
 	 */
-	public setUTCMilliseconds(ms: number): number {
-		this.#date.setUTCMilliseconds(ms);
+	public setUTCMilliseconds(milliseconds: number): number {
+		this.#date.setUTCMilliseconds(milliseconds);
 		this.#updateTime();
 		return this.getTime();
 	}
@@ -1401,29 +1448,43 @@ export default class SHDate {
 			month: number,
 			day: number,
 			hours: number,
+			minute: number,
+			second: number,
+			farction: number,
 			doy: number,
 			week: number,
 			time: number,
 			date: SHDate = new SHDate();
-		const data: any = Object.entries(new SHParser(str));
-		data.forEach(([key, value]: any) => {
+		const dataObj: any = new SHParser(str);
+		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
 					year = parseInt(value);
-					date.setFullYear(
-						year,
-						data["MONTH"] - 1 || date.getMonth(),
-						data["DAY"] || date.getDate()
-					);
+					date.setFullYear(year);
+					break;
+				case "MONTH":
+					month = parseInt(value);
+					date.setMonth(month - 1);
+					break;
+				case "DAY":
+					day = parseInt(value);
+					date.setDate(day);
 					break;
 				case "HOURS":
 					hours = parseInt(value);
-					date.setHours(
-						hours,
-						data["MINUTES"] || date.getMinutes(),
-						data["SECONDS"] || date.getSeconds(),
-						data["FRAC"] || date.getMilliseconds()
-					);
+					date.setHours(hours);
+					break;
+				case "MINUTES":
+					minute = parseInt(value);
+					date.setMinutes(minute);
+					break;
+				case "SECONDS":
+					second = parseInt(value);
+					date.setSeconds(second);
+					break;
+				case "FRAC":
+					farction = parseInt(value);
+					date.setMilliseconds(farction);
 					break;
 				case "TIMESTAMP":
 					time = parseInt(value);
@@ -1439,7 +1500,7 @@ export default class SHDate {
 					[year, month, day] = date.#weekOfDay(
 						year,
 						week,
-						data["DAY_OF_WEEK"] || date.getDay()
+						dataObj.DAY_OF_WEEK || date.getDay()
 					);
 					date.setFullYear(year, month, day);
 					break;
@@ -1464,7 +1525,7 @@ export default class SHDate {
 			}
 		});
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(data, str, date.toString(), date.getTime());
+		console.log(dataObj, str, date.toString(), date.getTime());
 		return date.getTime();
 	}
 

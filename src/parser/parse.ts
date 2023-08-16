@@ -261,7 +261,6 @@ export default class SHParser {
 		// YY .? doy
 		//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
 		// "@" "-"? [0-9]+
-		// YY "-" mm "-" dd "T" hh ":" ii ":" ss
 		// time
 
 		return this.standardsFormats() || this.compoundLocalizedNotations();
@@ -337,10 +336,10 @@ export default class SHParser {
 		return (
 			this.CommonLogFormat() || // Common Log Format	dd "/" M "/" YY : HH ":" II ":" SS space tzcorrection	"10/Oct/2000:13:55:36 -0700"
 			this.isoYearWeekDay() || // ISO year with ISO week and day	YY "-"? "W" W "-"? [0-7]	"2008W273", "2008-W28-3"
-			this.dateWithSpaceTime() || // EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
+			//this.dateWithSpaceTime() || // EXIF	YY ":" MM ":" DD " " HH ":" II ":" SS	"2008:08:07 18:11:31"// MySQL	YY "-" MM "-" DD " " HH ":" II ":" SS	"2008-08-07 18:11:31"
 			this.postgreSQL() || // PostgreSQL: Year with day-of-year	YY "."? doy	"2008.197", "2008197"
-			this.unixTimestamp() || // Unix Timestamp	"@" "-"? [0-9]+	"@1215282385" // Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
-			this.WDDX() // WDDX	YY "-" mm "-" dd "T" hh ":" ii ":" ss	"2008-7-1T9:3:37" // SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
+			this.unixTimestamp() // Unix Timestamp	"@" "-"? [0-9]+	"@1215282385" // Unix Timestamp with microseconds	"@" "-"? [0-9]+ "." [0-9]{0,6}	"@1607974647.503686"
+			// SOAP	YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?	"2008-07-01T22:35:17.02", "2008-07-01T22:35:17.03+08:00"
 		);
 		// ||this.MSSQL()
 		// XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
@@ -405,18 +404,18 @@ export default class SHParser {
 		return false;
 	}
 
-	/**
-	 * dateWithSpaceTime (YYYY-MM-DD HH:II:SS)
-	 *
-	 * @return bool
-	 */
-	dateWithSpaceTime() {
-		let pos = this.getPosition();
-		if (this.dateWithDash() && this.isTKSpace() && this.time24Notation())
-			return true;
-		this.resetPosition(pos);
-		return false;
-	}
+	// /**
+	//  * dateWithSpaceTime (YYYY-MM-DD HH:II:SS)
+	//  *
+	//  * @return bool
+	//  */
+	// dateWithSpaceTime() {
+	// 	let pos = this.getPosition();
+	// 	if (this.dateWithDash() && this.isTKSpace() && this.time24Notation())
+	// 		return true;
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
 
 	/**
 	 * PostgreSQL: Year with day-of-year (YYYY.doy)
@@ -473,35 +472,6 @@ export default class SHParser {
 			if (int) {
 				this.data["TIMESTAMP"] = int;
 				return true;
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * WDDX (YYYY-mm-ddTh12:ii:ss)
-	 *
-	 * @return bool
-	 */
-	WDDX() {
-		let h12,
-			min,
-			sec,
-			pos = this.getPosition();
-		if (this.dateWithDash() && this.isTKSignTime()) {
-			h12 = this.hour12();
-			if (h12 && this.isTKColon()) {
-				min = this.minutesOptionalPrefix();
-				if (min && this.isTKColon()) {
-					sec = this.secondsOptionalPrefix();
-					if (sec) {
-						this.data["SECONDS"] = sec;
-						this.data["MINUTES"] = min;
-						this.data["HOURS"] = h12;
-						return true;
-					}
-				}
 			}
 		}
 		this.resetPosition(pos);
@@ -781,7 +751,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	hour24() {
-		return this.int10To24() || this.int01To09();
+		return this.int10To24() || this.int01To09() || this.int00();
 	}
 
 	/**
