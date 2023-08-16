@@ -1451,6 +1451,8 @@ export default class SHDate {
 			minute: number,
 			second: number,
 			farction: number,
+			TZ: string,
+			TZ_Sign: string,
 			doy: number,
 			week: number,
 			time: number,
@@ -1486,6 +1488,16 @@ export default class SHDate {
 					farction = parseInt(value);
 					date.setMilliseconds(farction);
 					break;
+				// case "TZ":
+				// 	TZ = value;
+				// 	date.setTime(Date.parse(TZ));
+				// 	break;
+				// case "TZ_SIGN_PLUS":
+				// 	TZ_Sign = value;
+				// 	date.setTime(
+				// 		Date.parse(`${TZ_Sign}${dataObj.TZ_HOURS}:${dataObj.TZ_MINUTES}`)
+				// 	);
+				// 	break;
 				case "TIMESTAMP":
 					time = parseInt(value);
 					date.setTime(time);

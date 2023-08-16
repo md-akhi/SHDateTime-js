@@ -581,7 +581,7 @@ export default class SHParser {
 		let PLUS_DASH, h12, min;
 		switch (this.nameToken()) {
 			case "UTC":
-				this.data["TZ"] = "UTC";
+				this.data["TZ"] = "GMT";
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "00";
 				this.data["TZ_MINUTES"] = "00";
@@ -595,42 +595,24 @@ export default class SHParser {
 				this.nextToken();
 				return true;
 			case "EST":
-				this.data["TZ"] = "EST";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "05";
-				this.data["TZ_MINUTES"] = "00";
-				this.nextToken();
-				return true;
 			case "CDT":
-				this.data["TZ"] = "CDT";
+				this.data["TZ"] = this.valueToken();
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "05";
 				this.data["TZ_MINUTES"] = "00";
 				this.nextToken();
 				return true;
 			case "CST":
-				this.data["TZ"] = "CST";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "06";
-				this.data["TZ_MINUTES"] = "00";
-				this.nextToken();
-				return true;
 			case "MDT":
-				this.data["TZ"] = "MDT";
+				this.data["TZ"] = this.valueToken();
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "06";
 				this.data["TZ_MINUTES"] = "00";
 				this.nextToken();
 				return true;
 			case "MST":
-				this.data["TZ"] = "MST";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "07";
-				this.data["TZ_MINUTES"] = "00";
-				this.nextToken();
-				return true;
 			case "PDT":
-				this.data["TZ"] = "PDT";
+				this.data["TZ"] = this.valueToken();
 				this.data["TZ_SIGN_PLUS"] = true;
 				this.data["TZ_HOURS"] = "07";
 				this.data["TZ_MINUTES"] = "00";
