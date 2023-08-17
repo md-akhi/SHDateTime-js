@@ -86,7 +86,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 			msn
 		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=dsn=msn");
 		if (month == 11 && day !== parseInt(days)) {
-			console.log("");
+			console.log("{},");
 		} else
 			console.log(
 				`{ solar:"${years}W${Woyw}-${Dow}" , time:${shdate.getTime()} },`

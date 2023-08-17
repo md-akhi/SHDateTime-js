@@ -29,10 +29,13 @@ export default class SHDate {
 	 * version of SHDate
 	 */
 	static version: string = "1.3.0";
+
 	/**
 	 * @type {number[]} days in month without leap year
+	 */ /**
+	 * This static property represents the number of days in each month of a specific calendar.
 	 */
-	static DAYS_IN_MONTH: number[] = [
+	public static DAYS_IN_MONTH: number[] = [
 		31, // far
 		31, // ord
 		31, // kho
@@ -609,6 +612,7 @@ export default class SHDate {
 	 * Get private data of solar hijri date
 	 * @param {string} format - format of data
 	 * @returns {array}
+	 * @since 1.2.0
 	 */
 	public format(format: string, isUTC: boolean = false): any[] {
 		const year: number = isUTC ? this.getUTCFullYear() : this.getFullYear(),
@@ -1458,6 +1462,8 @@ export default class SHDate {
 			time: number,
 			date: SHDate = new SHDate();
 		const dataObj: any = new SHParser(str);
+		const TZDiff = date.getTime() - date.getTimezoneOffset() * 60;
+		console.log(TZDiff, date.getTime(), date.getTimezoneOffset());
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
@@ -1584,6 +1590,7 @@ export default class SHDate {
 
 	/**
 	 * The time difference with the server - miliseconds
+	 * @since 1.2.0
 	 */
 	setTimeServerDiff(time: number): void {
 		this.#config.time_server_diff = time;
@@ -1595,6 +1602,7 @@ export default class SHDate {
 
 	/**
 	 * Timezone identifier
+	 * @since 1.2.0
 	 */
 	setTimeZone(time_zone: string): void {
 		this.#config.time_zone = time_zone;
@@ -1605,6 +1613,7 @@ export default class SHDate {
 
 	/**
 	 * Language words Software
+	 * @since 1.2.0
 	 */
 	setLanguage(language: string): void {
 		if (Word.checkLanguage(language)) this.#config.language_Word = language;
@@ -1615,7 +1624,8 @@ export default class SHDate {
 	}
 
 	/**
-	 * Start first day of the week // 0 = Saturday | 6 = Friday
+	 * Start first day of the week , 0 = Saturday ,..., 6 = Friday
+	 * @since 1.2.0
 	 */
 	setFirstDayOfWeek(FDOW: number): void {
 		if (FDOW >= 0 && FDOW <= 6) this.#config.first_day_of_week = FDOW;
@@ -1629,20 +1639,24 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * rest Time
-	 *
-	 * @param  int h Hours
-	 * @param  int m Minutes
-	 * @param  int s Seconds
-	 * @return bool
+	 * resets the time of the SHDate instance.
+	 * @param {number} h - The hours value (default: 0)
+	 * @param {number} m - The minutes value (default: 0)
+	 * @param {number} s - The seconds value (default: 0)
+	 * @param {number} f - The milliseconds value (default: 0)
+	 * @returns {boolean} Returns true after resetting the time
 	 */
-	public restTime(h = 0, m = 0, s = 0, f = 0) {
+	public restTime(h = 0, m = 0, s = 0, f = 0): Boolean {
 		this.setHours(h, m, s, f);
 		return true;
 	}
 
-	setConfig(...args: any[]): void {
+	/**
+	 * sets the configuration options for the SHDate instance.
+	 * @param {...any[]} args - The configuration options to set
+	 * @returns {void}
+	 */
+	public setConfig(...args: any[]): void {
 		const config = { ...this.#config, ...args };
 		this.setFirstDayOfWeek(config.first_day_of_week);
 		this.setLanguage(config.language_Word);
@@ -1650,60 +1664,29 @@ export default class SHDate {
 		this.setTimeServerDiff(config.time_server_diff);
 	}
 
-	clone(): SHDate {
+	/**
+	 * creates a copy of the current date.
+	 * @returns {SHDate} A copy of the current date
+	 * @since 1.3.0
+	 */
+	public clone(): SHDate {
 		return new SHDate(this);
 	}
 
-	instance(): SHDate {
+	/**
+	 * an instance of the current date.
+	 * @returns {SHDate} An instance of the current date
+	 * @since 1.3.0
+	 */
+	public instance(): SHDate {
 		return this;
 	}
-
 	/**
-	 * version
+	 * the version of the SHDate class.
+	 * @returns {string} The version of the SHDate class
+	 * @since 1.0.0
 	 */
-	static getVersion() {
+	public static getVersion() {
 		return SHDate.version;
-	}
-}
-
-export class Export_SHDate extends SHDate {
-	getDaysInMonth(shYear: any, shMonth: any) {
-		return super.getDaysInMonth(shYear, shMonth);
-	}
-
-	getTime() {
-		return super.getTime();
-	}
-
-	getDates() {
-		return super.getDates();
-	}
-
-	checkTime(hours: number, minute: number, second: number) {
-		return super.checkTime(hours, minute, second);
-	}
-
-	revTime(hours: number, minute: number, second: number) {
-		return super.revTime(hours, minute, second);
-	}
-
-	getDayOfWeek(
-		Year: number,
-		Month: number,
-		Day: number,
-		FDOW = super.getFirstDayOfWeek()
-	) {
-		return super.getDayOfWeek(Year, Month, Day, FDOW);
-	}
-
-	getDayOfYear(Month: number, Day: number) {
-		return super.getDayOfYear(Month, Day);
-	}
-
-	getDaysOfDay(Year: number, doy: number) {
-		return super.getDaysOfDay(Year, doy);
-	}
-	getWeekOfDay(year: number, week: number, date: number = 1) {
-		super.getWeekOfDay(year, week, date);
 	}
 }

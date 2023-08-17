@@ -62,7 +62,7 @@
 			Leap
 		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=Leap");
 		if (month == 11 && day !== parseInt(days)) {
-			console.log("");
+			console.log("{},");
 		} else
 			console.log(
 				`{ solar:"${years}-${months}-${days}T${hours}:${minutes}:${seconds}" , time:${shdate.getTime()} },`
