@@ -578,69 +578,65 @@ export default class SHParser {
 	 * @return bool
 	 */
 	TZCorrection() {
-		let PLUS_DASH, h12, min;
+		let PLUS_DASH,
+			h12,
+			min,
+			time,
+			sign: number = 1;
 		switch (this.nameToken()) {
 			case "UTC":
 				this.data["TZ"] = "GMT";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "00";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 0;
 				this.nextToken();
-				return true;
+				break;
 			case "EDT":
 				this.data["TZ"] = "EDT";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "04";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 240;
 				this.nextToken();
-				return true;
+				break;
 			case "EST":
 			case "CDT":
 				this.data["TZ"] = this.valueToken();
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "05";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 300;
 				this.nextToken();
-				return true;
+				break;
 			case "CST":
 			case "MDT":
 				this.data["TZ"] = this.valueToken();
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "06";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 360;
 				this.nextToken();
-				return true;
+				break;
 			case "MST":
 			case "PDT":
 				this.data["TZ"] = this.valueToken();
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "07";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 420;
 				this.nextToken();
-				return true;
+				break;
 			case "PST":
 				this.data["TZ"] = "PST";
-				this.data["TZ_SIGN_PLUS"] = true;
-				this.data["TZ_HOURS"] = "08";
-				this.data["TZ_MINUTES"] = "00";
+				this.data["TZ_TIME"] = 480;
 				this.nextToken();
-				return true;
+				break;
+			default:
+				this.timeZone();
+				break;
 		}
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
-			this.data["TZ_SIGN"] = "+";
+			sign = 1;
 			PLUS_DASH = true;
 		} else if (this.isTKDash()) {
-			this.data["TZ_SIGN"] = "-";
+			sign = -1;
 			PLUS_DASH = true;
 		}
 		h12 = this.hour12();
 		if (PLUS_DASH && h12) {
-			this.data["TZ_HOURS"] = h12;
+			time = h12 * 60;
 			this.isTKColon();
 			min = this.minutesMandatoryPrefix();
 			if (min) {
-				this.data["TZ_MINUTES"] = min;
+				time += min;
+				this.data["TZ_TIME"] = sign * time;
 				return true;
 			}
 		}

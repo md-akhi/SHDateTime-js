@@ -1462,8 +1462,8 @@ export default class SHDate {
 			time: number,
 			date: SHDate = new SHDate();
 		const dataObj: any = new SHParser(str);
+		console.log(date.getTimezoneOffset() * 60, date.toTimeString());
 		const TZDiff = date.getTime() - date.getTimezoneOffset() * 60;
-		console.log(TZDiff, date.getTime(), date.getTimezoneOffset());
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
