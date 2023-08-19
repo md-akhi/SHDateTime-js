@@ -1282,6 +1282,16 @@ export default class SHDate {
 	}
 
 	/**
+	 * Gets the UTC time value in milliseconds.
+	 * @returns {number}
+	 * @since 1.3.0
+	 */
+	public getUTCTime(): number {
+		//if (isUTC) return this.#date.getUTCTime();
+		return this.#date.getTime() + this.getTimezoneOffset() * 60;
+	}
+
+	/**
 	 * Returns the stored time value in milliseconds since midnight, 11 Dey 1348 UTC.
 	 * @returns {number}
 	 */
@@ -1354,7 +1364,7 @@ export default class SHDate {
 	/**
 	 * Returns a string representation of a function.
 	 * @returns {string} A string representation of a function.
-	 * @since x.y.z
+	 * @since 1.0.0
 	 */
 	public toString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=dd=msn=yy");
@@ -1364,7 +1374,7 @@ export default class SHDate {
 	/**
 	 *
 	 * @returns {string} A string representation of a function.
-	 * @since x.y.z
+	 * @since 1.0.0
 	 */
 	public toUTCString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=dd=msn=yy", true);
@@ -1374,7 +1384,7 @@ export default class SHDate {
 	/**
 	 *
 	 * @returns {string} A string representation of a function.
-	 * @since x.y.z
+	 * @since 1.0.0
 	 */
 	public toDateString(): string {
 		const [day_short_name, date, month_short_name, year] =
@@ -1385,7 +1395,7 @@ export default class SHDate {
 	/**
 	 *
 	 * @returns {string} A string representation of a function.
-	 * @since x.y.z
+	 * @since 1.0.0
 	 */
 	public toUTCDateString(): string {
 		const [day_short_name, date, month_short_name, year] = this.format(
@@ -1438,7 +1448,7 @@ export default class SHDate {
 	 * Parses a string containing a date, and returns the number of milliseconds between that date and midnight, 11 Dey 1348.
 	 * @param {string} str — A date string
 	 * @returns {number} The number of milliseconds between that date and midnight, 11 Dey 1348.
-	 * @since x.y.z
+	 * @since 1.0.0
 	 * https://gitcode.net/openthos/gecko-dev/-/blob/GECKO120_2012041106_RELBRANCH/js/src/jsdate.cpp#L911
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
 	 * https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
@@ -1455,15 +1465,11 @@ export default class SHDate {
 			minute: number,
 			second: number,
 			farction: number,
-			TZ: string,
-			TZ_Sign: string,
 			doy: number,
 			week: number,
 			time: number,
 			date: SHDate = new SHDate();
 		const dataObj: any = new SHParser(str);
-		console.log(date.getTimezoneOffset() * 60, date.toTimeString());
-		const TZDiff = date.getTime() - date.getTimezoneOffset() * 60;
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
@@ -1523,8 +1529,8 @@ export default class SHDate {
 					date.setFullYear(year, month, day);
 					break;
 				case "NOW":
-					time = parseInt(value);
-					date.setTime(SHDate.now());
+					time = SHDate.now();
+					date.setTime(time);
 					break;
 				case "TODAY_MIDNIGHT":
 					date.restTime();
@@ -1543,7 +1549,7 @@ export default class SHDate {
 			}
 		});
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(dataObj, str, date.toString(), date.getTime());
+		console.log(dataObj, str, date.toUTCString(), date.getUTCTime());
 		return date.getTime();
 	}
 

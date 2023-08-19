@@ -315,7 +315,7 @@ export default class SHLexerConfig {
 		// SPRING: "springs?",
 		// SUMMER: "summers?",
 
-		//"TZ"		:	'\(?[A-Za-z]{3,6}\)?|[A-Z][a-z]+([_\/][A-Z][a-z]+)+',
+		// TZ: "(?[A-Za-z]{3,6})?|[A-Z][a-z]+([_/][A-Z][a-z]+)+",
 
 		DOT: `${SHLexerConfig.DOT}`,
 		UNKNOWN_CHAR: `[^ \t\s${SHLexerConfig.DOT}]` //  fragment

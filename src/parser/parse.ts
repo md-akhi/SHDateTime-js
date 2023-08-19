@@ -582,43 +582,50 @@ export default class SHParser {
 			h12,
 			min,
 			time,
-			sign: number = 1;
+			sign: number = 1,
+			isTZ = false;
 		switch (this.nameToken()) {
 			case "UTC":
 				this.data["TZ"] = "GMT";
 				this.data["TZ_TIME"] = 0;
+				isTZ = true;
 				this.nextToken();
 				break;
 			case "EDT":
 				this.data["TZ"] = "EDT";
 				this.data["TZ_TIME"] = 240;
+				isTZ = true;
 				this.nextToken();
 				break;
 			case "EST":
 			case "CDT":
 				this.data["TZ"] = this.valueToken();
 				this.data["TZ_TIME"] = 300;
+				isTZ = true;
 				this.nextToken();
 				break;
 			case "CST":
 			case "MDT":
 				this.data["TZ"] = this.valueToken();
 				this.data["TZ_TIME"] = 360;
+				isTZ = true;
 				this.nextToken();
 				break;
 			case "MST":
 			case "PDT":
 				this.data["TZ"] = this.valueToken();
 				this.data["TZ_TIME"] = 420;
+				isTZ = true;
 				this.nextToken();
 				break;
 			case "PST":
 				this.data["TZ"] = "PST";
 				this.data["TZ_TIME"] = 480;
+				isTZ = true;
 				this.nextToken();
 				break;
 			default:
-				this.timeZone();
+				isTZ = this.timeZone();
 				break;
 		}
 		PLUS_DASH = false;
@@ -639,7 +646,7 @@ export default class SHParser {
 				this.data["TZ_TIME"] = sign * time;
 				return true;
 			}
-		}
+		} else if (isTZ) return true;
 		return false;
 	}
 
