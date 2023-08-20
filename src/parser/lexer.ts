@@ -56,7 +56,7 @@ export default class SHLexer {
 						tokens.push(new SHToken(GetName, match[0], offset, position));
 						position++;
 					}
-					// console.log(str, GetName, match, offset, position);
+					// console.log(input, GetName, match, offset, position);
 					// console.log(input);
 					input = input.substr(len);
 					// console.log(input);

@@ -245,6 +245,8 @@ export default class SHLexerConfig {
 		EVENING: "evening|eve",
 		NIGHT: "night",
 
+		SIGN_TIME: "t",
+		SIGN_WEEK: "w",
 		UTC: "utc|gmt",
 		EST: "est",
 		EDT: "edt",
@@ -254,9 +256,6 @@ export default class SHLexerConfig {
 		MDT: "mdt",
 		PST: "pst",
 		PDT: "pdt",
-
-		SIGN_TIME: "[Tt]",
-		SIGN_WEEK: "[Ww]",
 
 		// ********** date rules **********
 

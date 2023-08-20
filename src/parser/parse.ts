@@ -511,7 +511,7 @@ export default class SHParser {
 					this.data["SECONDS"] = sec;
 					frac = this.fraction();
 					if (frac) {
-						this.data["FRAC"] = frac;
+						this.data["FRACTION"] = frac;
 					}
 				}
 			}
@@ -555,7 +555,7 @@ export default class SHParser {
 					this.data["SECONDS"] = sec;
 					frac = this.fraction();
 					if (frac) {
-						this.data["FRAC"] = frac;
+						this.data["FRACTION"] = frac;
 					}
 					this.isTKSpace();
 					this.TZCorrection() || this.timeZone();
@@ -578,49 +578,48 @@ export default class SHParser {
 	 * @return bool
 	 */
 	TZCorrection() {
-		let PLUS_DASH,
-			h12,
-			min,
-			time,
+		let PLUS_DASH: boolean = false,
+			h12: string | false,
+			min: string | false,
 			sign: number = 1,
-			isTZ = false;
+			isTZ: boolean = false;
 		switch (this.nameToken()) {
 			case "UTC":
-				this.data["TZ"] = "GMT";
+				this.data["TZ_NAME"] = "GMT";
 				this.data["TZ_TIME"] = 0;
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EDT":
-				this.data["TZ"] = "EDT";
-				this.data["TZ_TIME"] = 240;
+				this.data["TZ_NAME"] = "EDT";
+				this.data["TZ_TIME"] = 240 * 60000; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EST":
 			case "CDT":
-				this.data["TZ"] = this.valueToken();
-				this.data["TZ_TIME"] = 300;
+				this.data["TZ_NAME"] = this.valueToken();
+				this.data["TZ_TIME"] = 300 * 60000; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "CST":
 			case "MDT":
-				this.data["TZ"] = this.valueToken();
-				this.data["TZ_TIME"] = 360;
+				this.data["TZ_NAME"] = this.valueToken();
+				this.data["TZ_TIME"] = 360 * 60000; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "MST":
 			case "PDT":
-				this.data["TZ"] = this.valueToken();
-				this.data["TZ_TIME"] = 420;
+				this.data["TZ_NAME"] = this.valueToken();
+				this.data["TZ_TIME"] = 420 * 60000; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "PST":
-				this.data["TZ"] = "PST";
-				this.data["TZ_TIME"] = 480;
+				this.data["TZ_NAME"] = "PST";
+				this.data["TZ_TIME"] = 480 * 60000; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
@@ -630,21 +629,22 @@ export default class SHParser {
 		}
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
-			sign = 1;
-			PLUS_DASH = true;
-		} else if (this.isTKDash()) {
 			sign = -1;
 			PLUS_DASH = true;
+		} else if (this.isTKDash()) {
+			sign = 1;
+			PLUS_DASH = true;
 		}
-		h12 = this.hour12();
-		if (PLUS_DASH && h12) {
-			time = h12 * 60;
-			this.isTKColon();
-			min = this.minutesMandatoryPrefix();
-			if (min) {
-				time += min;
-				this.data["TZ_TIME"] = sign * time;
-				return true;
+		if (PLUS_DASH) {
+			h12 = this.hour12MandatoryPrefix();
+			if (h12) {
+				this.isTKColon();
+				min = this.minutesMandatoryPrefix();
+				if (min) {
+					this.data["TZ_TIME"] =
+						sign * (parseInt(h12) * 60 + parseInt(min)) * 60000; // min to ms
+					return true;
+				}
 			}
 		} else if (isTZ) return true;
 		return false;
@@ -726,6 +726,9 @@ export default class SHParser {
 	 */
 	hour12() {
 		return this.int10To12() || this.int1To9() || this.int01To09();
+	}
+	hour12MandatoryPrefix() {
+		return this.int10To12() || this.int01To09();
 	}
 
 	/**
@@ -1095,7 +1098,7 @@ export default class SHParser {
 	 *
 	 * @return false|number
 	 */
-	year2MandatoryPrefix(): number | false {
+	year2MandatoryPrefix(): string | false {
 		return this.int00To99();
 	}
 
@@ -1450,7 +1453,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	monthOptionalPrefix(): number | false {
+	monthOptionalPrefix(): string | false {
 		return this.monthMandatoryPrefix() || this.int1To9() || this.int0();
 	}
 
@@ -1460,7 +1463,7 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	monthMandatoryPrefix(): number | false {
+	monthMandatoryPrefix(): string | false {
 		return this.int10To12() || this.int01To09() || this.int00();
 	}
 
@@ -1470,7 +1473,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	weekOfYear(): number | false {
+	weekOfYear(): string | false {
 		return this.int10To53() || this.int01To09() || this.int00();
 	}
 
@@ -1542,7 +1545,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	ordinal(): number | false {
+	ordinal(): string | false {
 		return this.firstToThirtyFirstTextual() || this.relText();
 	}
 
@@ -1912,7 +1915,7 @@ export default class SHParser {
 	 */
 	handleRelTimeNumber() {
 		let int: any,
-			rel,
+			rel: any,
 			diffdow,
 			pos = this.getPosition();
 		if ((int = this.number())) {
@@ -1972,7 +1975,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	handleRelTimeText() {
-		let rel,
+		let rel: any,
 			int: any,
 			diffdoy,
 			pos = this.getPosition();
@@ -2287,7 +2290,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To99(): number | false {
+	int10To99(): string | false {
 		switch (this.nameToken()) {
 			case "INT_60":
 			case "INT_61":
@@ -2343,7 +2346,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To59(): number | false {
+	int10To59(): string | false {
 		switch (this.nameToken()) {
 			case "INT_54":
 			case "INT_55":
@@ -2365,7 +2368,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To53(): number | false {
+	int10To53(): string | false {
 		switch (this.nameToken()) {
 			case "INT_37":
 			case "INT_38":
@@ -2398,7 +2401,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To36(): number | false {
+	int10To36(): string | false {
 		switch (this.nameToken()) {
 			case "INT_32":
 			case "INT_33":
@@ -2419,7 +2422,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To31(): number | false {
+	int10To31(): string | false {
 		switch (this.nameToken()) {
 			case "INT_25":
 			case "INT_26":
@@ -2442,7 +2445,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To24(): number | false {
+	int10To24(): string | false {
 		if (this.isToken("INT_24")) {
 			const int = this.valueToken();
 			this.nextToken();
@@ -2457,7 +2460,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To23(): number | false {
+	int10To23(): string | false {
 		switch (this.nameToken()) {
 			case "INT_13":
 			case "INT_14":
@@ -2484,7 +2487,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int10To12(): number | false {
+	int10To12(): string | false {
 		switch (this.nameToken()) {
 			case "INT_10":
 			case "INT_11":
@@ -2503,7 +2506,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int01To09(): number | false {
+	int01To09(): string | false {
 		switch (this.nameToken()) {
 			case "INT_01":
 			case "INT_02":
@@ -2528,7 +2531,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int1To9(): number | false {
+	int1To9(): string | false {
 		switch (this.nameToken()) {
 			case "INT_8":
 			case "INT_9":
@@ -2546,7 +2549,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int1To7(): number | false {
+	int1To7(): string | false {
 		switch (this.nameToken()) {
 			case "INT_1":
 			case "INT_2":
@@ -2569,7 +2572,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int00(): number | false {
+	int00(): string | false {
 		if (this.isToken("INT_00")) {
 			const int = this.valueToken();
 			this.nextToken();
@@ -2584,7 +2587,7 @@ export default class SHParser {
 	 * @param  int int
 	 * @return bool
 	 */
-	int0(): number | false {
+	int0(): string | false {
 		if (this.isToken("INT_0")) {
 			const int = this.valueToken();
 			this.nextToken();

@@ -10,6 +10,7 @@
 
 import Word from "./word.js";
 import SHParser from "./parser/parse.js";
+import { setUncaughtExceptionCaptureCallback } from "process";
 interface VarSHDate {
 	[key: string]: number | undefined;
 	year?: number;
@@ -582,17 +583,17 @@ export default class SHDate {
 	/**
 	 * Get date/time information
 	 * @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
-	 * @return  array  an associative array of information related to the timestamp.
+	 * @return  object  an associative object of information related to the timestamp.
 	 * @since   1.0.0
 	 */
 	getDates(timestamp: any = this.getTime(), isGMT: boolean = false) {
-		const date =
-			typeof timestamp === "undefined"
-				? new SHDate()
-				: timestamp instanceof SHDate
-				? timestamp // Not provided
-				: new SHDate(timestamp); // Javascript Date() // UNIX timestamp (auto-convert to int)
+		let date: SHDate;
+		if (typeof timestamp === "undefined") date = new SHDate();
+		else if (timestamp instanceof SHDate) date = timestamp; // Not provided
+		else date = new SHDate(timestamp);
+		// Javascript Date() // UNIX timestamp (auto-convert to int)
 		return {
+			milliseconds: isGMT ? date.getUTCMilliseconds() : date.getMilliseconds(),
 			seconds: isGMT ? date.getUTCSeconds() : date.getSeconds(),
 			minutes: isGMT ? date.getUTCMinutes() : date.getMinutes(),
 			hours: isGMT ? date.getUTCHours() : date.getHours(),
@@ -1288,7 +1289,7 @@ export default class SHDate {
 	 */
 	public getUTCTime(): number {
 		//if (isUTC) return this.#date.getUTCTime();
-		return this.#date.getTime() + this.getTimezoneOffset() * 60;
+		return this.#date.getTime() + this.getTimezoneOffset() * 60000;
 	}
 
 	/**
@@ -1458,48 +1459,43 @@ export default class SHDate {
 	 */
 	public static parse(str: string): number {
 		//throw new Error("Not Implemented parse"); // TODO: implement
-		let year: number,
-			month: number,
-			day: number,
-			hours: number,
-			minutes: number,
-			seconds: number,
-			milliseconds: number,
+		let date: SHDate = new SHDate(),
+			defaultDate = date.getDates(),
+			year: number = defaultDate.year,
+			month: number = defaultDate.mon,
+			day: number = defaultDate.mday,
+			hours: number = defaultDate.hours,
+			minutes: number = defaultDate.minutes,
+			seconds: number = defaultDate.seconds,
+			milliseconds: number = defaultDate.milliseconds,
 			doy: number,
 			week: number,
 			time: number,
-			tz: string,
-			date: SHDate = new SHDate();
+			tz: string;
+		const localTZ = date.getTimezoneOffset() * 60000; // 60*1000
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
 					year = parseInt(value);
-					//date.setFullYear(year);
 					break;
 				case "MONTH":
 					month = parseInt(value);
-					//date.setMonth(month - 1);
 					break;
 				case "DAY":
 					day = parseInt(value);
-					//date.setDate(day);
 					break;
 				case "HOURS":
 					hours = parseInt(value);
-					//date.setHours(hours);
 					break;
 				case "MINUTES":
 					minutes = parseInt(value);
-					//date.setMinutes(minutes);
 					break;
 				case "SECONDS":
 					seconds = parseInt(value);
-					//date.setSeconds(seconds);
 					break;
-				case "FRAC":
+				case "FRACTION":
 					milliseconds = parseInt(value);
-					//date.setMilliseconds(milliseconds);
 					break;
 				case "TZ":
 					tz = value;
@@ -1518,7 +1514,6 @@ export default class SHDate {
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
 					[year, month, day] = date.#dateOfDoy(year, doy);
-					//date.setFullYear(year, month, day);
 					break;
 				case "WEEK_OF_YEAR":
 					week = parseInt(value);
@@ -1527,7 +1522,6 @@ export default class SHDate {
 						week,
 						dataObj.DAY_OF_WEEK || date.getDay()
 					);
-					//date.setFullYear(year, month, day);
 					break;
 				case "NOW":
 					time = SHDate.now();
@@ -1549,8 +1543,18 @@ export default class SHDate {
 					break;
 			}
 		});
+		date.setFullYear(year, month, day);
+		date.setHours(hours, minutes, seconds, milliseconds);
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(dataObj, str, date.toUTCString(), date.getUTCTime());
+		console.log(
+			localTZ,
+			dataObj,
+			str,
+			date.toString(),
+			date.getTime(),
+			date.toUTCString(),
+			date.getUTCTime()
+		);
 		return date.getTime();
 	}
 
