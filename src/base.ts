@@ -1462,48 +1462,49 @@ export default class SHDate {
 			month: number,
 			day: number,
 			hours: number,
-			minute: number,
-			second: number,
-			farction: number,
+			minutes: number,
+			seconds: number,
+			milliseconds: number,
 			doy: number,
 			week: number,
 			time: number,
+			tz: string,
 			date: SHDate = new SHDate();
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
 				case "YEAR":
 					year = parseInt(value);
-					date.setFullYear(year);
+					//date.setFullYear(year);
 					break;
 				case "MONTH":
 					month = parseInt(value);
-					date.setMonth(month - 1);
+					//date.setMonth(month - 1);
 					break;
 				case "DAY":
 					day = parseInt(value);
-					date.setDate(day);
+					//date.setDate(day);
 					break;
 				case "HOURS":
 					hours = parseInt(value);
-					date.setHours(hours);
+					//date.setHours(hours);
 					break;
 				case "MINUTES":
-					minute = parseInt(value);
-					date.setMinutes(minute);
+					minutes = parseInt(value);
+					//date.setMinutes(minutes);
 					break;
 				case "SECONDS":
-					second = parseInt(value);
-					date.setSeconds(second);
+					seconds = parseInt(value);
+					//date.setSeconds(seconds);
 					break;
 				case "FRAC":
-					farction = parseInt(value);
-					date.setMilliseconds(farction);
+					milliseconds = parseInt(value);
+					//date.setMilliseconds(milliseconds);
 					break;
-				// case "TZ":
-				// 	TZ = value;
-				// 	date.setTime(Date.parse(TZ));
-				// 	break;
+				case "TZ":
+					tz = value;
+					date.setTime(Date.parse(tz));
+					break;
 				// case "TZ_SIGN_PLUS":
 				// 	TZ_Sign = value;
 				// 	date.setTime(
@@ -1517,7 +1518,7 @@ export default class SHDate {
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
 					[year, month, day] = date.#dateOfDoy(year, doy);
-					date.setFullYear(year, month, day);
+					//date.setFullYear(year, month, day);
 					break;
 				case "WEEK_OF_YEAR":
 					week = parseInt(value);
@@ -1526,25 +1527,25 @@ export default class SHDate {
 						week,
 						dataObj.DAY_OF_WEEK || date.getDay()
 					);
-					date.setFullYear(year, month, day);
+					//date.setFullYear(year, month, day);
 					break;
 				case "NOW":
 					time = SHDate.now();
 					date.setTime(time);
 					break;
 				case "TODAY_MIDNIGHT":
-					date.restTime();
+					[hours, minutes, seconds, milliseconds] = date.restTime();
 					break;
 				case "NOON":
-					date.restTime(12);
+					[hours, minutes, seconds, milliseconds] = date.restTime(12);
 					break;
 				case "YESTERDAY":
-					date.setDate(date.getDate() - 1);
-					date.restTime();
+					day = date.getDate() - 1;
+					[hours, minutes, seconds, milliseconds] = date.restTime();
 					break;
 				case "TOMORROW":
-					date.setDate(date.getDate() + 1);
-					date.restTime();
+					day = date.getDate() + 1;
+					[hours, minutes, seconds, milliseconds] = date.restTime();
 					break;
 			}
 		});
@@ -1646,15 +1647,20 @@ export default class SHDate {
 
 	/**
 	 * resets the time of the SHDate instance.
-	 * @param {number} h - The hours value (default: 0)
-	 * @param {number} m - The minutes value (default: 0)
-	 * @param {number} s - The seconds value (default: 0)
-	 * @param {number} f - The milliseconds value (default: 0)
+	 * @param {number} hours - The hours value (default: 0)
+	 * @param {number} minutes - The minutes value (default: 0)
+	 * @param {number} seconds - The seconds value (default: 0)
+	 * @param {number} milliseconds - The milliseconds value (default: 0)
 	 * @returns {boolean} Returns true after resetting the time
 	 */
-	public restTime(h = 0, m = 0, s = 0, f = 0): Boolean {
-		this.setHours(h, m, s, f);
-		return true;
+	public restTime(
+		hours = 0,
+		minutes = 0,
+		seconds = 0,
+		milliseconds = 0
+	): number[] {
+		this.setHours(hours, minutes, seconds, milliseconds);
+		return [hours, minutes, seconds, milliseconds];
 	}
 
 	/**
