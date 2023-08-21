@@ -509,7 +509,7 @@ export default class SHParser {
 				sec = this.secondsMandatoryPrefix();
 				if (sec) {
 					this.data["SECONDS"] = sec;
-					frac = this.fraction();
+					frac = this.fractionalSecond();
 					if (frac) {
 						this.data["FRACTION"] = frac;
 					}
@@ -553,7 +553,7 @@ export default class SHParser {
 				sec = this.secondsOptionalPrefix();
 				if (sec) {
 					this.data["SECONDS"] = sec;
-					frac = this.fraction();
+					frac = this.fractionalSecond();
 					if (frac) {
 						this.data["FRACTION"] = frac;
 					}
@@ -812,12 +812,12 @@ export default class SHParser {
 	}
 
 	/**
-	 * fraction (frac) {.[0-9]+}
+	 * fractional second (frac) {.[0-9]+}
 	 *
 	 * @param  int num
 	 * @return bool
 	 */
-	fraction() {
+	fractionalSecond() {
 		if (this.isTKDot()) {
 			let int,
 				isFrac = false;

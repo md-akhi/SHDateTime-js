@@ -1471,7 +1471,8 @@ export default class SHDate {
 			doy: number,
 			week: number,
 			time: number,
-			tz: string;
+			tz: string,
+			tztime: string | number = 0;
 		const localTZ = date.getTimezoneOffset() * 60000; // 60*1000
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
@@ -1499,14 +1500,10 @@ export default class SHDate {
 					break;
 				case "TZ":
 					tz = value;
-					date.setTime(Date.parse(tz));
 					break;
-				// case "TZ_SIGN_PLUS":
-				// 	TZ_Sign = value;
-				// 	date.setTime(
-				// 		Date.parse(`${TZ_Sign}${dataObj.TZ_HOURS}:${dataObj.TZ_MINUTES}`)
-				// 	);
-				// 	break;
+				case "TZ_TIME":
+					tztime = value;
+					break;
 				case "TIMESTAMP":
 					time = parseInt(value);
 					date.setTime(time);
@@ -1543,8 +1540,13 @@ export default class SHDate {
 					break;
 			}
 		});
-		date.setFullYear(year, month, day);
-		date.setHours(hours, minutes, seconds, milliseconds);
+		if (tztime == 0) {
+			date.setUTCFullYear(year, month, day);
+			date.setUTCHours(hours, minutes, seconds, milliseconds);
+		} else {
+			date.setFullYear(year, month, day);
+			date.setHours(hours, minutes, seconds, milliseconds);
+		}
 		//console.log(JSON.stringify(SHParser, null, 2));
 		console.log(
 			localTZ,
