@@ -581,45 +581,45 @@ export default class SHParser {
 		let PLUS_DASH: boolean = false,
 			h12: string | false,
 			min: string | false,
-			sign: number = 1,
+			sign: string = "+",
 			isTZ: boolean = false;
 		switch (this.nameToken()) {
 			case "UTC":
 				this.data["TZ_NAME"] = "GMT";
-				this.data["TZ_TIME"] = 0;
+				this.data["TZ_TIME"] = "";
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EDT":
 				this.data["TZ_NAME"] = "EDT";
-				this.data["TZ_TIME"] = 240 * 60000; // min to ms
+				this.data["TZ_TIME"] = 240; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EST":
 			case "CDT":
 				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 300 * 60000; // min to ms
+				this.data["TZ_TIME"] = 300; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "CST":
 			case "MDT":
 				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 360 * 60000; // min to ms
+				this.data["TZ_TIME"] = 360; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "MST":
 			case "PDT":
 				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 420 * 60000; // min to ms
+				this.data["TZ_TIME"] = 420; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "PST":
 				this.data["TZ_NAME"] = "PST";
-				this.data["TZ_TIME"] = 480 * 60000; // min to ms
+				this.data["TZ_TIME"] = 480; // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
@@ -629,10 +629,10 @@ export default class SHParser {
 		}
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
-			sign = -1;
+			sign = "+";
 			PLUS_DASH = true;
 		} else if (this.isTKDash()) {
-			sign = 1;
+			sign = "-";
 			PLUS_DASH = true;
 		}
 		if (PLUS_DASH) {
@@ -641,8 +641,7 @@ export default class SHParser {
 				this.isTKColon();
 				min = this.minutesMandatoryPrefix();
 				if (min) {
-					this.data["TZ_TIME"] =
-						sign * (parseInt(h12) * 60 + parseInt(min)) * 60000; // min to ms
+					this.data["TZ_TIME"] = sign + h12 + min; // min to ms
 					return true;
 				}
 			}
