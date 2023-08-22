@@ -1471,7 +1471,6 @@ export default class SHDate {
 			milliseconds: number = defaultDate.milliseconds,
 			doy: number,
 			week: number,
-			time: number,
 			tz: string = "GMT",
 			tztime: string = "";
 		const dataObj: any = new SHParser(str);
@@ -1505,8 +1504,7 @@ export default class SHDate {
 					tztime = value;
 					break;
 				case "TIMESTAMP":
-					time = parseInt(value);
-					date.setTime(time);
+					date.setTime(parseInt(value));
 					break;
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
@@ -1521,8 +1519,7 @@ export default class SHDate {
 					);
 					break;
 				case "NOW":
-					time = SHDate.now();
-					date.setTime(time);
+					date.setTime(SHDate.now());
 					break;
 				case "TODAY_MIDNIGHT":
 					[hours, minutes, seconds, milliseconds] = date.restTime();
@@ -1566,10 +1563,14 @@ export default class SHDate {
 	}
 
 	public toConvert(type: string, ...data: any[]): any | any[] {
+		let year, month, day;
 		switch (type) {
 			case "ToGregorian":
-				const [year, month, day] = [...data];
+				[year, month, day] = [...data];
 				return this.#SolarToGregorian(year, month, day);
+			case "ToSolar":
+				[year, month, day] = [...data];
+				return this.#GregorianToSolar(year, month, day);
 			default:
 				break;
 		}
