@@ -823,13 +823,11 @@ export default class SHDate {
 		month: number | false = false,
 		date: number | false = false
 	): number {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			year,
-			month || this.getMonth(),
-			date || this.getDate()
-		);
-		if (date) this.#date.setFullYear(gyear, gmonth, gdate);
-		else if (month) this.#date.setFullYear(gyear, gmonth);
+		month = this.#isFalse(month, this.getMonth());
+		date = this.#isFalse(date, this.getDate());
+		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
+		if (typeof date == "number") this.#date.setFullYear(gyear, gmonth, gdate);
+		else if (typeof month == "number") this.#date.setFullYear(gyear, gmonth);
 		else this.#date.setFullYear(gyear);
 		this.#updateDate();
 		return this.getTime();
@@ -845,12 +843,15 @@ export default class SHDate {
 	 */
 	setUTCFullYear(
 		year: number,
-		month: number = this.getUTCMonth(),
-		date: number = this.getUTCDate()
+		month: number | false = false,
+		date: number | false = false
 	): number {
+		month = this.#isFalse(month, this.getUTCMonth());
+		date = this.#isFalse(date, this.getUTCDate());
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		if (date) this.#date.setUTCFullYear(gyear, gmonth, gdate);
-		else if (month) this.#date.setUTCFullYear(gyear, gmonth);
+		if (typeof date == "number")
+			this.#date.setUTCFullYear(gyear, gmonth, gdate);
+		else if (typeof month == "number") this.#date.setUTCFullYear(gyear, gmonth);
 		else this.#date.setUTCFullYear(gyear);
 		this.#updateDate();
 		return this.getTime();
@@ -864,12 +865,13 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setMonth(month: number, date: number | false = false): number {
+		date = this.#isFalse(date, this.getDate());
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getFullYear(),
 			month,
-			date || this.getDate()
+			date
 		);
-		if (date) this.#date.setMonth(gmonth, gdate);
+		if (typeof date == "number") this.#date.setMonth(gmonth, gdate);
 		else this.#date.setMonth(gmonth);
 		this.#date.setMonth(gmonth, gdate);
 		this.#updateDate();
@@ -884,10 +886,11 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setUTCMonth(month: number, date: number | false = false): number {
+		date = this.#isFalse(date, this.getUTCDate());
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
 			this.getUTCFullYear(),
 			month,
-			date || this.getUTCDate()
+			date
 		);
 		if (date) this.#date.setUTCMonth(gmonth, gdate);
 		else this.#date.setUTCMonth(gmonth);
@@ -945,16 +948,14 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds)
-			this.#date.setHours(
-				hours,
-				minutes || this.getMinutes(),
-				seconds || this.getSeconds(),
-				milliseconds
-			);
-		else if (seconds)
-			this.#date.setHours(hours, minutes || this.getMinutes(), seconds);
-		else if (minutes) this.#date.setHours(hours, minutes);
+		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
+		seconds = this.#isFalse(seconds, this.getSeconds());
+		minutes = this.#isFalse(minutes, this.getMinutes());
+		if (typeof milliseconds == "number")
+			this.#date.setHours(hours, minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			this.#date.setHours(hours, minutes, seconds);
+		else if (typeof minutes == "number") this.#date.setHours(hours, minutes);
 		else this.#date.setHours(hours);
 		this.#updateTime();
 		return this.getTime();
@@ -976,16 +977,14 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds)
-			this.#date.setUTCHours(
-				hours,
-				minutes || this.getMinutes(),
-				seconds || this.getSeconds(),
-				milliseconds
-			);
-		else if (seconds)
-			this.#date.setUTCHours(hours, minutes || this.getMinutes(), seconds);
-		else if (minutes) this.#date.setHours(hours, minutes);
+		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
+		seconds = this.#isFalse(seconds, this.getUTCSeconds());
+		minutes = this.#isFalse(minutes, this.getUTCMinutes());
+		if (typeof milliseconds == "number")
+			this.#date.setUTCHours(hours, minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			this.#date.setUTCHours(hours, minutes, seconds);
+		else if (typeof minutes == "number") this.#date.setHours(hours, minutes);
 		else this.#date.setUTCHours(hours);
 		this.#updateTime();
 		return this.getTime();
@@ -1005,13 +1004,12 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds)
-			this.#date.setMinutes(
-				minutes,
-				seconds || this.getSeconds(),
-				milliseconds
-			);
-		else if (seconds) this.#date.setMinutes(minutes, seconds);
+		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
+		seconds = this.#isFalse(seconds, this.getSeconds());
+		if (typeof milliseconds == "number")
+			this.#date.setMinutes(minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			this.#date.setMinutes(minutes, seconds);
 		else this.#date.setMinutes(minutes);
 		this.#updateTime();
 		return this.getTime();
@@ -1031,13 +1029,12 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds)
-			this.#date.setUTCMinutes(
-				minutes,
-				seconds || this.getUTCSeconds(),
-				milliseconds
-			);
-		else if (seconds) this.#date.setUTCMinutes(minutes, seconds);
+		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
+		seconds = this.#isFalse(seconds, this.getUTCSeconds());
+		if (typeof milliseconds == "number")
+			this.#date.setUTCMinutes(minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			this.#date.setUTCMinutes(minutes, seconds);
 		else this.#date.setUTCMinutes(minutes);
 		this.#updateTime();
 		return this.getTime();
@@ -1055,7 +1052,9 @@ export default class SHDate {
 		seconds: number,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds) this.#date.setSeconds(seconds, milliseconds);
+		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
+		if (typeof milliseconds == "number")
+			this.#date.setSeconds(seconds, milliseconds);
 		else this.#date.setSeconds(seconds);
 		this.#updateTime();
 		return this.getTime();
@@ -1072,7 +1071,9 @@ export default class SHDate {
 		seconds: number,
 		milliseconds: number | false = false
 	): number {
-		if (milliseconds) this.#date.setUTCSeconds(seconds, milliseconds);
+		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
+		if (typeof milliseconds == "number")
+			this.#date.setUTCSeconds(seconds, milliseconds);
 		else this.#date.setUTCSeconds(seconds);
 		this.#updateTime();
 		return this.getTime();
@@ -1471,9 +1472,8 @@ export default class SHDate {
 			doy: number,
 			week: number,
 			time: number,
-			tz: string,
-			tztime: string | number = 0;
-		const localTZ = date.getTimezoneOffset() * 60000; // 60*1000
+			tz: string = "GMT",
+			tztime: string = "";
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
@@ -1540,26 +1540,41 @@ export default class SHDate {
 					break;
 			}
 		});
-		if (tztime == 0) {
-			date.setUTCFullYear(year, month, day);
-			date.setUTCHours(hours, minutes, seconds, milliseconds);
-		} else {
-			date.setFullYear(year, month, day);
-			date.setHours(hours, minutes, seconds, milliseconds);
-		}
+		const [gyear, gmonth, gday] = date.toConvert(
+			"ToGregorian",
+			year,
+			month,
+			day
+		);
+		date.setTime(
+			new Date(
+				`${gyear}/${gmonth}/${gday} ${hours}:${minutes}:${seconds}.${milliseconds} ${tz}${tztime}`
+			).getTime()
+		);
 		//console.log(JSON.stringify(SHParser, null, 2));
 		console.log(
-			localTZ,
 			dataObj,
 			str,
+			`\n`,
 			date.toString(),
 			date.getTime(),
+			`\n`,
 			date.toUTCString(),
 			date.getUTCTime()
 		);
 		return date.getTime();
 	}
 
+	public toConvert(type: string, ...data: any[]): any | any[] {
+		switch (type) {
+			case "ToGregorian":
+				const [year, month, day] = [...data];
+				return this.#SolarToGregorian(year, month, day);
+			default:
+				break;
+		}
+		return false;
+	}
 	/**
 	 * converts a Date object to a primitive value.
 	 * @param {*} hint
@@ -1689,6 +1704,11 @@ export default class SHDate {
 	 */
 	public clone(): SHDate {
 		return new SHDate(this);
+	}
+
+	#isFalse(data: number | false, defaultData: any): number {
+		if (typeof data == "boolean") return defaultData;
+		else return data;
 	}
 
 	/**
