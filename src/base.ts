@@ -155,7 +155,9 @@ export default class SHDate {
 					hours = 0,
 					minute = 0,
 					second = 0,
-					millisecond = 0
+					millisecond = 0,
+					tz = "",
+					tztime = ""
 				] = args;
 				// year
 				this.setFullYear(mix, month, date);
@@ -166,8 +168,7 @@ export default class SHDate {
 		else if (typeof mix == "string") {
 			const [time = this.getTime()] = args;
 			// dateString
-			this.setTime(time);
-			SHDate.parse(mix);
+			SHDate.parse(mix, time);
 		} else if (mix instanceof SHDate || mix instanceof Date)
 			// dateObject
 			this.setTime(mix.getTime());
@@ -1458,21 +1459,22 @@ export default class SHDate {
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
 	 * https://www.w3schools.com/js/js_date_formats.asp
 	 */
-	public static parse(str: string): number {
+	public static parse(str: string, time: number = Date.now()): number {
 		//throw new Error("Not Implemented parse"); // TODO: implement
-		let date: SHDate = new SHDate(),
+		let date: SHDate = new SHDate(time),
 			defaultDate = date.getDates(),
-			year: number = defaultDate.year,
-			month: number = defaultDate.mon,
-			day: number = defaultDate.mday,
-			hours: number = defaultDate.hours,
-			minutes: number = defaultDate.minutes,
-			seconds: number = defaultDate.seconds,
-			milliseconds: number = defaultDate.milliseconds,
+			year: number | false = false,
+			month: number = 0,
+			day: number = 1,
+			hours: number = 0,
+			minutes: number = 0,
+			seconds: number = 0,
+			milliseconds: number = 0,
 			doy: number,
 			week: number,
-			tz: string = "GMT",
-			tztime: string = "";
+			tz: string = "",
+			tzoffset: number = date.getTimezoneOffset() * -1 * 60 * 1000,
+			tztime: number = 0;
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
@@ -1501,19 +1503,19 @@ export default class SHDate {
 					tz = value;
 					break;
 				case "TZ_TIME":
-					tztime = value;
+					tztime = tzoffset - value;
 					break;
 				case "TIMESTAMP":
 					date.setTime(parseInt(value));
 					break;
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
-					[year, month, day] = date.#dateOfDoy(year, doy);
+					[year, month, day] = date.#dateOfDoy(year as number, doy);
 					break;
 				case "WEEK_OF_YEAR":
 					week = parseInt(value);
 					[year, month, day] = date.#weekOfDay(
-						year,
+						year as number,
 						week,
 						dataObj.DAY_OF_WEEK || date.getDay()
 					);
@@ -1522,34 +1524,28 @@ export default class SHDate {
 					date.setTime(SHDate.now());
 					break;
 				case "TODAY_MIDNIGHT":
-					[hours, minutes, seconds, milliseconds] = date.restTime();
+					[hours, minutes, seconds, milliseconds] = date.restTime(0, 0, 0, 0);
 					break;
 				case "NOON":
 					[hours, minutes, seconds, milliseconds] = date.restTime(12);
 					break;
 				case "YESTERDAY":
 					day = date.getDate() - 1;
-					[hours, minutes, seconds, milliseconds] = date.restTime();
+					[hours, minutes, seconds, milliseconds] = date.restTime(0, 0, 0, 0);
 					break;
 				case "TOMORROW":
 					day = date.getDate() + 1;
-					[hours, minutes, seconds, milliseconds] = date.restTime();
+					[hours, minutes, seconds, milliseconds] = date.restTime(0, 0, 0, 0);
 					break;
 			}
 		});
-		const [gyear, gmonth, gday] = date.toConvert(
-			"ToGregorian",
-			year,
-			month,
-			day
-		);
-		date.setTime(
-			new Date(
-				`${gyear}/${gmonth}/${gday} ${hours}:${minutes}:${seconds}.${milliseconds} ${tz}${tztime}`
-			).getTime()
-		);
+		year = typeof year == "number" ? year : defaultDate.year;
+		date.setFullYear(year, month, day);
+		date.setHours(hours, minutes, seconds, milliseconds);
+		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
 		console.log(
+			tztime,
 			dataObj,
 			str,
 			`\n`,
@@ -1557,25 +1553,13 @@ export default class SHDate {
 			date.getTime(),
 			`\n`,
 			date.toUTCString(),
-			date.getUTCTime()
+			date.getUTCTime(),
+			`\n`,
+			new SHDate(year, month, day, hours, minutes, seconds, milliseconds)
 		);
 		return date.getTime();
 	}
 
-	public toConvert(type: string, ...data: any[]): any | any[] {
-		let year, month, day;
-		switch (type) {
-			case "ToGregorian":
-				[year, month, day] = [...data];
-				return this.#SolarToGregorian(year, month, day);
-			case "ToSolar":
-				[year, month, day] = [...data];
-				return this.#GregorianToSolar(year, month, day);
-			default:
-				break;
-		}
-		return false;
-	}
 	/**
 	 * converts a Date object to a primitive value.
 	 * @param {*} hint
