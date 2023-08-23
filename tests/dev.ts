@@ -1,4 +1,4 @@
 import SHDate from "../src/base";
 
 console.log("now:" + new SHDate().toString());
-console.log(new SHDate("1200-01-01T00:00:00 GMT+0430"));
+console.log(new SHDate("1402-10-15 10:20:30 gmt+0250"));
