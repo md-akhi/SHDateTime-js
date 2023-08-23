@@ -20,7 +20,9 @@ interface VarSHDate {
 	UTC_month?: number;
 	UTC_date?: number;
 }
-
+// interface ISHDate {
+// 	toString(): string;
+// }
 /**
  * class SHDate
  * @since   1.0.0
@@ -155,9 +157,7 @@ export default class SHDate {
 					hours = 0,
 					minute = 0,
 					second = 0,
-					millisecond = 0,
-					tz = "",
-					tztime = ""
+					millisecond = 0
 				] = args;
 				// year
 				this.setFullYear(mix, month, date);
@@ -168,7 +168,7 @@ export default class SHDate {
 		else if (typeof mix == "string") {
 			const [time = this.getTime()] = args;
 			// dateString
-			SHDate.parse(mix, time);
+			this.setTime(SHDate.parse(mix, time));
 		} else if (mix instanceof SHDate || mix instanceof Date)
 			// dateObject
 			this.setTime(mix.getTime());
@@ -634,43 +634,43 @@ export default class SHDate {
 					str.push(year);
 					break;
 				case "yy":
-					str.push(year.toString().padStart(4, "0"));
+					str.push(`${year}`.padStart(4, "0"));
 					break;
 				case "MM":
 					str.push(month.toString());
 					break;
 				case "mm":
-					str.push(month.toString().padStart(2, "0"));
+					str.push(`${month}`.padStart(2, "0"));
 					break;
 				case "DD":
 					str.push(date);
 					break;
 				case "dd":
-					str.push(date.toString().padStart(2, "0"));
+					str.push(`${date}`.padStart(2, "0"));
 					break;
 				case "HH":
 					str.push(hours);
 					break;
 				case "hh":
-					str.push(hours.toString().padStart(2, "0"));
+					str.push(`${hours}`.padStart(2, "0"));
 					break;
 				case "II":
 					str.push(minute);
 					break;
 				case "ii":
-					str.push(minute.toString().padStart(2, "0"));
+					str.push(`${minute}`.padStart(2, "0"));
 					break;
 				case "SS":
 					str.push(second);
 					break;
 				case "ss":
-					str.push(second.toString().padStart(2, "0"));
+					str.push(`${second}`.padStart(2, "0"));
 					break;
 				case "MS":
 					str.push(millisecond);
 					break;
 				case "ms":
-					str.push(millisecond.toString().padStart(2, "0"));
+					str.push(`${millisecond}`.padStart(2, "0"));
 					break;
 				case "Diy": // days In Year
 					str.push(this.#daysInYear(year));
@@ -1544,19 +1544,7 @@ export default class SHDate {
 		date.setHours(hours, minutes, seconds, milliseconds);
 		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(
-			tztime,
-			dataObj,
-			str,
-			`\n`,
-			date.toString(),
-			date.getTime(),
-			`\n`,
-			date.toUTCString(),
-			date.getUTCTime(),
-			`\n`,
-			new SHDate(year, month, day, hours, minutes, seconds, milliseconds)
-		);
+		console.log(dataObj, str, `\n`, date.toString(), date.getTime());
 		return date.getTime();
 	}
 
@@ -1660,10 +1648,10 @@ export default class SHDate {
 	 * @returns {boolean} Returns true after resetting the time
 	 */
 	public restTime(
-		hours = 0,
-		minutes = 0,
-		seconds = 0,
-		milliseconds = 0
+		hours: number = 0,
+		minutes: number = 0,
+		seconds: number = 0,
+		milliseconds: number = 0
 	): number[] {
 		this.setHours(hours, minutes, seconds, milliseconds);
 		return [hours, minutes, seconds, milliseconds];
@@ -1709,7 +1697,7 @@ export default class SHDate {
 	 * @returns {string} The version of the SHDate class
 	 * @since 1.0.0
 	 */
-	public static getVersion() {
+	public static getVersion(): string {
 		return SHDate.version;
 	}
 }
