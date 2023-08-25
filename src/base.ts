@@ -621,8 +621,8 @@ export default class SHDate {
 			month: number = isUTC ? this.getUTCMonth() : this.getMonth(),
 			date: number = isUTC ? this.getUTCDate() : this.getDate(),
 			hours: number = isUTC ? this.getUTCHours() : this.getHours(),
-			minute: number = isUTC ? this.getUTCMinutes() : this.getHours(),
-			second: number = isUTC ? this.getUTCSeconds() : this.getMinutes(),
+			minute: number = isUTC ? this.getUTCMinutes() : this.getMinutes(),
+			second: number = isUTC ? this.getUTCSeconds() : this.getSeconds(),
 			millisecond: number = isUTC
 				? this.getUTCMilliseconds()
 				: this.getMilliseconds(),
@@ -670,7 +670,7 @@ export default class SHDate {
 					str.push(millisecond);
 					break;
 				case "ms":
-					str.push(`${millisecond}`.padStart(2, "0"));
+					str.push(`${millisecond}`.padStart(3, "0"));
 					break;
 				case "Diy": // days In Year
 					str.push(this.#daysInYear(year));
@@ -1460,11 +1460,11 @@ export default class SHDate {
 	 * https://www.w3schools.com/js/js_date_formats.asp
 	 */
 	public static parse(str: string, time: number = Date.now()): number {
-		//throw new Error("Not Implemented parse"); // TODO: implement
+		//throw new Error("Not Implemented parse / Invalid Date"); // TODO: implement
 		let date: SHDate = new SHDate(time),
 			defaultDate = date.getDates(),
 			year: number | false = false,
-			month: number = 0,
+			month: number = 1,
 			day: number = 1,
 			hours: number = 0,
 			minutes: number = 0,
@@ -1540,11 +1540,11 @@ export default class SHDate {
 			}
 		});
 		year = typeof year == "number" ? year : defaultDate.year;
-		date.setFullYear(year, month, day);
+		date.setFullYear(year, month - 1, day);
 		date.setHours(hours, minutes, seconds, milliseconds);
 		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(dataObj, str, `\n`, date.toString(), date.getTime());
+		// console.log(dataObj, str, `\n`, date.toString(), date.getTime());
 		return date.getTime();
 	}
 
