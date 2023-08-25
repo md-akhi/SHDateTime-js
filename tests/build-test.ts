@@ -2,14 +2,6 @@ import SHDate from "../src/base";
 
 for (let year = 1200; year <= 1700; year += 20) {
 	[
-		[0, 1],
-		[0, 2],
-		[0, 3],
-		[0, 4],
-		[0, 5],
-		[0, 30],
-		[0, 31],
-
 		[1, 1],
 		[1, 2],
 		[1, 30],
@@ -66,9 +58,17 @@ for (let year = 1200; year <= 1700; year += 20) {
 		[11, 27],
 		[11, 28],
 		[11, 29],
-		[11, 30]
+		[11, 30],
+
+		[12, 1],
+		[12, 2],
+		[12, 3],
+		[12, 4],
+		[12, 5],
+		[12, 30],
+		[12, 31]
 	].forEach(([month, day]) => {
-		let shdate = new SHDate(year, month, day);
+		let shdate = new SHDate(year, month - 1, day);
 		const [
 			years,
 			months,
@@ -85,15 +85,60 @@ for (let year = 1200; year <= 1700; year += 20) {
 			dsn,
 			msn
 		] = shdate.format("yy=mm=dd=hh=ii=ss=Dow=Diy=Doy=Dim=Wiy=Woy=dsn=msn");
+
+		let gdate = new Date();
+		gdate.setTime(shdate.getTime());
+		const glongmonth = [
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December"
+		];
+		const gshortmonths = [
+			"Jan",
+			"Feb",
+			"Mar",
+			"Apr",
+			"May",
+			"Jun",
+			"Jul",
+			"Aug",
+			"Sep",
+			"Oct",
+			"Nov",
+			"Dec"
+		];
+		const gweekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		const [gyears, gmonths, gdays, ghours, gminutes, gseconds, gdow] = [
+			gdate.getFullYear(),
+			gdate.getMonth(),
+			gdate.getDate(),
+			gdate.getHours(),
+			gdate.getMinutes(),
+			gdate.getSeconds(),
+			gdate.getDay()
+		];
 		if (month == 11 && day !== parseInt(days)) {
 			console.log("{},");
 		} else
 			console.log(
-				`{ solar:"${years}W${Woyw}-${Dow}" , time:${shdate.getTime()} },`
+				`{
+					sdate:"${years}-${months}-${days}", solar:"${dsn} ${days} ${msn} ${years}" ,stime:${shdate.getTime()},
+					gdate:"${gyears}-${gmonths}-${gdays}", gregorian:"${gweekDays[gdow]} ${gdays} ${
+					gshortmonths[gmonths]
+				} ${gyears}" ,gtime:${gdate.getTime()}
+			},`
 			);
 	});
 }
-
 // for (let day = 12; day <= 15; day++) {
 // 	let shdate = new SHDate(1401, 0, day, 0);
 // 	console.log(
