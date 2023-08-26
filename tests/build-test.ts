@@ -119,7 +119,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 		const gweekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 		const [gyears, gmonths, gdays, ghours, gminutes, gseconds, gdow] = [
 			gdate.getFullYear(),
-			gdate.getMonth(),
+			gdate.getMonth() + 1,
 			gdate.getDate(),
 			gdate.getHours(),
 			gdate.getMinutes(),
@@ -131,9 +131,21 @@ for (let year = 1200; year <= 1700; year += 20) {
 		} else
 			console.log(
 				`{
-					sdate:"${years}-${months}-${days}", solar:"${dsn} ${days} ${msn} ${years}" ,stime:${shdate.getTime()},
-					gdate:"${gyears}-${gmonths}-${gdays}", gregorian:"${gweekDays[gdow]} ${gdays} ${
-					gshortmonths[gmonths]
+					sdate:"${years}-${String(parseInt(months) + 1).padStart(
+					2,
+					"0"
+				)}-${days} ${hours}:${minutes}:${seconds}", solar:"${dsn} ${days} ${msn} ${years}" ,stime:${shdate.getTime()},
+					gdate:"${String(gyears).padStart(4, "0")}-${String(gmonths).padStart(
+					2,
+					"0"
+				)}-${String(gdays).padStart(2, "0")} ${String(ghours).padStart(
+					2,
+					"0"
+				)}:${String(gminutes).padStart(2, "0")}:${String(gseconds).padStart(
+					2,
+					"0"
+				)}", gregorian:"${gweekDays[gdow]} ${gdays} ${
+					gshortmonths[gmonths - 1]
 				} ${gyears}" ,gtime:${gdate.getTime()}
 			},`
 			);

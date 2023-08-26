@@ -172,15 +172,46 @@ export default class SHLexerConfig {
 		TWENTIETH: "twentieth",
 		THIRTIETH: "thirtieth",
 
+		// ********** month rules **********
+
+		FARVARDIN: "far(vardin)?",
+		ORDIBEHESHT: "ord(ibehesht)?",
+		KHORDAD: "kho(rdad)?",
+		TIR: "tir",
+		AMORDAD: "amo(rdad)?|mor(dad)?",
+		SHAHRIVAR: "sha(hrivar)?",
+		MEHR: "mehr?",
+		ABAN: "aban?",
+		AZAR: "azar?",
+		DEY: "dey",
+		BAHMAN: "bah(man)?",
+		ESFAND: "es[fp]{1}and|es[fp]{1}",
+
+		MICROSECOND: "microsecond|usec",
+		MILLISECOND: "millisecond|msec|µsec|ms|µs",
+		HOUR: "hours?",
+		MINUTE: "minutes?|mins?",
+		DAY: "days?",
+		WEEKDAY: "weekdays?",
+		WEEK: "weeks?",
+		MONTH: "months?|mons?",
+		YEAR: "years?",
+		FORTNIGHT: "forth?night",
+
+		TODAY: "today",
+		TOMORROW: "tomorrow",
+		TONIGHT: "tonight",
+		YESTERDAY: "yesterday",
+
 		// ********** date rules **********
 
-		SATURDAY: "saturday|sat",
-		SUNDAY: "sunday|sun",
-		MONDAY: "monday|mon",
-		TUESDAY: "tuesday|tue",
-		WEDNESDAY: "wednesday|wed",
-		THURSDAY: "thursday|thu",
-		FRIDAY: "friday|fri|weekend",
+		SATURDAY: "sat(urday)?",
+		SUNDAY: "sun(day)?",
+		MONDAY: "mon(day)?",
+		TUESDAY: "tue(sday)?",
+		WEDNESDAY: "wed(nesday)?",
+		THURSDAY: "thu(rsday)?",
+		FRIDAY: "fri(day)?|weekend",
 
 		// ********** common rules **********
 
@@ -199,37 +230,6 @@ export default class SHLexerConfig {
 
 		SUFFIXES: "st|nd|rd|th", //[stndrh]
 		// ST: "st", ND: "nd", RD: "rd", TH: "th",
-
-		// ********** month rules **********
-
-		MICROSECOND: "microsecond|usec",
-		MILLISECOND: "millisecond|msec|ms|µsec|µs",
-		HOUR: "hours?",
-		MINUTE: "minutes?|mins?",
-		DAY: "days?",
-		WEEKDAY: "weekdays?",
-		WEEK: "weeks?",
-		MONTH: "months?|mons?",
-		YEAR: "years?",
-		FORTNIGHT: "forth?night",
-
-		TODAY: "today",
-		TOMORROW: "tomorrow",
-		TONIGHT: "tonight",
-		YESTERDAY: "yesterday",
-
-		FARVARDIN: "farvardin|far",
-		ORDIBEHESHT: "ordibehesht|ord",
-		KHORDAD: "khordad|kho",
-		TIR: "tir",
-		AMORDAD: "a?mordad|amo|mor",
-		SHAHRIVAR: "shahrivar|sha",
-		MEHR: "mehr?",
-		ABAN: "aban?",
-		AZAR: "azar?",
-		DEY: "dey",
-		BAHMAN: "bahman|bah",
-		ESFAND: "es[fp]{1}and|es[fp]{1}",
 
 		// ********** time rules **********
 

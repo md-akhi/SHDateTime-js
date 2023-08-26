@@ -1,9 +1,11 @@
 import SHDate from "../src/base";
 
+const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
+
 console.log("now:" + new SHDate().toString());
 
 const liter = "-";
-const date = `01 Far 1200`;
+const date = "01 sha 1200";
 const time = "";
 const shstring = `${date}${time}`;
 //const [year, month, day] = date.split(liter);
@@ -13,7 +15,7 @@ console.log("SHDate", shstring, shdat.toString(), shdat.getTime());
 
 console.log(`\n`);
 
-const gtime = new Date(shdat.getTime());
+let gtime = new Date(shdat.getTime());
 
 const gstring = `${gtime.getFullYear()}${liter}${
 	gtime.getMonth() + 1
@@ -22,3 +24,12 @@ let gdat = new Date(gstring);
 console.log("Date", gstring, gdat.toString(), gdat.getTime());
 
 console.log(`\n`);
+
+const unixTimeZero = new Date("1821-03-21 00:00:00");
+const javaScriptRelease = SHDate.parse("01 sha 1200");
+
+console.log(unixTimeZero);
+// Expected output: 0
+
+console.log(javaScriptRelease);
+// Expected output: 818035920000
