@@ -39,14 +39,14 @@ describe("String", () => {
 
 	it("correctly Date Day Of Year YYYY.doy", () => {
 		UntilStringDateDoy.DateDOY.forEach(({ solar, stime, gdate, gtime }) => {
-			const shts = SHDate.parse(solar);
+			const shts = SHDate.parse(solar.split(" ")[0]);
 			assert.equal(stime, shts);
 		});
 	});
 
 	it("correctly Date Week Of Year YYYY-Ww-D", () => {
 		UntilStringDateWoy.DateWOY.forEach(({ solar, stime, gdate, gtime }) => {
-			const shts = SHDate.parse(solar);
+			const shts = SHDate.parse(solar.split(" ")[0]);
 			assert.equal(stime, shts);
 		});
 	});

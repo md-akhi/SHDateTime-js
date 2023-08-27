@@ -450,10 +450,10 @@ export default class SHParser {
 			doy2,
 			pos = this.getPosition();
 		doy1 = this.int00To99();
-		doy2 = this.int0() || this.int1To9();
 		if (doy1) {
-			if (doy2) return parseInt(doy1 + doy2);
-			return parseInt(doy1);
+			doy2 = this.int1To9() || this.int0();
+			if (doy2) return doy1 + doy2;
+			return doy1;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -852,10 +852,9 @@ export default class SHParser {
 	dateLocalizedNotations() {
 		return (
 			this.dedateWithSlash() || // dd "/" mm "/" YY
-			this.year4TextualMonth() || // YY ([ \t.-])* m    Day reset to 1
+			this.year4TextualMonth() || // YY ([ \t-])* m    Day reset to 1
 			this.Date1Abbr() || // y "-" M "-" DD
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
-			this.dayMonth2Year() || // Day, month and two digit year, with dots or tabs
 			this.dayTextualMonthYear() || // Day, textual month and year
 			this.textualMonth4Year() || // Day and textual month
 			this.textualMonth4Year2() ||
@@ -1112,8 +1111,8 @@ export default class SHParser {
 
 	/**
 	 * year
-	 * a number between 1 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
-	 * 0?[0-9]{1,4}
+	 * a number between 01 and 9999 inclusive, with an optional 0 prefix before numbers 0-9
+	 * 0?[0-9]{2,4}
 	 *
 	 * @return false|string
 	 */
@@ -1125,7 +1124,7 @@ export default class SHParser {
 		if (y1) {
 			y2 = this.int00To99() || this.int1To9() || this.int0();
 			if (y2) {
-				return parseInt(y1 + y2);
+				return y1 + y2;
 			}
 			return y1;
 		}
@@ -1156,7 +1155,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayMandatoryPrefix() {
-		return this.int00() || this.int01To09() || this.int10To31();
+		return this.int10To31() || this.int01To09() || this.int00();
 	}
 
 	/**
@@ -1175,7 +1174,7 @@ export default class SHParser {
 
 	/**
 	 * Day, month and four digit year, with dots, tabs or dashes
-	 * dd [.\t-] mm [.-] YY
+	 * dd [\t-] mm [-] YY
 	 *
 	 * @return bool
 	 */
@@ -1185,9 +1184,9 @@ export default class SHParser {
 			day,
 			pos = this.getPosition();
 		day = this.dayOptionalPrefix();
-		if (day && (this.isTKSpace() || this.isTKDot() || this.isTKDash())) {
+		if (day && (this.isTKSpace() || this.isTKDash())) {
 			month = this.monthOptionalPrefix();
-			if (month && (this.isTKDot() || this.isTKDash())) {
+			if (month && this.isTKDash()) {
 				if ((year = this.year4MandatoryPrefix())) {
 					this.data["DAY"] = day;
 					this.data["MONTH"] = month;
@@ -1201,37 +1200,9 @@ export default class SHParser {
 	}
 
 	/**
-	 * Day, month and two digit year, with dots or tabs
-	 *  dd [.\t] mm "." yy
-	 *
-	 * @return bool
-	 */
-	dayMonth2Year() {
-		let year,
-			month,
-			day,
-			pos = this.getPosition();
-		day = this.dayOptionalPrefix();
-		if (day && (this.isTKSpace() || this.isTKDot())) {
-			month = this.monthOptionalPrefix();
-			if (month && this.isTKDot()) {
-				year = this.year2MandatoryPrefix();
-				if (year) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
 	 * Day, textual month and year
-	 * dd ([ \t.-])* m ([ \t.-])* y
-	 * d ([ .\t-])* m
+	 * dd ([ \t-]) m ([ \t-]) YY
+	 * d ([ \t-]) m
 	 *
 	 * @return bool
 	 */
@@ -1242,11 +1213,12 @@ export default class SHParser {
 			pos = this.getPosition();
 		day = this.dayOptionalPrefix();
 		if (day) {
-			while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
+			// console.log(this.nameToken());
+			this.isTKSpace() || this.isTKDash();
 			month = this.monthTextual();
 			if (month) {
-				while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
-				year = this.yearOptionalPrefix();
+				this.isTKSpace() || this.isTKDash();
+				year = this.year4MandatoryPrefix();
 				if (year) {
 					this.data["YEAR"] = year;
 				}

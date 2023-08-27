@@ -134,7 +134,9 @@ for (let year = 1200; year <= 1700; year += 20) {
 					sdate:"${years}-${String(parseInt(months) + 1).padStart(
 					2,
 					"0"
-				)}-${days} ${hours}:${minutes}:${seconds}", solar:"${dsn} ${days} ${msn} ${years}" ,stime:${shdate.getTime()},
+				)}-${days} ${hours}:${minutes}:${seconds}", solar:"${Woyy}W${String(
+					Woyw
+				).padStart(2, "0")}-${Dow}" ,stime:${shdate.getTime()},
 					gdate:"${String(gyears).padStart(4, "0")}-${String(gmonths).padStart(
 					2,
 					"0"
@@ -144,9 +146,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 				)}:${String(gminutes).padStart(2, "0")}:${String(gseconds).padStart(
 					2,
 					"0"
-				)}", gregorian:"${gweekDays[gdow]} ${gdays} ${
-					gshortmonths[gmonths - 1]
-				} ${gyears}" ,gtime:${gdate.getTime()}
+				)}", gregorian:"" ,gtime:${gdate.getTime()}
 			},`
 			);
 	});

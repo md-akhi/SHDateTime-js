@@ -5,7 +5,7 @@ const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
 console.log("now:" + new SHDate().toString());
 
 const liter = "-";
-const date = "01 sha 1200";
+const date = "1220W01-1";
 const time = "";
 const shstring = `${date}${time}`;
 //const [year, month, day] = date.split(liter);
@@ -25,8 +25,8 @@ console.log("Date", gstring, gdat.toString(), gdat.getTime());
 
 console.log(`\n`);
 
-const unixTimeZero = new Date("1821-03-21 00:00:00");
-const javaScriptRelease = SHDate.parse("01 sha 1200");
+const unixTimeZero = new Date("1841-03-21");
+const javaScriptRelease = SHDate.parse(date);
 
 console.log(unixTimeZero);
 // Expected output: 0

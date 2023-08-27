@@ -11,6 +11,7 @@
 import Word from "./word.js";
 import SHParser from "./parser/parse.js";
 import { setUncaughtExceptionCaptureCallback } from "process";
+import { log } from "console";
 interface VarSHDate {
 	[key: string]: number | undefined;
 	year?: number;
@@ -1463,8 +1464,8 @@ export default class SHDate {
 		//throw new Error("Not Implemented parse / Invalid Date"); // TODO: implement
 		let date: SHDate = new SHDate(time),
 			defaultDate = date.getDates(),
-			year: number | false = false,
-			month: number = 1,
+			year: number = 0,
+			month: number = 0,
 			day: number = 1,
 			hours: number = 0,
 			minutes: number = 0,
@@ -1482,7 +1483,7 @@ export default class SHDate {
 					year = parseInt(value);
 					break;
 				case "MONTH":
-					month = parseInt(value);
+					month = parseInt(value) - 1;
 					break;
 				case "DAY":
 					day = parseInt(value);
@@ -1517,7 +1518,7 @@ export default class SHDate {
 					[year, month, day] = date.#weekOfDay(
 						year as number,
 						week,
-						dataObj.DAY_OF_WEEK || date.getDay()
+						dataObj.DAY_OF_WEEK || 1
 					);
 					break;
 				case "NOW":
@@ -1539,8 +1540,9 @@ export default class SHDate {
 					break;
 			}
 		});
-		year = typeof year == "number" ? year : defaultDate.year;
-		date.setFullYear(year, month - 1, day);
+		year = year ? year : defaultDate.year;
+		// console.log(year, month, day, hours, minutes, seconds, milliseconds);
+		date.setFullYear(year, month, day);
 		date.setHours(hours, minutes, seconds, milliseconds);
 		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
