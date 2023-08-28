@@ -632,90 +632,90 @@ export default class SHDate {
 		format.split(/\s*(?:=|$)\s*/).forEach((f) => {
 			switch (f) {
 				case "YY":
-					str.push(year);
-					break;
-				case "yy":
 					str.push(`${year}`.padStart(4, "0"));
 					break;
-				case "MM":
-					str.push(month.toString());
+				case "yy":
+					str.push(year);
 					break;
-				case "mm":
+				case "MM":
 					str.push(`${month}`.padStart(2, "0"));
 					break;
-				case "DD":
-					str.push(date);
+				case "mm":
+					str.push(month.toString());
 					break;
-				case "dd":
+				case "DD":
 					str.push(`${date}`.padStart(2, "0"));
 					break;
-				case "HH":
-					str.push(hours);
+				case "dd":
+					str.push(date);
 					break;
-				case "hh":
+				case "HH":
 					str.push(`${hours}`.padStart(2, "0"));
 					break;
-				case "II":
-					str.push(minute);
+				case "hh":
+					str.push(hours);
 					break;
-				case "ii":
+				case "II":
 					str.push(`${minute}`.padStart(2, "0"));
 					break;
-				case "SS":
-					str.push(second);
+				case "ii":
+					str.push(minute);
 					break;
-				case "ss":
+				case "SS":
 					str.push(`${second}`.padStart(2, "0"));
 					break;
-				case "MS":
-					str.push(millisecond);
+				case "ss":
+					str.push(second);
 					break;
-				case "ms":
+				case "MS":
 					str.push(`${millisecond}`.padStart(3, "0"));
 					break;
+				case "ms":
+					str.push(millisecond);
+					break;
 				case "Diy": // days In Year
-					str.push(this.#daysInYear(year));
+					str.push(this.#daysInYear(year).toString().padStart(3, "0"));
 					break;
 				case "diy":
-					str.push(this.#daysInYear(year).toString().padStart(3, "0"));
+					str.push(this.#daysInYear(year));
 					break;
 				case "Leap":
 				case "leap":
 					str.push(this.isLeapYear(year));
 					break;
 				case "Dim": // days In Month
-					str.push(this.#daysInMonth(year, month));
-					break;
-				case "dim":
 					str.push(this.#daysInMonth(year, month).toString().padStart(2, "0"));
 					break;
-				case "Wiy": //weeks In Year
-					str.push(this.#weeksInYear(year));
+				case "dim":
+					str.push(this.#daysInMonth(year, month));
 					break;
-				case "wiy":
+				case "Wiy": //weeks In Year
 					str.push(this.#weeksInYear(year).toString().padStart(2, "0"));
 					break;
-				case "Woy": //week Of Year
-					str.push(this.#weekOfYear(year, month, date));
+				case "wiy":
+					str.push(this.#weeksInYear(year));
 					break;
-				case "woy": //week Of Year
+				case "Woy": //week Of Year
 					const [iso_week, iso_year] = this.#weekOfYear(year, month, date);
-					str.push(
-						iso_week.toString().padStart(2, "0"),
-						iso_year.toString().padStart(2, "0") // todo change number 2 to 4
+					str.push(`
+						[${iso_week.toString().padStart(2, "0")},
+						${iso_year.toString().padStart(4, "0")}]` // todo change number 2 to 4
 					);
 					break;
-				case "Dow": // day Of Week
-					str.push(weekday);
+				case "woy": //week Of Year
+					str.push(this.#weekOfYear(year, month, date));
 					break;
-				case "dow":
+				case "Dow": // day Of Week
 					str.push(weekday.toString().padStart(2, "0"));
 					break;
+				case "dow":
+					str.push(weekday);
+					break;
 				case "Doy": //day Of Year
-					str.push(this.#dayOfYear(month, date));
+					str.push(this.#dayOfYear(month, date).toString().padStart(3, "0"));
 					break;
 				case "doy":
-					str.push(this.#dayOfYear(month, date).toString().padStart(3, "0"));
+					str.push(this.#dayOfYear(month, date));
 					break;
 				case "dsn": //day short names
 					str.push(
