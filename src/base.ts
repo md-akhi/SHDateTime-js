@@ -202,6 +202,7 @@ export default class SHDate {
 		this.#sh.date = date;
 		return;
 	}
+
 	/** //todo  change name to synceTime
 	 * update time
 	 * @returns {null}
@@ -211,6 +212,7 @@ export default class SHDate {
 		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
 		return;
 	}
+
 	/**
 	 *  Convert gregorian date to solar hijri date
 	 * @param {number} gyear - gregorian year
@@ -341,12 +343,11 @@ export default class SHDate {
 
 	/**
 	 * Get leap year
-	 * @param {number} year - solar hijri year
 	 * @returns {boolean} - leap year
 	 * @since 1.0.0
 	 */
-	public isLeapYear(year: number = this.getFullYear()): boolean {
-		return this.#isLeapYear(year) ? true : false;
+	public isLeapYear(): boolean {
+		return this.#isLeapYear(this.getFullYear()) ? true : false;
 	}
 
 	/**
@@ -365,10 +366,8 @@ export default class SHDate {
 		date: number,
 		FDOW: number = this.#config.first_day_of_week
 	): number {
-		//	return (year+this.isLeapYear(year,true)+this::dayOfYear(year,month,date)+5)%7;
-		// 7+(gdow+1)-this.#config.first_day_of_week%7
-		// return (8 + gdow - this.#config.first_day_of_week) % 7; // shdow
-		//	new and best version
+		//	return (year+this.isLeapYear(year,true)+this.dayOfYear(year,month,date)+5)%7;//	new and best version
+		// return (8 + gdow - this.#config.first_day_of_week) % 7; // (7+(gdow+1)-this.#config.first_day_of_week)%7
 		return (
 			(5 +
 				year +
@@ -378,15 +377,23 @@ export default class SHDate {
 			7
 		);
 	}
-
-	getDayOfWeek(
-		year: number,
-		month: number,
-		date: number,
-		FDOW: number = this.#config.first_day_of_week
-	) {
-		return this.#dayOfWeek(year, month, date, FDOW);
+	getDayOfWeek() {
+		return this.#dayOfWeek(
+			this.getFullYear(),
+			this.getMonth(),
+			this.getDate(),
+			this.#config.first_day_of_week
+		);
 	}
+	getUTCDayOfWeek() {
+		return this.#dayOfWeek(
+			this.getUTCFullYear(),
+			this.getUTCMonth(),
+			this.getUTCDate(),
+			this.#config.first_day_of_week
+		);
+	}
+
 	/**
 	 * Get day of year (doy)
 	 * @param {number} month - solar hijri month
@@ -396,15 +403,19 @@ export default class SHDate {
 	 */
 	#dayOfYear(month: number, date: number): number {
 		return SHDate.DAY_OF_YEAR[month] + date - 1;
-		// var doy: number;
-		// month++;
-		// if (month < 7) doy = (month - 1) * 31;
-		// else doy = (month - 7) * 30 + 186;
-		// return (doy + date - 1) % (this.#daysInYear(year) - 1);
+		/*  var doy: number;
+		 month++;
+		 if (month < 7) doy = (month - 1) * 31;
+		 else doy = (month - 7) * 30 + 186;
+		 return (doy + date - 1) % (this.#daysInYear(year) - 1);*/
 	}
-	getDayOfYear(month: number, date: number) {
-		return this.#dayOfYear(month, date);
+	getDayOfYear() {
+		return this.#dayOfYear(this.getMonth(), this.getDate());
 	}
+	getUTCDayOfYear() {
+		return this.#dayOfYear(this.getUTCMonth(), this.getUTCDate());
+	}
+
 	/**
 	 * Get week of year (woy)
 	 * @param {number} year - solar hijri year
@@ -420,9 +431,10 @@ export default class SHDate {
 		FDOW: number = this.#config.first_day_of_week
 	): number[] {
 		var iw: number, //iso_week
-			iy: number, //iso_year
-			doy: number = this.#dayOfYear(month, date) + 1, // 1 through 366
-			far1weekday: number = this.#dayOfWeek(year, 0, 1, FDOW) + 1; // 1 through 7 - first dow of farvardin
+			iy: number; //iso_year
+		const doy: number = this.#dayOfYear(month, date) + 1, // 1 through 366
+			far1weekday: number = this.#dayOfWeek(year, 0, 1, FDOW) + 1, // 1 through 7 - first dow of farvardin
+			dow = this.#dayOfWeek(year, month, date, FDOW) + 1;
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
 		if (doy <= 8 - far1weekday && far1weekday > 4) {
 			iy = --year;
@@ -430,22 +442,38 @@ export default class SHDate {
 				far1weekday == 5 || (far1weekday == 6 && this.#isLeapYear(iy))
 					? 53
 					: 52;
-			return [iw, iy];
+			return [iw, iy, dow];
 		}
-		var esf29weekday: number =
+		const esf29weekday: number =
 			this.#dayOfWeek(year, 11, this.#daysInMonth(year, 11), FDOW) + 1; // 1 through 7 - last dow of esfand
 		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
 		if (doy > this.#daysInYear(year) - esf29weekday && esf29weekday < 4) {
 			iy = ++year;
 			iw = 1;
-			return [iw, iy];
+			return [iw, iy, dow];
 		}
 		/* Find if Y M D falls in YearNumber Y, WeekNumber 1 through 52|53 */
 		iy = year;
 		//(doy+(7-(this.#dayOfWeek(year,month,date,FDOW)+1))+(far1weekday-1))/7
 		iw = (5 + doy + far1weekday - this.#dayOfWeek(year, month, date, FDOW)) / 7;
 		if (far1weekday > 4) iw--;
-		return [iw, iy];
+		return [iw, iy, dow];
+	}
+	getWeekOfYear() {
+		return this.#weekOfYear(
+			this.getFullYear(),
+			this.getMonth(),
+			this.getDate(),
+			this.#config.first_day_of_week
+		);
+	}
+	getUTCWeekOfYear() {
+		return this.#weekOfYear(
+			this.getUTCFullYear(),
+			this.getUTCMonth(),
+			this.getUTCDate(),
+			this.#config.first_day_of_week
+		);
 	}
 
 	/**
@@ -460,6 +488,13 @@ export default class SHDate {
 		return 52; // SHDate.WEEKS_IN_YEAR;
 	}
 
+	getWeeksInYear(): number {
+		return this.#weeksInYear(this.getFullYear());
+	}
+	getUTCWeeksInYear(): number {
+		return this.#weeksInYear(this.getUTCFullYear());
+	}
+
 	/**
 	 * Get week of day (wod)
 	 * @param year  - solar hijri year
@@ -471,9 +506,12 @@ export default class SHDate {
 		const doy = (week - 1) * 7 + date - this.#dayOfWeek(year, 0, 4) + 2;
 		return this.#dateOfDoy(year, doy);
 	}
-	getWeekOfDay(year: number, week: number, date: number = 1) {
-		this.#weekOfDay(year, week, date);
+
+	setWeek(year: number, week: number, date: number = 1) {
+		const [years, months, days] = this.#weekOfDay(year, week, date);
+		return this.setFullYear(years, months, days);
 	}
+
 	/**
 	 * Get date of days of year (dodoy)
 	 * @param year - solar hijri year
@@ -506,6 +544,14 @@ export default class SHDate {
 		}
 		return [year, month, date];
 	}
+	setDateOfDoy(year: number, doy: number): number {
+		const [years, months, days] = this.#dateOfDoy(year, doy);
+		return this.setFullYear(years, months, days);
+	}
+	setUTCDateOfDoy(year: number, doy: number): number {
+		const [years, months, days] = this.#dateOfDoy(year, doy);
+		return this.setUTCFullYear(years, months, days);
+	}
 
 	/**
 	 * Get days in month (dim)
@@ -518,8 +564,11 @@ export default class SHDate {
 		if (month < 11) return SHDate.DAYS_IN_MONTH[month];
 		return this.#isLeapYear(year) ? 30 : 29; // SHDate.DAYS_IN_MONTH_LEAP[month] : SHDate.DAYS_IN_MONTH[month];
 	}
-	getDaysInMonth(year: number, month: number) {
-		return this.#daysInMonth;
+	getDaysInMonth() {
+		return this.#daysInMonth(this.getFullYear(), this.getMonth());
+	}
+	getUTCDaysInMonth() {
+		return this.#daysInMonth(this.getUTCFullYear(), this.getUTCMonth());
 	}
 
 	/**
@@ -531,48 +580,22 @@ export default class SHDate {
 	#daysInYear(year: number): number {
 		return this.#isLeapYear(year) ? 366 : 365; // SHDate.DAYS_IN_YEAR_LEAP : SHDate.DAYS_IN_YEAR;
 	}
-	/**
-	 * getRevDayOfYear
-	 *
-	 */
-	getDaysOfDay(year: number, doy: number) {
-		let month: number, day: number, diy: number;
-		if (!(Number.isInteger(year) && Number.isInteger(doy))) {
-			throw "The value is not integer";
-		}
-		doy++;
-		diy = this.#daysInYear(year);
-		if (doy < 1)
-			do {
-				year--;
-				doy += this.#daysInYear(year);
-			} while (doy < 1);
-		else if (doy > diy)
-			do {
-				doy -= diy;
-				year++;
-				diy = this.#daysInYear(year);
-			} while (doy > diy);
-		if (doy < 187) {
-			month = parseInt(((doy - 1) / 31).toString()) + 1;
-			day = doy % 31 ? doy % 31 : 31;
-		} else {
-			doy -= 186;
-			month = parseInt(((doy - 1) / 30).toString()) + 7;
-			day = doy % 30 ? doy % 30 : 30;
-		}
-		return [year, month, day];
+	getDaysInYear() {
+		return this.#daysInYear(this.getFullYear());
+	}
+	getUTCDaysInYear() {
+		return this.#daysInYear(this.getUTCFullYear());
 	}
 
 	/**
-	 * revTime
+	 * time correction
 	 *
 	 * @param  int hours
 	 * @param  int minute
 	 * @param  int second
 	 * @return array
 	 */
-	revTime(hours: number, minute: number, second: number) {
+	timeCorrection(hours: number, minute: number, second: number) {
 		let time: number, doy: number;
 		time = hours * 3600 /* 60*60 */ + minute * 60 + second;
 		second = time % 60;
@@ -583,32 +606,56 @@ export default class SHDate {
 	}
 
 	/**
+	 * date correction
+	 *
+	 * @param  int hours
+	 * @param  int minute
+	 * @param  int second
+	 * @return array
+	 */
+	dateCorrection(year: number, month: number, day: number) {
+		const doy = this.#dayOfYear(month, day);
+		return this.#dateOfDoy(year, doy);
+	}
+
+	/**
 	 * Get date/time information
 	 * @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
 	 * @return  object  an associative object of information related to the timestamp.
 	 * @since   1.0.0
 	 */
-	getDates(timestamp: any = this.getTime(), isGMT: boolean = false) {
+	#getDates(timestamp: any = this.getTime(), isUTC: boolean = false) {
 		let date: SHDate;
 		if (typeof timestamp === "undefined") date = new SHDate();
 		else if (timestamp instanceof SHDate) date = timestamp; // Not provided
 		else date = new SHDate(timestamp);
 		// Javascript Date() // UNIX timestamp (auto-convert to int)
 		return {
-			milliseconds: isGMT ? date.getUTCMilliseconds() : date.getMilliseconds(),
-			seconds: isGMT ? date.getUTCSeconds() : date.getSeconds(),
-			minutes: isGMT ? date.getUTCMinutes() : date.getMinutes(),
-			hours: isGMT ? date.getUTCHours() : date.getHours(),
-			mday: isGMT ? date.getUTCDate() : date.getDate(),
-			wday: isGMT ? date.getUTCDay() : date.getDay(),
-			mon: isGMT ? date.getUTCMonth() : date.getMonth(),
-			year: isGMT ? date.getUTCFullYear() : date.getFullYear(),
-			yday: this.#dayOfYear(
-				isGMT ? date.getUTCMonth() : date.getMonth(),
-				isGMT ? date.getUTCDate() : date.getDate()
+			milliseconds: isUTC ? date.getUTCMilliseconds() : date.getMilliseconds(),
+			seconds: isUTC ? date.getUTCSeconds() : date.getSeconds(),
+			minutes: isUTC ? date.getUTCMinutes() : date.getMinutes(),
+			hours: isUTC ? date.getUTCHours() : date.getHours(),
+			date: isUTC ? date.getUTCDate() : date.getDate(),
+			day: isUTC ? date.getUTCDay() : date.getDay(),
+			month: isUTC ? date.getUTCMonth() : date.getMonth(),
+			year: isUTC ? date.getUTCFullYear() : date.getFullYear(),
+			doy: this.#dayOfYear(
+				isUTC ? date.getUTCMonth() : date.getMonth(),
+				isUTC ? date.getUTCDate() : date.getDate()
 			),
-			ts: parseInt((date.getTime() / 1000).toString())
+			woy: this.#weekOfYear(
+				isUTC ? date.getUTCFullYear() : date.getFullYear(),
+				isUTC ? date.getUTCMonth() : date.getMonth(),
+				isUTC ? date.getUTCDate() : date.getDate()
+			),
+			timestamp: date.getTime() / 1000
 		};
+	}
+	getDates() {
+		return this.#getDates(this.getTime(), false);
+	}
+	getUTCDates() {
+		return this.#getDates(this.getTime(), true);
 	}
 
 	/**
@@ -680,8 +727,10 @@ export default class SHDate {
 					str.push(this.#daysInYear(year));
 					break;
 				case "Leap":
+					str.push(this.isLeapYear().toString());
+					break;
 				case "leap":
-					str.push(this.isLeapYear(year));
+					str.push(this.isLeapYear());
 					break;
 				case "Dim": // days In Month
 					str.push(this.#daysInMonth(year, month).toString().padStart(2, "0"));
@@ -696,11 +745,12 @@ export default class SHDate {
 					str.push(this.#weeksInYear(year));
 					break;
 				case "Woy": //week Of Year
-					const [iso_week, iso_year] = this.#weekOfYear(year, month, date);
-					str.push(`
-						[${iso_week.toString().padStart(2, "0")},
-						${iso_year.toString().padStart(4, "0")}]` // todo change number 2 to 4
-					);
+					const [iso_week, iso_year, dow] = this.#weekOfYear(year, month, date);
+					str.push([
+						iso_week.toString().padStart(2, "0"),
+						iso_year.toString().padStart(4, "0"),
+						dow.toString().padStart(4, "0")
+					]); // todo change number 2 to 4
 					break;
 				case "woy": //week Of Year
 					str.push(this.#weekOfYear(year, month, date));
@@ -875,7 +925,6 @@ export default class SHDate {
 		);
 		if (typeof date == "number") this.#date.setMonth(gmonth, gdate);
 		else this.#date.setMonth(gmonth);
-		this.#date.setMonth(gmonth, gdate);
 		this.#updateDate();
 		return this.getTime();
 	}

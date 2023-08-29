@@ -63,8 +63,8 @@ describe("week", () => {
 		UntilDate.solarDate.forEach(({ solar, Woy }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [[iws, iys]] = solardate.format("Woy");
-			assert.deepEqual([parseInt(iws), parseInt(iys)], Woy);
+			const [[iws, iys]] = solardate.format("woy");
+			assert.deepEqual([iws, iys], Woy);
 		});
 	});
 
@@ -72,8 +72,8 @@ describe("week", () => {
 		UntilDate.solarDate.forEach(({ solar, Wiy }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [Wiys] = solardate.format("Wiy");
-			assert.equal(parseInt(Wiys), Wiy);
+			const [Wiys] = solardate.format("wiy");
+			assert.equal(Wiys, Wiy);
 		});
 	});
 });
@@ -83,8 +83,8 @@ describe("year and day", () => {
 		UntilDate.solarDate.forEach(({ solar, Diy }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [Diys] = solardate.format("Diy");
-			assert.equal(parseInt(Diys), Diy);
+			const [Diys] = solardate.format("diy");
+			assert.equal(Diys, Diy);
 		});
 	});
 
@@ -92,8 +92,8 @@ describe("year and day", () => {
 		UntilDate.solarDate.forEach(({ solar, Doy }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [Doys] = solardate.format("Doy");
-			assert.equal(parseInt(Doys), Doy);
+			const [Doys] = solardate.format("doy");
+			assert.equal(Doys, Doy);
 		});
 	});
 
@@ -101,8 +101,8 @@ describe("year and day", () => {
 		UntilDate.solarDate.forEach(({ solar, Dim }) => {
 			const [shyear, shmonth, shdate] = solar;
 			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [Dims] = solardate.format("Dim");
-			assert.equal(parseInt(Dims), Dim);
+			const [Dims] = solardate.format("dim");
+			assert.equal(Dims, Dim);
 		});
 	});
 });
