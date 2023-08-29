@@ -1371,7 +1371,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public toString(): string {
-		//const [day_short_name, date, month_short_name, year] = this.format("dsn=dd=msn=yy");
+		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY");
 		return `${this.toDateString()} ${this.toTimeString()}`;
 	}
 
@@ -1381,7 +1381,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public toUTCString(): string {
-		//const [day_short_name, date, month_short_name, year] = this.format("dsn=dd=msn=yy", true);
+		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY", true);
 		return `${this.toUTCDateString()} ${this.toUTCTimeString()}`;
 	}
 
@@ -1392,7 +1392,7 @@ export default class SHDate {
 	 */
 	public toDateString(): string {
 		const [day_short_name, date, month_short_name, year] =
-			this.format("dsn=dd=msn=yy");
+			this.format("dsn=DD=msn=YY");
 		return `${day_short_name} ${date} ${month_short_name} ${year}`;
 	}
 
@@ -1403,7 +1403,7 @@ export default class SHDate {
 	 */
 	public toUTCDateString(): string {
 		const [day_short_name, date, month_short_name, year] = this.format(
-			"dsn=dd=msn=yy",
+			"dsn=DD=msn=YY",
 			true
 		);
 		return `${day_short_name}, ${date} ${month_short_name} ${year}`;
@@ -1424,7 +1424,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public toUTCTimeString(): string {
-		const [hours, minute, second] = this.format("hh=ii=ss", true);
+		const [hours, minute, second] = this.format("HH=II=SS", true);
 		return `${hours}:${minute}:${second} GMT`;
 	}
 
@@ -1435,7 +1435,7 @@ export default class SHDate {
 	 */
 	public toISOString(): string {
 		const [dates, times] = this.#date.toJSON().split(/\s*(?:T|$)\s*/);
-		const [year, month, date] = this.format("yy=mm=dd");
+		const [year, month, date] = this.format("YY=MM=DD");
 		return `${year}-${month}-${date}T${times}`;
 	}
 
