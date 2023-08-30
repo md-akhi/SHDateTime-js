@@ -430,11 +430,11 @@ export default class SHDate {
 		date: number,
 		FDOW: number = this.#config.first_day_of_week
 	): number[] {
-		var iw: number, //iso_week
+		let iw: number, //iso_week
 			iy: number; //iso_year
 		const doy: number = this.#dayOfYear(month, date) + 1, // 1 through 366
-			far1weekday: number = this.#dayOfWeek(year, 0, 1, FDOW) + 1, // 1 through 7 - first dow of farvardin
-			dow = this.#dayOfWeek(year, month, date, FDOW) + 1;
+			far1weekday: number = this.#dayOfWeek(year, 0, 1, FDOW) + 1; // 1 through 7 - first dow of farvardin
+
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
 		if (doy <= 8 - far1weekday && far1weekday > 4) {
 			iy = --year;
@@ -442,22 +442,24 @@ export default class SHDate {
 				far1weekday == 5 || (far1weekday == 6 && this.#isLeapYear(iy))
 					? 53
 					: 52;
-			return [iw, iy, dow];
+			return [iw, iy];
 		}
+
+		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
 		const esf29weekday: number =
 			this.#dayOfWeek(year, 11, this.#daysInMonth(year, 11), FDOW) + 1; // 1 through 7 - last dow of esfand
-		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
 		if (doy > this.#daysInYear(year) - esf29weekday && esf29weekday < 4) {
 			iy = ++year;
 			iw = 1;
-			return [iw, iy, dow];
+			return [iw, iy];
 		}
+
 		/* Find if Y M D falls in YearNumber Y, WeekNumber 1 through 52|53 */
 		iy = year;
 		//(doy+(7-(this.#dayOfWeek(year,month,date,FDOW)+1))+(far1weekday-1))/7
 		iw = (5 + doy + far1weekday - this.#dayOfWeek(year, month, date, FDOW)) / 7;
 		if (far1weekday > 4) iw--;
-		return [iw, iy, dow];
+		return [iw, iy];
 	}
 	getWeekOfYear() {
 		return this.#weekOfYear(
@@ -502,8 +504,8 @@ export default class SHDate {
 	 * @param date - solar hijri date
 	 * @returns {number} - week of day
 	 */
-	#weekOfDay(year: number, week: number, date: number = 1): number[] {
-		const doy = (week - 1) * 7 + date - this.#dayOfWeek(year, 0, 4) + 2;
+	#weekOfDay(year: number, week: number, date: number = 0): number[] {
+		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
 		return this.#dateOfDoy(year, doy);
 	}
 
@@ -726,17 +728,23 @@ export default class SHDate {
 				case "diy":
 					str.push(this.#daysInYear(year));
 					break;
-				case "Leap":
-					str.push(this.isLeapYear().toString());
+				case "Doy": //day Of Year
+					str.push(this.#dayOfYear(month, date).toString().padStart(3, "0"));
 					break;
-				case "leap":
-					str.push(this.isLeapYear());
+				case "doy":
+					str.push(this.#dayOfYear(month, date));
 					break;
 				case "Dim": // days In Month
 					str.push(this.#daysInMonth(year, month).toString().padStart(2, "0"));
 					break;
 				case "dim":
 					str.push(this.#daysInMonth(year, month));
+					break;
+				case "Dow": // day Of Week
+					str.push(weekday.toString().padStart(2, "0"));
+					break;
+				case "dow":
+					str.push(weekday);
 					break;
 				case "Wiy": //weeks In Year
 					str.push(this.#weeksInYear(year).toString().padStart(2, "0"));
@@ -745,27 +753,14 @@ export default class SHDate {
 					str.push(this.#weeksInYear(year));
 					break;
 				case "Woy": //week Of Year
-					const [iso_week, iso_year, dow] = this.#weekOfYear(year, month, date);
+					const [iso_week, iso_year] = this.#weekOfYear(year, month, date);
 					str.push([
 						iso_week.toString().padStart(2, "0"),
-						iso_year.toString().padStart(4, "0"),
-						dow.toString().padStart(4, "0")
-					]); // todo change number 2 to 4
+						iso_year.toString().padStart(4, "0")
+					]);
 					break;
 				case "woy": //week Of Year
 					str.push(this.#weekOfYear(year, month, date));
-					break;
-				case "Dow": // day Of Week
-					str.push(weekday.toString().padStart(2, "0"));
-					break;
-				case "dow":
-					str.push(weekday);
-					break;
-				case "Doy": //day Of Year
-					str.push(this.#dayOfYear(month, date).toString().padStart(3, "0"));
-					break;
-				case "doy":
-					str.push(this.#dayOfYear(month, date));
 					break;
 				case "dsn": //day short names
 					str.push(
@@ -819,6 +814,10 @@ export default class SHDate {
 					break;
 				case "sun": //suffix names
 					str.push(Word.getSuffixNames(date, this.#config.language_Word));
+					break;
+				case "Leap":
+				case "leap":
+					str.push(this.isLeapYear());
 					break;
 				default:
 					str.push(f);
@@ -1424,7 +1423,7 @@ export default class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 * @since 1.0.0
 	 */
-	public checkTime(
+	static checkTime(
 		hours: number,
 		minutes: number,
 		seconds: number,
@@ -1438,6 +1437,12 @@ export default class SHDate {
 			seconds < 0 ||
 			seconds > 59
 		);
+	}
+	public checkTime(hours: number, minutes: number, seconds: number): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, false);
+	}
+	public checkTime12(hours: number, minutes: number, seconds: number): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, true);
 	}
 
 	/**
@@ -1743,14 +1748,33 @@ export default class SHDate {
 	 * @param {number} milliseconds - The milliseconds value (default: 0)
 	 * @returns {boolean} Returns true after resetting the time
 	 */
+	#restTime(
+		hours: number = 0,
+		minutes: number = 0,
+		seconds: number = 0,
+		milliseconds: number = 0,
+		isUTC: boolean = false
+	): number[] {
+		isUTC
+			? this.setUTCHours(hours, minutes, seconds, milliseconds)
+			: this.setHours(hours, minutes, seconds, milliseconds);
+		return [hours, minutes, seconds, milliseconds];
+	}
 	public restTime(
 		hours: number = 0,
 		minutes: number = 0,
 		seconds: number = 0,
 		milliseconds: number = 0
 	): number[] {
-		this.setHours(hours, minutes, seconds, milliseconds);
-		return [hours, minutes, seconds, milliseconds];
+		return this.#restTime(hours, minutes, seconds, milliseconds, false);
+	}
+	public restUTCTime(
+		hours: number = 0,
+		minutes: number = 0,
+		seconds: number = 0,
+		milliseconds: number = 0
+	): number[] {
+		return this.#restTime(hours, minutes, seconds, milliseconds, true);
 	}
 
 	/**
