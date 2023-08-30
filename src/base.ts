@@ -862,6 +862,27 @@ export default class SHDate {
 		);
 	}
 
+	#setFullYear(
+		year: number,
+		month: number | false = false,
+		date: number | false = false,
+		isUTC: boolean = false
+	): number {
+		month = this.#isFalse(month, isUTC ? this.getUTCMonth() : this.getMonth());
+		date = this.#isFalse(date, isUTC ? this.getUTCDate() : this.getDate());
+		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
+		if (typeof date == "number")
+			isUTC
+				? this.#date.setUTCFullYear(gyear, gmonth, gdate)
+				: this.#date.setFullYear(gyear, gmonth, gdate);
+		else if (typeof month == "number")
+			isUTC
+				? this.#date.setUTCFullYear(gyear, gmonth)
+				: this.#date.setFullYear(gyear, gmonth);
+		else this.#date.setFullYear(gyear);
+		this.#updateDate();
+		return this.getTime();
+	}
 	/**
 	 * Sets the year of the Date object using local time.
 	 * @param {number} year — A numeric value for the year.
@@ -870,19 +891,13 @@ export default class SHDate {
 	 * @return {object} SHDate
 	 * @since 1.0.0
 	 */
+
 	setFullYear(
 		year: number,
 		month: number | false = false,
 		date: number | false = false
 	): number {
-		month = this.#isFalse(month, this.getMonth());
-		date = this.#isFalse(date, this.getDate());
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		if (typeof date == "number") this.#date.setFullYear(gyear, gmonth, gdate);
-		else if (typeof month == "number") this.#date.setFullYear(gyear, gmonth);
-		else this.#date.setFullYear(gyear);
-		this.#updateDate();
-		return this.getTime();
+		return this.#setFullYear(year, month, date, false);
 	}
 
 	/**
@@ -898,17 +913,28 @@ export default class SHDate {
 		month: number | false = false,
 		date: number | false = false
 	): number {
-		month = this.#isFalse(month, this.getUTCMonth());
-		date = this.#isFalse(date, this.getUTCDate());
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
+		return this.#setFullYear(year, month, date, true);
+	}
+
+	#setMonth(
+		month: number,
+		date: number | false = false,
+		isUTC: boolean = false
+	): number {
+		date = this.#isFalse(date, isUTC ? this.getUTCDate() : this.getDate());
+		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
+			this.getFullYear(),
+			month,
+			date
+		);
 		if (typeof date == "number")
-			this.#date.setUTCFullYear(gyear, gmonth, gdate);
-		else if (typeof month == "number") this.#date.setUTCFullYear(gyear, gmonth);
-		else this.#date.setUTCFullYear(gyear);
+			isUTC
+				? this.#date.setUTCMonth(gmonth, gdate)
+				: this.#date.setMonth(gmonth, gdate);
+		else isUTC ? this.#date.setUTCMonth(gmonth) : this.#date.setMonth(gmonth);
 		this.#updateDate();
 		return this.getTime();
 	}
-
 	/**
 	 * Sets the month value in the Date object using local time.
 	 * @param {number} month — A numeric value equal to the month. The value for Farvardin is 0, and other month values follow * consecutively.
@@ -917,16 +943,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setMonth(month: number, date: number | false = false): number {
-		date = this.#isFalse(date, this.getDate());
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			this.getFullYear(),
-			month,
-			date
-		);
-		if (typeof date == "number") this.#date.setMonth(gmonth, gdate);
-		else this.#date.setMonth(gmonth);
-		this.#updateDate();
-		return this.getTime();
+		return this.#setMonth(month, date, false);
 	}
 
 	/**
@@ -937,18 +954,19 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setUTCMonth(month: number, date: number | false = false): number {
-		date = this.#isFalse(date, this.getUTCDate());
+		return this.#setMonth(month, date, true);
+	}
+
+	#setDate(date: number, isUTC: boolean = false): number {
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			this.getUTCFullYear(),
-			month,
+			this.getFullYear(),
+			this.getMonth(),
 			date
 		);
-		if (date) this.#date.setUTCMonth(gmonth, gdate);
-		else this.#date.setUTCMonth(gmonth);
+		isUTC ? this.#date.setUTCDate(gdate) : this.#date.setDate(gdate);
 		this.#updateDate();
 		return this.getTime();
 	}
-
 	/**
 	 * Sets the numeric day-of-the-month value of the Date object using local time.
 	 * @param {number} date — A numeric value equal to the day of the month.
@@ -956,14 +974,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setDate(date: number): number {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			this.getFullYear(),
-			this.getMonth(),
-			date
-		);
-		this.#date.setDate(gdate);
-		this.#updateDate();
-		return this.getTime();
+		return this.#setDate(date, false);
 	}
 
 	/**
@@ -973,14 +984,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	setUTCDate(date: number): number {
-		const [gyear, gmonth, gdate] = this.#SolarToGregorian(
-			this.getUTCFullYear(),
-			this.getUTCMonth(),
-			date
-		);
-		this.#date.setUTCDate(gdate);
-		this.#updateDate();
-		return this.getTime();
+		return this.#setDate(date, true);
 	}
 
 	/**
@@ -993,23 +997,48 @@ export default class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
+	#setHours(
+		hours: number,
+		minutes: number | false = false,
+		seconds: number | false = false,
+		milliseconds: number | false = false,
+		isUTC: boolean = false
+	): number {
+		milliseconds = this.#isFalse(
+			milliseconds,
+			isUTC ? this.getUTCMilliseconds() : this.getMilliseconds()
+		);
+		seconds = this.#isFalse(
+			seconds,
+			isUTC ? this.getUTCSeconds() : this.getSeconds()
+		);
+		minutes = this.#isFalse(
+			minutes,
+			isUTC ? this.getUTCMinutes() : this.getMinutes()
+		);
+		if (typeof milliseconds == "number")
+			isUTC
+				? this.#date.setUTCHours(hours, minutes, seconds, milliseconds)
+				: this.#date.setHours(hours, minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			isUTC
+				? this.#date.setUTCHours(hours, minutes, seconds)
+				: this.#date.setHours(hours, minutes, seconds);
+		else if (typeof minutes == "number")
+			isUTC
+				? this.#date.setUTCHours(hours, minutes)
+				: this.#date.setHours(hours, minutes);
+		else isUTC ? this.#date.setUTCHours(hours) : this.#date.setHours(hours);
+		this.#updateTime();
+		return this.getTime();
+	}
 	public setHours(
 		hours: number,
 		minutes: number | false = false,
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
-		seconds = this.#isFalse(seconds, this.getSeconds());
-		minutes = this.#isFalse(minutes, this.getMinutes());
-		if (typeof milliseconds == "number")
-			this.#date.setHours(hours, minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			this.#date.setHours(hours, minutes, seconds);
-		else if (typeof minutes == "number") this.#date.setHours(hours, minutes);
-		else this.#date.setHours(hours);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setHours(hours, minutes, seconds, milliseconds, false);
 	}
 
 	/**
@@ -1028,17 +1057,7 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
-		seconds = this.#isFalse(seconds, this.getUTCSeconds());
-		minutes = this.#isFalse(minutes, this.getUTCMinutes());
-		if (typeof milliseconds == "number")
-			this.#date.setUTCHours(hours, minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			this.#date.setUTCHours(hours, minutes, seconds);
-		else if (typeof minutes == "number") this.#date.setHours(hours, minutes);
-		else this.#date.setUTCHours(hours);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setHours(hours, minutes, seconds, milliseconds, true);
 	}
 
 	/**
@@ -1050,20 +1069,41 @@ export default class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
+	#setMinutes(
+		minutes: number,
+		seconds: number | false = false,
+		milliseconds: number | false = false,
+		isUTC: boolean = false
+	): number {
+		milliseconds = this.#isFalse(
+			milliseconds,
+			isUTC ? this.getUTCMilliseconds() : this.getMilliseconds()
+		);
+		seconds = this.#isFalse(
+			seconds,
+			isUTC ? this.getUTCSeconds() : this.getSeconds()
+		);
+		if (typeof milliseconds == "number")
+			isUTC
+				? this.#date.setUTCMinutes(minutes, seconds, milliseconds)
+				: this.#date.setMinutes(minutes, seconds, milliseconds);
+		else if (typeof seconds == "number")
+			isUTC
+				? this.#date.setUTCMinutes(minutes, seconds)
+				: this.#date.setMinutes(minutes, seconds);
+		else
+			isUTC
+				? this.#date.setUTCMinutes(minutes)
+				: this.#date.setMinutes(minutes);
+		this.#updateTime();
+		return this.getTime();
+	}
 	public setMinutes(
 		minutes: number,
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
-		seconds = this.#isFalse(seconds, this.getSeconds());
-		if (typeof milliseconds == "number")
-			this.#date.setMinutes(minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			this.#date.setMinutes(minutes, seconds);
-		else this.#date.setMinutes(minutes);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setMinutes(minutes, seconds, milliseconds, false);
 	}
 
 	/**
@@ -1080,15 +1120,7 @@ export default class SHDate {
 		seconds: number | false = false,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
-		seconds = this.#isFalse(seconds, this.getUTCSeconds());
-		if (typeof milliseconds == "number")
-			this.#date.setUTCMinutes(minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			this.#date.setUTCMinutes(minutes, seconds);
-		else this.#date.setUTCMinutes(minutes);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setMinutes(minutes, seconds, milliseconds, true);
 	}
 
 	/**
@@ -1099,16 +1131,31 @@ export default class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
+	#setSeconds(
+		seconds: number,
+		milliseconds: number | false = false,
+		isUTC: boolean = false
+	): number {
+		milliseconds = this.#isFalse(
+			milliseconds,
+			isUTC ? this.getUTCMilliseconds() : this.getMilliseconds()
+		);
+		if (typeof milliseconds == "number")
+			isUTC
+				? this.#date.setUTCSeconds(seconds, milliseconds)
+				: this.#date.setSeconds(seconds, milliseconds);
+		else
+			isUTC
+				? this.#date.setUTCSeconds(seconds)
+				: this.#date.setSeconds(seconds);
+		this.#updateTime();
+		return this.getTime();
+	}
 	public setSeconds(
 		seconds: number,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getMilliseconds());
-		if (typeof milliseconds == "number")
-			this.#date.setSeconds(seconds, milliseconds);
-		else this.#date.setSeconds(seconds);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setSeconds(seconds, milliseconds, false);
 	}
 
 	/**
@@ -1122,12 +1169,7 @@ export default class SHDate {
 		seconds: number,
 		milliseconds: number | false = false
 	): number {
-		milliseconds = this.#isFalse(milliseconds, this.getUTCMilliseconds());
-		if (typeof milliseconds == "number")
-			this.#date.setUTCSeconds(seconds, milliseconds);
-		else this.#date.setUTCSeconds(seconds);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setSeconds(seconds, milliseconds, true);
 	}
 
 	/**
@@ -1136,10 +1178,15 @@ export default class SHDate {
 	 * @returns {object} SHDate
 	 * @since 1.0.0
 	 */
-	public setMilliseconds(milliseconds: number): number {
-		this.#date.setMilliseconds(milliseconds);
+	#setMilliseconds(milliseconds: number, isUTC: boolean = false): number {
+		isUTC
+			? this.#date.setUTCMilliseconds(milliseconds)
+			: this.#date.setMilliseconds(milliseconds);
 		this.#updateTime();
 		return this.getTime();
+	}
+	public setMilliseconds(milliseconds: number): number {
+		return this.#setMilliseconds(milliseconds, false);
 	}
 
 	/**
@@ -1149,9 +1196,7 @@ export default class SHDate {
 	 * @since 1.0.0
 	 */
 	public setUTCMilliseconds(milliseconds: number): number {
-		this.#date.setUTCMilliseconds(milliseconds);
-		this.#updateTime();
-		return this.getTime();
+		return this.#setMilliseconds(milliseconds, true);
 	}
 
 	/**

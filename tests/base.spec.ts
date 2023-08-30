@@ -15,9 +15,8 @@ describe("now()", () => {
 describe("Convert Date Gregorian() And Solar()", () => {
 	it("correctly leap", () => {
 		UntilConvertDate.leapYear.forEach(({ solar, Leap }) => {
-			const [shyear] = solar;
-			let solardate = new SHDate(shyear);
-			assert.equal(solardate.isLeapYear(shyear), Leap);
+			let solardate = new SHDate([solar]);
+			assert.equal(solardate.isLeapYear(), Leap);
 		});
 	});
 
@@ -26,12 +25,12 @@ describe("Convert Date Gregorian() And Solar()", () => {
 			const [gyear, gmonth, gdate] = gregorian;
 			let gregoriandate = new Date(gyear, gmonth, gdate);
 			let solardate = new SHDate(gregoriandate.getTime());
-			const arrsolardate = [
+			const sdate = [
 				solardate.getFullYear(),
 				solardate.getMonth(),
 				solardate.getDate()
 			];
-			assert.deepEqual(arrsolardate, solar);
+			assert.deepEqual(sdate, solar);
 		});
 	});
 
