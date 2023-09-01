@@ -4,36 +4,28 @@ const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
 
 console.log("now:" + new SHDate().toString());
 
-const liter = "-";
-const date = "1200W01-1";
-const time = "";
-const shstring = `${date}${time}`;
+const string = `1200-01-01`;
 //const [year, month, day] = date.split(liter);
 
-let shdat = new SHDate(shstring);
-console.log("SHDate", shstring, shdat.toString(), shdat.getTime());
+let sdate = new SHDate(string);
+let gdate = new Date(sdate.getTime());
+
+console.log("SHDate", string, sdate.toString(), sdate.getTime());
+
+const gstring = `${gdate.getFullYear()}-${
+	gdate.getMonth() + 1
+}-${gdate.getDate()}`;
+
+console.log("Date", gstring, gdate.toString(), gdate.getTime());
 
 console.log(`\n`);
 
-let gtime = new Date(shdat.getTime());
+const ggdate = new Date(sdate.getTime());
+const ssdate = new SHDate(sdate);
 
-const gstring = `${gtime.getFullYear()}${liter}${
-	gtime.getMonth() + 1
-}${liter}${gtime.getDate()}${time}`;
-let gdat = new Date(gstring);
-console.log("Date", gstring, gdat.toString(), gdat.getTime());
-
-console.log(`\n`);
-
-const unixTimeZero = new Date("1841-03-21");
-const javaScriptRelease = new SHDate(date);
-
-console.log(unixTimeZero);
+console.log(ggdate.toString());
 // Expected output: 0
 
-console.log(
-	javaScriptRelease.format("woy"),
-	javaScriptRelease.getTime(),
-	javaScriptRelease.toString()
-);
+const [[iw, iy]] = sdate.format("woy");
+console.log(ssdate.toString(), ssdate.setWeek(iy, iw, ssdate.getDay()));
 // Expected output: 818035920000

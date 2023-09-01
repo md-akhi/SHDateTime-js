@@ -5,6 +5,10 @@ for (let year = 1200; year <= 1700; year += 20) {
 		[1, 1],
 		[1, 2],
 		[1, 3],
+		[1, 4],
+		[1, 5],
+		[1, 6],
+		[1, 7],
 		[1, 15],
 		[1, 29],
 		[1, 30],
@@ -75,6 +79,8 @@ for (let year = 1200; year <= 1700; year += 20) {
 		[12, 3],
 		[12, 4],
 		[12, 15],
+		[12, 25],
+		[12, 26],
 		[12, 27],
 		[12, 28],
 		[12, 30],
@@ -95,7 +101,6 @@ for (let year = 1200; year <= 1700; year += 20) {
 			dim,
 			wiy,
 			[woyw, woyy],
-			leap,
 			dsn,
 			msn,
 			dfn,
@@ -106,9 +111,10 @@ for (let year = 1200; year <= 1700; year += 20) {
 			csn,
 			ssn,
 			osn,
-			sun
+			sun,
+			leaps
 		] = shdate.format(
-			"yy=mm=dd=hh=ii=ss=ms=dow=diy=doy=dim=wiy=woy=leap=dsn=msn=dfn=efn=esn=mfn=asn=csn=ssn=osn=sun"
+			"yy=mm=dd=hh=ii=ss=ms=dow=diy=doy=dim=wiy=woy=dsn=msn=dfn=efn=esn=mfn=asn=csn=ssn=osn=sun=lps"
 		);
 
 		let gdate = new Date();
@@ -158,12 +164,10 @@ for (let year = 1200; year <= 1700; year += 20) {
 				`{
 					sdate:[${years},${
 					months * 1 + 1
-				},${days},${hours},${minutes},${seconds}], sdata:{solar:[${years},${months},${days}],Dow:${dow}, Diy:${diy}, Doy:${doy}, Dim:${dim}, Wiy:${wiy}, Woy:[${woyw},${woyy}],dsn:"${dsn}", dfn:"${dfn}", esn:"${esn}", efn:"${efn}", mfn:"${mfn}", msn:"${msn}", asn:"${asn}", csn:"${csn}", ssn:"${ssn}", osn:"${
-					osn !== 0 ? osn : 0
-				}", sun:"${sun}"} ,stime:${shdate.getTime()},
+				},${days},${hours},${minutes},${seconds},${milliseconds}], sdata:{solar:[${years},${months},${days}], Leap:${shdate.isLeapYear()}, Leaps:${leaps}} ,stime:${shdate.getTime()},
 					gdate:[${gyears},${
 					gmonths * 1 + 1
-				},${gdays},${ghours},${gminutes},${gseconds}], gdata:{gregorian:[${gyears},${gmonths},${gdays}],Dow:${gdow}} ,gtime:${gdate.getTime()}
+				},${gdays},${ghours},${gminutes},${gseconds},${milliseconds}], gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,gtime:${gdate.getTime()}
 			},`
 			);
 	});
