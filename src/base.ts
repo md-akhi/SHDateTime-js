@@ -508,11 +508,13 @@ export default class SHDate {
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
 		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
+		// console.log(year, week, date, year, doy);
 		return this.#dateOfDayOfYear(year, doy);
 	}
 
 	setWeek(year: number, week: number, date: number = 0) {
 		const [years, months, days] = this.#weekOfDay(year, week, date);
+		// console.log(years, months, days);
 		return this.setFullYear(years, months, days);
 	}
 
@@ -1626,18 +1628,21 @@ export default class SHDate {
 					break;
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
-					[year, month, day] = date.#dateOfDayOfYear(
-						parseInt(dataObj.YEAR),
-						doy
-					);
+					date.setdateOfDayOfYear(parseInt(dataObj.YEAR), doy);
+					year = date.getFullYear();
+					month = date.getMonth();
+					day = date.getDate();
 					break;
 				case "WEEK_OF_YEAR":
 					week = parseInt(value);
-					[year, month, day] = date.#weekOfDay(
+					date.setWeek(
 						parseInt(dataObj.YEAR),
 						week,
 						dataObj.DAY_OF_WEEK ? parseInt(dataObj.DAY_OF_WEEK) - 1 : 0
 					);
+					year = date.getFullYear();
+					month = date.getMonth();
+					day = date.getDate();
 					break;
 				case "NOW":
 					now = SHDate.now();

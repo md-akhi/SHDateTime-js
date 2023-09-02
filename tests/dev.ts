@@ -4,7 +4,7 @@ const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
 
 console.log("now:" + new SHDate().toString());
 
-const string = `1200-01-01`;
+const string = `1199W53-5`;
 //const [year, month, day] = date.split(liter);
 
 let sdate = new SHDate(string);

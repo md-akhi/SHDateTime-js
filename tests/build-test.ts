@@ -164,7 +164,23 @@ for (let year = 1200; year <= 1700; year += 20) {
 				`{
 					sdate:[${years},${
 					months * 1 + 1
-				},${days},${hours},${minutes},${seconds},${milliseconds}], sdata:{solar:[${years},${months},${days}], Leap:${shdate.isLeapYear()}, Leaps:${leaps}} ,stime:${shdate.getTime()},
+				},${days},${hours},${minutes},${seconds},${milliseconds}], sdata:{solar:[${years},${months},${days}], DateTime:"${years}-${String(
+					parseInt(months) + 1
+				).padStart(2, "0")}-${String(days).padStart(
+					2,
+					"0"
+				)} ${hours}:${minutes}:${seconds}", DateAber:"${String(days).padStart(
+					2,
+					"0"
+				)} ${msn} ${years}", DateAberWithDate:"${dsn} ${String(days).padStart(
+					2,
+					"0"
+				)} ${msn} ${years}", DateDoy:"${years}.${String(doy).padStart(
+					3,
+					"0"
+				)}", DateWoy:"${woyy}W${String(woyw).padStart(2, "0")}-${
+					dow + 1
+				}"} ,stime:${shdate.getTime()},
 					gdate:[${gyears},${
 					gmonths * 1 + 1
 				},${gdays},${ghours},${gminutes},${gseconds},${milliseconds}], gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,gtime:${gdate.getTime()}
