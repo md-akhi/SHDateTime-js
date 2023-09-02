@@ -1,5 +1,12 @@
 import SHDate from "../src/base";
 
+function padstring(str: any, pad: number = 2) {
+	return `${str}`.padStart(pad, "0");
+}
+function strtoint(str: string | number) {
+	return (str as any) * 1;
+}
+
 for (let year = 1200; year <= 1700; year += 20) {
 	[
 		[1, 1],
@@ -117,37 +124,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 			"yy=mm=dd=hh=ii=ss=ms=dow=diy=doy=dim=wiy=woy=dsn=msn=dfn=efn=esn=mfn=asn=csn=ssn=osn=sun=lps"
 		);
 
-		let gdate = new Date();
-		gdate.setTime(shdate.getTime());
-		const glongmonth = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December"
-		];
-		const gshortmonths = [
-			"Jan",
-			"Feb",
-			"Mar",
-			"Apr",
-			"May",
-			"Jun",
-			"Jul",
-			"Aug",
-			"Sep",
-			"Oct",
-			"Nov",
-			"Dec"
-		];
-		const gweekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		let gdate = new Date(shdate.getTime());
 		const [gyears, gmonths, gdays, ghours, gminutes, gseconds, gdow] = [
 			gdate.getFullYear(),
 			gdate.getMonth(),
@@ -157,33 +134,33 @@ for (let year = 1200; year <= 1700; year += 20) {
 			gdate.getSeconds(),
 			gdate.getDay()
 		];
-		if (month == 11 && day !== parseInt(days)) {
+		if (month == 12 && day !== parseInt(days)) {
 			console.log("{},");
 		} else
 			console.log(
 				`{
 					sdate:[${years},${
-					months * 1 + 1
-				},${days},${hours},${minutes},${seconds},${milliseconds}], sdata:{solar:[${years},${months},${days}], DateTime:"${years}-${String(
-					parseInt(months) + 1
-				).padStart(2, "0")}-${String(days).padStart(
-					2,
-					"0"
-				)} ${hours}:${minutes}:${seconds}", DateAber:"${String(days).padStart(
-					2,
-					"0"
-				)} ${msn} ${years}", DateAberWithDate:"${dsn} ${String(days).padStart(
-					2,
-					"0"
-				)} ${msn} ${years}", DateDoy:"${years}.${String(doy).padStart(
-					3,
-					"0"
-				)}", DateWoy:"${woyy}W${String(woyw).padStart(2, "0")}-${
-					dow + 1
-				}"} ,stime:${shdate.getTime()},
+					strtoint(months) + 1
+				},${days},${hours},${minutes},${seconds},${milliseconds}],
+				sdata:{
+					solar:[${years},${months},${days}],
+					DateTime:"${padstring(years, 4)}-${padstring(
+					strtoint(months) + 1,
+					2
+				)}-${padstring(days, 2)} ${padstring(hours, 2)}:${padstring(
+					minutes,
+					2
+				)}:${padstring(seconds, 2)}",
+				DateAber:"${padstring(days, 2)} ${msn} ${padstring(years)}",
+				DateAberWithDate:"${dsn} ${padstring(days, 2)} ${msn} ${padstring(years, 4)}",
+				DateDoy:"${padstring(years, 4)}.${padstring(doy, 3)}",
+				DateWoy:"${padstring(woyy)}W${padstring(woyw)}-${dow + 1}"} ,
+				stime:${shdate.getTime()},
 					gdate:[${gyears},${
 					gmonths * 1 + 1
-				},${gdays},${ghours},${gminutes},${gseconds},${milliseconds}], gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,gtime:${gdate.getTime()}
+				},${gdays},${ghours},${gminutes},${gseconds},${milliseconds}],
+				gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,
+				gtime:${gdate.getTime()}
 			},`
 			);
 	});

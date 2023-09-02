@@ -508,20 +508,18 @@ export default class SHDate {
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
 		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
-		// console.log(year, week, date, year, doy);
 		return this.#dateOfDayOfYear(year, doy);
 	}
 
 	setWeek(year: number, week: number, date: number = 0) {
 		const [years, months, days] = this.#weekOfDay(year, week, date);
-		// console.log(years, months, days);
 		return this.setFullYear(years, months, days);
 	}
 
 	/**
 	 * Get date of days of year (dodoy)
 	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year
+	 * @param doy  - solar hijri day of year (range: 0 - 365)
 	 * @returns {array} - days of day
 	 * @since 1.0
 	 */
@@ -707,7 +705,7 @@ export default class SHDate {
 					str.push(`${month}`.padStart(2, "0"));
 					break;
 				case "mm":
-					str.push(month.toString());
+					str.push(month);
 					break;
 				case "DD":
 					str.push(`${date}`.padStart(2, "0"));
@@ -1628,7 +1626,7 @@ export default class SHDate {
 					break;
 				case "DAY_OF_YEAR":
 					doy = parseInt(value);
-					date.setdateOfDayOfYear(parseInt(dataObj.YEAR), doy);
+					date.setdateOfDayOfYear(year, doy);
 					year = date.getFullYear();
 					month = date.getMonth();
 					day = date.getDate();

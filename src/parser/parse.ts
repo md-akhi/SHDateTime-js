@@ -391,11 +391,11 @@ export default class SHParser {
 				if (week) {
 					this.isTKDash();
 					dow = this.int1To7() || this.int0();
+					this.data["YEAR"] = year;
+					this.data["WEEK_OF_YEAR"] = week;
 					if (dow) {
 						this.data["DAY_OF_WEEK"] = dow;
 					}
-					this.data["WEEK_OF_YEAR"] = week;
-					this.data["YEAR"] = year;
 					return true;
 				}
 			}
@@ -518,13 +518,6 @@ export default class SHParser {
 			this.isTKSpace();
 			meridian = this.meridian();
 			if (meridian) {
-				if ((this.data["MERIDIAN"] = "AM")) {
-					this.data["HOURS"] = h12;
-					this.data["AM"] = true;
-				} else {
-					this.data["HOURS"] = h12 + 12;
-					this.data["PM"] = true;
-				}
 				return true;
 			}
 		}
@@ -551,6 +544,8 @@ export default class SHParser {
 			if (min) {
 				this.isTKColon() || this.isTKDot();
 				sec = this.secondsOptionalPrefix();
+				this.data["HOURS"] = h24;
+				this.data["MINUTES"] = min;
 				if (sec) {
 					this.data["SECONDS"] = sec;
 					frac = this.fractionalSecond();
@@ -560,8 +555,6 @@ export default class SHParser {
 					this.isTKSpace();
 					this.TZCorrection() || this.timeZone();
 				}
-				this.data["HOURS"] = h24;
-				this.data["MINUTES"] = min;
 				return true;
 			}
 		} else if (this.TZCorrection() || this.timeZone()) {
@@ -759,13 +752,13 @@ export default class SHParser {
 	meridian() {
 		if (this.isToken("AM")) {
 			//00:00-11:59
-			this.data["MERIDIAN"] = "0";
+			this.data["MERIDIAN"] = false;
 			this.nextToken();
 			return true;
 		} else if (this.isToken("PM")) {
 			//12:00-23:59
 			this.nextToken();
-			this.data["MERIDIAN"] = "1";
+			this.data["MERIDIAN"] = true;
 			return true;
 		}
 		return false;
@@ -973,17 +966,18 @@ export default class SHParser {
 	dateWithDash() {
 		let pos, year, month, day;
 		pos = this.getPosition();
-		this.data["SIGN_DATE"] = this.signNumber();
+		const signNumber = this.signNumber();
 		year = this.year4MandatoryPrefix() || this.year2MandatoryPrefix();
 		if (year && this.isTKDash()) {
 			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
 				day = this.dayOptionalPrefix();
+				if (signNumber) this.data["SIGN_DATE"] = signNumber;
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
 				if (day) {
 					this.data["DAY"] = day;
 				}
-				this.data["YEAR"] = year;
-				this.data["MONTH"] = month;
 				return true;
 			}
 		}
@@ -1217,13 +1211,13 @@ export default class SHParser {
 			this.isTKSpace() || this.isTKDash();
 			month = this.monthTextual();
 			if (month) {
+				this.data["DAY"] = day;
+				this.data["MONTH"] = month;
 				this.isTKSpace() || this.isTKDash();
 				year = this.year4MandatoryPrefix();
 				if (year) {
 					this.data["YEAR"] = year;
 				}
-				this.data["MONTH"] = month;
-				this.data["DAY"] = day;
 				return true;
 			}
 		}
