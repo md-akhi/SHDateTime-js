@@ -5,13 +5,6 @@ import * as UntilString from "./Until-String.js";
 import SHDate from "../src/base.js";
 
 describe("String", () => {
-	it("correctly Date YYYY-MM-DD HH:II:SS", () => {
-		UntilString.DateString.forEach(({ sdata, stime }) => {
-			const shts = SHDate.parse(sdata.DateTime);
-			assert.equal(stime, shts);
-		});
-	});
-
 	it("correctly Date Day Of Year YYYY.doy", () => {
 		UntilString.DateString.forEach(({ sdata, stime }) => {
 			const shts = SHDate.parse(sdata.DateDoy);
@@ -22,6 +15,13 @@ describe("String", () => {
 	it("correctly Date Week Of Year YYYY-Ww-D", () => {
 		UntilString.DateString.forEach(({ sdata, stime }) => {
 			const shts = SHDate.parse(sdata.DateWoy);
+			assert.equal(stime, shts);
+		});
+	});
+
+	it("correctly Date YYYY-MM-DD HH:II:SS", () => {
+		UntilString.DateString.forEach(({ sdata, stime }) => {
+			const shts = SHDate.parse(sdata.DateTime);
 			assert.equal(stime, shts);
 		});
 	});

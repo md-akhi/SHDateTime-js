@@ -152,9 +152,20 @@ for (let year = 1200; year <= 1700; year += 20) {
 					2
 				)}:${padstring(seconds, 2)}",
 				DateAber:"${padstring(days, 2)} ${msn} ${padstring(years)}",
+				DateMonth:"${msn}",
+				DateYearMonth:"${padstring(years, 4)}${month % 2 & 0 ? "." : "-"}${msn}",
+				DateYear:"${padstring(years, 4)}",
 				DateAberWithDate:"${dsn} ${padstring(days, 2)} ${msn} ${padstring(years, 4)}",
 				DateDoy:"${padstring(years, 4)}.${padstring(doy, 3)}",
 				DateWoy:"${padstring(woyy)}W${padstring(woyw)}-${dow + 1}"} ,
+				DateWithSlash:"${padstring(years, 4)}/${padstring(
+					strtoint(months) + 1,
+					2
+				)}/${padstring(days, 2)}"} ,
+				DateWithOutSlash:"${padstring(years, 4)}${padstring(
+					strtoint(months) + 1,
+					2
+				)}${padstring(days, 2)}"} ,
 				stime:${shdate.getTime()},
 					gdate:[${gyears},${
 					gmonths * 1 + 1

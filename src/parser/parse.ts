@@ -838,20 +838,19 @@ export default class SHParser {
 	 */
 	DateFormats() {
 		// Localized Notations
-
 		return this.dateLocalizedNotations() || this.ISO8601Notations();
 	}
 
 	dateLocalizedNotations() {
 		return (
-			this.dedateWithSlash() || // dd "/" mm "/" YY
+			// this.dedateWithSlash() || // dd "/" mm "/" YY
 			this.year4TextualMonth() || // YY ([ \t-])* m    Day reset to 1
 			this.Date1Abbr() || // y "-" M "-" DD
 			this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			this.dayTextualMonthYear() || // Day, textual month and year
 			this.textualMonth4Year() || // Day and textual month
 			this.textualMonth4Year2() ||
-			this.textualMonthDayYear1() ||
+			// this.textualMonthDayYear1() ||
 			this.monthAbbrDayYear() ||
 			this.year4MandatoryPrefix() ||
 			this.dateMonthTextual()
@@ -902,25 +901,25 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	dedateWithSlash() {
-		let pos, year, month, day;
-		pos = this.getPosition();
-		day = this.dayOptionalPrefix();
-		if (day && this.isTKSlash()) {
-			month = this.monthOptionalPrefix();
-			if (month && this.isTKSlash()) {
-				year = this.year4MandatoryPrefix();
-				if (year) {
-					this.data["DAY"] = day;
-					this.data["MONTH"] = month;
-					this.data["YEAR"] = year;
-					return true;
-				}
-			}
-		}
-		this.resetPosition(pos);
-		return false;
-	}
+	// dedateWithSlash() {
+	// 	let pos, year, month, day;
+	// 	pos = this.getPosition();
+	// 	day = this.dayOptionalPrefix();
+	// 	if (day && this.isTKSlash()) {
+	// 		month = this.monthOptionalPrefix();
+	// 		if (month && this.isTKSlash()) {
+	// 			year = this.year4MandatoryPrefix();
+	// 			if (year) {
+	// 				this.data["DAY"] = day;
+	// 				this.data["MONTH"] = month;
+	// 				this.data["YEAR"] = year;
+	// 				return true;
+	// 			}
+	// 		}
+	// 	}
+	// 	this.resetPosition(pos);
+	// 	return false;
+	// }
 
 	/**
 	 * Four digit year and month (GNU)
@@ -933,10 +932,8 @@ export default class SHParser {
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
 		if (year) {
-			this.isTKSlash();
 			month = this.monthMandatoryPrefix();
 			if (month) {
-				this.isTKSlash();
 				if ((day = this.dayMandatoryPrefix())) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1024,7 +1021,8 @@ export default class SHParser {
 		if (year && this.isTKDash()) {
 			month = this.monthTextual();
 			if (month && this.isTKDash()) {
-				if ((day = this.dayMandatoryPrefix())) {
+				day = this.dayMandatoryPrefix();
+				if (day) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
 					this.data["DAY"] = day;
@@ -1181,7 +1179,8 @@ export default class SHParser {
 		if (day && (this.isTKSpace() || this.isTKDash())) {
 			month = this.monthOptionalPrefix();
 			if (month && this.isTKDash()) {
-				if ((year = this.year4MandatoryPrefix())) {
+				year = this.year4MandatoryPrefix();
+				if (year) {
 					this.data["DAY"] = day;
 					this.data["MONTH"] = month;
 					this.data["YEAR"] = year;
