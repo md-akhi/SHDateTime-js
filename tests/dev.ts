@@ -4,10 +4,10 @@ const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
 
 console.log("now:" + new SHDate().toString());
 
-const string = `1320-01-01 00:00:00`;
+const string = `1200/01/01`;
 //const [year, month, day] = date.split(liter);
 
-let sdate = new SHDate(-4681769144000);
+let sdate = new SHDate(string);
 let gdate = new Date(sdate.getTime());
 
 console.log("SHDate", string, sdate.toString(), sdate.getTime());

@@ -13,6 +13,37 @@ export default class SHLexerConfig {
 		COMMA: SHLexerConfig.COMMA,
 		SINGLE_QUOTE: SHLexerConfig.SINGLE_QUOTE,
 		SPACE: `${SHLexerConfig.SPACE}`,
+
+		// ********** month rules **********
+		FARVARDIN: "far(vardin)?",
+		ORDIBEHESHT: "ord(ibehesht)?",
+		KHORDAD: "kho(rdad)?",
+		TIR: "tir",
+		AMORDAD: "amo(rdad)?|mor(dad)?",
+		SHAHRIVAR: "sha(hrivar)?",
+		MEHR: "mehr?",
+		ABAN: "aban?",
+		AZAR: "azar?",
+		DEY: "dey",
+		BAHMAN: "bah(man)?",
+		ESFAND: "es[fp]{1}and|es[fp]{1}",
+
+		MICROSECOND: "microsecond|usec",
+		MILLISECOND: "millisecond|msec|µsec|ms|µs",
+		HOUR: "hours?",
+		MINUTE: "minutes?|mins?",
+		DAY: "days?",
+		WEEKDAY: "weekdays?",
+		WEEK: "weeks?",
+		MONTH: "months?|mons?",
+		YEAR: "years?",
+		FORTNIGHT: "forth?night",
+
+		TODAY: "today",
+		TOMORROW: "tomorrow",
+		TONIGHT: "tonight",
+		YESTERDAY: "yesterday",
+
 		// ********* numeric rules **********
 		INT_00: "00",
 		INT_01: "01",
@@ -114,7 +145,6 @@ export default class SHLexerConfig {
 		INT_97: "97",
 		INT_98: "98",
 		INT_99: "99",
-
 		INT_0: "0",
 		INT_1: "1",
 		INT_2: "2",
@@ -125,9 +155,7 @@ export default class SHLexerConfig {
 		INT_7: "7",
 		INT_8: "8",
 		INT_9: "9",
-
 		DIGIT: "[0-9]+", //  fragment
-
 		ONE: "one",
 		TWO: "two",
 		THREE: "three",
@@ -149,7 +177,6 @@ export default class SHLexerConfig {
 		NINETEEN: "nineteen",
 		TWENTY: "twenty",
 		THIRTY: "thirty",
-
 		FIRST: "first",
 		SECOND: "seconds?|secs?",
 		THIRD: "third",
@@ -171,37 +198,6 @@ export default class SHLexerConfig {
 		NINETEENTH: "nineteenth",
 		TWENTIETH: "twentieth",
 		THIRTIETH: "thirtieth",
-
-		// ********** month rules **********
-
-		FARVARDIN: "far(vardin)?",
-		ORDIBEHESHT: "ord(ibehesht)?",
-		KHORDAD: "kho(rdad)?",
-		TIR: "tir",
-		AMORDAD: "amo(rdad)?|mor(dad)?",
-		SHAHRIVAR: "sha(hrivar)?",
-		MEHR: "mehr?",
-		ABAN: "aban?",
-		AZAR: "azar?",
-		DEY: "dey",
-		BAHMAN: "bah(man)?",
-		ESFAND: "es[fp]{1}and|es[fp]{1}",
-
-		MICROSECOND: "microsecond|usec",
-		MILLISECOND: "millisecond|msec|µsec|ms|µs",
-		HOUR: "hours?",
-		MINUTE: "minutes?|mins?",
-		DAY: "days?",
-		WEEKDAY: "weekdays?",
-		WEEK: "weeks?",
-		MONTH: "months?|mons?",
-		YEAR: "years?",
-		FORTNIGHT: "forth?night",
-
-		TODAY: "today",
-		TOMORROW: "tomorrow",
-		TONIGHT: "tonight",
-		YESTERDAY: "yesterday",
 
 		// ********** date rules **********
 

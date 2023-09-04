@@ -1644,6 +1644,7 @@ export default class SHDate {
 					break;
 				case "NOW":
 					now = SHDate.now();
+					date.setTime(now);
 					break;
 				case "TODAY_MIDNIGHT":
 					[hours, minutes, seconds, milliseconds] = date.restTime(0, 0, 0, 0);
@@ -1665,7 +1666,7 @@ export default class SHDate {
 		// console.log(year, month, day, hours, minutes, seconds, milliseconds);
 		date.#setFullYear(year, month, day);
 		date.#setHours(hours, minutes, seconds, milliseconds);
-		now ? date.setTime(now) : date.setTime(date.getTime() + tztime);
+		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
 		// console.log(dataObj, str, `\n`, date.toString(), date.getTime());
 		return date.getTime();
