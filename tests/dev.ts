@@ -4,7 +4,7 @@ const tzoffset: number = new Date().getTimezoneOffset() * 60 * 1000;
 
 console.log("now:" + new SHDate().toString());
 
-const string = `1200/01/01`;
+const string = `1420/01/02`;
 //const [year, month, day] = date.split(liter);
 
 let sdate = new SHDate(string);
@@ -26,6 +26,5 @@ const ssdate = new SHDate(sdate);
 console.log(ggdate.toString());
 // Expected output: 0
 
-const [[iw, iy]] = sdate.format("woy");
-console.log(ssdate.toString(), ssdate.setWeek(iy, iw, ssdate.getDay()));
+console.log(ssdate.toString());
 // Expected output: 818035920000

@@ -143,7 +143,7 @@ export default class SHParser {
 	}
 
 	/**
-	 * Dot
+	 * Dot (.)
 	 *
 	 * @return bool
 	 */
@@ -155,6 +155,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Dash (-)
+	 *
+	 * @return bool
+	 */
 	isTKDash(): boolean {
 		if (this.isToken("DASH")) {
 			this.nextToken();
@@ -163,6 +168,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Plus (+)
+	 *
+	 * @return bool
+	 */
 	isTKPlus(): boolean {
 		if (this.isToken("PLUS")) {
 			this.nextToken();
@@ -171,6 +181,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Comma (,)
+	 *
+	 * @return bool
+	 */
 	isTKComma(): boolean {
 		if (this.isToken("COMMA")) {
 			this.nextToken();
@@ -208,6 +223,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Sign Time (T)
+	 *
+	 * @return bool
+	 */
 	isTKSignTime(): boolean {
 		if (this.isToken("SIGN_TIME")) {
 			this.nextToken();
@@ -216,6 +236,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * String Week (weeks?)
+	 *
+	 * @return bool
+	 */
 	isTKWeek(): boolean {
 		if (this.isToken("WEEK")) {
 			this.nextToken();
@@ -224,6 +249,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Slash (/)
+	 *
+	 * @return bool
+	 */
 	isTKSlash(): boolean {
 		if (this.isToken("SLASH")) {
 			this.nextToken();
@@ -232,6 +262,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * Sign Week (W)
+	 *
+	 * @return bool
+	 */
 	isTKSignWeek(): boolean {
 		if (this.isToken("SIGN_WEEK")) {
 			this.nextToken();
@@ -240,6 +275,11 @@ export default class SHParser {
 		return false;
 	}
 
+	/**
+	 * AT (@)
+	 *
+	 * @return bool
+	 */
 	isTKAT(): boolean {
 		if (this.isToken("AT")) {
 			this.nextToken();
@@ -838,7 +878,7 @@ export default class SHParser {
 	 */
 	DateFormats() {
 		// Localized Notations
-		return this.dateLocalizedNotations() || this.ISO8601Notations();
+		return this.ISO8601Notations() || this.dateLocalizedNotations();
 	}
 
 	dateLocalizedNotations() {
@@ -857,12 +897,26 @@ export default class SHParser {
 		);
 	}
 
+	dateyear4MandatoryPrefix() {
+		let pos, year;
+		pos = this.getPosition();
+		year = this.year4MandatoryPrefix();
+		if (year) {
+			this.data["YEAR"] = year;
+			this.data["MONTH"] = 1;
+			this.data["DAY"] = 1;
+			return true;
+		}
+		this.resetPosition(pos);
+		return false;
+	}
+
 	ISO8601Notations() {
 		return (
-			this.dateWithSlash() || // YY "/" mm "/" dd
-			this.dateWithOutSlash() || // ISO  YY "/"? MM "/"? DD
-			this.dateWithDash()
-		); // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
+			this.dateWithSlash() || // YY "/" MM "/" DD
+			this.dateWithDash() || // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
+			this.dateWithOutSlash() // ISO  YY "/"? MM "/"? DD
+		);
 	}
 
 	/**
@@ -878,9 +932,9 @@ export default class SHParser {
 		pos = this.getPosition();
 		year = this.year4MandatoryPrefix();
 		if (year && this.isTKSlash()) {
-			month = this.monthOptionalPrefix();
+			month = this.monthMandatoryPrefix();
 			if (month && this.isTKSlash()) {
-				day = this.dayOptionalPrefix();
+				day = this.dayMandatoryPrefix();
 				if (day) {
 					this.data["YEAR"] = year;
 					this.data["MONTH"] = month;
@@ -1351,7 +1405,9 @@ export default class SHParser {
 			pos = this.getPosition();
 		month = this.monthTextual();
 		if (month) {
+			this.data["YEAR"] = false;
 			this.data["MONTH"] = month;
+			this.data["DAY"] = 1;
 			return true;
 		}
 		this.resetPosition(pos);
@@ -1365,7 +1421,6 @@ export default class SHParser {
 	 * @return false|number
 	 */
 	monthTextual() {
-		var int;
 		switch (this.nameToken()) {
 			case "FARVARDIN":
 			case "INT_I":

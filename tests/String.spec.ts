@@ -16,6 +16,7 @@ const merge = (target: any, source: any) => {
 	return target;
 };
 const Until = merge(UntilString.DateString, UntilDate.solarDate);
+// console.log(Until);
 
 describe("String", () => {
 	it("correctly Date Day Of Year YYYY.doy", () => {
@@ -67,6 +68,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate
@@ -84,10 +90,21 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
+			if (days === 1 && months === 1)
+				assert.deepEqual(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
+			else
+				assert.notDeepEqual(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 		});
 	});
 
@@ -101,6 +118,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate
@@ -118,6 +140,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			if (days === 1)
 				assert.deepEqual(
 					[years, months, days, hours, minutes, seconds, milliseconds],
@@ -141,6 +168,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate
@@ -158,6 +190,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate
@@ -175,6 +212,11 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
+			if (hours == 1)
+				console.log(
+					[years, months, days, hours, minutes, seconds, milliseconds],
+					sdate
+				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate

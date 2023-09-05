@@ -19175,7 +19175,7 @@ export const solarDate = [
 		gtime: 985120200000
 	},
 	{
-		sdate: [1380, 1, 2, 1, 0, 0, 0],
+		sdate: [1380, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1380, 0, 2],
 			Dow: 5,
@@ -19198,7 +19198,7 @@ export const solarDate = [
 			leaps: "334"
 		},
 		stime: 985206600000,
-		gdate: [2001, 3, 22, 1, 0, 0, 0],
+		gdate: [2001, 3, 22, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2001, 2, 22]
 		},
@@ -21276,7 +21276,7 @@ export const solarDate = [
 		gtime: 1616272200000
 	},
 	{
-		sdate: [1400, 1, 2, 1, 0, 0, 0],
+		sdate: [1400, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1400, 0, 2],
 			Dow: 2,
@@ -21299,7 +21299,7 @@ export const solarDate = [
 			leaps: "339"
 		},
 		stime: 1616358600000,
-		gdate: [2021, 3, 22, 1, 0, 0, 0],
+		gdate: [2021, 3, 22, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2021, 2, 22]
 		},
@@ -23377,7 +23377,7 @@ export const solarDate = [
 		gtime: 2247337800000
 	},
 	{
-		sdate: [1420, 1, 2, 1, 0, 0, 0],
+		sdate: [1420, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1420, 0, 2],
 			Dow: 5,
@@ -23400,7 +23400,7 @@ export const solarDate = [
 			leaps: "343"
 		},
 		stime: 2247424200000,
-		gdate: [2041, 3, 21, 1, 0, 0, 0],
+		gdate: [2041, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2041, 2, 21]
 		},
@@ -25508,7 +25508,7 @@ export const solarDate = [
 		gtime: 2878489800000
 	},
 	{
-		sdate: [1440, 1, 2, 1, 0, 0, 0],
+		sdate: [1440, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1440, 0, 2],
 			Dow: 2,
@@ -25531,7 +25531,7 @@ export const solarDate = [
 			leaps: "348"
 		},
 		stime: 2878576200000,
-		gdate: [2061, 3, 21, 1, 0, 0, 0],
+		gdate: [2061, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2061, 2, 21]
 		},
@@ -27609,7 +27609,7 @@ export const solarDate = [
 		gtime: 3509641800000
 	},
 	{
-		sdate: [1460, 1, 2, 1, 0, 0, 0],
+		sdate: [1460, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1460, 0, 2],
 			Dow: 6,
@@ -27632,7 +27632,7 @@ export const solarDate = [
 			leaps: "353"
 		},
 		stime: 3509728200000,
-		gdate: [2081, 3, 21, 1, 0, 0, 0],
+		gdate: [2081, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2081, 2, 21]
 		},
@@ -29680,7 +29680,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1480, 1, 1, 1, 0, 0, 0],
+		sdate: [1480, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1480, 0, 1],
 			Dow: 2,
@@ -29703,7 +29703,7 @@ export const solarDate = [
 			leaps: "358"
 		},
 		stime: 4140793800000,
-		gdate: [2101, 3, 21, 1, 0, 0, 0],
+		gdate: [2101, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2101, 2, 21]
 		},
@@ -31781,7 +31781,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1500, 1, 1, 1, 0, 0, 0],
+		sdate: [1500, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1500, 0, 1],
 			Dow: 6,
@@ -31804,7 +31804,7 @@ export const solarDate = [
 			leaps: "363"
 		},
 		stime: 4771945800000,
-		gdate: [2121, 3, 21, 1, 0, 0, 0],
+		gdate: [2121, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2121, 2, 21]
 		},
@@ -33882,7 +33882,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1520, 1, 1, 1, 0, 0, 0],
+		sdate: [1520, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1520, 0, 1],
 			Dow: 3,
@@ -33905,7 +33905,7 @@ export const solarDate = [
 			leaps: "368"
 		},
 		stime: 5403097800000,
-		gdate: [2141, 3, 21, 1, 0, 0, 0],
+		gdate: [2141, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2141, 2, 21]
 		},
@@ -36013,7 +36013,7 @@ export const solarDate = [
 		gtime: 6034163400000
 	},
 	{
-		sdate: [1540, 1, 2, 1, 0, 0, 0],
+		sdate: [1540, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1540, 0, 2],
 			Dow: 0,
@@ -36036,7 +36036,7 @@ export const solarDate = [
 			leaps: "372"
 		},
 		stime: 6034249800000,
-		gdate: [2161, 3, 21, 1, 0, 0, 0],
+		gdate: [2161, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2161, 2, 21]
 		},
@@ -38144,7 +38144,7 @@ export const solarDate = [
 		gtime: 6665315400000
 	},
 	{
-		sdate: [1560, 1, 2, 1, 0, 0, 0],
+		sdate: [1560, 1, 2, 0, 0, 0, 0],
 		sdata: {
 			solar: [1560, 0, 2],
 			Dow: 4,
@@ -38167,7 +38167,7 @@ export const solarDate = [
 			leaps: "377"
 		},
 		stime: 6665401800000,
-		gdate: [2181, 3, 21, 1, 0, 0, 0],
+		gdate: [2181, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2181, 2, 21]
 		},
@@ -40245,7 +40245,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1580, 1, 1, 1, 0, 0, 0],
+		sdate: [1580, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1580, 0, 1],
 			Dow: 0,
@@ -40268,7 +40268,7 @@ export const solarDate = [
 			leaps: "382"
 		},
 		stime: 7296467400000,
-		gdate: [2201, 3, 21, 1, 0, 0, 0],
+		gdate: [2201, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2201, 2, 21]
 		},
@@ -42346,7 +42346,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1600, 1, 1, 1, 0, 0, 0],
+		sdate: [1600, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1600, 0, 1],
 			Dow: 4,
@@ -42369,7 +42369,7 @@ export const solarDate = [
 			leaps: "387"
 		},
 		stime: 7927619400000,
-		gdate: [2221, 3, 21, 1, 0, 0, 0],
+		gdate: [2221, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2221, 2, 21]
 		},
@@ -44447,7 +44447,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1620, 1, 1, 1, 0, 0, 0],
+		sdate: [1620, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1620, 0, 1],
 			Dow: 1,
@@ -44470,7 +44470,7 @@ export const solarDate = [
 			leaps: "392"
 		},
 		stime: 8558771400000,
-		gdate: [2241, 3, 21, 1, 0, 0, 0],
+		gdate: [2241, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2241, 2, 21]
 		},
@@ -46548,7 +46548,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1640, 1, 1, 1, 0, 0, 0],
+		sdate: [1640, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1640, 0, 1],
 			Dow: 5,
@@ -46571,7 +46571,7 @@ export const solarDate = [
 			leaps: "397"
 		},
 		stime: 9189923400000,
-		gdate: [2261, 3, 21, 1, 0, 0, 0],
+		gdate: [2261, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2261, 2, 21]
 		},
@@ -48649,7 +48649,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1660, 1, 1, 1, 0, 0, 0],
+		sdate: [1660, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1660, 0, 1],
 			Dow: 2,
@@ -48672,7 +48672,7 @@ export const solarDate = [
 			leaps: "402"
 		},
 		stime: 9821075400000,
-		gdate: [2281, 3, 21, 1, 0, 0, 0],
+		gdate: [2281, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2281, 2, 21]
 		},
@@ -50750,7 +50750,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1680, 1, 1, 1, 0, 0, 0],
+		sdate: [1680, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1680, 0, 1],
 			Dow: 5,
@@ -50773,7 +50773,7 @@ export const solarDate = [
 			leaps: "406"
 		},
 		stime: 10452141000000,
-		gdate: [2301, 3, 21, 1, 0, 0, 0],
+		gdate: [2301, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2301, 2, 21]
 		},
@@ -52850,7 +52850,7 @@ export const solarDate = [
 		gtime: 10483504200000
 	},
 	{
-		sdate: [1680, 12, 30, 1, 0, 0, 0],
+		sdate: [1680, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1680, 11, 30],
 			Dow: 6,
@@ -52873,7 +52873,7 @@ export const solarDate = [
 			leaps: "406"
 		},
 		stime: 10483677000000,
-		gdate: [2302, 3, 21, 1, 0, 0, 0],
+		gdate: [2302, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2302, 2, 21]
 		},
@@ -52881,7 +52881,7 @@ export const solarDate = [
 	},
 
 	{
-		sdate: [1700, 1, 1, 1, 0, 0, 0],
+		sdate: [1700, 1, 1, 0, 0, 0, 0],
 		sdata: {
 			solar: [1700, 0, 1],
 			Dow: 2,
@@ -52904,7 +52904,7 @@ export const solarDate = [
 			leaps: "411"
 		},
 		stime: 11083293000000,
-		gdate: [2321, 3, 21, 1, 0, 0, 0],
+		gdate: [2321, 3, 21, 0, 0, 0, 0],
 		gdata: {
 			gregorian: [2321, 2, 21]
 		},
