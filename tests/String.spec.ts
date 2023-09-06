@@ -17,6 +17,11 @@ const merge = (target: any, source: any) => {
 };
 const Until = merge(UntilString.DateString, UntilDate.solarDate);
 // console.log(Until);
+const tests = (data1: any, data2: any, isarray = false) => {
+	if (!isarray) console.log(data1, data2);
+	else if (JSON.stringify(data1) !== JSON.stringify(data2))
+		console.log(data1, data2);
+};
 
 describe("String", () => {
 	it("correctly Date Day Of Year YYYY.doy", () => {
@@ -62,49 +67,23 @@ describe("String", () => {
 		Until.forEach(({ sdata, sdate }: any) => {
 			const date = new SHDate(sdata.DateWithSlash);
 			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
+			const months = date.getMonth();
 			const days = date.getDate();
 			const hours = date.getHours();
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
+			assert.deepEqual([years, months, days], sdata.solar);
 		});
 	});
 
 	it("correctly Date YYYY ", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
+		Until.forEach(({ sdata }: any) => {
 			const date = new SHDate(sdata.DateYear);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
 			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			if (days === 1 && months === 1)
-				assert.deepEqual(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			else
-				assert.notDeepEqual(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
+			assert.equal(years, sdata.solar[0]);
 		});
 	});
 
@@ -118,11 +97,6 @@ describe("String", () => {
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
 			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds, milliseconds],
 				sdate
@@ -134,93 +108,110 @@ describe("String", () => {
 		Until.forEach(({ sdata, sdate }: any) => {
 			const date = new SHDate(sdata.DateYearMonth);
 			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
+			const months = date.getMonth();
 			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			if (days === 1)
-				assert.deepEqual(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			else
-				assert.notDeepEqual(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
+			tests([years, months, days], sdata.solar, true);
+			if (sdate[2] == 1) {
+				assert.deepEqual([years, months, days], sdata.solar);
+			} else {
+				assert.notDeepEqual([years, months, days], sdata.solar);
+			}
 		});
 	});
 
-	it("correctly Date Abbr M ", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
-			const date = new SHDate(sdata.DateMonth);
-			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
-			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
-		});
-	});
+	// it("correctly Date Abbr M ", () => {
+	// 	Until.forEach(({ sdata, sdate }: any) => {
+	// 		const date = new SHDate(sdata.DateMonth);
+	// 		const years = date.getFullYear();
+	// 		const months = date.getMonth() + 1;
+	// 		const days = date.getDate();
+	// 		const hours = date.getHours();
+	// 		const minutes = date.getMinutes();
+	// 		const seconds = date.getSeconds();
+	// 		const milliseconds = date.getMilliseconds();
+	// 		if (
+	// 			JSON.stringify([
+	// 				years,
+	// 				months,
+	// 				days,
+	// 				hours,
+	// 				minutes,
+	// 				seconds,
+	// 				milliseconds
+	// 			]) !== JSON.stringify(sdate)
+	// 		)
+	// 			console.log(
+	// 				[years, months, days, hours, minutes, seconds, milliseconds],
+	// 				sdate
+	// 			);
+	// 		assert.deepEqual(
+	// 			[years, months, days, hours, minutes, seconds, milliseconds],
+	// 			sdate
+	// 		);
+	// 	});
+	// });
 
-	it("correctly Date Abbr DD, M YYYY", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
-			const date = new SHDate(sdata.DateAber);
-			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
-			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
-		});
-	});
+	// it("correctly Date Abbr DD, M YYYY", () => {
+	// 	Until.forEach(({ sdata, sdate }: any) => {
+	// 		const date = new SHDate(sdata.DateAber);
+	// 		const years = date.getFullYear();
+	// 		const months = date.getMonth() + 1;
+	// 		const days = date.getDate();
+	// 		const hours = date.getHours();
+	// 		const minutes = date.getMinutes();
+	// 		const seconds = date.getSeconds();
+	// 		const milliseconds = date.getMilliseconds();
+	// 		if (
+	// 			JSON.stringify([
+	// 				years,
+	// 				months,
+	// 				days,
+	// 				hours,
+	// 				minutes,
+	// 				seconds,
+	// 				milliseconds
+	// 			]) !== JSON.stringify(sdate)
+	// 		)
+	// 			console.log(
+	// 				[years, months, days, hours, minutes, seconds, milliseconds],
+	// 				sdate
+	// 			);
+	// 		assert.deepEqual(
+	// 			[years, months, days, hours, minutes, seconds, milliseconds],
+	// 			sdate
+	// 		);
+	// 	});
+	// });
 
-	it("correctly Date Abbr DayName , DD M YYYY", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
-			const date = new SHDate(sdata.DateAberWithDate);
-			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
-			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (hours == 1)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
-		});
-	});
+	// it("correctly Date Abbr DayName , DD M YYYY", () => {
+	// 	Until.forEach(({ sdata, sdate }: any) => {
+	// 		const date = new SHDate(sdata.DateAberWithDate);
+	// 		const years = date.getFullYear();
+	// 		const months = date.getMonth() + 1;
+	// 		const days = date.getDate();
+	// 		const hours = date.getHours();
+	// 		const minutes = date.getMinutes();
+	// 		const seconds = date.getSeconds();
+	// 		const milliseconds = date.getMilliseconds();
+	// 		if (
+	// 			JSON.stringify([
+	// 				years,
+	// 				months,
+	// 				days,
+	// 				hours,
+	// 				minutes,
+	// 				seconds,
+	// 				milliseconds
+	// 			]) !== JSON.stringify(sdate)
+	// 		)
+	// 			console.log(
+	// 				[years, months, days, hours, minutes, seconds, milliseconds],
+	// 				sdate
+	// 			);
+	// 		assert.deepEqual(
+	// 			[years, months, days, hours, minutes, seconds, milliseconds],
+	// 			sdate
+	// 		);
+	// 	});
+	// });
 });

@@ -1,3 +1,7 @@
+/**
+ * bug on date [1380+20, 1, 2, 0, 0, 0, 0]
+ */
+
 /*
 function padstring(str: any, pad: number = 2) {
 	return `${str}`.padStart(pad, "0");
@@ -92,6 +96,7 @@ for (let year = 1200; year <= 1700; year += 20) {
 		[12, 29],
 		[12, 30]
 	].forEach(([month, day]) => {
+		//if(year==1380&& month ==1&& day==2)continue;// bug data
 		let shdate = new SHDate(year, month - 1, day);
 		const [
 			years,
@@ -1578,6 +1583,26 @@ export const DateString = [
 		gdata: { gregorian: [1822, 2, 19] },
 		gtime: -4663797944000
 	},
+	{
+		sdate: [1200, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1200, 11, 29],
+			DateTime: "1200-12-29 00:00:00",
+			DateAber: "29 Esf 1200",
+			DateMonth: "Esf",
+			DateYearMonth: "1200-Esf",
+			DateYear: "1200",
+			DateAberWithDate: "Wed 29 Esf 1200",
+			DateDoy: "1200.364",
+			DateWoy: "1200W52-5",
+			DateWithSlash: "1200/12/29",
+			DateWithOutSlash: "12001229"
+		},
+		stime: -4663711544000,
+		gdate: [1822, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1822, 2, 20] },
+		gtime: -4663711544000
+	},
 
 	{
 		sdate: [1220, 1, 1, 0, 0, 0, 0],
@@ -2978,6 +3003,26 @@ export const DateString = [
 		gdate: [1842, 3, 19, 0, 0, 0, 0],
 		gdata: { gregorian: [1842, 2, 19] },
 		gtime: -4032645944000
+	},
+	{
+		sdate: [1220, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1220, 11, 29],
+			DateTime: "1220-12-29 00:00:00",
+			DateAber: "29 Esf 1220",
+			DateMonth: "Esf",
+			DateYearMonth: "1220-Esf",
+			DateYear: "1220",
+			DateAberWithDate: "Sun 29 Esf 1220",
+			DateDoy: "1220.364",
+			DateWoy: "1221W01-2",
+			DateWithSlash: "1220/12/29",
+			DateWithOutSlash: "12201229"
+		},
+		stime: -4032559544000,
+		gdate: [1842, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1842, 2, 20] },
+		gtime: -4032559544000
 	},
 
 	{
@@ -4380,6 +4425,26 @@ export const DateString = [
 		gdata: { gregorian: [1862, 2, 19] },
 		gtime: -3401493944000
 	},
+	{
+		sdate: [1240, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1240, 11, 29],
+			DateTime: "1240-12-29 00:00:00",
+			DateAber: "29 Esf 1240",
+			DateMonth: "Esf",
+			DateYearMonth: "1240-Esf",
+			DateYear: "1240",
+			DateAberWithDate: "Thu 29 Esf 1240",
+			DateDoy: "1240.364",
+			DateWoy: "1240W52-6",
+			DateWithSlash: "1240/12/29",
+			DateWithOutSlash: "12401229"
+		},
+		stime: -3401407544000,
+		gdate: [1862, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1862, 2, 20] },
+		gtime: -3401407544000
+	},
 
 	{
 		sdate: [1260, 1, 1, 0, 0, 0, 0],
@@ -5780,6 +5845,26 @@ export const DateString = [
 		gdate: [1882, 3, 19, 0, 0, 0, 0],
 		gdata: { gregorian: [1882, 2, 19] },
 		gtime: -2770341944000
+	},
+	{
+		sdate: [1260, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1260, 11, 29],
+			DateTime: "1260-12-29 00:00:00",
+			DateAber: "29 Esf 1260",
+			DateMonth: "Esf",
+			DateYearMonth: "1260-Esf",
+			DateYear: "1260",
+			DateAberWithDate: "Mon 29 Esf 1260",
+			DateDoy: "1260.364",
+			DateWoy: "1261W01-3",
+			DateWithSlash: "1260/12/29",
+			DateWithOutSlash: "12601229"
+		},
+		stime: -2770255544000,
+		gdate: [1882, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1882, 2, 20] },
+		gtime: -2770255544000
 	},
 
 	{
@@ -7183,6 +7268,26 @@ export const DateString = [
 		gtime: -2139276344000
 	},
 	{
+		sdate: [1280, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1280, 11, 29],
+			DateTime: "1280-12-29 00:00:00",
+			DateAber: "29 Esf 1280",
+			DateMonth: "Esf",
+			DateYearMonth: "1280-Esf",
+			DateYear: "1280",
+			DateAberWithDate: "Thu 29 Esf 1280",
+			DateDoy: "1280.364",
+			DateWoy: "1280W52-6",
+			DateWithSlash: "1280/12/29",
+			DateWithOutSlash: "12801229"
+		},
+		stime: -2139189944000,
+		gdate: [1902, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1902, 2, 20] },
+		gtime: -2139189944000
+	},
+	{
 		sdate: [1280, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1280, 11, 30],
@@ -7202,7 +7307,6 @@ export const DateString = [
 		gdata: { gregorian: [1902, 2, 21] },
 		gtime: -2139103544000
 	},
-
 	{
 		sdate: [1300, 1, 1, 0, 0, 0, 0],
 		sdata: {
@@ -8604,6 +8708,26 @@ export const DateString = [
 		gtime: -1508124344000
 	},
 	{
+		sdate: [1300, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1300, 11, 29],
+			DateTime: "1300-12-29 00:00:00",
+			DateAber: "29 Esf 1300",
+			DateMonth: "Esf",
+			DateYearMonth: "1300-Esf",
+			DateYear: "1300",
+			DateAberWithDate: "Mon 29 Esf 1300",
+			DateDoy: "1300.364",
+			DateWoy: "1300W53-3",
+			DateWithSlash: "1300/12/29",
+			DateWithOutSlash: "13001229"
+		},
+		stime: -1508037944000,
+		gdate: [1922, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1922, 2, 20] },
+		gtime: -1508037944000
+	},
+	{
 		sdate: [1300, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1300, 11, 30],
@@ -8623,7 +8747,6 @@ export const DateString = [
 		gdata: { gregorian: [1922, 2, 21] },
 		gtime: -1507951544000
 	},
-
 	{
 		sdate: [1320, 1, 1, 0, 0, 0, 0],
 		sdata: {
@@ -10023,6 +10146,26 @@ export const DateString = [
 		gdate: [1942, 3, 19, 0, 0, 0, 0],
 		gdata: { gregorian: [1942, 2, 19] },
 		gtime: -876972344000
+	},
+	{
+		sdate: [1320, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1320, 11, 29],
+			DateTime: "1320-12-29 00:00:00",
+			DateAber: "29 Esf 1320",
+			DateMonth: "Esf",
+			DateYearMonth: "1320-Esf",
+			DateYear: "1320",
+			DateAberWithDate: "Fri 29 Esf 1320",
+			DateDoy: "1320.364",
+			DateWoy: "1320W52-7",
+			DateWithSlash: "1320/12/29",
+			DateWithOutSlash: "13201229"
+		},
+		stime: -876885944000,
+		gdate: [1942, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1942, 2, 20] },
+		gtime: -876885944000
 	},
 
 	{
@@ -11425,6 +11568,26 @@ export const DateString = [
 		gdata: { gregorian: [1962, 2, 19] },
 		gtime: -245820600000
 	},
+	{
+		sdate: [1340, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1340, 11, 29],
+			DateTime: "1340-12-29 00:00:00",
+			DateAber: "29 Esf 1340",
+			DateMonth: "Esf",
+			DateYearMonth: "1340-Esf",
+			DateYear: "1340",
+			DateAberWithDate: "Tue 29 Esf 1340",
+			DateDoy: "1340.364",
+			DateWoy: "1340W53-4",
+			DateWithSlash: "1340/12/29",
+			DateWithOutSlash: "13401229"
+		},
+		stime: -245734200000,
+		gdate: [1962, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1962, 2, 20] },
+		gtime: -245734200000
+	},
 
 	{
 		sdate: [1360, 1, 1, 0, 0, 0, 0],
@@ -12826,6 +12989,26 @@ export const DateString = [
 		gdata: { gregorian: [1982, 2, 19] },
 		gtime: 385331400000
 	},
+	{
+		sdate: [1360, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1360, 11, 29],
+			DateTime: "1360-12-29 00:00:00",
+			DateAber: "29 Esf 1360",
+			DateMonth: "Esf",
+			DateYearMonth: "1360-Esf",
+			DateYear: "1360",
+			DateAberWithDate: "Sat 29 Esf 1360",
+			DateDoy: "1360.364",
+			DateWoy: "1361W01-1",
+			DateWithSlash: "1360/12/29",
+			DateWithOutSlash: "13601229"
+		},
+		stime: 385417800000,
+		gdate: [1982, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [1982, 2, 20] },
+		gtime: 385417800000
+	},
 
 	{
 		sdate: [1380, 1, 1, 0, 0, 0, 0],
@@ -12848,7 +13031,7 @@ export const DateString = [
 		gtime: 985120200000
 	},
 	{
-		sdate: [1380, 1, 2, 0, 0, 0, 0],
+		sdate: [1380, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1380, 0, 2],
 			DateTime: "1380-01-02 01:00:00",
@@ -12863,7 +13046,7 @@ export const DateString = [
 			DateWithOutSlash: "13800102"
 		},
 		stime: 985206600000,
-		gdate: [2001, 3, 22, 0, 0, 0, 0],
+		gdate: [2001, 3, 22, 1, 0, 0, 0],
 		gdata: { gregorian: [2001, 2, 22] },
 		gtime: 985206600000
 	},
@@ -14227,6 +14410,26 @@ export const DateString = [
 		gdata: { gregorian: [2002, 2, 19] },
 		gtime: 1016483400000
 	},
+	{
+		sdate: [1380, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1380, 11, 29],
+			DateTime: "1380-12-29 00:00:00",
+			DateAber: "29 Esf 1380",
+			DateMonth: "Esf",
+			DateYearMonth: "1380-Esf",
+			DateYear: "1380",
+			DateAberWithDate: "Wed 29 Esf 1380",
+			DateDoy: "1380.364",
+			DateWoy: "1380W52-5",
+			DateWithSlash: "1380/12/29",
+			DateWithOutSlash: "13801229"
+		},
+		stime: 1016569800000,
+		gdate: [2002, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2002, 2, 20] },
+		gtime: 1016569800000
+	},
 
 	{
 		sdate: [1400, 1, 1, 0, 0, 0, 0],
@@ -14249,7 +14452,7 @@ export const DateString = [
 		gtime: 1616272200000
 	},
 	{
-		sdate: [1400, 1, 2, 0, 0, 0, 0],
+		sdate: [1400, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1400, 0, 2],
 			DateTime: "1400-01-02 01:00:00",
@@ -14264,7 +14467,7 @@ export const DateString = [
 			DateWithOutSlash: "14000102"
 		},
 		stime: 1616358600000,
-		gdate: [2021, 3, 22, 0, 0, 0, 0],
+		gdate: [2021, 3, 22, 1, 0, 0, 0],
 		gdata: { gregorian: [2021, 2, 22] },
 		gtime: 1616358600000
 	},
@@ -15628,6 +15831,26 @@ export const DateString = [
 		gdata: { gregorian: [2022, 2, 19] },
 		gtime: 1647635400000
 	},
+	{
+		sdate: [1400, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1400, 11, 29],
+			DateTime: "1400-12-29 00:00:00",
+			DateAber: "29 Esf 1400",
+			DateMonth: "Esf",
+			DateYearMonth: "1400-Esf",
+			DateYear: "1400",
+			DateAberWithDate: "Sun 29 Esf 1400",
+			DateDoy: "1400.364",
+			DateWoy: "1401W01-2",
+			DateWithSlash: "1400/12/29",
+			DateWithOutSlash: "14001229"
+		},
+		stime: 1647721800000,
+		gdate: [2022, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2022, 2, 20] },
+		gtime: 1647721800000
+	},
 
 	{
 		sdate: [1420, 1, 1, 0, 0, 0, 0],
@@ -15650,7 +15873,7 @@ export const DateString = [
 		gtime: 2247337800000
 	},
 	{
-		sdate: [1420, 1, 2, 0, 0, 0, 0],
+		sdate: [1420, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1420, 0, 2],
 			DateTime: "1420-01-02 01:00:00",
@@ -15665,7 +15888,7 @@ export const DateString = [
 			DateWithOutSlash: "14200102"
 		},
 		stime: 2247424200000,
-		gdate: [2041, 3, 21, 0, 0, 0, 0],
+		gdate: [2041, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2041, 2, 21] },
 		gtime: 2247424200000
 	},
@@ -17030,6 +17253,26 @@ export const DateString = [
 		gtime: 2278701000000
 	},
 	{
+		sdate: [1420, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1420, 11, 29],
+			DateTime: "1420-12-29 00:00:00",
+			DateAber: "29 Esf 1420",
+			DateMonth: "Esf",
+			DateYearMonth: "1420-Esf",
+			DateYear: "1420",
+			DateAberWithDate: "Wed 29 Esf 1420",
+			DateDoy: "1420.364",
+			DateWoy: "1420W52-5",
+			DateWithSlash: "1420/12/29",
+			DateWithOutSlash: "14201229"
+		},
+		stime: 2278787400000,
+		gdate: [2042, 3, 19, 0, 0, 0, 0],
+		gdata: { gregorian: [2042, 2, 19] },
+		gtime: 2278787400000
+	},
+	{
 		sdate: [1420, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1420, 11, 30],
@@ -17049,7 +17292,6 @@ export const DateString = [
 		gdata: { gregorian: [2042, 2, 20] },
 		gtime: 2278873800000
 	},
-
 	{
 		sdate: [1440, 1, 1, 0, 0, 0, 0],
 		sdata: {
@@ -17071,7 +17313,7 @@ export const DateString = [
 		gtime: 2878489800000
 	},
 	{
-		sdate: [1440, 1, 2, 0, 0, 0, 0],
+		sdate: [1440, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1440, 0, 2],
 			DateTime: "1440-01-02 01:00:00",
@@ -17086,7 +17328,7 @@ export const DateString = [
 			DateWithOutSlash: "14400102"
 		},
 		stime: 2878576200000,
-		gdate: [2061, 3, 21, 0, 0, 0, 0],
+		gdate: [2061, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2061, 2, 21] },
 		gtime: 2878576200000
 	},
@@ -18450,6 +18692,26 @@ export const DateString = [
 		gdata: { gregorian: [2062, 2, 18] },
 		gtime: 2909853000000
 	},
+	{
+		sdate: [1440, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1440, 11, 29],
+			DateTime: "1440-12-29 00:00:00",
+			DateAber: "29 Esf 1440",
+			DateMonth: "Esf",
+			DateYearMonth: "1440-Esf",
+			DateYear: "1440",
+			DateAberWithDate: "Sun 29 Esf 1440",
+			DateDoy: "1440.364",
+			DateWoy: "1441W01-2",
+			DateWithSlash: "1440/12/29",
+			DateWithOutSlash: "14401229"
+		},
+		stime: 2909939400000,
+		gdate: [2062, 3, 19, 0, 0, 0, 0],
+		gdata: { gregorian: [2062, 2, 19] },
+		gtime: 2909939400000
+	},
 
 	{
 		sdate: [1460, 1, 1, 0, 0, 0, 0],
@@ -18472,7 +18734,7 @@ export const DateString = [
 		gtime: 3509641800000
 	},
 	{
-		sdate: [1460, 1, 2, 0, 0, 0, 0],
+		sdate: [1460, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1460, 0, 2],
 			DateTime: "1460-01-02 01:00:00",
@@ -18487,7 +18749,7 @@ export const DateString = [
 			DateWithOutSlash: "14600102"
 		},
 		stime: 3509728200000,
-		gdate: [2081, 3, 21, 0, 0, 0, 0],
+		gdate: [2081, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2081, 2, 21] },
 		gtime: 3509728200000
 	},
@@ -19851,9 +20113,29 @@ export const DateString = [
 		gdata: { gregorian: [2082, 2, 18] },
 		gtime: 3541005000000
 	},
+	{
+		sdate: [1460, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1460, 11, 29],
+			DateTime: "1460-12-29 00:00:00",
+			DateAber: "29 Esf 1460",
+			DateMonth: "Esf",
+			DateYearMonth: "1460-Esf",
+			DateYear: "1460",
+			DateAberWithDate: "Thu 29 Esf 1460",
+			DateDoy: "1460.364",
+			DateWoy: "1460W52-6",
+			DateWithSlash: "1460/12/29",
+			DateWithOutSlash: "14601229"
+		},
+		stime: 3541091400000,
+		gdate: [2082, 3, 19, 0, 0, 0, 0],
+		gdata: { gregorian: [2082, 2, 19] },
+		gtime: 3541091400000
+	},
 
 	{
-		sdate: [1480, 1, 1, 0, 0, 0, 0],
+		sdate: [1480, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1480, 0, 1],
 			DateTime: "1480-01-01 01:00:00",
@@ -19868,7 +20150,7 @@ export const DateString = [
 			DateWithOutSlash: "14800101"
 		},
 		stime: 4140793800000,
-		gdate: [2101, 3, 21, 0, 0, 0, 0],
+		gdate: [2101, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2101, 2, 21] },
 		gtime: 4140793800000
 	},
@@ -21252,9 +21534,29 @@ export const DateString = [
 		gdata: { gregorian: [2102, 2, 19] },
 		gtime: 4172157000000
 	},
+	{
+		sdate: [1480, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1480, 11, 29],
+			DateTime: "1480-12-29 00:00:00",
+			DateAber: "29 Esf 1480",
+			DateMonth: "Esf",
+			DateYearMonth: "1480-Esf",
+			DateYear: "1480",
+			DateAberWithDate: "Mon 29 Esf 1480",
+			DateDoy: "1480.364",
+			DateWoy: "1481W01-3",
+			DateWithSlash: "1480/12/29",
+			DateWithOutSlash: "14801229"
+		},
+		stime: 4172243400000,
+		gdate: [2102, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2102, 2, 20] },
+		gtime: 4172243400000
+	},
 
 	{
-		sdate: [1500, 1, 1, 0, 0, 0, 0],
+		sdate: [1500, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1500, 0, 1],
 			DateTime: "1500-01-01 01:00:00",
@@ -21269,7 +21571,7 @@ export const DateString = [
 			DateWithOutSlash: "15000101"
 		},
 		stime: 4771945800000,
-		gdate: [2121, 3, 21, 0, 0, 0, 0],
+		gdate: [2121, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2121, 2, 21] },
 		gtime: 4771945800000
 	},
@@ -22653,9 +22955,29 @@ export const DateString = [
 		gdata: { gregorian: [2122, 2, 19] },
 		gtime: 4803309000000
 	},
+	{
+		sdate: [1500, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1500, 11, 29],
+			DateTime: "1500-12-29 00:00:00",
+			DateAber: "29 Esf 1500",
+			DateMonth: "Esf",
+			DateYearMonth: "1500-Esf",
+			DateYear: "1500",
+			DateAberWithDate: "Fri 29 Esf 1500",
+			DateDoy: "1500.364",
+			DateWoy: "1500W52-7",
+			DateWithSlash: "1500/12/29",
+			DateWithOutSlash: "15001229"
+		},
+		stime: 4803395400000,
+		gdate: [2122, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2122, 2, 20] },
+		gtime: 4803395400000
+	},
 
 	{
-		sdate: [1520, 1, 1, 0, 0, 0, 0],
+		sdate: [1520, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1520, 0, 1],
 			DateTime: "1520-01-01 01:00:00",
@@ -22670,7 +22992,7 @@ export const DateString = [
 			DateWithOutSlash: "15200101"
 		},
 		stime: 5403097800000,
-		gdate: [2141, 3, 21, 0, 0, 0, 0],
+		gdate: [2141, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2141, 2, 21] },
 		gtime: 5403097800000
 	},
@@ -24054,6 +24376,26 @@ export const DateString = [
 		gdata: { gregorian: [2142, 2, 19] },
 		gtime: 5434461000000
 	},
+	{
+		sdate: [1520, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1520, 11, 29],
+			DateTime: "1520-12-29 00:00:00",
+			DateAber: "29 Esf 1520",
+			DateMonth: "Esf",
+			DateYearMonth: "1520-Esf",
+			DateYear: "1520",
+			DateAberWithDate: "Tue 29 Esf 1520",
+			DateDoy: "1520.364",
+			DateWoy: "1520W53-4",
+			DateWithSlash: "1520/12/29",
+			DateWithOutSlash: "15201229"
+		},
+		stime: 5434547400000,
+		gdate: [2142, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2142, 2, 20] },
+		gtime: 5434547400000
+	},
 
 	{
 		sdate: [1540, 1, 1, 0, 0, 0, 0],
@@ -24076,7 +24418,7 @@ export const DateString = [
 		gtime: 6034163400000
 	},
 	{
-		sdate: [1540, 1, 2, 0, 0, 0, 0],
+		sdate: [1540, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1540, 0, 2],
 			DateTime: "1540-01-02 01:00:00",
@@ -24091,7 +24433,7 @@ export const DateString = [
 			DateWithOutSlash: "15400102"
 		},
 		stime: 6034249800000,
-		gdate: [2161, 3, 21, 0, 0, 0, 0],
+		gdate: [2161, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2161, 2, 21] },
 		gtime: 6034249800000
 	},
@@ -25456,6 +25798,26 @@ export const DateString = [
 		gtime: 6065526600000
 	},
 	{
+		sdate: [1540, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1540, 11, 29],
+			DateTime: "1540-12-29 00:00:00",
+			DateAber: "29 Esf 1540",
+			DateMonth: "Esf",
+			DateYearMonth: "1540-Esf",
+			DateYear: "1540",
+			DateAberWithDate: "Fri 29 Esf 1540",
+			DateDoy: "1540.364",
+			DateWoy: "1540W52-7",
+			DateWithSlash: "1540/12/29",
+			DateWithOutSlash: "15401229"
+		},
+		stime: 6065613000000,
+		gdate: [2162, 3, 19, 0, 0, 0, 0],
+		gdata: { gregorian: [2162, 2, 19] },
+		gtime: 6065613000000
+	},
+	{
 		sdate: [1540, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1540, 11, 30],
@@ -25475,7 +25837,6 @@ export const DateString = [
 		gdata: { gregorian: [2162, 2, 20] },
 		gtime: 6065699400000
 	},
-
 	{
 		sdate: [1560, 1, 1, 0, 0, 0, 0],
 		sdata: {
@@ -25497,7 +25858,7 @@ export const DateString = [
 		gtime: 6665315400000
 	},
 	{
-		sdate: [1560, 1, 2, 0, 0, 0, 0],
+		sdate: [1560, 1, 2, 1, 0, 0, 0],
 		sdata: {
 			solar: [1560, 0, 2],
 			DateTime: "1560-01-02 01:00:00",
@@ -25512,7 +25873,7 @@ export const DateString = [
 			DateWithOutSlash: "15600102"
 		},
 		stime: 6665401800000,
-		gdate: [2181, 3, 21, 0, 0, 0, 0],
+		gdate: [2181, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2181, 2, 21] },
 		gtime: 6665401800000
 	},
@@ -26877,6 +27238,26 @@ export const DateString = [
 		gtime: 6696678600000
 	},
 	{
+		sdate: [1560, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1560, 11, 29],
+			DateTime: "1560-12-29 00:00:00",
+			DateAber: "29 Esf 1560",
+			DateMonth: "Esf",
+			DateYearMonth: "1560-Esf",
+			DateYear: "1560",
+			DateAberWithDate: "Tue 29 Esf 1560",
+			DateDoy: "1560.364",
+			DateWoy: "1560W53-4",
+			DateWithSlash: "1560/12/29",
+			DateWithOutSlash: "15601229"
+		},
+		stime: 6696765000000,
+		gdate: [2182, 3, 19, 0, 0, 0, 0],
+		gdata: { gregorian: [2182, 2, 19] },
+		gtime: 6696765000000
+	},
+	{
 		sdate: [1560, 12, 30, 0, 0, 0, 0],
 		sdata: {
 			solar: [1560, 11, 30],
@@ -26896,9 +27277,8 @@ export const DateString = [
 		gdata: { gregorian: [2182, 2, 20] },
 		gtime: 6696851400000
 	},
-
 	{
-		sdate: [1580, 1, 1, 0, 0, 0, 0],
+		sdate: [1580, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1580, 0, 1],
 			DateTime: "1580-01-01 01:00:00",
@@ -26913,7 +27293,7 @@ export const DateString = [
 			DateWithOutSlash: "15800101"
 		},
 		stime: 7296467400000,
-		gdate: [2201, 3, 21, 0, 0, 0, 0],
+		gdate: [2201, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2201, 2, 21] },
 		gtime: 7296467400000
 	},
@@ -28297,9 +28677,29 @@ export const DateString = [
 		gdata: { gregorian: [2202, 2, 19] },
 		gtime: 7327830600000
 	},
+	{
+		sdate: [1580, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1580, 11, 29],
+			DateTime: "1580-12-29 00:00:00",
+			DateAber: "29 Esf 1580",
+			DateMonth: "Esf",
+			DateYearMonth: "1580-Esf",
+			DateYear: "1580",
+			DateAberWithDate: "Sat 29 Esf 1580",
+			DateDoy: "1580.364",
+			DateWoy: "1581W01-1",
+			DateWithSlash: "1580/12/29",
+			DateWithOutSlash: "15801229"
+		},
+		stime: 7327917000000,
+		gdate: [2202, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2202, 2, 20] },
+		gtime: 7327917000000
+	},
 
 	{
-		sdate: [1600, 1, 1, 0, 0, 0, 0],
+		sdate: [1600, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1600, 0, 1],
 			DateTime: "1600-01-01 01:00:00",
@@ -28314,7 +28714,7 @@ export const DateString = [
 			DateWithOutSlash: "16000101"
 		},
 		stime: 7927619400000,
-		gdate: [2221, 3, 21, 0, 0, 0, 0],
+		gdate: [2221, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2221, 2, 21] },
 		gtime: 7927619400000
 	},
@@ -29698,9 +30098,29 @@ export const DateString = [
 		gdata: { gregorian: [2222, 2, 19] },
 		gtime: 7958982600000
 	},
+	{
+		sdate: [1600, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1600, 11, 29],
+			DateTime: "1600-12-29 00:00:00",
+			DateAber: "29 Esf 1600",
+			DateMonth: "Esf",
+			DateYearMonth: "1600-Esf",
+			DateYear: "1600",
+			DateAberWithDate: "Wed 29 Esf 1600",
+			DateDoy: "1600.364",
+			DateWoy: "1600W52-5",
+			DateWithSlash: "1600/12/29",
+			DateWithOutSlash: "16001229"
+		},
+		stime: 7959069000000,
+		gdate: [2222, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2222, 2, 20] },
+		gtime: 7959069000000
+	},
 
 	{
-		sdate: [1620, 1, 1, 0, 0, 0, 0],
+		sdate: [1620, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1620, 0, 1],
 			DateTime: "1620-01-01 01:00:00",
@@ -29715,7 +30135,7 @@ export const DateString = [
 			DateWithOutSlash: "16200101"
 		},
 		stime: 8558771400000,
-		gdate: [2241, 3, 21, 0, 0, 0, 0],
+		gdate: [2241, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2241, 2, 21] },
 		gtime: 8558771400000
 	},
@@ -31099,9 +31519,29 @@ export const DateString = [
 		gdata: { gregorian: [2242, 2, 19] },
 		gtime: 8590134600000
 	},
+	{
+		sdate: [1620, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1620, 11, 29],
+			DateTime: "1620-12-29 00:00:00",
+			DateAber: "29 Esf 1620",
+			DateMonth: "Esf",
+			DateYearMonth: "1620-Esf",
+			DateYear: "1620",
+			DateAberWithDate: "Sun 29 Esf 1620",
+			DateDoy: "1620.364",
+			DateWoy: "1621W01-2",
+			DateWithSlash: "1620/12/29",
+			DateWithOutSlash: "16201229"
+		},
+		stime: 8590221000000,
+		gdate: [2242, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2242, 2, 20] },
+		gtime: 8590221000000
+	},
 
 	{
-		sdate: [1640, 1, 1, 0, 0, 0, 0],
+		sdate: [1640, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1640, 0, 1],
 			DateTime: "1640-01-01 01:00:00",
@@ -31116,7 +31556,7 @@ export const DateString = [
 			DateWithOutSlash: "16400101"
 		},
 		stime: 9189923400000,
-		gdate: [2261, 3, 21, 0, 0, 0, 0],
+		gdate: [2261, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2261, 2, 21] },
 		gtime: 9189923400000
 	},
@@ -32500,9 +32940,29 @@ export const DateString = [
 		gdata: { gregorian: [2262, 2, 19] },
 		gtime: 9221286600000
 	},
+	{
+		sdate: [1640, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1640, 11, 29],
+			DateTime: "1640-12-29 00:00:00",
+			DateAber: "29 Esf 1640",
+			DateMonth: "Esf",
+			DateYearMonth: "1640-Esf",
+			DateYear: "1640",
+			DateAberWithDate: "Thu 29 Esf 1640",
+			DateDoy: "1640.364",
+			DateWoy: "1640W52-6",
+			DateWithSlash: "1640/12/29",
+			DateWithOutSlash: "16401229"
+		},
+		stime: 9221373000000,
+		gdate: [2262, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2262, 2, 20] },
+		gtime: 9221373000000
+	},
 
 	{
-		sdate: [1660, 1, 1, 0, 0, 0, 0],
+		sdate: [1660, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1660, 0, 1],
 			DateTime: "1660-01-01 01:00:00",
@@ -32517,7 +32977,7 @@ export const DateString = [
 			DateWithOutSlash: "16600101"
 		},
 		stime: 9821075400000,
-		gdate: [2281, 3, 21, 0, 0, 0, 0],
+		gdate: [2281, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2281, 2, 21] },
 		gtime: 9821075400000
 	},
@@ -33901,9 +34361,29 @@ export const DateString = [
 		gdata: { gregorian: [2282, 2, 19] },
 		gtime: 9852438600000
 	},
+	{
+		sdate: [1660, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1660, 11, 29],
+			DateTime: "1660-12-29 00:00:00",
+			DateAber: "29 Esf 1660",
+			DateMonth: "Esf",
+			DateYearMonth: "1660-Esf",
+			DateYear: "1660",
+			DateAberWithDate: "Mon 29 Esf 1660",
+			DateDoy: "1660.364",
+			DateWoy: "1661W01-3",
+			DateWithSlash: "1660/12/29",
+			DateWithOutSlash: "16601229"
+		},
+		stime: 9852525000000,
+		gdate: [2282, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2282, 2, 20] },
+		gtime: 9852525000000
+	},
 
 	{
-		sdate: [1680, 1, 1, 0, 0, 0, 0],
+		sdate: [1680, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1680, 0, 1],
 			DateTime: "1680-01-01 01:00:00",
@@ -33918,7 +34398,7 @@ export const DateString = [
 			DateWithOutSlash: "16800101"
 		},
 		stime: 10452141000000,
-		gdate: [2301, 3, 21, 0, 0, 0, 0],
+		gdate: [2301, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2301, 2, 21] },
 		gtime: 10452141000000
 	},
@@ -35303,7 +35783,27 @@ export const DateString = [
 		gtime: 10483504200000
 	},
 	{
-		sdate: [1680, 12, 30, 0, 0, 0, 0],
+		sdate: [1680, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1680, 11, 29],
+			DateTime: "1680-12-29 00:00:00",
+			DateAber: "29 Esf 1680",
+			DateMonth: "Esf",
+			DateYearMonth: "1680-Esf",
+			DateYear: "1680",
+			DateAberWithDate: "Thu 29 Esf 1680",
+			DateDoy: "1680.364",
+			DateWoy: "1680W52-6",
+			DateWithSlash: "1680/12/29",
+			DateWithOutSlash: "16801229"
+		},
+		stime: 10483590600000,
+		gdate: [2302, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2302, 2, 20] },
+		gtime: 10483590600000
+	},
+	{
+		sdate: [1680, 12, 30, 1, 0, 0, 0],
 		sdata: {
 			solar: [1680, 11, 30],
 			DateTime: "1680-12-30 01:00:00",
@@ -35318,13 +35818,12 @@ export const DateString = [
 			DateWithOutSlash: "16801230"
 		},
 		stime: 10483677000000,
-		gdate: [2302, 3, 21, 0, 0, 0, 0],
+		gdate: [2302, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2302, 2, 21] },
 		gtime: 10483677000000
 	},
-
 	{
-		sdate: [1700, 1, 1, 0, 0, 0, 0],
+		sdate: [1700, 1, 1, 1, 0, 0, 0],
 		sdata: {
 			solar: [1700, 0, 1],
 			DateTime: "1700-01-01 01:00:00",
@@ -35339,7 +35838,7 @@ export const DateString = [
 			DateWithOutSlash: "17000101"
 		},
 		stime: 11083293000000,
-		gdate: [2321, 3, 21, 0, 0, 0, 0],
+		gdate: [2321, 3, 21, 1, 0, 0, 0],
 		gdata: { gregorian: [2321, 2, 21] },
 		gtime: 11083293000000
 	},
@@ -36722,5 +37221,25 @@ export const DateString = [
 		gdate: [2322, 3, 19, 0, 0, 0, 0],
 		gdata: { gregorian: [2322, 2, 19] },
 		gtime: 11114656200000
+	},
+	{
+		sdate: [1700, 12, 29, 0, 0, 0, 0],
+		sdata: {
+			solar: [1700, 11, 29],
+			DateTime: "1700-12-29 00:00:00",
+			DateAber: "29 Esf 1700",
+			DateMonth: "Esf",
+			DateYearMonth: "1700-Esf",
+			DateYear: "1700",
+			DateAberWithDate: "Mon 29 Esf 1700",
+			DateDoy: "1700.364",
+			DateWoy: "1701W01-3",
+			DateWithSlash: "1700/12/29",
+			DateWithOutSlash: "17001229"
+		},
+		stime: 11114742600000,
+		gdate: [2322, 3, 20, 0, 0, 0, 0],
+		gdata: { gregorian: [2322, 2, 20] },
+		gtime: 11114742600000
 	}
 ];

@@ -1589,8 +1589,8 @@ export default class SHDate {
 			doy: number,
 			week: number,
 			tz: string = "",
-			tzoffset: number = date.getTimezoneOffset() * -1 * 60 * 1000,
 			tztime: number = 0;
+		//tzoffset: number = date.getTimezoneOffset() * -1 * 60000,
 		const dataObj: any = new SHParser(str);
 		Object.entries(dataObj).forEach(([key, value]: any) => {
 			switch (key) {
@@ -1619,7 +1619,7 @@ export default class SHDate {
 					tz = value;
 					break;
 				case "TZ_TIME":
-					tztime = tzoffset - value;
+					tztime = date.getTimezoneOffset() * -1 * 60000 - value;
 					break;
 				case "TIMESTAMP":
 					date.setTime(parseInt(value));
@@ -1634,7 +1634,7 @@ export default class SHDate {
 				case "WEEK_OF_YEAR":
 					week = parseInt(value);
 					date.setWeek(
-						parseInt(dataObj.YEAR),
+						year,
 						week,
 						dataObj.DAY_OF_WEEK ? parseInt(dataObj.DAY_OF_WEEK) - 1 : 0
 					);
@@ -1663,12 +1663,12 @@ export default class SHDate {
 			}
 		});
 		year = year ? year : defaultDate.year;
-		// console.log(year, month, day, hours, minutes, seconds, milliseconds);
-		date.#setFullYear(year, month, day);
+		console.log(year, month, day, hours, minutes, seconds, milliseconds);
 		date.#setHours(hours, minutes, seconds, milliseconds);
+		date.#setFullYear(year, month, day);
 		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
-		// console.log(dataObj, str, `\n`, date.toString(), date.getTime());
+		console.log(dataObj, str, `\n`, date.toString(), date.getTime());
 		return date.getTime();
 	}
 
