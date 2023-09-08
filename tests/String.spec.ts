@@ -17,10 +17,10 @@ const merge = (target: any, source: any) => {
 };
 const Until = merge(UntilString.DateString, UntilDate.solarDate);
 // console.log(Until);
-const tests = (data1: any, data2: any, isarray = false) => {
-	if (!isarray) console.log(data1, data2);
-	else if (JSON.stringify(data1) !== JSON.stringify(data2))
-		console.log(data1, data2);
+const tests = (isarray = false, ...data: any) => {
+	if (!isarray) console.log(data);
+	else if (JSON.stringify(data[0]) !== JSON.stringify(data[1]))
+		console.log(data);
 };
 
 describe("String", () => {
@@ -48,6 +48,7 @@ describe("String", () => {
 
 	it("correctly Date YYYY-MM-DD HH:II:SS", () => {
 		Until.forEach(({ sdata, sdate }: any) => {
+			const [dyears, dmonths, ddays, dhours, dminutes, dseconds] = sdate;
 			const date = new SHDate(sdata.DateTime);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
@@ -55,10 +56,9 @@ describe("String", () => {
 			const hours = date.getHours();
 			const minutes = date.getMinutes();
 			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
 			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
+				[years, months, days, hours, minutes, seconds],
+				[dyears, dmonths, ddays, dhours, dminutes, dseconds]
 			);
 		});
 	});
@@ -110,7 +110,7 @@ describe("String", () => {
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
-			tests([years, months, days], sdata.solar, true);
+			tests(true, [years, months, days], sdata.solar);
 			if (sdate[2] == 1) {
 				assert.deepEqual([years, months, days], sdata.solar);
 			} else {

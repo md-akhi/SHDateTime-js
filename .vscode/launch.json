@@ -5,15 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "name": "nodemon",
-      "program": "${workspaceFolder}/app.js",
+      "command": "npm start",
+      "name": "Run npm start",
       "request": "launch",
-      "restart": true,
-      "runtimeExecutable": "nodemon",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "type": "node-terminal"
     },
     {
       "args": [
@@ -32,11 +27,12 @@
       "type": "node"
     },
     {
-      "type": "pwa-node",
+      "args": ["task"],
+      "name": "Gulp task",
+      "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
       "request": "launch",
-      "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\dist\\cjs\\index.js"
+      "type": "node"
     }
   ]
 }

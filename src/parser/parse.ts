@@ -141,13 +141,15 @@ export default class SHParser {
 		return this.dateTimeTZ() || this.dateWithAbbrTimeTZ();
 	}
 
-	// Atom	"2022-06-02T16:58:35+00:00"
 	// ISO8601	"2022-06-02T16:58:35+0000"
-	// RFC 3339	"2022-06-02T16:58:35+00:00"
-	// W3C	"2022-06-02T16:58:35+00:00"
+	// Atom, RFC 3339, W3C	"2022-06-02T16:58:35+00:00"
 	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
 	dateTimeTZ() {
-		if (this.dateWithDash() && this.time24Notation()) return true;
+		if (
+			this.dateWithDash(false, true) &&
+			this.time24Notation(true, true, true, true)
+		)
+			return true;
 		return false;
 	}
 
@@ -172,19 +174,8 @@ export default class SHParser {
 	 */
 	CommonLogFormat() {
 		const pos = this.getPosition();
-		const year = this.year4();
-		if (year && this.isTKSlash()) {
-			const month = this.month(true);
-			if (month && this.isTKSlash()) {
-				const day = this.day(true);
-				if (day && this.time24Notation()) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
-			}
-		}
+		if (this.dateWithSlash(true) && this.time24Notation(true, true, true, true))
+			return true;
 		this.resetPosition(pos);
 		return false;
 	}
@@ -203,10 +194,10 @@ export default class SHParser {
 			if (this.isTKSignWeek()) {
 				const week = this.weekOfYear();
 				if (week) {
-					this.isTKDash();
-					const dow = this.int0To7();
 					this.data["YEAR"] = year;
 					this.data["WEEK_OF_YEAR"] = week;
+					this.isTKDash();
+					const dow = this.int0To7();
 					if (dow) {
 						this.data["DAY_OF_WEEK"] = dow;
 					}
@@ -216,6 +207,16 @@ export default class SHParser {
 		}
 		this.resetPosition(pos);
 		return false;
+	}
+
+	/**
+	 * week of year (W)
+	 *
+	 * @param  int int
+	 * @return bool
+	 */
+	weekOfYear(): string | false {
+		return this.int10To53() || this.int00To09();
 	}
 
 	// /**
@@ -258,11 +259,9 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayOfYear() {
-		const pos = this.getPosition();
 		const doy1 = this.int10To36() || this.int00To09();
 		const doy2 = this.int0To9();
 		if (doy1 && doy2) return doy1 + doy2;
-		this.resetPosition(pos);
 		return false;
 	}
 
@@ -291,7 +290,10 @@ export default class SHParser {
 	 * @return bool
 	 */
 	TimeFormats() {
-		return this.time24Notation() || this.time12Notation();
+		return (
+			this.time24Notation(true, true, true, true) ||
+			this.time12Notation(true, true, true, true)
+		);
 	}
 
 	/**
@@ -303,35 +305,37 @@ export default class SHParser {
 	 * @return bool
 	 */
 	time12Notation(
-		ish12 = false,
-		ismin = false,
+		issign = false,
 		issec = false,
 		isfrac = false,
-		ismeridian = false,
-		iscolon = false,
-		isdot = false
+		ismeridian = false
 	) {
 		const pos = this.getPosition();
-		this.isTKSignTime();
+		if (issign) this.isTKSignTime();
 		const h12 = this.H12();
 		if (h12) {
 			this.isTKColon();
 			const min = this.minutes();
 			if (min) {
+				this.data["HOURS"] = h12;
 				this.data["MINUTES"] = min;
-				this.isTKColon();
-				const sec = this.seconds();
-				if (sec) {
-					this.data["SECONDS"] = sec;
-					const frac = this.fractionalSecond();
-					if (frac) {
-						this.data["FRACTION"] = frac;
+				if (issec) {
+					this.isTKColon();
+					const sec = this.seconds();
+					if (sec) {
+						this.data["SECONDS"] = sec;
+						if (isfrac) {
+							const frac = this.fractionalSecond();
+							if (frac) {
+								this.data["FRACTION"] = frac;
+							}
+						}
 					}
 				}
-			}
-			this.isTKSpace();
-			const meridian = this.meridian();
-			if (meridian) {
+				if (ismeridian) {
+					this.isTKSpace();
+					this.meridian();
+				}
 				return true;
 			}
 		}
@@ -348,40 +352,34 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	time24Notation(
-		ish24 = false,
-		ismin = false,
-		issec = false,
-		isfrac = false,
-		iscolon = false,
-		isdot = false,
-		istzc = false,
-		istz = false
-	) {
+	time24Notation(issign = false, issec = true, isfrac = false, istz = true) {
 		const pos = this.getPosition();
-		this.isTKSignTime();
+		if (issign) this.isTKSignTime();
 		const h24 = this.H24();
-		if (h24 && (this.isTKColon() || this.isTKDot())) {
+		if (h24 && this.isTKColon()) {
 			const min = this.minutes(false);
 			if (min) {
-				this.isTKColon() || this.isTKDot();
-				const sec = this.seconds(false);
 				this.data["HOURS"] = h24;
 				this.data["MINUTES"] = min;
-				if (sec) {
-					this.data["SECONDS"] = sec;
-					const frac = this.fractionalSecond();
-					if (frac) {
-						this.data["FRACTION"] = frac;
+				const pos2 = this.getPosition();
+				if (issec && this.isTKColon()) {
+					const sec = this.seconds(false);
+					if (sec) {
+						this.data["SECONDS"] = sec;
+						if (isfrac) {
+							const frac = this.fractionalSecond();
+							if (frac) {
+								this.data["FRACTION"] = frac;
+							}
+						}
 					}
+				} else this.resetPosition(pos2);
+				if (istz) {
 					this.isTKSpace();
 					this.TZCorrection() || this.timeZone();
 				}
 				return true;
 			}
-		} else if (this.TZCorrection() || this.timeZone()) {
-			//Time zone information
-			return true;
 		}
 		this.resetPosition(pos);
 		return false;
@@ -463,9 +461,9 @@ export default class SHParser {
 				const min = this.minutes();
 				if (min) {
 					time += parseInt(min); // min to ms
+					this.data["TZ_TIME"] = sign * time * 60 * 1000; // min to ms
+					return true;
 				}
-				this.data["TZ_TIME"] = sign * time * 60 * 1000; // min to ms
-				return true;
 			}
 		} else if (isTZ) return true;
 		return false;
@@ -493,19 +491,17 @@ export default class SHParser {
 	 * @param  string sign
 	 * @return bool
 	 */
-	number(count = false): any {
-		let isInt,
-			int,
-			num: string = "";
+	number(issign = false, count = false): any {
+		let int,
+			num: string = "",
+			isInt = false;
 		const pos = this.getPosition();
-		const sign = this.signNumber();
-		isInt = true;
-		do {
-			int = this.int00To99() || this.int0To9();
-			if (int) num += int; //sprintf('%s%s',$num,int);
-			else isInt = false;
-		} while (isInt);
-		if (!isInt) {
+		const sign = this.signNumber() || 1;
+		while ((int = this.int00To99() || this.int0To9())) {
+			num += int; //sprintf('%s%s',$num,int);
+			isInt = true;
+		}
+		if (isInt) {
 			return [sign, num];
 		}
 		this.resetPosition(pos);
@@ -655,23 +651,26 @@ export default class SHParser {
 
 	ISO8601Notations() {
 		return (
-			this.dateWithSlash() || // YY "/" MM "/" DD
-			this.dateWithDash() || // [+-]? YY "-" MM "-" DD // YY "-" mm		Day reset to 1
-			this.dateWithOut() // ISO  YY "/"? MM "/"? DD
+			this.dateWithSlash(true) || // YY "/" MM "/" DD
+			this.dateWithDash(true, true) || // [+-]? YY "-" MM "-" DD
+			//this.dateWithDash(false, true) || // YY "-" MM "-" DD
+			this.dateWithDash(false, false) || // YY "-" MM		Day reset to 1
+			this.dateWithOut() // ISO  YY  MM  DD
 		);
 	}
 
 	dateLocalizedNotations() {
 		return (
 			// this.dedateWithSlash() || // dd "/" mm "/" YY
-			this.year4TextualMonth() || // YY ([ \t-])* m    Day reset to 1
-			this.Date1Abbr() || // y "-" M "-" DD
+			this.Date1Abbr(true) || // y "-" M "-" DD
+			this.Date1Abbr(false) || // y "-" M
 			// this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			// this.dayTextualMonthYear() || // Day, textual month and year
 			// this.textualMonth4Year() || // Day and textual month
+			this.year4TextualMonth() || // YY ([ \t.])* m    Day reset to 1
 			this.textualMonthYear4() ||
 			// this.textualMonthDayYear1() ||
-			// this.monthAbbrDayYear() ||
+			// this.monthAbbrDayYear()||
 			this.dateyear4MandatoryPrefix() ||
 			this.dateMonthTextual()
 		);
@@ -696,19 +695,22 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	dateWithSlash() {
+	dateWithSlash(isday = false) {
 		const pos = this.getPosition();
 		const year = this.year4();
 		if (year && this.isTKSlash()) {
-			const month = this.month(true);
-			if (month && this.isTKSlash()) {
-				const day = this.day(true);
-				if (day) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
+			const month = this.month(true) || this.monthTextual();
+			if (month) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				const pos2 = this.getPosition();
+				if (isday && this.isTKSlash()) {
+					const day = this.day(true);
+					if (day) {
+						this.data["DAY"] = day;
+					} else this.resetPosition(pos2);
 				}
+				return true;
 			}
 		}
 		this.resetPosition(pos);
@@ -753,7 +755,7 @@ export default class SHParser {
 		const pos = this.getPosition();
 		const year = this.year4();
 		if (year) {
-			const month = this.month(true);
+			const month = this.month(true) || this.monthTextual();
 			if (month) {
 				const day = this.day(true);
 				if (day) {
@@ -782,20 +784,22 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	dateWithDash(issign = false) {
+	dateWithDash(issign = false, isday = false) {
 		let sign;
 		const pos = this.getPosition();
 		if (issign) sign = this.signNumber();
-		const year = this.year4() || this.year2(true);
+		const year = this.year4();
 		if (year && this.isTKDash()) {
-			const month = this.month(false);
-			if (month && this.isTKDash()) {
-				if (typeof sign == "number") this.data["SIGN_DATE"] = sign;
+			const month = this.month(true) || this.monthTextual();
+			if (month) {
+				if (issign) this.data["SIGN_DATE"] = sign;
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
-				const day = this.dayWithSuffix();
-				if (day) {
-					this.data["DAY"] = day;
+				const pos2 = this.getPosition();
+				if (isday && this.isTKDash()) {
+					const day = this.day(true);
+					if (day) this.data["DAY"] = day;
+					else this.resetPosition(pos2);
 				}
 				return true;
 			}
@@ -813,13 +817,11 @@ export default class SHParser {
 	year4TextualMonth() {
 		const pos = this.getPosition();
 		const year = this.year4();
-		if (year) {
-			this.isTKDash() || this.isTKSpace() || this.isTKDot();
+		if (year && (this.isTKSpace() || this.isTKDot())) {
 			const month = this.monthTextual();
 			if (month) {
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
-				this.data["DAY"] = 1;
 				return true;
 			}
 		}
@@ -829,23 +831,26 @@ export default class SHParser {
 
 	/**
 		 * Year, month abbreviation and day
-			// y "-" M "-" DD
+			// YY "-" M "-" DD
 		 *
 		 * @return bool
 		 */
-	Date1Abbr() {
+	Date1Abbr(isday = false) {
 		const pos = this.getPosition();
-		const year = this.year1or4();
+		const year = this.year4();
 		if (year && this.isTKDash()) {
 			const month = this.monthTextual();
-			if (month && this.isTKDash()) {
-				const day = this.day(true);
-				if (day) {
-					this.data["YEAR"] = year;
-					this.data["MONTH"] = month;
-					this.data["DAY"] = day;
-					return true;
-				}
+			if (month) {
+				this.data["YEAR"] = year;
+				this.data["MONTH"] = month;
+				const pos2 = this.getPosition();
+				if (isday && this.isTKDash()) {
+					const day = this.day(true);
+					if (day) {
+						this.data["DAY"] = day;
+						return true;
+					}
+				} else this.resetPosition(pos2);
 			}
 		}
 		this.resetPosition(pos);
@@ -853,15 +858,12 @@ export default class SHParser {
 	}
 
 	// COOKIE	"Thursday, 02-Jun-2022 16:58:35 UTC"
-	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
 	// RFC 7231	"Thu, 02 Jun 2022 16:58:35 GMT"
-	// RFC 822	"Thu, 02 Jun 22 16:58:35 +0000"
-	// RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
-	// RFC 1123	"Thu, 02 Jun 2022 16:58:35 +0000"
-	// RFC 2822	"Thu, 02 Jun 2022 16:58:35 +0000"
-	// RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
+	// RFC 850	"Thursday, 02-Jun-22 16:58:35 UTC"
+	// RFC 822, RFC 1036	"Thu, 02 Jun 22 16:58:35 +0000"
+	// RFC 1123, RFC 2822, RSS	"Thu, 02 Jun 2022 16:58:35 +0000"
 
-	dateWithAbbrTimeTZ() {
+	dateWithAbbrTimeTZ(isdname = false) {
 		const pos = this.getPosition();
 		if (this.dayNeme()) {
 			this.isTKComma();
@@ -874,7 +876,11 @@ export default class SHParser {
 				if (month) {
 					this.isTKDash() || this.isTKSpace();
 					const year = this.year4() || this.year2(true);
-					if (year && this.isTKSpace() && this.time24Notation()) {
+					if (
+						year &&
+						this.isTKSpace() &&
+						this.time24Notation(true, true, true, true)
+					) {
 						this.data["YEAR"] = year;
 						this.data["MONTH"] = month;
 						this.data["DAY"] = day;
@@ -895,11 +901,9 @@ export default class SHParser {
 	 * @return bool
 	 */
 	year4() {
-		const pos = this.getPosition();
 		const y1 = this.year2(true);
 		const y2 = this.year2(true);
 		if (y1 && y2) return y1 + y2;
-		this.resetPosition(pos);
 		return false;
 	}
 
@@ -921,17 +925,15 @@ export default class SHParser {
 	 *
 	 * @return false|string
 	 */
-	year1or4() {
-		const pos = this.getPosition();
-		const y1 = this.year2(false);
-		if (y1) {
-			const y2 = this.year2(false);
-			if (y2) return y1 + y2;
-			return y1;
-		}
-		this.resetPosition(pos);
-		return false;
-	}
+	// year1or4() {
+	// 	const y1 = this.year2(false);
+	// 	if (y1) {
+	// 		const y2 = this.year2(false);
+	// 		if (y2) return y1 + y2;
+	// 		return y1;
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * day (dd) {([0-2]?[0-9] | "3"[01]) daysuf?}
@@ -940,7 +942,7 @@ export default class SHParser {
 	 * @return bool
 	 */
 	dayWithSuffix() {
-		const int = this.day(false);
+		const int = this.day(true);
 		if (int) {
 			this.daySuffixTextual();
 			return int;
@@ -1063,12 +1065,11 @@ export default class SHParser {
 		const pos = this.getPosition();
 		const month = this.monthTextual();
 		if (month) {
-			this.isTKSpace() || this.isTKDot() || this.isTKDash();
+			this.isTKSpace() || this.isTKDash();
 			const year = this.year4();
 			if (year) {
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
-				this.data["DAY"] = 1;
 				return true;
 			}
 		}
@@ -1157,7 +1158,6 @@ export default class SHParser {
 		const month = this.monthTextual();
 		if (month) {
 			this.data["MONTH"] = month;
-			this.data["DAY"] = 1;
 			return true;
 		}
 		this.resetPosition(pos);
@@ -1240,16 +1240,6 @@ export default class SHParser {
 	month(isMandatoryPrefix = true): string | false {
 		if (isMandatoryPrefix) return this.int10To12() || this.int00To09();
 		return this.month(true) || this.int0To9();
-	}
-
-	/**
-	 * week of year (W)
-	 *
-	 * @param  int int
-	 * @return bool
-	 */
-	weekOfYear(): string | false {
-		return this.int10To53() || this.int00To09();
 	}
 
 	// Relative
