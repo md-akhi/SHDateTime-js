@@ -1663,12 +1663,12 @@ export default class SHDate {
 			}
 		});
 		year = year ? year : defaultDate.year;
-		console.log(year, month, day, hours, minutes, seconds, milliseconds);
+		// console.log(year, month, day, hours, minutes, seconds, milliseconds);
 		date.#setHours(hours, minutes, seconds, milliseconds);
 		date.#setFullYear(year, month, day);
 		date.setTime(date.getTime() + tztime);
 		//console.log(JSON.stringify(SHParser, null, 2));
-		console.log(dataObj, str, `\n`, date.toString(), date.getTime());
+		// console.log(dataObj, str, `\n`, date.toString(), date.getTime());
 		return date.getTime();
 	}
 

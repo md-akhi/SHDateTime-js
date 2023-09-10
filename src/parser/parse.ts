@@ -313,8 +313,7 @@ export default class SHParser {
 		const pos = this.getPosition();
 		if (issign) this.isTKSignTime();
 		const h12 = this.H12();
-		if (h12) {
-			this.isTKColon();
+		if (h12 && this.isTKColon()) {
 			const min = this.minutes();
 			if (min) {
 				this.data["HOURS"] = h12;
@@ -362,7 +361,8 @@ export default class SHParser {
 				this.data["HOURS"] = h24;
 				this.data["MINUTES"] = min;
 				const pos2 = this.getPosition();
-				if (issec && this.isTKColon()) {
+				if (issec) {
+					this.isTKColon();
 					const sec = this.seconds(false);
 					if (sec) {
 						this.data["SECONDS"] = sec;
@@ -663,7 +663,6 @@ export default class SHParser {
 		return (
 			// this.dedateWithSlash() || // dd "/" mm "/" YY
 			this.Date1Abbr(true) || // y "-" M "-" DD
-			this.Date1Abbr(false) || // y "-" M
 			// this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
 			// this.dayTextualMonthYear() || // Day, textual month and year
 			// this.textualMonth4Year() || // Day and textual month
@@ -869,23 +868,23 @@ export default class SHParser {
 			this.isTKComma();
 			this.isTKSpace();
 			this.isTKComma();
-			const day = this.day(true);
-			if (day) {
+		}
+		const day = this.day(true);
+		if (day) {
+			this.isTKDash() || this.isTKSpace();
+			const month = this.monthTextual();
+			if (month) {
 				this.isTKDash() || this.isTKSpace();
-				const month = this.monthTextual();
-				if (month) {
-					this.isTKDash() || this.isTKSpace();
-					const year = this.year4() || this.year2(true);
-					if (
-						year &&
-						this.isTKSpace() &&
-						this.time24Notation(true, true, true, true)
-					) {
-						this.data["YEAR"] = year;
-						this.data["MONTH"] = month;
-						this.data["DAY"] = day;
-						return true;
-					}
+				const year = this.year4() || this.year2(true);
+				if (
+					year &&
+					this.isTKSpace() &&
+					this.time24Notation(true, true, true, true)
+				) {
+					this.data["YEAR"] = year;
+					this.data["MONTH"] = month;
+					this.data["DAY"] = day;
+					return true;
 				}
 			}
 		}

@@ -16,17 +16,6 @@ export default class SHLexerConfig {
 
 		// ********** month rules **********
 		SHAHRIVAR: "shahrivar|sha",
-		FARVARDIN: "farvardin|far",
-		ORDIBEHESHT: "ordibehesht|ord",
-		KHORDAD: "khordad|kho",
-		TIR: "tir",
-		AMORDAD: "amordad|mordad|amo|mor",
-		MEHR: "mehr?",
-		ABAN: "aban?",
-		AZAR: "azar?",
-		DEY: "dey",
-		BAHMAN: "bahman|bah",
-		ESFAND: "es[fp]{1}and|es[fp]{1}",
 
 		// ********* numeric rules **********
 		INT_00: "00",
@@ -182,6 +171,21 @@ export default class SHLexerConfig {
 		TWENTIETH: "twentieth",
 		THIRTIETH: "thirtieth",
 		THIRTY: "thirty",
+
+		// ********** month rules **********
+
+		FARVARDIN: "farvardin|far",
+		ORDIBEHESHT: "ordibehesht|ord",
+		KHORDAD: "khordad|kho",
+		TIR: "tir",
+		AMORDAD: "amordad|mordad|amo|mor",
+		//SHAHRIVAR: "shahrivar|sha",
+		MEHR: "mehr?",
+		ABAN: "aban?",
+		AZAR: "azar?",
+		DEY: "dey",
+		BAHMAN: "bahman|bah",
+		ESFAND: "es[fp]{1}and|es[fp]{1}",
 
 		// ********** date rules **********
 
