@@ -46,7 +46,7 @@ export default class SHLexer {
 			for (const tokenDefinition of config.getTokenDefinitions()) {
 				const GetRegex = tokenDefinition.getRegex();
 				const GetName = tokenDefinition.getName();
-				const Regex: RegExp = new RegExp("^" + GetRegex, "i");
+				const Regex: RegExp = new RegExp(GetRegex, "u");
 				match = input.match(Regex);
 				// console.log(input, GetName, match);
 				if (match) {

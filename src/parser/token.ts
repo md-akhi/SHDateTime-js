@@ -1,27 +1,40 @@
 export default class SHToken {
-	/** @var string */
-	protected name: any;
+	//private lexer: Lexer;
 
 	/** @var string */
-	protected value: any;
+	protected name: string | undefined;
+
+	/** @var string */
+	protected value: string | undefined;
+
+	/** @var int */ //line
+	protected offset: number | undefined;
+
+	/** @var int */ //column
+	protected position: number | undefined;
 
 	/** @var int */
-	protected offset: any;
-
-	/** @var int */
-	protected position: any;
+	protected length: number | undefined;
 
 	/**
 	 * @param string name
 	 * @param string value
-	 * @param string offset
-	 * @param string count
+	 * @param number offset
+	 * @param number position
+	 * @param number length
 	 */
-	public constructor(name: any, value: any, offset: any, count: any) {
+	public constructor(
+		name: string,
+		value: string,
+		offset: number,
+		position: number,
+		length: number = 0
+	) {
 		this.name = name;
 		this.value = value;
 		this.offset = offset;
-		this.position = count;
+		this.position = position;
+		this.length = length;
 	}
 
 	/**
@@ -52,6 +65,13 @@ export default class SHToken {
 		return this.value;
 	}
 
+	/**
+	 * @return string
+	 */
+	public getLength() {
+		return this.length;
+	}
+
 	public is(token: any) {
 		if (typeof token === "string") {
 			return this.name === token;
@@ -59,5 +79,16 @@ export default class SHToken {
 			return this.name === token.getName();
 		}
 		//throw new InvalidArgumentException('Expected string or Token');
+	}
+	/**
+	 * Removes token from lexer.
+	 */
+	public remove() {
+		this.name = undefined;
+		this.value = undefined;
+		this.offset = undefined;
+		this.position = undefined;
+		this.length = undefined;
+		//this.lexer.update();
 	}
 }
