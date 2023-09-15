@@ -10,7 +10,7 @@ export default class SHToken {
 	/** @var int */ //line
 	protected offset: number | undefined;
 
-	/** @var int */ //column
+	/** @var int */ //id
 	protected position: number | undefined;
 
 	/** @var int */
@@ -28,7 +28,7 @@ export default class SHToken {
 		value: string,
 		offset: number,
 		position: number,
-		length: number = 0
+		length: number
 	) {
 		this.name = name;
 		this.value = value;

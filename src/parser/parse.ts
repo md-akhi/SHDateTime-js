@@ -13,42 +13,7 @@ export default class SHParser {
 	 */
 	public Lexer;
 	time: any;
-	data: any = {
-		// YEAR: "",
-		// MONTH: "",
-		// DAY: "",
-		// HOURS: "",
-		// MINUTES: "",
-		// SECONDS: "",
-		// DAY_OF_YEAR: "",
-		// DAY_OF_WEEK: "",
-		// TIMESTAMP: "",
-		// Sign_Timestamp: "",
-		// RTDAY: "",
-		// RYDAY: "",
-		// FRAC: "",
-		// PM: "",
-		// AM: "",
-		// NOW: "",
-		// TODAY_MIDNIGHT: "",
-		// NOON: "",
-		// YESTERDAY: "",
-		// TOMORROW: "",
-		// AGO: "",
-		// NEXT_DAY_OF_NAME: "",
-		// MINUTES_15_PAST_SPECIFIED_HOUR: "",
-		// MINUTES_15_BEFORE_SPECIFIED_HOUR: "",
-		// FIRST_DAY_CURRENT_MONTH: "",
-		// LAST_DAY_CURRENT_MONTH: "",
-		// LAST_WEEK_DAY_CURRENT_MONTH: "",
-		// TH_WEEK_DAY_CURRENT_MONTH: "",
-		// SIGN_DATE: "",
-		// TZ_SIGN_PLUS: "",
-		// TZ_SIGN_DASH: "",
-		// TZ_HOURS: "",
-		// TZ_MINUTES: "",
-		// TZ_NAME: ""
-	};
+	data: any = {};
 	Date: any;
 
 	/**
@@ -69,19 +34,17 @@ export default class SHParser {
 
 	/**
 	 * Compound Formats
+	 * Localized Notations
+	 * YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
+	 * YY-MM-DD HH:II:SS
+	 * dd/M/Y:HH:II:SS tspace tzcorrection
+	 * YY-?"W"W-?[0-7]
+	 * YY .? doy
+	 * "@" "-"? [0-9]+ // time
 	 *
 	 * @return bool
 	 */
 	public CompoundFormats(): boolean {
-		// Localized Notations
-		// dd/M/Y:HH:II:SS tspace tzcorrection
-		//  YY-?"W"W-?[0-7]
-		//  YY-MM-DD HH:II:SS
-		// YY .? doy
-		//  YY "-" MM "-" DD "T" HH ":" II ":" SS frac tzcorrection?
-		// "@" "-"? [0-9]+
-		// time
-
 		return this.standardsFormats() || this.compoundLocalizedNotations();
 	}
 	// https://www.php.net/manual/en/datetime.formats.php
@@ -141,14 +104,14 @@ export default class SHParser {
 		return this.dateTimeTZ() || this.dateWithAbbrTimeTZ();
 	}
 
-	// ISO8601	"2022-06-02T16:58:35+0000"
-	// Atom, RFC 3339, W3C	"2022-06-02T16:58:35+00:00"
-	// RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
+	/**
+	 * ISO8601	"2022-06-02T16:58:35+0000"
+	 * Atom, RFC 3339, W3C	"2022-06-02T16:58:35+00:00"
+	 * RFC 3339 Extended	"2022-06-02T16:58:35.698+00:00"
+	 * @returns
+	 */
 	dateTimeTZ() {
-		if (
-			this.dateWithDash(false, true) &&
-			this.time24Notation(true, true, true, true)
-		)
+		if (this.dateWithDash(true) && this.time24Notation(true, true, true, true))
 			return true;
 		return false;
 	}
@@ -164,6 +127,55 @@ export default class SHParser {
 		// ||this.MSSQL()
 		// XMLRPC	YY MM DD "T" hh ":" II ":" SS	"20080701T22:38:07", "20080701T9:38:07"
 		// XMLRPC (Compact)	YY MM DD 't' hh II SS	"20080701t223807", "20080701T093807"
+	}
+
+	/**
+	 * Date Formats
+	 *
+	 * @return bool
+	 */
+	DateFormats() {
+		// Localized Notations
+		return this.ISO8601Notations() || this.dateLocalizedNotations();
+	}
+
+	ISO8601Notations() {
+		return (
+			this.dateWithSlash(true) || // YY "/" MM "/" DD
+			this.dateWithDash(true) || // [+-]? YY "-" MM "-" DD
+			//this.dateWithDash(false, true) || // YY "-" MM "-" DD
+			this.dateWithDash(false) || // YY "-" MM Day reset to 1
+			this.dateWithSlash(false) || // YY "/" MM Day reset to 1
+			this.dateWithOut() // ISO  YY  MM  DD
+		);
+	}
+
+	dateLocalizedNotations() {
+		return (
+			// this.dedateWithSlash() || // dd "/" mm "/" YY
+			this.Date1Abbr(true) || // y "-" M "-" DD
+			// this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
+			this.dayTextualMonthYear() || // Day, textual month and year
+			// this.textualMonth4Year() || // Day and textual month
+			this.year4TextualMonth() || // YY ([ \t.])* m    Day reset to 1
+			this.textualMonthYear4() ||
+			// this.textualMonthDayYear1() ||
+			// this.monthAbbrDayYear()||
+			this.dateyear4MandatoryPrefix() ||
+			this.dateMonthTextual()
+		);
+	}
+
+	/**
+	 * TimeFormats
+	 *
+	 * @return bool
+	 */
+	TimeFormats() {
+		return (
+			this.time24Notation(true, true, true, true) ||
+			this.time12Notation(true, true, true, true)
+		);
 	}
 
 	/**
@@ -192,7 +204,7 @@ export default class SHParser {
 		if (year) {
 			this.isTKDash();
 			if (this.isTKSignWeek()) {
-				const week = this.weekOfYear();
+				const week = this.int10To53() || this.int00To09(); // week of year (W)
 				if (week) {
 					this.data["YEAR"] = year;
 					this.data["WEEK_OF_YEAR"] = week;
@@ -207,16 +219,6 @@ export default class SHParser {
 		}
 		this.resetPosition(pos);
 		return false;
-	}
-
-	/**
-	 * week of year (W)
-	 *
-	 * @param  int int
-	 * @return bool
-	 */
-	weekOfYear(): string | false {
-		return this.int10To53() || this.int00To09();
 	}
 
 	// /**
@@ -241,7 +243,7 @@ export default class SHParser {
 		const pos = this.getPosition();
 		const year = this.year4();
 		if (year && this.isTKDot()) {
-			const doy = this.dayOfYear();
+			const doy = `${this.int10To36() || this.int00To09()}${this.int0To9()}`; // day Of Year (000-366)
 			if (doy) {
 				this.data["YEAR"] = year;
 				this.data["DAY_OF_YEAR"] = doy;
@@ -249,19 +251,6 @@ export default class SHParser {
 			}
 		}
 		this.resetPosition(pos);
-		return false;
-	}
-
-	/**
-	 * day Of Year (000-366)
-	 *
-	 * @param  int $int
-	 * @return bool
-	 */
-	dayOfYear() {
-		const doy1 = this.int10To36() || this.int00To09();
-		const doy2 = this.int0To9();
-		if (doy1 && doy2) return doy1 + doy2;
 		return false;
 	}
 
@@ -282,18 +271,6 @@ export default class SHParser {
 		}
 		this.resetPosition(pos);
 		return false;
-	}
-
-	/**
-	 * TimeFormats
-	 *
-	 * @return bool
-	 */
-	TimeFormats() {
-		return (
-			this.time24Notation(true, true, true, true) ||
-			this.time12Notation(true, true, true, true)
-		);
 	}
 
 	/**
@@ -639,42 +616,6 @@ export default class SHParser {
 		return false;
 	}
 
-	/**
-	 * Date Formats
-	 *
-	 * @return bool
-	 */
-	DateFormats() {
-		// Localized Notations
-		return this.ISO8601Notations() || this.dateLocalizedNotations();
-	}
-
-	ISO8601Notations() {
-		return (
-			this.dateWithSlash(true) || // YY "/" MM "/" DD
-			this.dateWithDash(true, true) || // [+-]? YY "-" MM "-" DD
-			//this.dateWithDash(false, true) || // YY "-" MM "-" DD
-			this.dateWithDash(false, false) || // YY "-" MM		Day reset to 1
-			this.dateWithOut() // ISO  YY  MM  DD
-		);
-	}
-
-	dateLocalizedNotations() {
-		return (
-			// this.dedateWithSlash() || // dd "/" mm "/" YY
-			this.Date1Abbr(true) || // y "-" M "-" DD
-			// this.dayMonth4Year() || // Day, month and four digit year, with dots, tabs or dashes
-			// this.dayTextualMonthYear() || // Day, textual month and year
-			// this.textualMonth4Year() || // Day and textual month
-			this.year4TextualMonth() || // YY ([ \t.])* m    Day reset to 1
-			this.textualMonthYear4() ||
-			// this.textualMonthDayYear1() ||
-			// this.monthAbbrDayYear()||
-			this.dateyear4MandatoryPrefix() ||
-			this.dateMonthTextual()
-		);
-	}
-
 	dateyear4MandatoryPrefix() {
 		const pos = this.getPosition();
 		const year = this.year4();
@@ -783,15 +724,15 @@ export default class SHParser {
 	 *
 	 * @return bool
 	 */
-	dateWithDash(issign = false, isday = false) {
+	dateWithDash(isday = false) {
 		let sign;
 		const pos = this.getPosition();
-		if (issign) sign = this.signNumber();
+		//if (issign) sign = this.signNumber();
 		const year = this.year4();
 		if (year && this.isTKDash()) {
 			const month = this.month(true) || this.monthTextual();
 			if (month) {
-				if (issign) this.data["SIGN_DATE"] = sign;
+				//if (issign) this.data["SIGN_DATE"] = sign;
 				this.data["YEAR"] = year;
 				this.data["MONTH"] = month;
 				const pos2 = this.getPosition();
@@ -1008,31 +949,31 @@ export default class SHParser {
 	 * d ([ \t-]) m
 	 *
 	 * @return bool
-	//  */
-	// dayTextualMonthYear() {
-	// 	let year,
-	// 		month,
-	// 		day,
-	// 		pos = this.getPosition();
-	// 	day = this.dayWithSuffix();
-	// 	if (day) {
-	// 		// console.log(this.nameToken());
-	// 		this.isTKSpace() || this.isTKDash();
-	// 		month = this.monthTextual();
-	// 		if (month) {
-	// 			this.data["DAY"] = day;
-	// 			this.data["MONTH"] = month;
-	// 			this.isTKSpace() || this.isTKDash();
-	// 			year = this.year4();
-	// 			if (year) {
-	// 				this.data["YEAR"] = year;
-	// 			}
-	// 			return true;
-	// 		}
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
+	 */
+	dayTextualMonthYear() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		day = this.dayWithSuffix();
+		if (day) {
+			// console.log(this.nameToken());
+			this.isTKSpace() || this.isTKDash();
+			month = this.monthTextual();
+			if (month) {
+				this.data["DAY"] = day;
+				this.data["MONTH"] = month;
+				this.isTKSpace() || this.isTKDash();
+				year = this.year4();
+				if (year) {
+					this.data["YEAR"] = year;
+				}
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
 
 	/**
 	 * Textual month and four digit year (Day reset to 1)

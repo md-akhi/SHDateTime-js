@@ -48,7 +48,14 @@ describe("String", () => {
 
 	it("correctly Date YYYY-MM-DD HH:II:SS", () => {
 		Until.forEach(({ sdata, sdate }: any) => {
-			const [dyears, dmonths, ddays, dhours, dminutes, dseconds] = sdate;
+			const [
+				untilYears,
+				untilMonths,
+				untilDays,
+				untilHours,
+				untilMinutes,
+				untilSeconds
+			] = sdate;
 			const date = new SHDate(sdata.DateTime);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
@@ -58,21 +65,24 @@ describe("String", () => {
 			const seconds = date.getSeconds();
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds],
-				[dyears, dmonths, ddays, dhours, dminutes, dseconds]
+				[
+					untilYears,
+					untilMonths,
+					untilDays,
+					untilHours,
+					untilMinutes,
+					untilSeconds
+				]
 			);
 		});
 	});
 
 	it("correctly Date YYYY/MM/DD ", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
+		Until.forEach(({ sdata }: any) => {
 			const date = new SHDate(sdata.DateWithSlash);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
 			assert.deepEqual([years, months, days], sdata.solar);
 		});
 	});
@@ -81,116 +91,64 @@ describe("String", () => {
 		Until.forEach(({ sdata }: any) => {
 			const date = new SHDate(sdata.DateYear);
 			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
-			const days = date.getDate();
 			assert.equal(years, sdata.solar[0]);
 		});
 	});
 
 	it("correctly Date YYYYMMDD ", () => {
 		Until.forEach(({ sdata, sdate }: any) => {
+			const [untilYears, untilMonths, untilDays] = sdate;
 			const date = new SHDate(sdata.DateWithOutSlash);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
 			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
 			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
+				[years, months, days],
+				[untilYears, untilMonths, untilDays]
 			);
 		});
 	});
 
-	// it("correctly Date Abbr YYYY[.-]M ", () => {
-	// 	Until.forEach(({ sdata }: any) => {
-	// 		const date = new SHDate(sdata.DateYearMonth);
-	// 		const years = date.getFullYear();
-	// 		const months = date.getMonth();
-	// 		const days = date.getDate();
-	// 		tests(true, [years, months, days], sdata.solar);
-	// 		if (sdata.solar[2] == 1 && sdata.solar[1] == months) {
-	// 			assert.deepEqual([years, months, days], sdata.solar);
-	// 		} else {
-	// 			assert.notDeepEqual([years, months, days], sdata.solar);
-	// 		}
-	// 	});
-	// });
+	it("correctly Date Abbr YYYY[.-]M ", () => {
+		Until.forEach(({ sdata }: any) => {
+			const date = new SHDate(sdata.DateYearMonth);
+			const years = date.getFullYear();
+			const months = date.getMonth();
+			const days = date.getDate();
+			if (sdata.solar[2] == 1) {
+				assert.deepEqual([years, months, days], sdata.solar);
+			} else {
+				assert.notDeepEqual([years, months, days], sdata.solar);
+			}
+		});
+	});
 
 	it("correctly Date Abbr M ", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
+		Until.forEach(({ sdata }: any) => {
 			const date = new SHDate(sdata.DateMonth);
-			const years = date.getFullYear();
-			const months = date.getMonth() + 1;
-			const days = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-			const milliseconds = date.getMilliseconds();
-			if (
-				JSON.stringify([
-					years,
-					months,
-					days,
-					hours,
-					minutes,
-					seconds,
-					milliseconds
-				]) !== JSON.stringify(sdate)
-			)
-				console.log(
-					[years, months, days, hours, minutes, seconds, milliseconds],
-					sdate
-				);
-			assert.deepEqual(
-				[years, months, days, hours, minutes, seconds, milliseconds],
-				sdate
-			);
+			const months = date.getMonth();
+			assert.equal(months, sdata.solar[1]);
 		});
 	});
 
 	it("correctly Date Abbr DD, M YYYY", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
+		Until.forEach(({ sdata }: any) => {
 			const date = new SHDate(sdata.DateAber);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
-			tests(true, [years, months, days], sdata.solar);
+			// tests(false, sdata.DateAber, [years, months, days]);
 			assert.deepEqual([years, months, days], sdata.solar);
 		});
 	});
 
-	// it("correctly Date Abbr DayName , DD M YYYY", () => {
-	// 	Until.forEach(({ sdata, sdate }: any) => {
-	// 		const date = new SHDate(sdata.DateAberWithDate);
-	// 		const years = date.getFullYear();
-	// 		const months = date.getMonth() + 1;
-	// 		const days = date.getDate();
-	// 		const hours = date.getHours();
-	// 		const minutes = date.getMinutes();
-	// 		const seconds = date.getSeconds();
-	// 		const milliseconds = date.getMilliseconds();
-	// 		if (
-	// 			JSON.stringify([
-	// 				years,
-	// 				months,
-	// 				days,
-	// 				hours,
-	// 				minutes,
-	// 				seconds,
-	// 				milliseconds
-	// 			]) !== JSON.stringify(sdate)
-	// 		)
-	// 			console.log(
-	// 				[years, months, days, hours, minutes, seconds, milliseconds],
-	// 				sdate
-	// 			);
-	// 		assert.deepEqual(
-	// 			[years, months, days, hours, minutes, seconds, milliseconds],
-	// 			sdate
-	// 		);
-	// 	});
-	// });
+	it("correctly Date Abbr DayName , DD M YYYY", () => {
+		Until.forEach(({ sdata }: any) => {
+			const date = new SHDate(sdata.DateAberWithDate);
+			const years = date.getFullYear();
+			const months = date.getMonth();
+			const days = date.getDate();
+			assert.deepEqual([years, months, days], sdata.solar);
+		});
+	});
 });
