@@ -1,7 +1,7 @@
 /**
  * In the name of Allah, the Beneficent, the Merciful.
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
- * @link http://codehub.akhi.ir/js/SHDateTime
+ * @link http://git.akhi.ir/js/SHDateTime
  */
 import Language from "./languages/language.js";
 
@@ -10,7 +10,7 @@ import Language from "./languages/language.js";
  * @since 1.0.0
  */
 export default class Word {
-	static LANGUAGE_WORD: string = Language.WORD;
+	static LANGUAGE_WORD: string = "en_US";
 	static FIRST_DAY_OF_WEEK: number = 0;
 
 	/**

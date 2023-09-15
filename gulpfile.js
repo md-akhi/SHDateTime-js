@@ -13,19 +13,26 @@ const pkg = require("./package.json");
  * combine all .ts files into one
  */
 function combineTS() {
-	return gulp
-		.src(["src/**/*.ts"])
-		.pipe(concat("shdatetime.ts"))
-		.pipe(replace(/class ([a-z]{2}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
-		.pipe(replace(/export default (function|class)/g, "$1"))
-		.pipe(replace(/import [a-zA-z_]* from [0-9a-zA-z_/\.\"]*;/g, " "))
-		.pipe(replace(/ ([a-z]{2}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
-		.pipe(replace(/ Language_([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage_$1"))
-		.pipe(replace(/class (Word)/g, "class SHDate$1"))
-		.pipe(replace(/(Word\.)/g, " SHDate$1"))
-		.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
-		.pipe(replace(/ Language.([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage.$1"))
-		.pipe(gulp.dest("src/browser"));
+	return (
+		gulp
+			.src(["src/**/*.ts"])
+			.pipe(concat("shdatetime.ts"))
+			.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
+			.pipe(replace(/export default (function|class)/g, "$1"))
+			.pipe(replace(/import [a-zA-z_]* from [0-9a-zA-z_/\.\"]*;/g, " "))
+			.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
+			.pipe(replace(/ Language_([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguage_$1"))
+			.pipe(replace(/class (Language|Word)/g, "class SHDate$1"))
+			.pipe(replace(/(Language\.|Word\.)/g, "SHDate$1"))
+			//.pipe(replace(/class (Word)/g, "class SHDate$1"))
+			//.pipe(replace(/(Word\.)/g, " SHDate$1"))
+			.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
+			.pipe(replace(/ Languages.([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguages.$1"))
+			.pipe(replace(/SH(Parser|Lexer|Token)/g, "SHDate$1"))
+			//.pipe(replace(/SH(Lexer)/g, "SHDate$1"))
+			//.pipe(replace(/SH(Token)/g, "SHDate$1"))
+			.pipe(gulp.dest("src/browser"))
+	);
 }
 
 function moveDTS() {
@@ -41,14 +48,14 @@ function browser() {
 		"* In the name of Allah, the Beneficent, the Merciful.",
 		`* @package ${pkg.name} - ${pkg.description}`,
 		`* @author ${pkg.author}`,
-		"* @link http://codehub.akhi.ir/js/SHDateTime",
+		"* @link http://git.akhi.ir/js/SHDateTime",
 		"* @copyright Copyright (C) 2015 - 2022 . All right reserved.",
 		`* @license https://www.gnu.org/licenses/agpl-3.0.en.html ${pkg.license} License`,
 		`* @version Release: ${pkg.version}`,
 		"*/"
 	].join("\n");
 	var infoShort = [
-		`/** In the name of Allah. | ${pkg.name}@${pkg.version} | (C) 2015 - 2022 All right reserved. | ${pkg.license} | http://codehub.akhi.ir/js/SHDateTime */`,
+		`/** In the name of Allah. | ${pkg.name}@${pkg.version} | (C) 2015 - 2022 All right reserved. | ${pkg.license} | http://git.akhi.ir/js/SHDateTime */`,
 		""
 	].join("\n");
 

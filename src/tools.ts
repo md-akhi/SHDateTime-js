@@ -1,7 +1,7 @@
 /**
  * In the name of Allah, the Beneficent, the Merciful.
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
- * @link http://codehub.akhi.ir/js/SHDateTime
+ * @link http://git.akhi.ir/js/SHDateTime
  */
 
 import Language from "./languages/language.js";

@@ -2,7 +2,7 @@
  * In the name of Allah, the Beneficent, the Merciful.
  * @package Date and Time Related Extensions SH{ Shamsi Hijri, Solar Hijri, Iranian Hijri }
  * @author Mohammad Amanalikhani
- * @link http://codehub.akhi.ir/js/SHDateTime
+ * @link http://git.akhi.ir/js/SHDateTime
  * @copyright Copyright (C) 2015 - 2022 Open Source Matters,Inc. All right reserved.
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html AGPL-3.0 License
  * @version Release: 1.3.0
@@ -10,8 +10,6 @@
 
 import Word from "./word.js";
 import SHParser from "./parser/parse.js";
-import { setUncaughtExceptionCaptureCallback } from "process";
-import { log } from "console";
 interface VarSHDate {
 	[key: string]: number | undefined;
 	year?: number;
