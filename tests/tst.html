@@ -3,14 +3,19 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>SHDate.js</title>
+		<script src="../dist/browser/shdatetime.min.js"></script>
 	</head>
 
-	<body id="id">
-		<script src="../dist/browser/shdatetime.min.js"></script>
+	<body>
+		<div id="id1"></div>
+		<div id="id2"></div>
 		<script>
-			document.getElementById("id").innerText = SHDate.DAYS_IN_MONTH;
-
-			//var SHDate = require("file:///D:/DevOps/js/SHDateTime-js/dist/amd/shdate.js");
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+			var d1 = new Date(),
+				d2 = new Date("Thu, 01 Jan 1970 00:00:00 GMT+0300");
+			document.getElementById("id1").innerText = d1;
+			document.getElementById("id2").innerText = d2;
+			console.log(d1, d2);
 		</script>
 	</body>
 </html>

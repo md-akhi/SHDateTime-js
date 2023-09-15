@@ -53,27 +53,29 @@ function browser() {
 	].join("\n");
 
 	return gulp
-		.src("dist/browser/shdatetime.js",{sourcemaps:true})
+		.src("dist/browser/shdatetime.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
 		.pipe(banner(infoLong))
 		.pipe(gulp.dest("dist/browser"))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
 		.pipe(banner(infoShort))
-		.pipe(gulp.dest("./dist/browser",{sourcemaps:"."}));
+		.pipe(gulp.dest("./dist/browser", { sourcemaps: "." }));
 }
 
 function delTSBrowser() {
-	return del(["src/browser","dist/browser/*.d.ts"]);
+	return del(["src/browser", "dist/browser/*.d.ts"]);
 }
 function moveTSBrowser() {
-	return gulp.src(["src/browser/*.ts","dist/browser/*.d.ts"]).pipe(gulp.dest("dist/types"));
+	return gulp
+		.src(["src/browser/*.ts", "dist/browser/*.d.ts"])
+		.pipe(gulp.dest("dist/types"));
 }
 
 /**
  * Run default.
  */
-exports.default = gulp.series(browser,moveTSBrowser, delTSBrowser);
+exports.default = gulp.series(browser, moveTSBrowser, delTSBrowser);
 exports.combineTS = combineTS;
 exports.moveDTS = moveDTS;
 exports.delDTS = delDTS;
