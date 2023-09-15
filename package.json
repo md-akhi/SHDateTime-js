@@ -67,10 +67,18 @@
   },
   "typesVersions": {
     "*": {
-      ".": ["dist/types/index.d.ts"],
-      "./words?": ["./dist/types/word.d.ts"],
-      "./tools?": ["./dist/types/tools.d.ts"],
-      "./*": ["./dist/types/i18n/*.d.ts"]
+      ".": [
+        "dist/types/index.d.ts"
+      ],
+      "./words?": [
+        "./dist/types/word.d.ts"
+      ],
+      "./tools?": [
+        "./dist/types/tools.d.ts"
+      ],
+      "./*": [
+        "./dist/types/i18n/*.d.ts"
+      ]
     }
   },
   "directories": {
@@ -79,8 +87,16 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
-  "man": ["./docs/**/*.md"],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "docs",
+    "dist"
+  ],
+  "man": [
+    "./docs/**/*.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -90,35 +106,35 @@
   },
   "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.16.11",
-    "@tsconfig/recommended": "^1.0.1",
-    "@types/chai": "^4.3.0",
-    "@types/mocha": "^9.1.0",
-    "@types/node": "^17.0.21",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "chai": "^4.3.6",
+    "@babel/core": "^7.22.19",
+    "@babel/preset-env": "^7.22.15",
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^17.0.45",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "chai": "^4.3.8",
     "cross-env": "^7.0.3",
-    "del": "^6.0.0",
-    "eslint": "^8.14.0",
+    "del": "^6.1.1",
+    "eslint": "^8.49.0",
     "eslint-config-recommended": "^4.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.9",
     "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.3",
+    "gulp-replace": "^1.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "husky": "^7.0.4",
-    "lint-staged": "^12.1.5",
-    "mocha": "^9.2.1",
-    "nodemon": "^2.0.15",
+    "lint-staged": "^12.5.0",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.6.4"
+    "prettier": "^3.0.3",
+    "tslib": "^2.6.2",
+    "typescript": "^4.9.5"
   },
   "husky": {
     "hooks": {
@@ -126,7 +142,14 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
-    "*": ["prettier --write", "git add"]
+    "/**/*.{ts}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
