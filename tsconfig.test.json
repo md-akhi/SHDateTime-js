@@ -1,9 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "Node",
     "outDir": "dist",
     "sourceMap": false,
-    "declaration": false
+    "declaration": false,
+    "removeComments": true
   },
   "include": ["tests"]
 }
