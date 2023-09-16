@@ -9,6 +9,21 @@ const del = require("del");
 const banner = require("gulp-header");
 const pkg = require("./package.json");
 
+const infoLong = [
+	`/**
+	* In the name of Allah, the Beneficent, the Merciful.
+	* @package ${pkg.name} - ${pkg.description}
+	* @author ${pkg.author}
+	* @link http://git.akhi.ir/js/SHDateTime
+	* @copyright ${pkg.suportDate}
+	* @license ${pkg.license}
+	* @version Release: ${pkg.version}
+	*/`
+].join("\n");
+const infoShort = [
+	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.suportDate} | ${pkg.license} | http://git.akhi.ir/js/SHDateTime */`
+].join("\n");
+
 /**
  * combine all .ts files into one
  */
@@ -35,6 +50,18 @@ function combineTS() {
 	);
 }
 
+function setVersion() {
+	return gulp
+		.src(["src/**/*.ts"])
+		.pipe(
+			replace(
+				/@version Release: (0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?/g,
+				`@version Release: ${pkg.version}`
+			)
+		)
+		.pipe(gulp.dest("src/"));
+}
+
 function moveDTS() {
 	return gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types"));
 }
@@ -43,22 +70,6 @@ function delDTS() {
 }
 
 function browser() {
-	var infoLong = [
-		"/**",
-		"* In the name of Allah, the Beneficent, the Merciful.",
-		`* @package ${pkg.name} - ${pkg.description}`,
-		`* @author ${pkg.author}`,
-		"* @link http://git.akhi.ir/js/SHDateTime",
-		"* @copyright Copyright (C) 2015 - 2022 . All right reserved.",
-		`* @license https://www.gnu.org/licenses/agpl-3.0.en.html ${pkg.license} License`,
-		`* @version Release: ${pkg.version}`,
-		"*/"
-	].join("\n");
-	var infoShort = [
-		`/** In the name of Allah. | ${pkg.name}@${pkg.version} | (C) 2015 - 2022 All right reserved. | ${pkg.license} | http://git.akhi.ir/js/SHDateTime */`,
-		""
-	].join("\n");
-
 	return gulp
 		.src("dist/browser/shdatetime.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
@@ -86,3 +97,4 @@ exports.default = gulp.series(browser, moveTSBrowser, delTSBrowser);
 exports.combineTS = combineTS;
 exports.moveDTS = moveDTS;
 exports.delDTS = delDTS;
+exports.setVersion = setVersion;

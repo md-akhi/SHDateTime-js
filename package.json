@@ -1,19 +1,23 @@
 {
   "name": "@md-akhi/shdatetime",
-  "version": "1.4.10",
+  "version": "1.4.15",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
     "time",
     "datetime",
     "date time",
+    "date and time",
     "shamsi hijri",
     "solar hijri",
     "iranian hijri",
-    "typescript"
+    "typescript",
+    "Extensions",
+    "parser"
   ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0 License",
+  "suportDate": "(C) 2015 - 2023. All right reserved.",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon --exec run-s dev:clean tsc:test dev:watch --watch ./src",
@@ -21,6 +25,7 @@
     "dev:watch": "node dist/tests/dev.js",
     "watch": "tsc -w",
     "build": "run-s build:*",
+    "build:version": "gulp setVersion",
     "build:clean": "rm -rf dist src/browser",
     "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
     "test": "npm run tsc:test && mocha",
