@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Node10",
     "module": "UMD",
     "outDir": "dist/browser",
     "target": "ES6",
