@@ -51,6 +51,45 @@ function combineTS() {
 }
 
 function setVersion() {
+	/**
+	 * (?x)
+^
+  (?:
+    \ \*
+    (?:
+      \
+      (?:
+        @
+        (?:
+          (?:
+            package\ Date\ and\ Time\ Related\ Extensions\ SH\{\ Shamsi\ Hijri,\ Solar\ Hijri,\ Iranian\ Hijri\ \}
+            |
+            li
+            (?:
+              cense\ https:\/\/www\.gnu\.org\/licenses\/agpl\-3\.0\.en\.html\ AGPL\-3\.0\ Licens
+              |
+              nk\ http:\/\/git\.akhi\.ir\/js\/SHDateTim
+            )
+            e
+            |
+            author\ Mohammad\ Amanalikhani
+            |
+            version\ Release:\ 1\.4\.15
+          )
+          |
+          copyright\ Copyright\ \(C\)\ 2015\ \-\ 2022\ Open\ Source\ Matters,Inc\.\ All\ right\ reserved\.
+        )
+        |
+        In\ the\ name\ of\ Allah,\ the\ Beneficent,\ the\ Merciful\.
+      )
+      |
+      \/
+    )
+    |
+    \/\*\*
+  )
+$/gm
+	 */
 	return gulp
 		.src(["src/**/*.ts"])
 		.pipe(
