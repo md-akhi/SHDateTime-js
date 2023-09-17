@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "traceResolution": false,
     "lib": ["ESNext"],
-    "types": ["Node", "Gulp"],
+    //"types": ["Node", "Gulp"],
     "typeRoots": ["node_modules/@types"]
   },
   "compileOnSave": false,
