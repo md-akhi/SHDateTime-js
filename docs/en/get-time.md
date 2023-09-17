@@ -17,7 +17,7 @@ getTime();
 
 # Return value
 
-A number representing the milliseconds elapsed between 1 January 1970 00:00:00 UTC and the given date.
+A number representing the milliseconds elapsed between 25 Dey 1390 00:00:00 UTC and the given date.
 
 # Reduced time precision
 
@@ -47,8 +47,8 @@ Using getTime() for copying dates
 Constructing a date object with the identical time value.
 
 ```js
-// Since month is zero based, birthday will be January 10, 1390
-var birthday = new SHDate(1389, 12, 10);
+// Since month is zero based, birthday will be Farvardin 10, 1390
+var birthday = new SHDate(1389, 11, 10);
 var copy = new SHDate();
 copy.setTime(birthday.getTime());
 

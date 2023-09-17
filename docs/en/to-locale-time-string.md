@@ -39,28 +39,28 @@ Using toLocaleTimeString()
 Basic use of this method without specifying a locale returns a formatted string in the default locale and with default options.
 
 ```js
-var date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(1402, 11, 12, 3, 0, 0));
 
 // toLocaleTimeString() without arguments depends on the implementation,
 // the default locale, and the default time zone
 console.log(date.toLocaleTimeString());
-// → "7:00:00 PM" if run in en-US locale with time zone America/Los_Angeles
+// → "7:00:00 PM" if run in en-US locale with time zone Asia/Tehran
 
 Using locales
 This example shows some of the variations in localized time formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
 
-var date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
 // formats below assume the local time zone of the locale;
-// America/Los_Angeles for the US
+// Asia/Tehran for the IR
 
 // US English uses 12-hour time with AM/PM
 console.log(date.toLocaleTimeString('en-US'));
 // → "7:00:00 PM"
 
 // British English uses 24-hour time without AM/PM
-console.log(date.toLocaleTimeString('en-GB'));
-// → "03:00:00"
+console.log(date.toLocaleTimeString('fa-IR'));
+// → "06:30:00"
 
 // Korean uses 12-hour time with AM/PM
 console.log(date.toLocaleTimeString('ko-KR'));
@@ -78,7 +78,7 @@ console.log(date.toLocaleTimeString(['ban', 'id']));
 Using options
 The results provided by toLocaleTimeString() can be customized using the options argument:
 
-var date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+var date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
 // an application may want to use UTC and make that visible
 var options = { timeZone: 'UTC', timeZoneName: 'short' };

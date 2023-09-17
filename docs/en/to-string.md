@@ -23,11 +23,11 @@ Date instances inherit their toString() method from SHDate.prototype, not Object
 
 Week day: 3 letter English week day name, e.g. "Sat"
 space
-Month name: 3 letter English month name, e.g. "Sep"
+Month name: 3 letter English month name, e.g. "Day"
 space
 Date: 2 digit day in month, e.g. "01"
 space
-Year: 4 digit year, e.g. "2018"
+Year: 4 digit year, e.g. "1402"
 space
 Hour: 2 digit hour of day, e.g. "14"
 colon

@@ -17,14 +17,14 @@ setMonth(monthValue, dayValue);
 # Parameters
 
 <code>monthValue</code>
-A zero-based integer representing the month of the year offset from the start of the year. So, 0 represents January, 11 represents December, -1 represents December of the previous year, and 12 represents January of the following year.
+A zero-based integer representing the month of the year offset from the start of the year. So, 0 represents Farvardin, 11 represents Esfand, -1 represents Esfand of the previous year, and 12 represents Farvardin of the following year.
 
 <code>dayValue</code>
 Optional. An integer from 1 to 31, representing the day of the month.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date.
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
 # Description
 

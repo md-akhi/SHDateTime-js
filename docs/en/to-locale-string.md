@@ -37,12 +37,12 @@ Using toLocaleString()
 In basic use without specifying a locale, a formatted string in the default locale and with default options is returned.
 
 ```js
-let date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
+let date = new SHDate(SHDate.UTC(1402, 11, 12, 3, 0, 0));
 
 // toLocaleString() without arguments depends on the
 // implementation, the default locale, and the default time zone
 console.log(date.toLocaleString());
-// → "12/11/2012, 7:00:00 PM" if run in en-US locale with time zone America/Los_Angeles
+// → "12/11/1402, 7:00:00 PM" if run in en-US locale with time zone Asia/Tehran
 
 Checking for support for locales and options arguments
 The locales and options arguments are not supported in all browsers yet. To check whether an implementation supports them already, you can use the requirement that illegal language tags are rejected with a RangeError exception:
@@ -62,7 +62,7 @@ This example shows some of the variations in localized date and time formats. In
 let date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // Formats below assume the local time zone of the locale;
-// America/Los_Angeles for the US
+// Asia/Tehran for the IR
 
 // US English uses month-day-year order and 12-hour time with AM/PM
 console.log(date.toLocaleString('en-US'));
@@ -93,24 +93,24 @@ console.log(date.toLocaleString(['ban', 'id']));
 Using options
 The results provided by toLocaleString() can be customized using the options argument:
 
-let date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
+let date = new SHDate(SHDate.UTC(1400, 11, 20, 3, 0, 0));
 
 // Request a weekday along with a long date
 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 console.log(date.toLocaleString('de-DE', options));
-// → "Donnerstag, 20. Dezember 2012"
+// → "Donnerstag, 20. Dezember 1400"
 
 // An application may want to use UTC and make that visible
 options.timeZone = 'UTC';
 options.timeZoneName = 'short';
 
 console.log(date.toLocaleString('en-US', options));
-// → "Thursday, December 20, 2012, GMT"
+// → "Thursday, Esfand 20, 1400, GMT"
 
 // Sometimes even the US needs 24-hour time
 console.log(date.toLocaleString('en-US', { hour12: false }));
-// → "12/19/2012, 19:00:00"
+// → "12/19/1400, 19:00:00"
 
 Avoid comparing formatted date values to static values
 Most of the time, the formatting returned by toLocaleString() is consistent. However, this might change in the future, and isn't guaranteed for all languages; output variations are by design, and allowed by the specification.
@@ -119,7 +119,7 @@ Most notably, the IE and Edge browsers insert bidirectional control characters a
 
 For this reason, you cannot expect to be able to compare the results of toLocaleString() to a static value:
 
-"1/1/2019, 01:00:00" === new SHDate("2019-01-01T01:00:00Z").toLocaleString("en-US");
+"1/1/1400, 01:00:00" === new SHDate("1400-01-01T01:00:00Z").toLocaleString("en-US");
 // true in Firefox and others
 // false in IE and Edge
 ```

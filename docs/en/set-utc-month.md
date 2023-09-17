@@ -17,14 +17,14 @@ setUTCMonth(monthValue, dayValue);
 # Parameters
 
 <code>monthValue</code>
-An integer between 0 and 11, representing the months January through December.
+An integer between 0 and 11, representing the months Farvardin through Esfand.
 
 <code>dayValue</code>
 Optional. An integer from 1 to 31, representing the day of the month.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date.
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
 # Description
 

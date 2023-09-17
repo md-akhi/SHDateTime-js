@@ -43,7 +43,7 @@ Note: The above description is a simplification. In implementations, the IANA ti
 // Create a Date instance for the current time
 let currentLocalDate = new SHDate();
 // Create a Date instance for 03:24 GMT-0200 on May 1st in 2016
-let laborDay2016at0324GMTminus2 = new SHDate("May 1, 2016 03:24:00 GMT-0200");
+let laborDay2016at0324GMTminus2 = new SHDate("Day 1, 1402 03:24:00 GMT-0200");
 currentLocalDate.getTimezoneOffset() ===
 	laborDay2016at0324GMTminus2.getTimezoneOffset();
 // true, always, in any timezone that doesn't annually shift in and out of DST

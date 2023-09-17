@@ -15,11 +15,11 @@ valueOf();
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the given date, or NaN in case of an invalid date.
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the given date, or NaN in case of an invalid date.
 
 # Description
 
-The valueOf() method returns the primitive value of a Date object as a number data type, the number of milliseconds since midnight 01 January, 1970 UTC.
+The valueOf() method returns the primitive value of a Date object as a number data type, the number of milliseconds since midnight 11 Day, 1348 UTC.
 
 This method is functionally equivalent to the SHDate.getTime() method.
 

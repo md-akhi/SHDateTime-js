@@ -6,7 +6,7 @@ First three letters of the week day name
 First three letters of the month name
 Two digit day of the month, padded on the left a zero if necessary
 Four digit year (at least), padded on the left with zeros if necessary
-E.g. "Thu Jan 01 1970".
+E.g. "Thu Day 11 1348".
 
 Try it
 
@@ -34,12 +34,12 @@ The toDateString() method is especially useful because compliant engines impleme
 A basic usage of toDateString()
 
 ```js
-var d = new SHDate(1993, 5, 28, 14, 39, 7);
+var d = new SHDate(1372, 3, 7, 14, 39, 7);
 
-console.log(d.toString()); // logs Mon Jun 28 1993 14:39:07 GMT-0600 (PDT)
-console.log(d.toDateString()); // logs Mon Jun 28 1993
+console.log(d.toString()); // logs Mon Tir 07 1372 14:39:07 GMT-0600 (PDT)
+console.log(d.toDateString()); // logs Mon Tir 07 1372
 ```
 
-Note: Month are 0-indexed when used as an argument of Date (thus 0 corresponds to January and 11 to December).
+Note: Month are 0-indexed when used as an argument of Date (thus 0 corresponds to Farvardin and 11 to December).
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toDateString

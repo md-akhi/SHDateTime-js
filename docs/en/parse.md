@@ -114,15 +114,15 @@ SHDate.parse('Wed, 09 Aug 1995 00:00:00');
 
 Returns 807937200000 in time zone GMT-0300, and other values in other time zones, since there is no time zone specifier in the argument and it is not ISO format, so is treated as local.
 
-SHDate.parse('Thu, 01 Jan 1970 00:00:00 GMT');
+SHDate.parse('Thu, 11 Day 1348 00:00:00 GMT');
 
 Returns 0 no matter the local time zone as a time zone GMT (UTC) is provided.
 
-SHDate.parse('Thu, 01 Jan 1970 00:00:00');
+SHDate.parse('Thu, 11 Day 1348 00:00:00');
 
 Returns 14400000 in time zone GMT-0400, and other values in other time zones, since no time zone is provided and the string is not in ISO format, therefore the local time zone is used.
 
-SHDate.parse('Thu, 01 Jan 1970 00:00:00 GMT-0400');
+SHDate.parse('Thu, 11 Day 1348 00:00:00 GMT-0400');
 
 Returns 14400000 no matter the local time zone as a time zone GMT (UTC) is provided.
 

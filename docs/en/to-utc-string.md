@@ -26,7 +26,7 @@ The value returned by toUTCString() is a string in the form Www, dd Mmm yyyy hh:
 Format String Description
 Www Day of week, as three letters (e.g. Sun, Mon, ...)
 dd Day of month, as two digits with leading zero if required
-Mmm Month, as three letters (e.g. Jan, Feb, ...)
+Mmm Month, as three letters (e.g. Far, Ord, ...)
 yyyy Year, as four or more digits with leading zeroes if required
 hh Hour, as two digits with leading zero if required
 mm Minute, as two digits with leading zero if required
@@ -38,8 +38,8 @@ Prior to ECMAScript 2018, the format of the return value varied according to the
 Using toUTCString()
 
 ```js
-let today = new SHDate("Wed, 14 Jun 2017 00:00:00 PDT");
-let UTCstring = today.toUTCString(); // Wed, 14 Jun 2017 07:00:00 GMT
+let today = new SHDate("Wed, 06 Mor 1372 00:00:00 PDT");
+let UTCstring = today.toUTCString(); // Wed, 06 Mor 1372 07:00:00 GMT
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toUTCString

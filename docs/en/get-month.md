@@ -15,7 +15,7 @@ getMonth();
 
 # Return value
 
-An integer number, between 0 and 11, representing the month in the given date according to local time. 0 corresponds to January, 1 to February, and so on.
+An integer number, between 0 and 11, representing the month in the given date according to local time. 0 corresponds to Farvardin, 1 to February, and so on.
 
 # Examples
 
@@ -28,11 +28,11 @@ var month = Xmas95.getMonth();
 
 console.log(month); // 11
 
-Note: If needed, the full name of a month (January for example) can be obtained by using Intl.DateTimeFormat() with an options parameter. Using this method, internationalization is made easier:
+Note: If needed, the full name of a month (Farvardin for example) can be obtained by using Intl.DateTimeFormat() with an options parameter. Using this method, internationalization is made easier:
 
 var options = { month: 'long'};
 console.log(new Intl.DateTimeFormat('en-US', options).format(Xmas95));
-// December
+// Esfand
 console.log(new Intl.DateTimeFormat('de-DE', options).format(Xmas95));
 // Dezember
 ```

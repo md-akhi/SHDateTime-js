@@ -18,17 +18,17 @@ setFullYear(yearValue, monthValue, dateValue);
 # Parameters
 
 <code>yearValue</code>
-An integer specifying the numeric value of the year, for example, 1995.
+An integer specifying the numeric value of the year, for example, 1395.
 
 <code>monthValue</code>
-Optional. An integer between 0 and 11 representing the months January through December.
+Optional. An integer between 0 and 11 representing the months Farvardin through Esfand.
 
 <code>dateValue</code>
 Optional. An integer between 1 and 31 representing the day of the month. If you specify the dateValue parameter, you must also specify the monthValue.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date.
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
 # Description
 

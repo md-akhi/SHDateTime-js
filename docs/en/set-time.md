@@ -16,11 +16,11 @@ setTime(timeValue);
 # Parameters
 
 <code>timeValue</code>
-An integer representing the number of milliseconds since 1 January 1970, 00:00:00 UTC.
+An integer representing the number of milliseconds since 25 Dey 1390, 00:00:00 UTC.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date (effectively, the value of the argument).
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date (effectively, the value of the argument).
 
 # Description
 

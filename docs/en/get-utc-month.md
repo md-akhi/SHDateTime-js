@@ -15,7 +15,7 @@ getUTCMonth();
 
 # Return value
 
-A number. If the Date object represents a valid date, an integer number, between 0 and 11, corresponding to the month of the given date according to universal time. 0 for January, 1 for February, 2 for March, and so on. Otherwise, NaN if the Date object doesn't represent a valid date.
+A number. If the Date object represents a valid date, an integer number, between 0 and 11, corresponding to the month of the given date according to universal time. 0 for Farvardin, 1 for Ordibehesht, 2 for Khordad, and so on. Otherwise, NaN if the Date object doesn't represent a valid date.
 
 # Examples
 

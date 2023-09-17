@@ -22,7 +22,7 @@ An integer from 1 to 31, representing the day of the month.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the updated date.
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
 # Description
 

@@ -22,7 +22,7 @@ An integer representing the day of the month.
 
 # Return value
 
-The number of milliseconds between 1 January 1970 00:00:00 UTC and the given date (the Date object is also changed in place).
+The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the given date (the Date object is also changed in place).
 
 # Description
 
