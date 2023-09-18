@@ -9,19 +9,21 @@ const del = require("del");
 const banner = require("gulp-header");
 const pkg = require("./package.json");
 
+const link = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
 const infoLong = [
 	`/**
 	* In the name of Allah, the Beneficent, the Merciful.
 	* @package ${pkg.name} - ${pkg.description}
 	* @author ${pkg.author}
-	* @link http://git.akhi.ir/js/SHDateTime
-	* @copyright ${pkg.suportDate}
-	* @license ${pkg.license}
+	* @link ${link}
+	* @copyright ${pkg.copyright}
+	* @license ${pkg.license} License
 	* @version Release: ${pkg.version}
-	*/`
+	*/
+	`
 ].join("\n");
 const infoShort = [
-	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.suportDate} | ${pkg.license} | http://git.akhi.ir/js/SHDateTime */`
+	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.copyright} | ${pkg.license} License | ${link} */`
 ].join("\n");
 
 /**
@@ -50,52 +52,41 @@ function combineTS() {
 	);
 }
 
-function setVersion() {
+function setDescription() {
 	/**
-	 * (?x)
-^
-  (?:
-    \ \*
-    (?:
-      \
-      (?:
-        @
-        (?:
-          (?:
-            package\ Date\ and\ Time\ Related\ Extensions\ SH\{\ Shamsi\ Hijri,\ Solar\ Hijri,\ Iranian\ Hijri\ \}
-            |
-            li
-            (?:
-              cense\ https:\/\/www\.gnu\.org\/licenses\/agpl\-3\.0\.en\.html\ AGPL\-3\.0\ Licens
-              |
-              nk\ http:\/\/git\.akhi\.ir\/js\/SHDateTim
-            )
-            e
-            |
-            author\ Mohammad\ Amanalikhani
-            |
-            version\ Release:\ 1\.4\.15
-          )
-          |
-          copyright\ Copyright\ \(C\)\ 2015\ \-\ 2022\ Open\ Source\ Matters,Inc\.\ All\ right\ reserved\.
-        )
-        |
-        In\ the\ name\ of\ Allah,\ the\ Beneficent,\ the\ Merciful\.
-      )
-      |
-      \/
-    )
-    |
-    \/\*\*
-  )
-$/gm
+	 * In the name of Allah, the Beneficent, the Merciful. | \* In the name of Allah, the Beneficent, the Merciful\./im;
 	 */
 	return gulp
 		.src(["src/**/*.ts"])
 		.pipe(
 			replace(
-				/@version Release: (0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?/g,
-				`@version Release: ${pkg.version}`
+				/\* @(package( [\w\/\-\,\{\}@]+)+)/g,
+				`* @package ${pkg.name} - ${pkg.description}`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(author( [\w\/\-\,\{\}@<>\.\(\):]+)+)/g,
+				`* @author ${pkg.author}`
+			)
+		)
+		.pipe(replace(/\* @(link( [\w:\/\.\|]+)+)/g, `* @link ${link}`))
+		.pipe(
+			replace(
+				/\* @(copyright( [\w\d.\(\)\-\,]+)+)/g,
+				`* @copyright ${pkg.copyright}`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(license( [\w\d:\/.\(\)\-]+)+)/g,
+				`* @license ${pkg.license} License`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(version( [\w\d:\/\.\-]+)+)/g,
+				`* @version Release: ${pkg.version}`
 			)
 		)
 		.pipe(gulp.dest("src/"));
@@ -136,4 +127,4 @@ exports.default = gulp.series(browser, moveTSBrowser, delTSBrowser);
 exports.combineTS = combineTS;
 exports.moveDTS = moveDTS;
 exports.delDTS = delDTS;
-exports.setVersion = setVersion;
+exports.setDescription = setDescription;
