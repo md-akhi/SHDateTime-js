@@ -5,18 +5,24 @@
  */
 import Language_fa_IR from "./i18n/fa_IR.js";
 import Language_en_US from "./i18n/en_US.js";
+import Language_ckb_IR from "./l10n/ckb_IR.js";
 
 /**
  * list of supported languages
  * @since 1.0.0
  */
 enum Languages {
+	//i18n
 	fa_IR = "fa_IR",
-	en_US = "en_US"
+	en_US = "en_US",
+
+	//l10n
+	ckb_IR = "ckb_IR"
 }
 
 export default class Language {
 	static WORD: string = Languages.en_US;
+
 	/**
 	 * cheeck Language
 	 * @param {string} language
@@ -27,11 +33,13 @@ export default class Language {
 		switch (language) {
 			case Languages.fa_IR:
 			case Languages.en_US:
+			case Languages.ckb_IR:
 				return true;
 			default:
 				return false;
 		}
 	}
+
 	/**
 	 * Get Language class
 	 * @param {string} language
@@ -44,6 +52,8 @@ export default class Language {
 				return Language_fa_IR;
 			case Languages.en_US:
 				return Language_en_US;
+			case Languages.ckb_IR:
+				return Language_ckb_IR;
 			default:
 				return Language_en_US;
 		}
