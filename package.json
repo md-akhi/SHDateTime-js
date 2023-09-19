@@ -41,9 +41,9 @@
     "test:build": "npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
     "prepare": "husky install"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/mjs/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/base.js",
+  "module": "./dist/mjs/base.js",
+  "types": "./dist/types/base.d.ts",
   "browser": "./dist/browser/shdatetime.min.js",
   "unpkg": "https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
   "jsdrive": "https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",

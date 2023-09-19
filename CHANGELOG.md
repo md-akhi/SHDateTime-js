@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 ### [ایجاد / اضافه شد][#]
 
 - ایجاد توابع clone & instance
+- پیاده سازی تابع parse
+- اضافه شدن مستندات به زبان انگلیسی
 
 ### [تغییر کرد][#]
 
@@ -38,6 +40,8 @@ All notable changes to this project will be documented in this file.
 ### [Added][#]
 
 - feat: added clone & instance function
+- feat: Parser function implementation
+- Added documentation in English
 
 ### [Changed][#]
 
