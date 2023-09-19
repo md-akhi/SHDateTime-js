@@ -1,1 +1,9 @@
-.
+(@@toPrimitive.md)[./en/@@toPrimitive.md]
+(get date)[./en/get-date.md]
+(get day)[./en/get-day.md]
+(get full year)[./en/get-full-year.md]
+(get hours)[./en/get-hours.md]
+(get milliseconds)[./en/get-milliseconds.md]
+(get minutes)[./en/get-minutes.md]
+(get month)[./en/get-month.md]
+(get seconds)[./en/get-seconds.md]

@@ -70,7 +70,7 @@ function setDescription() {
 				`* @author ${pkg.author}`
 			)
 		)
-		.pipe(replace(/\* @(link( [\w:\/\.\|]+)+)/g, `* @link ${link}`))
+		.pipe(replace(/\* @(link( [\w:\/\.\|#-]+)+)/g, `* @link ${link}`))
 		.pipe(
 			replace(
 				/\* @(copyright( [\w\d.\(\)\-\,]+)+)/g,

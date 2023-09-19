@@ -1,11 +1,11 @@
-# Date[@@toPrimitive]
+# SHDate[@@toPrimitive]
 
 The <code>\[@@toPrimitive]()</code> method converts a Date object to a primitive value.
 
 # Syntax
 
 ```js
-Date()[Symbol.toPrimitive](hint);
+SHDate()[Symbol.toPrimitive](hint);
 ```
 
 # Return value

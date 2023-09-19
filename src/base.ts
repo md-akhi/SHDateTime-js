@@ -2,7 +2,7 @@
  * In the name of Allah, the Beneficent, the Merciful.
  * @package shdate - Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}
  * @author Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)
- * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme-akhi/SHDateTime-js#readme
+ * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
  * @version Release: 1.4.15
@@ -1564,7 +1564,7 @@ export default class SHDate {
 	 * Parses a string containing a date, and returns the number of milliseconds between that date and midnight, 11 Dey 1348.
 	 * @param {string} str — A date string
 	 * @returns {number} The number of milliseconds between that date and midnight, 11 Dey 1348.
-	 * @since 1.0
+	 * @since 1.4
 	 * https://gitcode.net/openthos/gecko-dev/-/blob/GECKO120_2012041106_RELBRANCH/js/src/jsdate.cpp#L911
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
 	 * https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
