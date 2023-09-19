@@ -36,7 +36,7 @@ function combineTS() {
 			.pipe(concat("shdatetime.ts"))
 			.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
 			.pipe(replace(/export default (function|class)/g, "$1"))
-			.pipe(replace(/import [a-zA-z_]* from [0-9a-zA-z_/\.\"]*;/g, " "))
+			.pipe(replace(/import [a-zA-Z_]* from [0-9a-zA-Z_/\.\"]*;/g, " "))
 			.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
 			.pipe(replace(/ Language_([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguage_$1"))
 			.pipe(replace(/class (Language|Word)/g, "class SHDate$1"))
