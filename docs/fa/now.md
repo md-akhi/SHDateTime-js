@@ -13,11 +13,11 @@ Try it
 SHDate.now();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A Number representing the milliseconds elapsed since the UNIX epoch.
 
-# Examples
+# نمونه‌ها
 
 Reduced time precision
 To offer protection against timing attacks and fingerprinting, the precision of SHDate.now() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.

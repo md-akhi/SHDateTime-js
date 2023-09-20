@@ -13,17 +13,17 @@ Try it
 toTimeString();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A string representing the time portion of the given date in human readable form in English.
 
-# Description
+# توضیحات
 
 Date instances refer to a specific point in time. Calling toString() will return the date formatted in a human readable form in English. Sometimes it is desirable to obtain a string of the time portion; such a thing can be accomplished with the toTimeString() method.
 
 The toTimeString() method is especially useful because compliant engines implementing ECMA-262 may differ in the string obtained from toString() for Date objects, as the format is implementation-dependent; simple string slicing approaches may not produce consistent results across multiple engines.
 
-# Examples
+# نمونه‌ها
 
 A basic usage of toTimeString()
 

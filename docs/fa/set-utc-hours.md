@@ -16,31 +16,31 @@ setUTCHours(hoursValue, minutesValue, secondsValue);
 setUTCHours(hoursValue, minutesValue, secondsValue, msValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>hoursValue</code>
+<code dir="ltr">hoursValue</code>
 An integer between 0 and 23, representing the hour.
 
-<code>minutesValue</code>
+<code dir="ltr">minutesValue</code>
 Optional. An integer between 0 and 59, representing the minutes.
 
-<code>secondsValue</code>
+<code dir="ltr">secondsValue</code>
 Optional. An integer between 0 and 59, representing the seconds. If you specify the secondsValue parameter, you must also specify the minutesValue.
 
-<code>msValue</code>
+<code dir="ltr">msValue</code>
 Optional. A number between 0 and 999, representing the milliseconds. If you specify the msValue parameter, you must also specify the minutesValue and secondsValue.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 11 Dey 1348 00:00:00 UTC and the updated date.
 
-# Description
+# توضیحات
 
 If you do not specify the minutesValue, secondsValue, and msValue parameters, the values returned from the getUTCMinutes(), getUTCSeconds(), and getUTCMilliseconds() methods are used.
 
 If a parameter you specify is outside of the expected range, setUTCHours() attempts to update the date information in the Date object accordingly. For example, if you use 100 for secondsValue, the minutes will be incremented by 1 (minutesValue + 1), and 40 will be used for seconds.
 
-# Examples
+# نمونه‌ها
 
 ```js
 var theBigDay = new SHDate();

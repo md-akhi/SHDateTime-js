@@ -25,29 +25,29 @@ Integer value representing the year.
 
 Values from 0 to 99 map to the years 1300 to 1399. All other values are the actual year. See the example.
 
-<code>month</code> Optional
+<code dir="ltr">month</code> Optional
 An integer between 0 (Farvardin) and 11 (Espand) representing the month. Since ECMAScript 2017 it defaults to 0 if omitted. (Up until ECMAScript 2016, month was a required parameter. As of ES2017, it no longer is.)
 
-<code>day</code> Optional
+<code dir="ltr">day</code> Optional
 An integer between 1 and 31 representing the day of the month. If omitted, defaults to 1.
 
-<code>hour</code> Optional
+<code dir="ltr">hour</code> Optional
 An integer between 0 and 23 representing the hours. If omitted, defaults to 0.
 
-<code>minute</code> Optional
+<code dir="ltr">minute</code> Optional
 An integer between 0 and 59 representing the minutes. If omitted, defaults to 0.
 
-<code>second</code> Optional
+<code dir="ltr">second</code> Optional
 An integer between 0 and 59 representing the seconds. If omitted, defaults to 0.
 
-<code>millisecond</code> Optional
+<code dir="ltr">millisecond</code> Optional
 An integer between 0 and 999 representing the milliseconds. If omitted, defaults to 0.
 
-# Return value
+# مقدار برگشتی
 
 A number representing the number of milliseconds for the given date since 11 Dey 1348, 00:00:00, UTC.
 
-# Description
+# توضیحات
 
 UTC() takes comma-delimited date and time parameters and returns the number of milliseconds between 11 Dey 1348, 00:00:00, universal time and the specified date and time.
 
@@ -61,7 +61,7 @@ If a parameter is outside of the expected range, the UTC() method updates the ot
 
 UTC() is a static method of Date, so it's called as SHDate.UTC() rather than as a method of a Date instance.
 
-# Examples
+# نمونه‌ها
 
 Using SHDate.UTC()
 The following statement creates a Date object with the arguments treated as UTC instead of local:

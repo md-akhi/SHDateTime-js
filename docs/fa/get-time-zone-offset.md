@@ -1,7 +1,6 @@
 # SHDate.getTimezoneOffset()
 
-The getTimezoneOffset() method returns the difference, in minutes, between a date as evaluated in the UTC time zone, and the same date as evaluated in the local time zone.
-
+روش GetTimeZoneOffset () تفاوت ، در عرض چند دقیقه ، بین تاریخی را که در منطقه زمانی UTC ارزیابی شده و همان تاریخ ارزیابی شده در منطقه زمانی محلی را برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -13,31 +12,31 @@ Try it
 getTimezoneOffset();
 ```
 
-# Return value
+# مقدار برگشتی
 
-The difference, in minutes, between date, as evaluated in the UTC time zone, and as evaluated in the local time zone.
+تفاوت ، در دقیقه ، بین تاریخ ، همانطور که در منطقه زمانی UTC ارزیابی شده است ، و همانطور که در منطقه زمانی محلی ارزیابی شده است.
 
-# Description
+# توضیحات
 
-date.getTimezoneOffset() returns the difference, in minutes, between date as evaluated in the UTC time zone, and date as evaluated in the local time zone — that is, the time zone of the host system in which the browser is being used (if the code is run from the Web in a browser), or otherwise the host system of whatever JavaScript runtime (for example, a Node.js environment) the code is executed in.
+date.gettimezoneoffset () تفاوت ، در دقیقه ، بین تاریخ ارزیابی شده در منطقه زمانی UTC ، و تاریخ را که در منطقه زمانی محلی ارزیابی شده است - یعنی منطقه زمانی سیستم میزبان که در آن مرورگر استفاده می شود ، برمی گرداند.اگر کد از وب در یک مرورگر اجرا شود) ، یا در غیر این صورت سیستم میزبان هر زمان اجرا JavaScript (به عنوان مثال ، یک محیط Node.js) کد در آن اجرا می شود.
 
-Negative values and positive values
-The number of minutes returned by getTimezoneOffset() is positive if the local time zone is behind UTC, and negative if the local time zone is ahead of UTC. For example, for UTC+10, -600 will be returned.
+مقادیر منفی و مقادیر مثبت
+اگر منطقه زمانی محلی در پشت UTC باشد ، تعداد دقایقی که توسط GetTimeZoneOffset () مثبت است ، مثبت است و اگر منطقه زمانی محلی از UTC جلوتر باشد ، منفی است.به عنوان مثال ، برای UTC+10 ، -600 بازگردانده می شود.
 
-Current time zone UTC-8 UTC UTC+3
-Return Value 480 0 -180
-Varied results in Daylight Saving Time (DST) time zones
-In a time zone that annually shifts in and out of Daylight Saving Time (DST), the number of minutes returned by calling getTimezoneOffset() can vary.
+منطقه زمانی فعلی UTC-8 UTC UTC+3
+مقدار بازگشت 480 0 -180
+نتایج متنوع در زمان صرفه جویی در نور روز (DST) مناطق زمانی
+در یک منطقه زمانی که سالانه در زمان صرفه جویی در نور روز (DST) تغییر می کند و خارج می شود ، تعداد دقایقی که با فراخوانی GetTimeZoneOffset () برگشت داده می شود ، می تواند متفاوت باشد.
 
-Consider a given local time zone and a date date1 that are both in DST, and consider minutes, the number of minutes returned by calling date1.getTimezoneOffset(); then:
+یک منطقه زمانی محلی خاص و یک تاریخ تاریخ 1 را در نظر بگیرید که هم در DST است ، و دقایقی را در نظر بگیرید ، تعداد دقایقی که با فراخوانی تاریخ 1.gettimezoneoffset () بازگردانده می شود.سپس:
 
-If the local time zone is currently in DST, but a given date date2 is not in DST, then the number of minutes returned by date2.getTimezoneOffset() is minutes ± 60.
-If the local time zone is not currently in DST, but a given date date3 is in DST, then the number of minutes returned by date3.getTimezoneOffset() is minutes ± 60.
-In a time zone that doesn't annually shift in and out of Daylight Saving Time (DST), the number of minutes returned by calling getTimezoneOffset() always returns the same number of minutes, regardless of the date instance it's called from.
+اگر منطقه زمانی محلی در حال حاضر در DST باشد ، اما تاریخ تاریخ مشخص 2 در DST نیست ، تعداد دقایقی که توسط Date2.GettimeZoneOffset () بازگردانده می شود 60 دقیقه است.
+اگر منطقه زمانی محلی در حال حاضر در DST نباشد ، اما تاریخ تاریخ مشخصی در DST است ، تعداد دقایقی که توسط Date3.gettimezoneOffset () دقیقه بازگردانده شده است 60 دقیقه است.
+در یک منطقه زمانی که سالانه از زمان صرفه جویی در نور روز (DST) تغییر نمی کند و خارج نمی شود ، تعداد دقایقی که با فراخوانی GetTimeZoneOffset () بازگردانده می شود ، بدون در نظر گرفتن نمونه ای که از آن خوانده می شود ، همان تعداد دقایقی را برمی گرداند.
 
-Note: The above description is a simplification. In implementations, the IANA time zone database (tzdata) is used for precisely determining the effect of DST on the calculation of the time-zone difference.
+توجه: توضیحات فوق ساده سازی است.در پیاده سازی ها ، از پایگاه داده منطقه زمانی IANA (TZDATA) برای تعیین دقیق تأثیر DST در محاسبه اختلاف منطقه زمانی استفاده می شود.
 
-# Examples
+# نمونه‌ها
 
 ```js
 // Create a Date instance for the current time

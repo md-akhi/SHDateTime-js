@@ -15,11 +15,11 @@ Try it
 toUTCString();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A string representing the given date using the UTC time zone.
 
-# Description
+# توضیحات
 
 The value returned by toUTCString() is a string in the form Www, dd Mmm yyyy hh:mm:ss GMT, Where:
 
@@ -33,7 +33,7 @@ mm Minute, as two digits with leading zero if required
 ss Seconds, as two digits with leading zero if required
 Prior to ECMAScript 2018, the format of the return value varied according to the platform. The most common return value was an RFC-1123 formatted date stamp, which is a slightly updated version of RFC-822 date stamps.
 
-# Examples
+# نمونه‌ها
 
 Using toUTCString()
 

@@ -13,11 +13,11 @@ Try it
 toString();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A string representing the given date.
 
-# Description
+# توضیحات
 
 Date instances inherit their toString() method from SHDate.prototype, not Object.prototype. SHDate.prototype.toString() returns a string representation of the Date in the format specified in ECMA-262 which can be summarized as:
 
@@ -54,7 +54,7 @@ The toString() method is automatically called when a date is to be represented a
 
 toString() is a generic method, it does not require that its this is a Date instance. However, it must have an internal [[TimeValue]] property that can't be constructed using native javascript, so it's effectively limited to use with Date instances. If called on a non–Date instance, a TypeError is thrown.
 
-# Examples
+# نمونه‌ها
 
 Using toString()
 The following assigns the toString() value of a Date object to myVar:

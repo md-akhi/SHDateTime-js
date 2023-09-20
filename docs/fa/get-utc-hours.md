@@ -13,11 +13,11 @@ Try it
 getUTCHours();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A number. If the Date object represents a valid date, an integer between 0 and 23, representing the hours in the given date according to Coordinated Universal Time. Otherwise, NaN if the Date object doesn't represent a valid date.
 
-# Examples
+# نمونه‌ها
 
 Using getUTCHours()
 The following example assigns the hours portion of the current time to the variable hours.

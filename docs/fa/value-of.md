@@ -13,11 +13,11 @@ Try it
 valueOf();
 ```
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the given date, or NaN in case of an invalid date.
 
-# Description
+# توضیحات
 
 The valueOf() method returns the primitive value of a Date object as a number data type, the number of milliseconds since midnight 11 Day, 1348 UTC.
 
@@ -25,7 +25,7 @@ This method is functionally equivalent to the SHDate.getTime() method.
 
 This method is usually called internally by JavaScript and not explicitly in code.
 
-# Examples
+# نمونه‌ها
 
 ```js
 var x = new SHDate(56, 6, 17);

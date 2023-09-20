@@ -13,20 +13,20 @@ Try it
 setMilliseconds(millisecondsValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>millisecondsValue</code>
+<code dir="ltr">millisecondsValue</code>
 A number between 0 and 999, representing the milliseconds.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
-# Description
+# توضیحات
 
 If you specify a number outside the expected range, the date information in the Date object is updated accordingly. For example, if you specify 1005, the number of seconds is incremented by 1, and 5 is used for the milliseconds.
 
-# Examples
+# نمونه‌ها
 
 Using setMilliseconds()
 

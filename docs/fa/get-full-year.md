@@ -1,8 +1,8 @@
 # SHDate.getFullYear()
 
-The <code>getFullYear()</code> method returns the year of the specified date according to local time.
+متد <code dir="ltr">getFullYear()</code> سال تاریخ مشخص شده را بر اساس زمان محلی برمی گرداند.
 
-Use this method instead of the <code>getYear()</code> method.
+به جای متد <code dir="ltr">getYear()</code> از این متد استفاده کنید.
 
 Try it
 
@@ -15,15 +15,15 @@ Try it
 getFullYear();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A number corresponding to the year of the given date, according to local time.
 
-# Description
+# توضیحات
 
-The value returned by <code>getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code>getFullYear()</code> returns a four-digit number, for example, 1390. Use this function to make sure a year is compliant with years after 2000.
+The value returned by <code dir="ltr">getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code dir="ltr">getFullYear()</code> returns a four-digit number, for example, 1390. Use this function to make sure a year is compliant with years after 2000.
 
-# Examples
+# نمونه‌ها
 
 The following example assigns the four-digit value of the current year to the variable year.
 

@@ -14,19 +14,19 @@ setMonth(monthValue);
 setMonth(monthValue, dayValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>monthValue</code>
+<code dir="ltr">monthValue</code>
 A zero-based integer representing the month of the year offset from the start of the year. So, 0 represents Farvardin, 11 represents Esfand, -1 represents Esfand of the previous year, and 12 represents Farvardin of the following year.
 
-<code>dayValue</code>
+<code dir="ltr">dayValue</code>
 Optional. An integer from 1 to 31, representing the day of the month.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
-# Description
+# توضیحات
 
 If you do not specify the dayValue parameter, the value returned from the getDate() method is used.
 
@@ -34,7 +34,7 @@ If a parameter you specify is outside of the expected range, setMonth() attempts
 
 The current day of month will have an impact on the behavior of this method. Conceptually it will add the number of days given by the current day of the month to the 1st day of the new month specified as the parameter, to return the new date. For example, if the current value is 31st August 2016, calling setMonth with a value of 1 will return 2nd March 2016. This is because in 2016 February had 29 days.
 
-# Examples
+# نمونه‌ها
 
 Using setMonth()
 

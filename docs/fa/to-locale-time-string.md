@@ -17,7 +17,7 @@ toLocaleTimeString(locales);
 toLocaleTimeString(locales, options);
 ```
 
-# Parameters
+# پارامترها
 
 The locales and options arguments customize the behavior of the function and let applications specify which language formatting conventions should be used. In older implementations that ignore the locales and options arguments, the locales and the form of the string returned will be entirely implementation-dependent.
 
@@ -25,7 +25,7 @@ See the Intl.DateTimeFormat() constructor for details on these parameters and ho
 
 The default value for each date-time component property is undefined, but if the hour, minute, second properties are all undefined, then hour, minute, and second are assumed to be "numeric".
 
-# Return value
+# مقدار برگشتی
 
 A string representing the time portion of the given Date instance according to language-specific conventions.
 
@@ -33,7 +33,7 @@ A string representing the time portion of the given Date instance according to l
 
 When formatting large numbers of dates, it is better to create an Intl.DateTimeFormat object and use the function provided by its format property.
 
-# Examples
+# نمونه‌ها
 
 Using toLocaleTimeString()
 Basic use of this method without specifying a locale returns a formatted string in the default locale and with default options.

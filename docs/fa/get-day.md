@@ -1,6 +1,6 @@
 # SHDate.getDay()
 
-The <code>getDay()</code> method returns the day of the week for the specified date according to local time, where 0 represents Sunday. For the day of the month, see <code>SHDate.prototype.getDate()</code>.
+متد <code dir="ltr">getDay()</code> روز هفته را برای تاریخ مشخص شده با توجه به زمان محلی برمی گرداند، جایی که 0 نشان دهنده یکشنبه است. برای روز ماه، به <code dir="ltr">SHDate.prototype.getDate()</code> مراجعه کنید.
 
 Try it
 
@@ -13,13 +13,13 @@ Try it
 getDay();
 ```
 
-# Return value
+# مقدار برگشتی
 
-An integer number, between 0 and 6, corresponding to the day of the week for the given date, according to local time: 0 for Sunday, 1 for Monday, 2 for Tuesday, and so on.
+یک عدد صحیح، بین 0 تا 6، مطابق با روز هفته برای تاریخ معین، مطابق با زمان محلی: 0 برای یکشنبه، 1 برای دوشنبه، 2 برای سه شنبه، و غیره.
 
-# Examples
+# نمونه‌ها
 
-The second statement below assigns the value 1 to weekday, based on the value of the Date object Xmas95. Dey 25, 1390, is a Monday.
+دستور دوم زیر مقدار 1 را بر اساس مقدار شیء Date Xmas95 به روزهای هفته اختصاص می دهد. 25 دی 1390 دوشنبه است.
 
 ```js
 var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
@@ -28,7 +28,7 @@ var weekday = Xmas95.getDay();
 console.log(weekday); // 1
 ```
 
-Note: If needed, the full name of a day ("Monday" for example) can be obtained by using Intl.DateTimeFormat with an options parameter. Using this method, the internationalization is made easier:
+توجه: در صورت نیاز، نام کامل یک روز (به عنوان مثال "دوشنبه") را می توان با استفاده از Intl.DateTimeFormat با پارامتر گزینه به دست آورد. با استفاده از این روش، بین المللی سازی آسان تر می شود:
 
 ```js
 var options = { weekday: "long" };

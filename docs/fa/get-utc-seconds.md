@@ -13,11 +13,11 @@ Try it
 getUTCSeconds();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A number. If the Date object represents a valid date, an integer between 0 and 59, representing the seconds in the given date according to universal time. Otherwise, NaN if the Date object doesn't represent a valid date.
 
-# Examples
+# نمونه‌ها
 
 Using getUTCSeconds()
 The following example assigns the seconds portion of the current time to the variable seconds.

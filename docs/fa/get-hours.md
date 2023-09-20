@@ -1,6 +1,6 @@
 # SHDate.getHours()
 
-The getHours() method returns the hour for the specified date, according to local time.
+متد <code dir="ltr">getHours()</code> ساعت را برای تاریخ مشخص شده، با توجه به زمان محلی برمی گرداند.
 
 Try it
 
@@ -13,14 +13,14 @@ Try it
 getHours();
 ```
 
-# Return value
+# مقدار برگشتی
 
-An integer number, between 0 and 23, representing the hour for the given date according to local time.
+یک عدد صحیح، بین 0 و 23، که نشان دهنده ساعت برای تاریخ معین با توجه به زمان محلی است.
 
-# Examples
+# نمونه‌ها
 
-Using getHours()
-The second statement below assigns the value 23 to the variable hours, based on the value of the Date object Xmas95.
+استفاده از <code dir="ltr">getHours()</code>
+عبارت دوم زیر مقدار 23 را بر اساس مقدار شیء Date Xmas95 به متغیر ساعت اختصاص می دهد.
 
 ```js
 let Xmas95 = new SHDate("Dey 25, 1390 23:15:30");

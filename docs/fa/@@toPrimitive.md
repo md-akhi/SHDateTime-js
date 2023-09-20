@@ -22,11 +22,11 @@ SHDate()[Symbol.toPrimitive](hint);
 
 The <code dir="ltr">\[@@toPrimitive]()</code> method of the Date object returns a primitive value, that is either of type number or of type string.
 
-If hint is string or default, <code>\[@@toPrimitive]()</code> tries to call the toString method. If the toString property does not exist, it tries to call the valueOf method and if the valueOf does not exist either, <code>\[@@toPrimitive]()</code> throws a TypeError.
+If hint is string or default, <code dir="ltr">\[@@toPrimitive]()</code> tries to call the toString method. If the toString property does not exist, it tries to call the valueOf method and if the valueOf does not exist either, <code dir="ltr">\[@@toPrimitive]()</code> throws a TypeError.
 
-If hint is number, <code>\[@@toPrimitive]()</code> first tries to call valueOf, and if that fails, it calls toString.
+If hint is number, <code dir="ltr">\[@@toPrimitive]()</code> first tries to call valueOf, and if that fails, it calls toString.
 
-JavaScript calls the <code>\[@@toPrimitive]()</code> method to convert an object to a primitive value. You rarely need to invoke the <code>\[@@toPrimitive]()</code> method yourself; JavaScript automatically invokes it when encountering an object where a primitive value is expected.
+JavaScript calls the <code dir="ltr">\[@@toPrimitive]()</code> method to convert an object to a primitive value. You rarely need to invoke the <code dir="ltr">\[@@toPrimitive]()</code> method yourself; JavaScript automatically invokes it when encountering an object where a primitive value is expected.
 
 متد <code dir="ltr">\[@toPrimitive]()</code> یک مقدار اولیه را برمی‌گرداند که یا از نوع شماره یا رشته نوع است.
 
@@ -34,7 +34,7 @@ JavaScript calls the <code>\[@@toPrimitive]()</code> method to convert an object
 
 اگر راهنمایی عدد باشد، <code dir="ltr">\[@@toPrimitive]()</code> ابتدا سعی می‌کند valueOf را فراخوانی کند، و اگر موفق نشد، toString را فراخوانی می‌کند.
 
-جاوا اسکریپت متد <code dir="ltr">\[@@toPrimitive]()</code> را برای تبدیل یک شی به مقدار اولیه فراخوانی می کند. شما به ندرت نیاز دارید که خودتان متد <code>\[@@toPrimitive]()</code> را فراخوانی کنید. جاوا اسکریپت به طور خودکار آن را هنگام برخورد با یک شی که در آن مقدار اولیه مورد انتظار است فراخوانی می کند.
+جاوا اسکریپت متد <code dir="ltr">\[@@toPrimitive]()</code> را برای تبدیل یک شی به مقدار اولیه فراخوانی می کند. شما به ندرت نیاز دارید که خودتان متد <code dir="ltr">\[@@toPrimitive]()</code> را فراخوانی کنید. جاوا اسکریپت به طور خودکار آن را هنگام برخورد با یک شی که در آن مقدار اولیه مورد انتظار است فراخوانی می کند.
 
 # نمونه‌ها
 

@@ -13,20 +13,20 @@ Try it
 setTime(timeValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>timeValue</code>
+<code dir="ltr">timeValue</code>
 An integer representing the number of milliseconds since 25 Dey 1390, 00:00:00 UTC.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date (effectively, the value of the argument).
 
-# Description
+# توضیحات
 
 Use the setTime() method to help assign a date and time to another Date object.
 
-# Examples
+# نمونه‌ها
 
 ```js
 var theBigDay = new SHDate("July 1, 1999");

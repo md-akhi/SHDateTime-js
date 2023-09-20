@@ -1,7 +1,6 @@
 # SHDate.getMilliseconds()
 
-The getMilliseconds() method returns the milliseconds in the specified date according to local time.
-
+روش <code dir="ltr">getMilliseconds()</code> میلی ثانیه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -13,14 +12,14 @@ Try it
 getMilliseconds();
 ```
 
-# Return value
+# مقدار برگشتی
 
-A number, between 0 and 999, representing the milliseconds for the given date according to local time.
+عددی بین 0 تا 999 که نشان‌دهنده میلی‌ثانیه برای تاریخ معین بر اساس زمان محلی است.
 
-# Examples
+# نمونه‌ها
 
-Using getMilliseconds()
-The following example assigns the milliseconds portion of the current time to the variable milliseconds:
+استفاده از <code dir="ltr">getMilliseconds()</code>
+مثال زیر بخش میلی ثانیه ای زمان جاری را به متغیر میلی ثانیه اختصاص می دهد:
 
 ```js
 var today = new SHDate();

@@ -1,7 +1,6 @@
 # SHDate.setFullYear()
 
-The setFullYear() method sets the full year for a specified date according to local time. Returns new timestamp.
-
+متد <code dir="ltr">setFullYear()</code> کل سال را برای یک تاریخ مشخص با توجه به زمان محلی تنظیم می کند. مهر زمانی جدید را برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,30 +14,30 @@ setFullYear(yearValue, monthValue);
 setFullYear(yearValue, monthValue, dateValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>yearValue</code>
-An integer specifying the numeric value of the year, for example, 1395.
+<code dir="ltr">yearValue</code>
+یک عدد صحیح که مقدار عددی سال را مشخص می کند، به عنوان مثال، 1395.
 
-<code>monthValue</code>
-Optional. An integer between 0 and 11 representing the months Farvardin through Esfand.
+<code dir="ltr">monthValue</code>
+اختیاری. عدد صحیحی بین 0 تا 11 نشان دهنده ماه های فروردین تا اسفند است.
 
-<code>dateValue</code>
-Optional. An integer between 1 and 31 representing the day of the month. If you specify the dateValue parameter, you must also specify the monthValue.
+<code dir="ltr">dateValue</code>
+اختیاری. یک عدد صحیح بین 1 و 31 که نشان دهنده روز ماه است. اگر پارامتر dateValue را مشخص کنید، باید monthValue را نیز مشخص کنید.
 
-# Return value
+# مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
 
-# Description
+# توضیحات
 
-If you do not specify the monthValue and dateValue parameters, the values returned from the getMonth() and getDate() methods are used.
+اگر پارامترهای monthValue و dateValue را مشخص نکنید، از مقادیر برگشتی از متد getMonth() و getDate() استفاده می شود.
 
-If a parameter you specify is outside of the expected range, setFullYear() attempts to update the other parameters and the date information in the Date object accordingly. For example, if you specify 15 for monthValue, the year is incremented by 1 (yearValue + 1), and 3 is used for the month.
+اگر پارامتری که مشخص می‌کنید خارج از محدوده مورد انتظار باشد، setFullYear() سعی می‌کند پارامترهای دیگر و اطلاعات تاریخ را در شی Date به‌روزرسانی کند. به عنوان مثال، اگر 15 را برای monthValue مشخص کنید، سال 1 افزایش می یابد (yearValue + 1) و 3 برای ماه استفاده می شود.
 
-# Examples
+# نمونه‌ها
 
-Using setFullYear()
+استفاده از setFullYear()
 
 ```js
 var theBigDay = new SHDate();

@@ -13,15 +13,15 @@ Try it
 toJSON();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A string representation of the given date.
 
-# Description
+# توضیحات
 
 Date instances refer to a specific point in time. Calling toJSON() returns a string (using toISOString()) representing the Date object's value. This method is generally intended to, by default, usefully serialize Date objects during JSON serialization.
 
-# Examples
+# نمونه‌ها
 
 ```js
 var jsonDate = new SHDate().toJSON();

@@ -1,6 +1,6 @@
 # SHDate.getMinutes()
 
-The getMinutes() method returns the minutes in the specified date according to local time.
+روش <code dir="ltr">getMinutes()</code> دقیقه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 
 Try it
 
@@ -13,14 +13,14 @@ Try it
 getMinutes();
 ```
 
-# Return value
+# مقدار برگشتی
 
-An integer number, between 0 and 59, representing the minutes in the given date according to local time.
+یک عدد صحیح، بین 0 تا 59، که بیانگر دقایق در تاریخ معین بر اساس زمان محلی است.
 
-# Examples
+# نمونه‌ها
 
-Using getMinutes()
-The second statement below assigns the value 15 to the variable minutes, based on the value of the Date object Xmas95.
+با استفاده از <code dir="ltr">getMinutes()</code>
+عبارت دوم زیر مقدار 15 را به متغیر دقیقه بر اساس مقدار شیء Date Xmas95 اختصاص می دهد.
 
 ```js
 var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");

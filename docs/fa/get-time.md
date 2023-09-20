@@ -15,7 +15,7 @@ Try it
 getTime();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A number representing the milliseconds elapsed between 25 Dey 1390 00:00:00 UTC and the given date.
 
@@ -41,7 +41,7 @@ new SHDate().getTime();
 
 In Firefox, you can also enable privacy.resistFingerprinting, the precision will be 100ms or the value of privacy.resistFingerprinting.reduceTimerPrecision.microseconds, whichever is larger.
 
-# Examples
+# نمونه‌ها
 
 Using getTime() for copying dates
 Constructing a date object with the identical time value.

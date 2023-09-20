@@ -15,20 +15,20 @@ Try it
 setUTCDate(dayValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>dayValue</code>
+<code dir="ltr">dayValue</code>
 An integer from 1 to 31, representing the day of the month.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
 
-# Description
+# توضیحات
 
 If a parameter you specify is outside of the expected range, setUTCDate() attempts to update the date information in the Date object accordingly. For example, if you use 40 for dayValue, and the month stored in the Date object is June, the day will be changed to 10 and the month will be incremented to July.
 
-# Examples
+# نمونه‌ها
 
 ```js
 var theBigDay = new SHDate();

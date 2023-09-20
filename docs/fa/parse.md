@@ -11,6 +11,7 @@ Try it
 
 # Syntax
 
+```js
 Direct call:
 
 SHDate.parse(dateString)
@@ -18,17 +19,18 @@ SHDate.parse(dateString)
 Implicit call:
 
 new SHDate(dateString)
+```
 
-# Parameters
+# پارامترها
 
-<code>dateString</code>
+<code dir="ltr">dateString</code>
 A string representing a simplification of the ISO 8601 calendar date extended format. (Other formats may be used, but results are implementation-dependent.)
 
-# Return value
+# مقدار برگشتی
 
 A number representing the milliseconds elapsed since 11 Dey 1348, 00:00:00 UTC and the date obtained by parsing the given string representation of a date. If the argument doesn't represent a valid date, NaN is returned.
 
-# Description
+# توضیحات
 
 The parse() method takes a date string (such as "2011-10-10T14:48:00") and returns the number of milliseconds since 11 Dey 1348, 00:00:00 UTC.
 
@@ -50,38 +52,47 @@ The ECMAScript specification states: If the String does not conform to the stand
 
 However, invalid values in date strings not recognized as simplified ISO format as defined by ECMA-262 may or may not result in NaN, depending on the browser and values provided, e.g.:
 
+```js
 // Non-ISO string with invalid date values
-new SHDate('23/25/2014');
+new SHDate("23/25/2014");
+```
 
 will be treated as a local date of 25 November, 2015 in Firefox 30 and an invalid date in Safari 7.
 
 However, if the string is recognized as an ISO format string and it contains invalid values, it will return NaN in all browsers compliant with ES5 and later:
 
+```js
 // ISO string with invalid values
-new SHDate('2014-25-23').toISOString();
+new SHDate("2014-25-23").toISOString();
 // throws "RangeError: invalid date" in all ES5-compliant browsers
+```
 
 SpiderMonkey's implementation-specific heuristic can be found in jsdate.cpp. The string "10 06 2014" is an example of a non-conforming ISO format and thus falls back to a custom routine. See also this rough outline on how the parsing works.
 
-new SHDate('10 06 2014');
+```js
+new SHDate("10 06 2014");
+```
 
 will be treated as a local date of 6 October, 2014, and not 10 June, 2014.
 
 Other examples:
 
-new SHDate('foo-bar 2014').toString();
+```js
+new SHDate("foo-bar 2014").toString();
 // returns: "Invalid Date"
 
-SHDate.parse('foo-bar 2014');
+SHDate.parse("foo-bar 2014");
 // returns: NaN
+```
 
 Differences in assumed time zone
 Note: This section contains implementation-specific behavior that can be inconsistent across implementations.
 
 Given a non-standard date string of "March 7, 2014", parse() assumes a local time zone, but given a simplification of the ISO 8601 calendar date extended format such as "2014-03-07", it will assume a time zone of UTC (ES5 and ECMAScript 2015). Therefore Date objects produced using those strings may represent different moments in time depending on the version of ECMAScript supported unless the system is set with a local time zone of UTC. This means that two date strings that appear equivalent may result in two different values depending on the format of the string that is being converted.
 
-# Examples
+# نمونه‌ها
 
+```js
 Using SHDate.parse()
 The following calls all return 1546300800000. The first according to ES5 will imply UTC time, and the others are specifying UTC timezone via the ISO date specification (Z and +00:00)
 
@@ -125,5 +136,6 @@ Returns 14400000 in time zone GMT-0400, and other values in other time zones, si
 SHDate.parse('Thu, 11 Day 1348 00:00:00 GMT-0400');
 
 Returns 14400000 no matter the local time zone as a time zone GMT (UTC) is provided.
+```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse

@@ -13,11 +13,11 @@ Try it
 toISOString();
 ```
 
-# Return value
+# مقدار برگشتی
 
 A string representing the given date in the ISO 8601 format according to universal time.
 
-# Examples
+# نمونه‌ها
 
 ```js
 let today = new SHDate("05 Day 1402 14:48 UTC");

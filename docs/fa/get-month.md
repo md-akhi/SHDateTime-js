@@ -1,7 +1,6 @@
 # SHDate.getMonth()
 
-The getMonth() method returns the month in the specified date according to local time, as a zero-based value (where zero indicates the first month of the year).
-
+روش GetMonth () ماه را در تاریخ مشخص شده با توجه به زمان محلی ، به عنوان یک مقدار مبتنی بر صفر (جایی که صفر نشانگر ماه اول سال است) برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -13,14 +12,14 @@ Try it
 getMonth();
 ```
 
-# Return value
+# مقدار برگشتی
 
-An integer number, between 0 and 11, representing the month in the given date according to local time. 0 corresponds to Farvardin, 1 to February, and so on.
+یک عدد عدد صحیح ، بین 0 تا 11 ، نمایانگر ماه در تاریخ معین با توجه به زمان محلی است.0 مطابق با فارواردین ، 1 تا فوریه و غیره است.
 
-# Examples
+# نمونه‌ها
 
-Using getMonth()
-The second statement below assigns the value 11 to the variable month, based on the value of the Date object Xmas95.
+با استفاده از getMonth ()
+بیانیه دوم در زیر مقدار 11 را به ماه متغیر ، بر اساس مقدار موضوع تاریخ XMAS95 اختصاص می دهد.
 
 ```js
 var Xmas95 = new SHDate('Dey 25, 1390 23:15:30');

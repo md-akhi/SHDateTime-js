@@ -15,16 +15,16 @@ Try it
 setDate(dayValue);
 ```
 
-# Parameters
+# پارامترها
 
-<code>dayValue</code>
+<code dir="ltr">dayValue</code>
 An integer representing the day of the month.
 
-# Return value
+# مقدار برگشتی
 
 The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the given date (the Date object is also changed in place).
 
-# Description
+# توضیحات
 
 If the dayValue is outside of the range of date values for the month, setDate() will update the Date object accordingly.
 
@@ -32,7 +32,7 @@ For example, if 0 is provided for dayValue, the date will be set to the last day
 
 If a negative number is provided for dayValue, the date will be set counting backwards from the last day of the previous month. -1 would result in the date being set to 1 day before the last day of the previous month.
 
-# Examples
+# نمونه‌ها
 
 Using setDate()
 
