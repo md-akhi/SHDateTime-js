@@ -17,15 +17,15 @@ getFullYear();
 
 # مقدار برگشتی
 
-A number corresponding to the year of the given date, according to local time.
+با توجه به زمان محلی ، تعدادی مربوط به سال تاریخ مشخص شده است.
 
 # توضیحات
 
-The value returned by <code dir="ltr">getFullYear()</code> is an absolute number. For dates between the years 1000 and 9999, <code dir="ltr">getFullYear()</code> returns a four-digit number, for example, 1390. Use this function to make sure a year is compliant with years after 2000.
+مقدار برگردانده شده توسط <code dir = "ltr"> getClyear () </code> یک عدد مطلق است.برای تاریخ های بین سالهای 1000 و 9999 ، <code dir = "ltr"> getCressear () </code> یک شماره چهار رقمی را به عنوان مثال ، 1390 باز می گرداند. از این عملکرد استفاده کنید تا مطمئن شوید سال پس از سال 2000 مطابقت داردبشر
 
 # نمونه‌ها
 
-The following example assigns the four-digit value of the current year to the variable year.
+مثال زیر مقدار چهار رقمی سال جاری را به سال متغیر اختصاص می دهد.
 
 ```js
 var today = new SHDate();
