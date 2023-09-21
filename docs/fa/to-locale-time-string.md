@@ -1,9 +1,8 @@
 # SHDate.toLocaleTimeString()
 
-The toLocaleTimeString() method returns a string with a language-sensitive representation of the time portion of the date. The newer locales and options arguments let applications specify the language formatting conventions to use. These arguments can also customize the behavior of the function.
+روش <code dir = "ltr"> tolocaletimestring () </code> رشته ای را با بازنمایی حساس به زبان از قسمت زمان تاریخ برمی گرداند.آرگومان های محلی و گزینه های جدیدتر به برنامه ها اجازه می دهند تا کنوانسیون های قالب بندی زبان را برای استفاده مشخص کنند.این استدلال ها همچنین می توانند رفتار عملکرد را سفارشی کنند.
 
-More dated implementations ignore the locales and options arguments. In these circumstances, the form of the string returned is entirely implementation-dependent.
-
+پیاده سازی های تاریخ بیشتر ، آرگومان های محلی و گزینه ها را نادیده می گیرند.در این شرایط ، شکل رشته برگشتی کاملاً وابسته به اجرای است.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -19,24 +18,24 @@ toLocaleTimeString(locales, options);
 
 # پارامترها
 
-The locales and options arguments customize the behavior of the function and let applications specify which language formatting conventions should be used. In older implementations that ignore the locales and options arguments, the locales and the form of the string returned will be entirely implementation-dependent.
+آرگومان های محلی و گزینه ها رفتار عملکرد را سفارشی می کنند و به برنامه ها اجازه می دهند تا از کنوانسیون های قالب بندی زبان استفاده کنند.در پیاده سازی های قدیمی که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محلی ها و شکل رشته های برگشتی کاملاً وابسته به اجرای هستند.
 
-See the Intl.DateTimeFormat() constructor for details on these parameters and how to use them.
+برای جزئیات بیشتر در مورد این پارامترها و نحوه استفاده از آنها ، به سازنده <code dir = "ltr"> intl.datetimeformat () </code> مراجعه کنید.
 
-The default value for each date-time component property is undefined, but if the hour, minute, second properties are all undefined, then hour, minute, and second are assumed to be "numeric".
+مقدار پیش فرض برای هر خاصیت مؤلفه تاریخ تعریف نشده است ، اما اگر ساعت ، دقیقه ، خصوصیات دوم همه تعریف نشده باشد ، ساعت ، دقیقه و دوم فرض می شود که "عددی" هستند.
 
 # مقدار برگشتی
 
-A string representing the time portion of the given Date instance according to language-specific conventions.
+رشته ای که نشان دهنده بخش زمانی از تاریخ مشخص شده با توجه به کنوانسیون های خاص زبان است.
 
 # Performance
 
-When formatting large numbers of dates, it is better to create an Intl.DateTimeFormat object and use the function provided by its format property.
+هنگام قالب بندی تعداد زیادی از تاریخ ها ، بهتر است یک شی <code dir = "ltr"> intl.datetimeformat </code> ایجاد کنید و از عملکرد ارائه شده توسط ویژگی فرمت آن استفاده کنید.
 
 # نمونه‌ها
 
-Using toLocaleTimeString()
-Basic use of this method without specifying a locale returns a formatted string in the default locale and with default options.
+با استفاده از <code dir = "ltr"> tolocaletimestring () </code>
+استفاده اساسی از این روش بدون مشخص کردن یک مکان محلی یک رشته فرمت شده را در محل پیش فرض و با گزینه های پیش فرض باز می گرداند.
 
 ```js
 var date = new SHDate(SHDate.UTC(1402, 11, 12, 3, 0, 0));
@@ -45,52 +44,58 @@ var date = new SHDate(SHDate.UTC(1402, 11, 12, 3, 0, 0));
 // the default locale, and the default time zone
 console.log(date.toLocaleTimeString());
 // → "7:00:00 PM" if run in en-US locale with time zone Asia/Tehran
+```
 
-Using locales
-This example shows some of the variations in localized time formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
+با استفاده از محلی
+این مثال برخی از تغییرات در قالب های زمانی موضعی را نشان می دهد.برای به دست آوردن قالب زبان مورد استفاده در رابط کاربری برنامه خود ، حتماً با استفاده از استدلال محلی ، آن زبان (و احتمالاً برخی از زبانهای برگشتی) را مشخص کنید:
 
+```js
 var date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
 // formats below assume the local time zone of the locale;
 // Asia/Tehran for the IR
 
 // US English uses 12-hour time with AM/PM
-console.log(date.toLocaleTimeString('en-US'));
+console.log(date.toLocaleTimeString("en-US"));
 // → "7:00:00 PM"
 
 // British English uses 24-hour time without AM/PM
-console.log(date.toLocaleTimeString('fa-IR'));
+console.log(date.toLocaleTimeString("fa-IR"));
 // → "06:30:00"
 
 // Korean uses 12-hour time with AM/PM
-console.log(date.toLocaleTimeString('ko-KR'));
+console.log(date.toLocaleTimeString("ko-KR"));
 // → "오후 12:00:00"
 
 // Arabic in most Arabic speaking countries uses real Arabic digits
-console.log(date.toLocaleTimeString('ar-EG'));
+console.log(date.toLocaleTimeString("ar-EG"));
 // → "٧:٠٠:٠٠ م"
 
 // when requesting a language that may not be supported, such as
 // Balinese, include a fallback language, in this case Indonesian
-console.log(date.toLocaleTimeString(['ban', 'id']));
+console.log(date.toLocaleTimeString(["ban", "id"]));
 // → "11.00.00"
+```
 
-Using options
-The results provided by toLocaleTimeString() can be customized using the options argument:
+با استفاده از گزینه ها
+نتایج ارائه شده توسط <code dir="ltr">tolocaletimestring ()</code> با استفاده از آرگومان گزینه ها قابل تنظیم است:
 
+```js
 var date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
 // an application may want to use UTC and make that visible
-var options = { timeZone: 'UTC', timeZoneName: 'short' };
-console.log(date.toLocaleTimeString('en-US', options));
+var options = { timeZone: "UTC", timeZoneName: "short" };
+console.log(date.toLocaleTimeString("en-US", options));
 // → "3:00:00 AM GMT"
 
 // sometimes even the US needs 24-hour time
-console.log(date.toLocaleTimeString('en-US', { hour12: false }));
+console.log(date.toLocaleTimeString("en-US", { hour12: false }));
 // → "19:00:00"
 
 // show only hours and minutes, use options with the default locale - use an empty array
-console.log(date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+console.log(
+	date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+);
 // → "20:01"
 ```
 

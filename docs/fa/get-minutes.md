@@ -1,6 +1,6 @@
 # SHDate.getMinutes()
 
-روش <code dir="ltr">getMinutes()</code> دقیقه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
+متد <code dir="ltr">getMinutes()</code> دقیقه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 
 Try it
 

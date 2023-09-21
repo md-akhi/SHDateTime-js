@@ -1,9 +1,8 @@
 # SHDate.setDate()
 
-The setDate() method changes the day of the month of a given Date instance, based on local time.
+روش <code dir = "ltr"> setDate () </code> روز ماه یک نمونه تاریخ معین را بر اساس زمان محلی تغییر می دهد.
 
-To instead change the day of the month for a given Date instance based on UTC time, use the setUTCDate() method.
-
+برای تغییر روز ماه برای یک نمونه تاریخ معین بر اساس زمان UTC ، از روش <code dir = "ltr"> setutcdate () </code> استفاده کنید.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -17,24 +16,24 @@ setDate(dayValue);
 
 # پارامترها
 
-<code dir="ltr">dayValue</code>
-An integer representing the day of the month.
+<code dir = "ltr"> dayvalue </code>
+یک عدد صحیح به نمایندگی از روز ماه.
 
 # مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the given date (the Date object is also changed in place).
+تعداد میلی ثانیه بین 25 Dey 1390 00:00:00 UTC و تاریخ داده شده (شیء تاریخ نیز در جای خود تغییر می کند).
 
 # توضیحات
 
-If the dayValue is outside of the range of date values for the month, setDate() will update the Date object accordingly.
+اگر DayValue خارج از محدوده مقادیر تاریخ برای ماه باشد ، <code dir="ltr">SetDate ()</code> شیء تاریخ را بر این اساس به روز می کند.
 
-For example, if 0 is provided for dayValue, the date will be set to the last day of the previous month.
+به عنوان مثال ، اگر 0 برای DayValue ارائه شود ، تاریخ به آخرین روز ماه قبل تعیین می شود.
 
-If a negative number is provided for dayValue, the date will be set counting backwards from the last day of the previous month. -1 would result in the date being set to 1 day before the last day of the previous month.
+اگر تعداد منفی برای DayValue ارائه شود ، تاریخ از آخرین روز ماه قبل شمارش به عقب تنظیم می شود.-1 منجر به تعیین تاریخ 1 روز قبل از آخرین روز ماه قبل خواهد شد.
 
 # نمونه‌ها
 
-Using setDate()
+با استفاده از <code dir="ltr">setDate ()</code>
 
 ```js
 const theBigDay = new SHDate(1962, 6, 7, 12); // noon of 1962-07-07 (7th of July 1962, month is 0-indexed)

@@ -1,7 +1,6 @@
 # SHDate.getUTCMinutes()
 
-The getUTCMinutes() method returns the minutes in the specified date according to universal time.
-
+روش <code dir = "ltr"> getutcminutes () </code> دقیقه ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,12 +14,10 @@ getUTCMinutes();
 
 # مقدار برگشتی
 
-A number. If the Date object represents a valid date, an integer between 0 and 59, representing the minutes in the given date according to universal time. Otherwise, NaN if the Date object doesn't represent a valid date.
-
+یک عدد.اگر شیء تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح بین 0 تا 59 ، نمایندگی صورتجلسه در تاریخ معین با توجه به زمان جهانی است.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
 # نمونه‌ها
-
-Using getUTCMinutes()
-The following example assigns the minutes portion of the current time to the variable minutes.
+با استفاده از <code dir = "ltr"> getutcminutes () </code>
+مثال زیر بخش دقیقه از زمان فعلی را به دقیقه های متغیر اختصاص می دهد.
 
 ```js
 var today = new SHDate();

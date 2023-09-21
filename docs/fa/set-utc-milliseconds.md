@@ -1,7 +1,6 @@
 # SHDate.setUTCMilliseconds()
 
-The setUTCMilliseconds() method sets the milliseconds for a specified date according to universal time.
-
+روش <code dir = "ltr"> setutcmilliseconds () </code> milliseconds را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -16,16 +15,13 @@ setUTCMilliseconds(millisecondsValue);
 # پارامترها
 
 <code dir="ltr">millisecondsValue</code>
-A number between 0 and 999, representing the milliseconds.
-
+تعدادی بین 0 تا 999 ، نماینده میلی ثانیه.
 # مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
-
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
 # توضیحات
 
-If a parameter you specify is outside of the expected range, setUTCMilliseconds() attempts to update the date information in the Date object accordingly. For example, if you use 1100 for millisecondsValue, the seconds stored in the Date object will be incremented by 1, and 100 will be used for milliseconds.
-
+اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir = "ltr"> setutcmilliseconds () </code> تلاش می کند تا اطلاعات تاریخ را در شیء تاریخ بر همین اساس به روز کند.به عنوان مثال ، اگر از 1100 برای MillisecondsValue استفاده می کنید ، ثانیه های ذخیره شده در شیء تاریخ توسط 1 افزایش می یابد و 100 برای میلی ثانیه استفاده می شود.
 # نمونه‌ها
 
 ```js

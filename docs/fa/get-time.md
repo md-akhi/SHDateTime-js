@@ -1,9 +1,7 @@
 # SHDate.getTime()
 
-The getTime() method returns the number of milliseconds since the ECMAScript epoch.
-
-You can use this method to help assign a date and time to another Date object. This method is functionally equivalent to the valueOf() method.
-
+روش <code dir = "ltr"> getTime () </code> تعداد میلی ثانیه از زمان Ecmascript را برمی گرداند.
+می توانید از این روش برای کمک به اختصاص تاریخ و زمان به یک شیء تاریخ دیگر استفاده کنید.این روش از نظر عملکردی معادل روش مقدار () است.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -17,12 +15,10 @@ getTime();
 
 # مقدار برگشتی
 
-A number representing the milliseconds elapsed between 25 Dey 1390 00:00:00 UTC and the given date.
-
+تعدادی به نمایندگی از میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ مشخص شده.
 # Reduced time precision
 
-To offer protection against timing attacks and fingerprinting, the precision of new SHDate().getTime() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.
-
+برای ارائه محافظت در برابر حملات به موقع و اثر انگشت ، دقت <code dir = "ltr"> shdate جدید (). gettime () </code> بسته به تنظیمات مرورگر ممکن است گرد شود.در Firefox ، اولویت reducetimerprecision به طور پیش فرض و پیش فرض به 20 میکرومتر در Firefox 59 فعال می شود.در 60 این 2 متر خواهد بود.
 ```js
 // reduced time precision (2ms) in Firefox 60
 new SHDate().getTime();
@@ -39,12 +35,11 @@ new SHDate().getTime();
 // ...
 ```
 
-In Firefox, you can also enable privacy.resistFingerprinting, the precision will be 100ms or the value of privacy.resistFingerprinting.reduceTimerPrecision.microseconds, whichever is larger.
-
+در Firefox ، شما همچنین می توانید حریم خصوصی را فعال کنید. ResistFingerPrinting ، دقت 100ms یا ارزش حریم خصوصی خواهد بود. ResistFingerPrinting.ReducetimerPrecision.microseconds ، هر کدام بزرگتر باشد.
 # نمونه‌ها
 
-Using getTime() for copying dates
-Constructing a date object with the identical time value.
+با استفاده از <code dir = "ltr"> getTime () </code> برای کپی کردن تاریخ
+ساخت یک شی تاریخ با مقدار زمان یکسان.
 
 ```js
 // Since month is zero based, birthday will be Farvardin 10, 1390
@@ -52,8 +47,8 @@ var birthday = new SHDate(1389, 11, 10);
 var copy = new SHDate();
 copy.setTime(birthday.getTime());
 
-Measuring execution time
-Subtracting two subsequent getTime() calls on newly generated Date objects, give the time span between these two calls. This can be used to calculate the executing time of some operations. See also SHDate.now() to prevent instantiating unnecessary Date objects.
+اندازه گیری زمان اجرای
+تفریق دو تماس بعدی () در مورد اشیاء تاریخ تازه تولید شده ، مدت زمان بین این دو تماس را می دهید.این می تواند برای محاسبه زمان اجرای برخی از عملیات ها استفاده شود.همچنین برای جلوگیری از فوری اشیاء غیر ضروری تاریخ ، به shdate.now () مراجعه کنید.
 
 var end, start;
 

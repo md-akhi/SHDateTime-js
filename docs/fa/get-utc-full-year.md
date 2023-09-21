@@ -1,7 +1,6 @@
 # SHDate.getUTCFullYear()
 
-The getUTCFullYear() method returns the year in the specified date according to universal time.
-
+روش <code dir="ltr">GetUtcallyear ()</code> سال را در تاریخ مشخص با توجه به زمان جهانی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,17 +14,14 @@ getUTCFullYear();
 
 # Return value
 
-A number. If the Date object represents a valid date, an integer representing the year in the given date according to universal time. Otherwise, NaN if the Date object doesn't represent a valid date.
-
+یک عدد.اگر تاریخ تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح که سال را در تاریخ معین با توجه به زمان جهانی نشان می دهد.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
 # توضیحات
 
-The value returned by getUTCFullYear() is an absolute number that is compliant with year-2000, for example, 1995.
-
+مقدار برگردانده شده توسط <code dir = "ltr"> getUtcracyear () </code> یک عدد مطلق است که مطابق با سال 2000 است ، به عنوان مثال ، 1995.
 # نمونه‌ها
-
+با استفاده از <code dir="ltr">GetUtcractyear ()</code>
+مثال زیر مقدار چهار رقمی سال جاری را به سال متغیر اختصاص می دهد.
 ```js
-Using getUTCFullYear()
-The following example assigns the four-digit value of the current year to the variable year.
 
 var today = new SHDate();
 var year = today.getUTCFullYear();

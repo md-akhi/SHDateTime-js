@@ -1,9 +1,8 @@
 # SHDate.toLocaleDateString()
 
-The toLocaleDateString() method returns a string with a language sensitive representation of the date portion of the specified date in the user agent's timezone.
+روش <code dir = "ltr"> tolocaledatestring () </code> رشته ای را با بازنمایی حساس به زبان از قسمت تاریخ تاریخ مشخص شده در منطقه زمانی عامل کاربر باز می گرداند.
 
-The locales and options arguments let applications specify the language whose formatting conventions should be used and allow to customize the behavior of the function. In older implementations, which ignore the locales and options arguments, the locale used and the form of the string returned are entirely implementation dependent.
-
+آرگومان های محلی و گزینه ها به برنامه ها اجازه می دهند زبانی را که از کنوانسیون های قالب بندی استفاده می شود ، مشخص کنند و اجازه می دهند تا رفتار عملکرد را سفارشی کنند.در پیاده سازی های قدیمی ، که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محلی که مورد استفاده قرار می گیرد و شکل رشته برگشتی کاملاً وابسته است.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -19,24 +18,24 @@ toLocaleDateString(locales, options);
 
 # پارامترها
 
-The locales and options arguments customize the behavior of the function and let applications specify the language whose formatting conventions should be used. In implementations, which ignore the locales and options arguments, the locale used and the form of the string returned are entirely implementation dependent.
+آرگومان های محلی و گزینه ها رفتار عملکرد را سفارشی می کنند و به برنامه ها اجازه می دهند زبانی را که از کنوانسیون های قالب بندی استفاده می شود ، مشخص کنند.در پیاده سازی ها ، که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محلی که مورد استفاده قرار می گیرد و شکل رشته برگشتی کاملاً وابسته است.
 
-See the Intl.DateTimeFormat() constructor for details on these parameters and how to use them.
+برای جزئیات بیشتر در مورد این پارامترها و نحوه استفاده از آنها ، به سازنده <code dir = "ltr"> intl.datetimeformat () </code> مراجعه کنید.
 
-The default value for each date-time component property is undefined, but if the weekday, year, month, day properties are all undefined, then year, month, and day are assumed to be "numeric".
+مقدار پیش فرض برای هر خاصیت مؤلفه تاریخ مشخص نشده است ، اما اگر روزهای هفته ، سال ، ماه ، روز همه تعریف نشده باشد ، در آن زمان ، سال ، ماه و روز فرض می شود که "عددی" هستند.
 
 # مقدار برگشتی
 
-A string representing the date portion of the given Date instance according to language-specific conventions.
+رشته ای که بخش تاریخ نمونه تاریخ مشخص را با توجه به کنوانسیون های خاص زبان نشان می دهد.
 
 # Performance
 
-When formatting large numbers of dates, it is better to create an Intl.DateTimeFormat object and use the function provided by its format property.
+هنگام قالب بندی تعداد زیادی از تاریخ ها ، بهتر است یک شیء intl.datetimeformat ایجاد کرده و از عملکرد ارائه شده توسط ویژگی فرمت آن استفاده کنید.
 
 # نمونه‌ها
 
-Using toLocaleDateString()
-In basic use without specifying a locale, a formatted string in the default locale and with default options is returned.
+با استفاده از <code dir = "ltr"> tolocaledatestring () </code>
+در استفاده اساسی بدون مشخص کردن یک مکان ، یک رشته فرمت شده در محل پیش فرض و با گزینه های پیش فرض بازگردانده می شود.
 
 ```js
 const date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
@@ -45,72 +44,85 @@ const date = new SHDate(SHDate.UTC(2012, 11, 12, 3, 0, 0));
 // the default locale, and the default time zone
 console.log(date.toLocaleDateString());
 // → "12/11/2012" if run in en-US locale with time zone Asia/Tehran
+```
 
-Checking for support for locales and options arguments
-The locales and options arguments are not supported in all browsers yet. To check whether an implementation supports them already, you can use the requirement that illegal language tags are rejected with a RangeError exception:
+بررسی پشتیبانی از آرگومان های محلی و گزینه ها
+آرگومان های محلی و گزینه ها هنوز در همه مرورگرها پشتیبانی نمی شوند.برای بررسی اینکه آیا یک اجرای از قبل از آنها پشتیبانی می کند ، می توانید از الزامی که برچسب های زبان غیرقانونی با یک استثناء RangeRror رد می شوند ، استفاده کنید:
 
+```js
 function toLocaleDateStringSupportsLocales() {
-try {
-new SHDate().toLocaleDateString('i');
-} catch (e) {
-return e.name === 'RangeError';
+	try {
+		new SHDate().toLocaleDateString("i");
+	} catch (e) {
+		return e.name === "RangeError";
+	}
+	return false;
 }
-return false;
-}
+```
 
-Using locales
-This example shows some of the variations in localized date formats. In order to get the format of the language used in the user interface of your application, make sure to specify that language (and possibly some fallback languages) using the locales argument:
+با استفاده از محلی
+این مثال برخی از تغییرات در قالب های تاریخ بومی سازی را نشان می دهد.برای به دست آوردن قالب زبان مورد استفاده در رابط کاربری برنامه خود ، حتماً با استفاده از استدلال محلی ، آن زبان (و احتمالاً برخی از زبانهای برگشتی) را مشخص کنید:
 
+```js
 const date = new SHDate(SHDate.UTC(2012, 11, 20, 3, 0, 0));
 
 // formats below assume the local time zone of the locale;
 // Asia/Tehran for the IR
 
 // US English uses month-day-year order
-console.log(date.toLocaleDateString('en-US'));
+console.log(date.toLocaleDateString("en-US"));
 // → "12/20/2012"
 
 // British English uses day-month-year order
-console.log(date.toLocaleDateString('en-GB'));
+console.log(date.toLocaleDateString("en-GB"));
 // → "20/12/2012"
 
 // Korean uses year-month-day order
-console.log(date.toLocaleDateString('ko-KR'));
+console.log(date.toLocaleDateString("ko-KR"));
 // → "2012. 12. 20."
 
 // Event for Persian, It's hard to manually convert date to Solar Hijri
-console.log(date.toLocaleDateString('fa-IR'));
+console.log(date.toLocaleDateString("fa-IR"));
 // → "۱۳۹۱/۹/۳۰"
 
 // Arabic in most Arabic speaking countries uses real Arabic digits
-console.log(date.toLocaleDateString('ar-EG'));
+console.log(date.toLocaleDateString("ar-EG"));
 // → "٢٠‏/١٢‏/٢٠١٢"
 
 // for Japanese, applications may want to use the Japanese calendar,
 // where 2012 was the year 24 of the Heisei era
-console.log(date.toLocaleDateString('ja-JP-u-ca-japanese'));
+console.log(date.toLocaleDateString("ja-JP-u-ca-japanese"));
 // → "24/12/20"
 
 // when requesting a language that may not be supported, such as
 // Balinese, include a fallback language, in this case Indonesian
-console.log(date.toLocaleDateString(['ban', 'id']));
+console.log(date.toLocaleDateString(["ban", "id"]));
 // → "20/12/2012"
-
-Using options
-The results provided by toLocaleDateString() can be customized using the options argument:
-
+```
+با استفاده از گزینه ها
+نتایج ارائه شده توسط tolocaledatestring () با استفاده از آرگومان گزینه ها قابل تنظیم است:
+```js
 const date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
 // request a weekday along with a long date
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-console.log(date.toLocaleDateString('de-DE', options));
+const options = {
+	weekday: "long",
+	year: "numeric",
+	month: "long",
+	day: "numeric"
+};
+console.log(date.toLocaleDateString("de-DE", options));
 // → "Donnerstag, 20. Espand 1402"
 
 // an application may want to use UTC and make that visible
-options.timeZone = 'UTC';
-options.timeZoneName = 'short';
-console.log(date.toLocaleDateString('en-US', options));
+options.timeZone = "UTC";
+options.timeZoneName = "short";
+console.log(date.toLocaleDateString("en-US", options));
 // → "Thursday, Esfand 20, 1402, UTC"
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+
+```
+
+```

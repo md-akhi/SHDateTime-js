@@ -19,31 +19,31 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 ## Install
 
 ```bash
-$ npm i @md-akhi/shdatetime
+$ npm i shdatetime
 ```
 
 ## Usage
 
-- ES Modules:
+- ES Modules (ESM):
 
 ```javascript
-import SHDate from "@md-akhi/shdatetime";
+import SHDate from "shdatetime";
 var date = new SHDate();
 ```
 
-- CommonJS:
+- CommonJS (CJS):
 
 ```javascript
-const SHDate = require("@md-akhi/shdatetime").default;
+const SHDate = require("shdatetime").default;
 var date = new SHDate();
 ```
 
-- TypeScript:
+- TypeScript (TS):
 
 ```TypeScript
-const SHDate = require('@md-akhi/shdatetime');
+const SHDate = require('shdatetime');
 // OR
-import SHDate from '@md-akhi/shdatetime';
+import SHDate from 'shdatetime';
 
 var date = new SHDate();
 ```
@@ -52,7 +52,7 @@ var date = new SHDate();
 
 ```html
 <script type="module">
-	import SHDate from "@md-akhi/shdatetime";
+	import SHDate from "shdatetime";
 	var date = new SHDate();
 </script>
 ```
@@ -62,7 +62,7 @@ var date = new SHDate();
 ```html
 <script
 	type="text/javascript"
-	src="/path/to/@md-akhi/shdatetime/dist/browser/shdatetime.min.js"
+	src="/path/to/shdatetime/dist/browser/shdatetime.min.js"
 ></script>
 <script>
 	var date = new SHDate();
@@ -72,13 +72,13 @@ var date = new SHDate();
 jsdrive:
 
 ```shell
-https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+https://cdn.jsdelivr.net/npm/shdatetime@latest/dist/browser/shdatetime.min.js
 ```
 
 ubpkg:
 
 ```shell
-https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
+https://unpkg.com/shdatetime@latest/dist/browser/shdatetime.min.js
 ```
 
 ### Note
@@ -87,70 +87,70 @@ https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js
 
 ## API
 
-- [format](#format)
+- format: ( [en](./docs/en/format) | [fa](./docs/fa/format) )
 
   - Formatting a Date and Time (Date -> String)
 
-<!-- - [parse](#parse)
+- parse: ( [en](./docs/en/parse) | [fa](./docs/fa/parse) )
 
-  - Parsing a Date and Time string (String -> Date) -->
+  - Parsing a Date and Time string (String -> Date)
 
-- [setFullYears](#setyearsdateobj-years)
+- setFullYears: ( [en](./docs/en/setFullYears) | [fa](./docs/fa/setFullYears) )
 
   - seting years
 
-- [setMonths](#setmonths)
+- setMonths: ( [en](./docs/en/setMonths) | [fa](./docs/fa/setMonths) )
 
   - seting months
 
-- [setDays](#setdays)
+- setDays: ( [en](./docs/en/setDays) | [fa](./docs/fa/setDays) )
 
   - seting days
 
-- [setHours](#sethours)
+- setHours: ( [en](./docs/en/setHours) | [fa](./docs/fa/setHours) )
 
   - seting hours
 
-- [setMinutes](#setminutes)
+- setMinutes: ( [en](./docs/en/setMinutes) | [fa](./docs/fa/setMinutes) )
 
   - seting minutes
 
-- [setSeconds](#setseconds)
+- setSeconds: ( [en](./docs/en/setSeconds) | [fa](./docs/fa/setSeconds) )
 
   - seting seconds
 
-- [setMilliseconds](#setmilliseconds)
+- setMilliseconds: ( [en](./docs/en/setMilliseconds) | [fa](./docs/fa/setMilliseconds) )
 
   - seting milliseconds
 
-- [getFullYears](#getyearsdateobj-years)
+- getFullYears: ( [en](./docs/en/getFullYears) | [fa](./docs/fa/getFullYears) )
 
   - geting years
 
-- [getMonths](#getmonths)
+- getMonths: ( [en](./docs/en/getMonths) | [fa](./docs/fa/getMonths) )
 
   - geting months
 
-- [getDays](#getdays)
+- getDays: ( [en](./docs/en/getDays) | [fa](./docs/fa/getDays) )
 
   - geting days
 
-- [getHours](#gethours)
+- getHours: ( [en](./docs/en/getHours) | [fa](./docs/fa/getHours) )
 
   - geting hours
 
-- [getMinutes](#getminutes)
+- getMinutes: ( [en](./docs/en/getMinutes) | [fa](./docs/fa/getMinutes) )
 
   - geting minutes
 
-- [getSeconds](#getseconds)
+- getSeconds: ( [en](./docs/en/getSeconds) | [fa](./docs/fa/getSeconds) )
 
   - geting seconds
 
-- [getMilliseconds](#getmilliseconds)
+- getMilliseconds: ( [en](./docs/en/getMilliseconds) | [fa](./docs/fa/getMilliseconds) )
 
   - seting milliseconds
 
-- [isLeapYear](#isLeapYear)
+- isLeapYear: ( [en](./docs/en/isLeapYear) | [fa](./docs/fa/isLeapYear) )
 
   - Whether year is leap year

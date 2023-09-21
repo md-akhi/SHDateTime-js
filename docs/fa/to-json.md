@@ -1,7 +1,6 @@
 # SHDate.toJSON()
 
-The toJSON() method returns a string representation of the Date object.
-
+روش <code dir = "ltr"> tojson () </code> بازنمایی رشته ای از شیء تاریخ را برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,11 +14,11 @@ toJSON();
 
 # مقدار برگشتی
 
-A string representation of the given date.
+بازنمایی رشته ای از تاریخ معین.
 
 # توضیحات
 
-Date instances refer to a specific point in time. Calling toJSON() returns a string (using toISOString()) representing the Date object's value. This method is generally intended to, by default, usefully serialize Date objects during JSON serialization.
+نمونه های تاریخ به یک نکته خاص در زمان مراجعه می کنند.فراخوانی <code dir = "ltr"> tojson () </code> یک رشته (با استفاده از <code dir = "ltr"> toisostring () </code>) را نشان می دهد که مقدار شیء تاریخ را نشان می دهد.این روش به طور کلی در نظر گرفته شده است ، به طور پیش فرض ، اشیاء تاریخ را در طول سریال سازی JSON سریال سازی کنید.
 
 # نمونه‌ها
 

@@ -1,7 +1,6 @@
 # SHDate.getUTCDate()
 
-The getUTCDate() method returns the day of the month(from 1 to 31) in the specified date according to universal time.
-
+روش <code dir = "ltr"> getutcdate () </code> روز ماه (از 1 تا 31) را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,14 +14,13 @@ getUTCDate();
 
 # Return value
 
-A number. If the Date object represents a valid date, an integer number ranging from 1 to 31 representing day of month for the given date, according to universal time. Otherwise, NaN if the Date object doesn't represent a valid date.
+یک عدد.اگر تاریخ تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح از 1 تا 31 به نمایندگی از روز ماه برای تاریخ معین ، طبق زمان جهانی.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
 
 # نمونه‌ها
 
-```js
-Using getUTCDate()
-The following example assigns the day of month of the current date to the variable dayOfMonth.
+با استفاده از <code dir="ltr">GetUtcdate ()</code>مثال زیر روز ماه تاریخ فعلی را به متغیر dayofmonth اختصاص می دهد.
 
+```js
 var today = new SHDate();
 var dayOfMonth = today.getUTCDate();
 ```

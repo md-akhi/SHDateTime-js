@@ -1,7 +1,6 @@
 # SHDate.now()
 
-The static SHDate.now() method returns the number of milliseconds elapsed since 11 Dey 1348 00:00:00 UTC.
-
+روش استاتیک <code dir = "ltr"> shdate.now () </code> تعداد میلی ثانیه از 11 Dey 1348 00:00:00 UTC را باز می گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=now" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,13 +14,10 @@ SHDate.now();
 
 # مقدار برگشتی
 
-A Number representing the milliseconds elapsed since the UNIX epoch.
-
+تعدادی که نمایندگان میلی ثانیه از زمان دوره یونیکس سپری شده اند.
 # نمونه‌ها
-
-Reduced time precision
-To offer protection against timing attacks and fingerprinting, the precision of SHDate.now() might get rounded depending on browser settings. In Firefox, the privacy.reduceTimerPrecision preference is enabled by default and defaults to 20µs in Firefox 59; in 60 it will be 2ms.
-
+کاهش دقت زمان
+برای محافظت در برابر حملات به موقع و اثر انگشت ، دقت <code dir="ltr">shdate.now ()</code> بسته به تنظیمات مرورگر ممکن است گرد شود.در Firefox ، اولویت reducetimerprecision به طور پیش فرض و پیش فرض به 20 میکرومتر در Firefox 59 فعال می شود.در 60 این 2 متر خواهد بود.
 ```js
 // reduced time precision (2ms) in Firefox 60
 SHDate.now();
@@ -38,6 +34,5 @@ SHDate.now();
 // ...
 ```
 
-In Firefox, you can also enable privacy.resistFingerprinting, the precision will be 100ms or the value of privacy.resistFingerprinting.reduceTimerPrecision.microseconds, whichever is larger.
-
+در Firefox ، شما همچنین می توانید حریم خصوصی را فعال کنید. ResistFingerPrinting ، دقت 100ms یا ارزش حریم خصوصی خواهد بود. ResistFingerPrinting.ReducetimerPrecision.microseconds ، هر کدام بزرگتر باشد.
 [](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)

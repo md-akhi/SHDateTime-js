@@ -31,13 +31,13 @@ setFullYear(yearValue, monthValue, dateValue);
 
 # توضیحات
 
-اگر پارامترهای monthValue و dateValue را مشخص نکنید، از مقادیر برگشتی از متد getMonth() و getDate() استفاده می شود.
+اگر پارامترهای monthValue و dateValue را مشخص نکنید، از مقادیر برگشتی از متد <code dir="ltr">getMonth()</code> و <code dir="ltr">getDate()</code> استفاده می شود.
 
-اگر پارامتری که مشخص می‌کنید خارج از محدوده مورد انتظار باشد، setFullYear() سعی می‌کند پارامترهای دیگر و اطلاعات تاریخ را در شی Date به‌روزرسانی کند. به عنوان مثال، اگر 15 را برای monthValue مشخص کنید، سال 1 افزایش می یابد (yearValue + 1) و 3 برای ماه استفاده می شود.
+اگر پارامتری که مشخص می‌کنید خارج از محدوده مورد انتظار باشد، <code dir="ltr">setFullYear()</code> سعی می‌کند پارامترهای دیگر و اطلاعات تاریخ را در شی Date به‌روزرسانی کند. به عنوان مثال، اگر 15 را برای monthValue مشخص کنید، سال 1 افزایش می یابد (yearValue + 1) و 3 برای ماه استفاده می شود.
 
 # نمونه‌ها
 
-استفاده از setFullYear()
+استفاده از <code dir="ltr">setFullYear()</code>
 
 ```js
 var theBigDay = new SHDate();

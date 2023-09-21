@@ -1,7 +1,6 @@
 # SHDate.getUTCHours()
 
-The getUTCHours() method returns the hours in the specified date according to universal time.
-
+روش <code dir="ltr">GetUtchours ()</code> ساعت ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,12 +14,12 @@ getUTCHours();
 
 # مقدار برگشتی
 
-A number. If the Date object represents a valid date, an integer between 0 and 23, representing the hours in the given date according to Coordinated Universal Time. Otherwise, NaN if the Date object doesn't represent a valid date.
+یک عدد.اگر شیء تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح بین 0 تا 23 ، ساعات موجود در تاریخ معین را با توجه به زمان جهانی هماهنگ نشان می دهد.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
 
 # نمونه‌ها
 
-Using getUTCHours()
-The following example assigns the hours portion of the current time to the variable hours.
+با استفاده از <code dir = "ltr"> getutchours () </code>
+مثال زیر بخش ساعت زمان فعلی را به ساعتهای متغیر اختصاص می دهد.
 
 ```js
 var today = new SHDate();

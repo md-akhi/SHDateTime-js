@@ -1,7 +1,6 @@
 # SHDate.toString()
 
-The toString() method returns a string representing the specified Date object.
-
+روش <code dir = "ltr"> toString () </code> رشته ای را نشان می دهد که نمایانگر شیء تاریخ مشخص شده است.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,49 +14,43 @@ toString();
 
 # مقدار برگشتی
 
-A string representing the given date.
+رشته ای که تاریخ داده شده را نشان می دهد.
 
 # توضیحات
 
-Date instances inherit their toString() method from SHDate.prototype, not Object.prototype. SHDate.prototype.toString() returns a string representation of the Date in the format specified in ECMA-262 which can be summarized as:
-
-Week day: 3 letter English week day name, e.g. "Sat"
+نمونه های تاریخ به ارث می برند <code dir = "ltr"> toString () </code> از shdate.prototype ، نه <code dir = "ltr"> object.prototype. </code> <code dir = "ltr">shdate.prototype.toString () </code> بازنمایی رشته ای از تاریخ را در قالب مشخص شده در ECMA-262 برمی گرداند که می تواند به صورت خلاصه شود:
+Week day: نام 3 حرف هفته انگلیسی ، به عنوان مثال"شنبه"
 space
-Month name: 3 letter English month name, e.g. "Day"
+Month name: نام ماه انگلیسی 3 نامه ، به عنوان مثال"روز"
 space
-Date: 2 digit day in month, e.g. "01"
+Date: روز 2 رقمی در ماه ، به عنوان مثال"01"
 space
-Year: 4 digit year, e.g. "1402"
+Year: سال 4 رقمی ، به عنوان مثال"1402"
 space
-Hour: 2 digit hour of day, e.g. "14"
+Hour: ساعت 2 رقمی روز ، به عنوان مثال"14"
 colon
-Minute: 2 digit minute of hour, e.g. "53"
+Minute: دقیقه 2 رقمی ساعت ، به عنوان مثال"53"
 colon
-Second: 2 digit second of minute, e.g. "26"
+Second: 2 رقمی ثانیه دقیقه ، به عنوان مثال"26"
 space
-The string "GMT"
-Timezone offset sign, either:
-"+" for positive offsets (0 or greater)
-"-" for negative offsets (less than zero)
-Two digit hour offset, e.g. "14"
-Two digit minute offset, e.g. "00"
-Optionally, a timezone name consisting of:
-space
-Left bracket, i.e. "("
-An implementation dependent string representation of the timezone, which might be an abbreviation or full name (there is no standard for names or abbreviations of timezones), e.g. "Line Islands Time" or "LINT"
-Right bracket, i.e. ")"
+رشته "GMT"
+علامت جبران منطقه زمانی ، یا:"+" for positive offsets (0 or greater)
+"-" برای جبران های منفی (کمتر از صفر)
+جبران دو رقمی ساعت ، به عنوان مثال"14"
+جبران دو رقمی دقیقه ، به عنوان مثال"00"به صورت اختیاری ، یک منطقه زمانی متشکل از:space
+براکت سمت چپ ، یعنی "("
+نمایندگی رشته وابسته به اجرای منطقه زمانی ، که ممکن است یک مخفف یا نام کامل باشد (هیچ استانداردی برای نام یا مخفف مناطق زمانی وجود ندارد) ، به عنوان مثال."زمان جزایر خط" یا "خط"
+براکت راست ، یعنی ")"
 E.g. "Sat Sep 01 2018 14:53:26 GMT+1400 (LINT)"
+تا زمان ECMAScript 2018 (نسخه 9) ، فرمت رشته ای که توسط <code dir="ltr">shdate.prototype.tostring</code> برگردانده شده بود ، وابسته بود.بنابراین نباید به آن اعتماد کرد که در قالب مشخص شده باشد.
 
-Until ECMAScript 2018 (edition 9), the format of the string returned by SHDate.prototype.toString was implementation dependent. Therefore it should not be relied upon to be in the specified format.
-
-The toString() method is automatically called when a date is to be represented as a text value, e.g. console.log(new SHDate()), or when a date is used in a string concatenation, such as var today = 'Today is ' + new SHDate().
-
-toString() is a generic method, it does not require that its this is a Date instance. However, it must have an internal [[TimeValue]] property that can't be constructed using native javascript, so it's effectively limited to use with Date instances. If called on a non–Date instance, a TypeError is thrown.
+روش <code dir = "ltr"> toString () </code> به طور خودکار هنگام نمایش تاریخ به عنوان یک مقدار متن ، به عنوان مثال ، به طور خودکار فراخوانی می شود.<code dir = "ltr"> console.log (shdate جدید ()) </code> ، یا هنگامی که یک تاریخ در یک کنسرت رشته ای استفاده می شود ، مانند <code dir = "ltr"> var today = "امروز است"+ shdate جدید () </code>.
+<code dir = "ltr"> toString () </code> یک روش عمومی است ، نیازی به این نیست که این یک نمونه تاریخ باشد.با این حال ، باید یک خاصیت داخلی [[TimeValue]] داشته باشد که با استفاده از JavaScript بومی ساخته نمی شود ، بنابراین به طور موثری محدود به استفاده با نمونه های تاریخ است.اگر به یک نمونه غیر دات فراخوانده شود ، یک نوع پرتاب می شود.
 
 # نمونه‌ها
 
-Using toString()
-The following assigns the toString() value of a Date object to myVar:
+با استفاده از <code dir = "ltr"> toString () </code>
+موارد زیر مقدار <code dir = "ltr"> toString () </code> یک شیء تاریخ را به Myvar اختصاص می دهد:
 
 ```js
 var x = new SHDate();

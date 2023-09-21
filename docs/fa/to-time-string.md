@@ -1,7 +1,6 @@
 # SHDate.toTimeString()
 
-The toTimeString() method returns the time portion of a Date object in human readable form in English.
-
+روش <code dir = "ltr"> totimestring () </code> بخش زمان یک شیء تاریخ را به شکل قابل خواندن انسان به زبان انگلیسی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,17 +14,16 @@ toTimeString();
 
 # مقدار برگشتی
 
-A string representing the time portion of the given date in human readable form in English.
+رشته ای که بخش زمانی از تاریخ داده شده را در فرم قابل خواندن انسان به زبان انگلیسی نشان می دهد.
 
 # توضیحات
 
-Date instances refer to a specific point in time. Calling toString() will return the date formatted in a human readable form in English. Sometimes it is desirable to obtain a string of the time portion; such a thing can be accomplished with the toTimeString() method.
-
-The toTimeString() method is especially useful because compliant engines implementing ECMA-262 may differ in the string obtained from toString() for Date objects, as the format is implementation-dependent; simple string slicing approaches may not produce consistent results across multiple engines.
+نمونه های تاریخ به یک نکته خاص در زمان مراجعه می کنند.فراخوانی <code dir = "ltr"> toString () </code> تاریخ فرمت شده به شکل قابل خواندن انسان به زبان انگلیسی را برمی گرداند.بعضی اوقات مطلوب است که یک رشته از زمان را بدست آورید.چنین چیزی را می توان با روش <code dir = "ltr"> totimestring () </code> انجام داد.
+روش <code dir = "ltr"> totimestring () </code> به ویژه مفید است زیرا موتورهای سازگار با اجرای ECMA-262 ممکن است در رشته به دست آمده از <code dir = "ltr"> toString () </code> برایاشیاء تاریخ ، به عنوان قالب وابسته به اجرای است.رویکردهای برش رشته ای ساده ممکن است نتایج مداوم را در چندین موتورهای مختلف به همراه نکند.
 
 # نمونه‌ها
 
-A basic usage of toTimeString()
+استفاده اساسی از <code dir = "ltr"> totimestring () </code>
 
 ```js
 var d = new SHDate(1372, 3, 6, 14, 39, 7);

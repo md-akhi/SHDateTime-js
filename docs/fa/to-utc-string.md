@@ -1,9 +1,8 @@
 # SHDate.toUTCString()
 
-The toUTCString() method converts a date to a string, using the UTC time zone.
+روش <code dir = "ltr"> toutcstring () </code> با استفاده از منطقه زمانی UTC ، تاریخ را به یک رشته تبدیل می کند.
 
-Based on rfc7231 and modified according to ecma-262 toUTCString, it can have negative values in the 2021 version
-
+بر اساس RFC7231 و مطابق با ECMA-262 TOUTCSTRING اصلاح شده ، می تواند در نسخه 2021 مقادیر منفی داشته باشد
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -17,25 +16,24 @@ toUTCString();
 
 # مقدار برگشتی
 
-A string representing the given date using the UTC time zone.
+رشته ای که تاریخ داده شده را با استفاده از منطقه زمانی UTC نشان می دهد.
 
 # توضیحات
 
-The value returned by toUTCString() is a string in the form Www, dd Mmm yyyy hh:mm:ss GMT, Where:
-
-Format String Description
-Www Day of week, as three letters (e.g. Sun, Mon, ...)
-dd Day of month, as two digits with leading zero if required
-Mmm Month, as three letters (e.g. Far, Ord, ...)
-yyyy Year, as four or more digits with leading zeroes if required
-hh Hour, as two digits with leading zero if required
-mm Minute, as two digits with leading zero if required
-ss Seconds, as two digits with leading zero if required
-Prior to ECMAScript 2018, the format of the return value varied according to the platform. The most common return value was an RFC-1123 formatted date stamp, which is a slightly updated version of RFC-822 date stamps.
+مقدار برگردانده شده توسط <code dir = "ltr"> toutcstring () </code> یک رشته به شکل www ، dd mmm yyyy hh: mm: ss gmt ، جایی مست:
+توضیحات رشته قالب
+WWW روز هفته ، به عنوان سه نامه (به عنوان مثال خورشید ، دوشنبه ، ...)
+روز DD ماه ، به عنوان دو رقم با صفر پیشرو در صورت لزوم
+ماه MMM ، به عنوان سه حرف (به عنوان مثال ، ord ، ...)
+سال yyyy ، به عنوان چهار یا بیشتر رقم با صفرهای پیشرو در صورت لزوم
+ساعت HH ، به عنوان دو رقم با صفر پیشرو در صورت لزوم
+دقیقه میلی متر ، به عنوان دو رقم با صفر پیشرو در صورت نیاز
+SS ثانیه ، به عنوان دو رقم با صفر پیشرو در صورت لزوم
+قبل از ECMAScript 2018 ، قالب مقدار بازگشت با توجه به سیستم عامل متفاوت بود.متداول ترین مقدار بازگشت ، تمبر تاریخ فرمت شده RFC-1123 بود که یک نسخه کمی به روز شده از تمبرهای تاریخ RFC-822 است.
 
 # نمونه‌ها
 
-Using toUTCString()
+با استفاده از <code dir = "ltr"> toutcstring () </code>
 
 ```js
 let today = new SHDate("Wed, 06 Mor 1372 00:00:00 PDT");

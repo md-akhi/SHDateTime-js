@@ -1,7 +1,6 @@
 # SHDate.setUTCSeconds()
 
-The setUTCSeconds() method sets the seconds for a specified date according to universal time.
-
+روش <code dir = "ltr"> setutcseconds () </code> ثانیه ها را برای تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,23 +14,18 @@ setUTCSeconds(secondsValue, msValue);
 ```
 
 # پارامترها
+<code dir = "ltr"> secondsvalue </code>
+یک عدد صحیح بین 0 تا 59 ، نمایانگر ثانیه ها.
 
-<code dir="ltr">secondsValue</code>
-An integer between 0 and 59, representing the seconds.
-
-<code dir="ltr">msValue</code>
-Optional. A number between 0 and 999, representing the milliseconds.
-
+<code dir = "ltr"> msvalue </code>
+اختیاری.تعدادی بین 0 تا 999 ، نماینده میلی ثانیه.
 # مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
-
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
 # توضیحات
+اگر پارامتر MSValue را مشخص نکردید ، از مقدار بازگشت از <code dir = "ltr"> روش getUtCmilliseconds () </code> استفاده می شود.
 
-If you do not specify the msValue parameter, the value returned from the getUTCMilliseconds() method is used.
-
-If a parameter you specify is outside of the expected range, setUTCSeconds() attempts to update the date information in the Date object accordingly. For example, if you use 100 for secondsValue, the minutes stored in the Date object will be incremented by 1, and 40 will be used for seconds.
-
+اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir = "ltr"> setutcseconds () </code> سعی می کند اطلاعات تاریخ را در شیء تاریخ بر این اساس به روز کند.به عنوان مثال ، اگر از 100 برای SecondsValue استفاده کنید ، دقیقه های ذخیره شده در شیء تاریخ با 1 افزایش می یابد و 40 برای ثانیه استفاده می شود.
 # نمونه‌ها
 
 ```js

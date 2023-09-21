@@ -1,9 +1,8 @@
 # SHDate.parse()
 
-The SHDate.parse() method parses a string representation of a date, and returns the number of milliseconds since 11 Dey 1348, 00:00:00 UTC or NaN if the string is unrecognized or, in some cases, contains illegal date values (e.g. 2015-02-31).
+روش <code dir="ltr">shdate.parse ()</code> بازنمایی رشته ای از یک تاریخ را تجزیه می کند ، و تعداد میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC یا NAN را برمی گرداند اگر این رشته ناشناخته باشد یا در بعضی موارد حاوی مقادیر غیرقانونی تاریخ باشد (به عنوان مثال 2015-02-31).
 
-It is not recommended to use SHDate.parse as until ES5, parsing of strings was entirely implementation dependent. There are still many differences in how different hosts parse date strings, therefore date strings should be manually parsed (a library can help if many different formats are to be accommodated).
-
+توصیه نمی شود از shdate.parse استفاده کنید تا زمانی که ES5 ، تجزیه رشته ها کاملاً وابسته به اجرای آن بود.هنوز هم تفاوت های زیادی در نحوه تجزیه رشته های تاریخ میزبان وجود دارد ، بنابراین رشته های تاریخ باید به صورت دستی تجزیه شوند (یک کتابخانه در صورت اسکان بسیاری از قالب های مختلف می تواند کمک کند).
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -24,58 +23,55 @@ new SHDate(dateString)
 # پارامترها
 
 <code dir="ltr">dateString</code>
-A string representing a simplification of the ISO 8601 calendar date extended format. (Other formats may be used, but results are implementation-dependent.)
+رشته ای که نشان دهنده ساده سازی فرمت گسترده تقویم ISO 8601 است.(ممکن است از قالب های دیگر استفاده شود ، اما نتایج وابسته به اجرای آن هستند.)
 
 # مقدار برگشتی
 
-A number representing the milliseconds elapsed since 11 Dey 1348, 00:00:00 UTC and the date obtained by parsing the given string representation of a date. If the argument doesn't represent a valid date, NaN is returned.
+تعدادی به نمایندگی از میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC و تاریخ به دست آمده با تجزیه نمایندگی رشته ای از تاریخ.اگر استدلال یک تاریخ معتبر را نشان نداد ، NAN بازگردانده می شود.
 
 # توضیحات
 
-The parse() method takes a date string (such as "2011-10-10T14:48:00") and returns the number of milliseconds since 11 Dey 1348, 00:00:00 UTC.
+روش <code dir = "ltr"> parse () </code> یک رشته تاریخ (مانند "2011-10-10T14: 48: 00") را می گیرد و تعداد میلی ثانیه را از 11 دی 1348 ، 00:00 برمی گرداند: 00 UTC.
 
-This function is useful for setting date values based on string values, for example in conjunction with the setTime() method and the Date object.
+این تابع برای تنظیم مقادیر تاریخ بر اساس مقادیر رشته ، به عنوان مثال در رابطه با روش Settime () و شیء تاریخ مفید است.
 
-Date Time String Format
-The standard string representation of a date time string is a simplification of the ISO 8601 calendar date extended format. (See the section Date Time String Format in the ECMAScript specification for more details.)
+قالب رشته زمان تاریخ
+بازنمایی رشته استاندارد از یک رشته زمان تاریخ ، ساده سازی فرمت تمدید تاریخ تقویم ISO 8601 است.(برای اطلاعات بیشتر به فرمت رشته زمان بخش در مشخصات ECMAScript مراجعه کنید.)
 
-For example, "2011-10-10" (date-only form), "2011-10-10T14:48:00" (date-time form), or "2011-10-10T14:48:00.000+09:00" (date-time form with milliseconds and time zone) can be passed and will be parsed. When the time zone offset is absent, date-only forms are interpreted as a UTC time and date-time forms are interpreted as local time.
+به عنوان مثال ، "2011-10-10" (فرم فقط تاریخ) ، "2011-10-10T14: 48: 00" (فرم تاریخ زمان) ، یا "2011-10-10T14: 48: 00.000+09: 00"(فرم تاریخ با میلی ثانیه و منطقه زمانی) قابل عبور است و تجزیه می شود.هنگامی که جبران منطقه زمانی وجود ندارد ، فرم های فقط تاریخ به عنوان یک زمان UTC تعبیر می شوند و فرم های زمان تاریخ به عنوان زمان محلی تعبیر می شوند.
 
-While time zone specifiers are used during date string parsing to interpret the argument, the value returned is always the number of milliseconds between 11 Dey 1348 00:00:00 UTC and the point in time represented by the argument or NaN.
+در حالی که از مشخصات منطقه زمانی در هنگام تجزیه رشته برای تفسیر آرگومان استفاده می شود ، مقدار برگشتی همیشه تعداد میلی ثانیه بین 11 Dey 1348 00:00:00 UTC و نقطه ای از زمان نشان داده شده توسط استدلال یا NAN است.
 
-Because parse() is a static method of Date, it is called as SHDate.parse() rather than as a method of a Date instance.
+از آنجا که <code dir = "ltr"> parse () </code> یک روش استاتیک تاریخ است ، به عنوان <code dir = "ltr"> shdate.parse () </code> نامیده می شود و نه به عنوان یک روشیک نمونه تاریخ
 
-Fall-back to implementation-specific date formats
-Note: This section contains implementation-specific behavior that can be inconsistent across implementations.
+بازگشت به قالب های تاریخ خاص اجرا
+توجه: این بخش شامل رفتارهای خاص پیاده سازی است که می تواند در طول پیاده سازی ها متناقض باشد.
 
-The ECMAScript specification states: If the String does not conform to the standard format the function may fall back to any implementation–specific heuristics or implementation–specific parsing algorithm. Unrecognizable strings or dates containing illegal element values in ISO formatted strings shall cause SHDate.parse() to return NaN.
+مشخصات ECMAScript بیان می کند: اگر رشته با قالب استاندارد مطابقت نداشته باشد ، ممکن است عملکرد به هر الگوریتم تجزیه و تحلیل خاص اجرای یا اجرای و پیاده سازی خاص برگردد.رشته ها یا تاریخ های غیرقابل تشخیص حاوی مقادیر عناصر غیرقانونی در رشته های فرمت شده ISO باید باعث <code dir = "ltr"> shdate.parse () </code> بازگشت NAN.
 
-However, invalid values in date strings not recognized as simplified ISO format as defined by ECMA-262 may or may not result in NaN, depending on the browser and values provided, e.g.:
+با این حال ، مقادیر نامعتبر در رشته های تاریخ که به عنوان فرمت ISO ساده شده شناخته نشده اند ، همانطور که توسط ECMA-262 تعریف شده است ، بسته به مرورگر و مقادیر ارائه شده ، ممکن است در NAN نتیجه داشته باشد ، به عنوان مثال:
 
-```js
+````js
 // Non-ISO string with invalid date values
 new SHDate("23/25/2014");
-```
+```به عنوان تاریخ محلی 25 نوامبر 2015 در Firefox 30 و تاریخ نامعتبر در Safari 7 تحت درمان قرار می گیرد.
 
-will be treated as a local date of 25 November, 2015 in Firefox 30 and an invalid date in Safari 7.
-
-However, if the string is recognized as an ISO format string and it contains invalid values, it will return NaN in all browsers compliant with ES5 and later:
-
+با این حال ، اگر رشته به عنوان یک رشته فرمت ISO شناخته شود و حاوی مقادیر نامعتبر باشد ، در تمام مرورگرهای مطابق با ES5 و بعد از آن NAN باز می گردد:
 ```js
 // ISO string with invalid values
 new SHDate("2014-25-23").toISOString();
 // throws "RangeError: invalid date" in all ES5-compliant browsers
-```
+````
 
-SpiderMonkey's implementation-specific heuristic can be found in jsdate.cpp. The string "10 06 2014" is an example of a non-conforming ISO format and thus falls back to a custom routine. See also this rough outline on how the parsing works.
+اکتشافی خاص SpiderMonkey را می توان در JSDATE.CPP یافت.رشته "10 06 2014" نمونه ای از فرمت ISO غیر سازگار است و بنابراین به یک روال سفارشی باز می گردد.همچنین این طرح خشن را در مورد نحوه کار تجزیه و تحلیل مشاهده کنید.
 
 ```js
 new SHDate("10 06 2014");
 ```
 
-will be treated as a local date of 6 October, 2014, and not 10 June, 2014.
+به عنوان تاریخ محلی 6 اکتبر 2014 و نه 10 ژوئن 2014 رفتار خواهد شد.
 
-Other examples:
+نمونه های دیگر:
 
 ```js
 new SHDate("foo-bar 2014").toString();
@@ -85,57 +81,73 @@ SHDate.parse("foo-bar 2014");
 // returns: NaN
 ```
 
-Differences in assumed time zone
-Note: This section contains implementation-specific behavior that can be inconsistent across implementations.
+تفاوت در منطقه زمانی فرضی
+توجه: این بخش شامل رفتارهای خاص پیاده سازی است که می تواند در طول پیاده سازی ها متناقض باشد.
 
-Given a non-standard date string of "March 7, 2014", parse() assumes a local time zone, but given a simplification of the ISO 8601 calendar date extended format such as "2014-03-07", it will assume a time zone of UTC (ES5 and ECMAScript 2015). Therefore Date objects produced using those strings may represent different moments in time depending on the version of ECMAScript supported unless the system is set with a local time zone of UTC. This means that two date strings that appear equivalent may result in two different values depending on the format of the string that is being converted.
+با توجه به یک تاریخ غیر استاندارد از "7 مارس 2014" ، پارس () یک منطقه زمانی محلی را فرض می کند ، اما با توجه به ساده سازی فرمت تقویم ISO 8601 با فرمت گسترده مانند "2014-03-07" ، فرض می کندمنطقه زمانی UTC (ES5 و ECMAScript 2015).بنابراین اشیاء تاریخ تولید شده با استفاده از آن رشته ها بسته به نسخه ECMAScript پشتیبانی شده ممکن است لحظه های مختلفی را نشان دهند ، مگر اینکه سیستم با یک منطقه زمانی محلی UTC تنظیم شود.این بدان معنی است که دو رشته تاریخ که معادل آن به نظر می رسند بسته به قالب رشته ای که در حال تبدیل است ، ممکن است در دو مقدار مختلف به وجود بیاید.
 
 # نمونه‌ها
 
+با استفاده از <code dir = "ltr"> shdate.parse () </code>
+تماس های زیر همه بازگشت 1546300800000. اولین مورد مطابق با ES5 دلالت بر زمان UTC خواهد داشت ، و سایرین در حال مشخص کردن منطقه زمانی UTC از طریق مشخصات تاریخ ISO هستند (Z و +00: 00)
+
 ```js
-Using SHDate.parse()
-The following calls all return 1546300800000. The first according to ES5 will imply UTC time, and the others are specifying UTC timezone via the ISO date specification (Z and +00:00)
-
-SHDate.parse("2019-01-01")
-SHDate.parse("2019-01-01T00:00:00.000Z")
-SHDate.parse("2019-01-01T00:00:00.000+00:00")
-
-The following call, which does not specify a time zone will be set to 2019-01-01 at 00:00:00 in the local timezone of the system.
-
-SHDate.parse("2019-01-01T00:00:00")
-
-Non-standard date strings
-Note: This section contains implementation-specific behavior that can be inconsistent across implementations.
-
-If IPOdate is an existing Date object, it can be set to August 9, 1995 (local time) as follows:
-
-IPOdate.setTime(SHDate.parse('Aug 9, 1995'));
-
-Some other examples of parsing non-standard date strings:
-
-SHDate.parse('Aug 9, 1995');
-
-Returns 807937200000 in time zone GMT-0300, and other values in other time zones, since the string does not specify a time zone and is not ISO format, therefore the time zone defaults to local.
-
-SHDate.parse('Wed, 09 Aug 1995 00:00:00 GMT');
-
-Returns 807926400000 no matter the local time zone as GMT (UTC) is provided.
-
-SHDate.parse('Wed, 09 Aug 1995 00:00:00');
-
-Returns 807937200000 in time zone GMT-0300, and other values in other time zones, since there is no time zone specifier in the argument and it is not ISO format, so is treated as local.
-
-SHDate.parse('Thu, 11 Day 1348 00:00:00 GMT');
-
-Returns 0 no matter the local time zone as a time zone GMT (UTC) is provided.
-
-SHDate.parse('Thu, 11 Day 1348 00:00:00');
-
-Returns 14400000 in time zone GMT-0400, and other values in other time zones, since no time zone is provided and the string is not in ISO format, therefore the local time zone is used.
-
-SHDate.parse('Thu, 11 Day 1348 00:00:00 GMT-0400');
-
-Returns 14400000 no matter the local time zone as a time zone GMT (UTC) is provided.
+SHDate.parse("2019-01-01");
+SHDate.parse("2019-01-01T00:00:00.000Z");
+SHDate.parse("2019-01-01T00:00:00.000+00:00");
 ```
+
+تماس زیر ، که یک منطقه زمانی را مشخص نمی کند ، در ساعت 00:00:00 در منطقه زمانی محلی سیستم در ساعت 2019-01-01 تنظیم می شود.
+
+```js
+SHDate.parse("2019-01-01T00:00:00");
+```
+
+رشته های تاریخ غیر استاندارد
+توجه: این بخش شامل رفتارهای خاص پیاده سازی است که می تواند در طول پیاده سازی ها متناقض باشد.
+
+اگر آی پاد یک شیء تاریخ موجود است ، می توان آن را در 9 آگوست 1995 (به وقت محلی) به شرح زیر تنظیم کرد:
+
+```js
+IPOdate.setTime(SHDate.parse("Aug 9, 1995"));
+```
+
+برخی از نمونه های دیگر تجزیه رشته های تاریخ غیر استاندارد:
+
+```js
+SHDate.parse("Aug 9, 1995");
+```
+
+807937200000 را در منطقه زمانی GMT-0300 و سایر مقادیر در مناطق زمانی دیگر باز می گرداند ، زیرا این رشته منطقه زمانی را مشخص نمی کند و فرمت ISO نیست ، بنابراین منطقه زمانی به طور پیش فرض محلی است.
+
+```js
+SHDate.parse("Wed, 09 Aug 1995 00:00:00 GMT");
+```
+
+بدون توجه به منطقه زمانی محلی به عنوان GMT (UTC) 807926400000 را بازگرداند.
+
+```js
+SHDate.parse("Wed, 09 Aug 1995 00:00:00");
+```
+
+807937200000 را در منطقه زمانی GMT-0300 و سایر مقادیر در مناطق زمانی دیگر باز می گرداند ، زیرا هیچ مشخصه منطقه زمانی در استدلال وجود ندارد و فرمت ISO نیست ، بنابراین به عنوان محلی رفتار می شود.
+
+```js
+SHDate.parse("Thu, 11 Day 1348 00:00:00 GMT");
+```
+
+بدون توجه به منطقه زمانی محلی به عنوان منطقه زمانی GMT (UTC) 0 باز می گردد.
+
+```js
+SHDate.parse("Thu, 11 Day 1348 00:00:00");
+```
+
+14400000 در منطقه زمانی GMT-0400 و سایر مقادیر در مناطق زمانی دیگر باز می گردد ، زیرا هیچ منطقه زمانی ارائه نمی شود و رشته در قالب ISO نیست ، بنابراین از منطقه زمانی محلی استفاده می شود.
+
+```js
+SHDate.parse("Thu, 11 Day 1348 00:00:00 GMT-0400");
+```
+
+بازگشت 14400000 بدون توجه به منطقه زمانی محلی به عنوان منطقه زمانی GMT (UTC) ارائه می شود.
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse

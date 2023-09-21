@@ -1,7 +1,6 @@
 # SHDate.UTC()
 
-The SHDate.UTC() method accepts parameters similar to the Date constructor, but treats them as UTC. It returns the number of milliseconds since 11 Dey 1348, 00:00:00 UTC.
-
+روش <code dir = "ltr"> shdate.utc () </code> پارامترهای مشابه سازنده تاریخ را می پذیرد ، اما آنها را به عنوان UTC رفتار می کند.این تعداد میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC را برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -21,53 +20,51 @@ SHDate.UTC(year, month, day, hour, minute, second, millisecond);
 
 # year
 
-Integer value representing the year.
+ارزش عدد صحیح به نمایندگی از سال.
 
-Values from 0 to 99 map to the years 1300 to 1399. All other values are the actual year. See the example.
+مقادیر 0 تا 99 نقشه به سالهای 1300 تا 1399. تمام مقادیر دیگر سال واقعی هستند.مثال را ببینید.
 
-<code dir="ltr">month</code> Optional
-An integer between 0 (Farvardin) and 11 (Espand) representing the month. Since ECMAScript 2017 it defaults to 0 if omitted. (Up until ECMAScript 2016, month was a required parameter. As of ES2017, it no longer is.)
+<code dir = "ltr"> ماه </code> اختیاری
+یک عدد صحیح بین 0 (فارواردین) و 11 (ESPAND) نماینده ماه.از آنجا که ECMAScript 2017 در صورت حذف به 0 پیش فرض می شود.(تا زمان ECMAScript 2016 ، ماه یک پارامتر مورد نیاز بود. از نظر ES2017 ، دیگر نیست.)
 
-<code dir="ltr">day</code> Optional
-An integer between 1 and 31 representing the day of the month. If omitted, defaults to 1.
+<code dir = "ltr"> روز </code> اختیاری
+یک عدد صحیح بین 1 تا 31 به نمایندگی از روز ماه.در صورت حذف ، پیش فرض به 1.
 
-<code dir="ltr">hour</code> Optional
-An integer between 0 and 23 representing the hours. If omitted, defaults to 0.
+<code dir = "ltr"> ساعت </code> اختیاری
+یک عدد صحیح بین 0 تا 23 نشان دهنده ساعت است.در صورت حذف ، پیش فرض 0.
 
-<code dir="ltr">minute</code> Optional
-An integer between 0 and 59 representing the minutes. If omitted, defaults to 0.
+<code dir = "ltr"> دقیقه </code> اختیاری
+یک عدد صحیح بین 0 تا 59 نشان دهنده دقیقه است.در صورت حذف ، پیش فرض 0.
 
-<code dir="ltr">second</code> Optional
-An integer between 0 and 59 representing the seconds. If omitted, defaults to 0.
+<code dir = "ltr"> دوم </code> اختیاری
+یک عدد صحیح بین 0 تا 59 به نمایندگی از ثانیه.در صورت حذف ، پیش فرض 0.
 
-<code dir="ltr">millisecond</code> Optional
-An integer between 0 and 999 representing the milliseconds. If omitted, defaults to 0.
+<code dir = "ltr"> millisecond </code> اختیاری
+یک عدد صحیح بین 0 تا 999 نماینده میلی ثانیه.در صورت حذف ، پیش فرض 0.
 
 # مقدار برگشتی
 
-A number representing the number of milliseconds for the given date since 11 Dey 1348, 00:00:00, UTC.
+تعدادی که تعداد میلی ثانیه را برای تاریخ مشخص از 11 دی 1348 ، 00:00:00 ، UTC نشان می دهد.
 
 # توضیحات
 
-UTC() takes comma-delimited date and time parameters and returns the number of milliseconds between 11 Dey 1348, 00:00:00, universal time and the specified date and time.
-
+<code dir = "ltr"> utc () </code> پارامترهای تاریخ و زمان کاما را می گیرد و تعداد میلی ثانیه را بین 11 دی 1348 ، 00:00:00 ، زمان جهانی و تاریخ و زمان مشخص شده باز می گرداند.
 Years between 0 and 99 are converted to a year in the 14th century (1348 + year). For example, 95 is converted to the year 1395.
+سالهای بین 0 تا 99 در قرن چهاردهم (1348 + سال) به یک سال تبدیل می شود.به عنوان مثال ، 95 به سال 1395 تبدیل می شود.The U<code dir="ltr"></code>TC() method differs from the Date constructor in two ways:
+rrowش u <code dir = "ltr"> </code> tc () ba saزndhe tharیخ be adw rruش methahahahttette:زمان.
+<code dir = "ltr"> shdate.utc () </code> به جای ایجاد یک شیء تاریخ ، مقدار زمان را به عنوان یک عدد برمی گرداند.
+اگر یک پارامتر خارج از محدوده مورد انتظار باشد ، روش <code dir = "ltr"> utc () </code> پارامترهای دیگر را برای قرار دادن مقدار به روز می کند.به عنوان مثال ، اگر 15 برای ماه استفاده شود ، سال توسط 1 (سال + 1) افزایش می یابد و 3 برای ماه استفاده می شود.
+<code dir="ltr">UTC ()</code> یک روش استاتیک تاریخ است ، بنابراین به عنوان <code dir = "ltr"> shdate.utc () </code> نامیده می شود و نه به عنوان یک روش یک نمونه تاریخ.# نمونه‌ها
 
-The UTC() method differs from the Date constructor in two ways:
-
-SHDate.UTC() uses universal time instead of the local time.
-SHDate.UTC() returns a time value as a number instead of creating a Date object.
-If a parameter is outside of the expected range, the UTC() method updates the other parameters to accommodate the value. For example, if 15 is used for month, the year will be incremented by 1 (year + 1) and 3 will be used for the month.
-
-UTC() is a static method of Date, so it's called as SHDate.UTC() rather than as a method of a Date instance.
-
-# نمونه‌ها
-
-Using SHDate.UTC()
-The following statement creates a Date object with the arguments treated as UTC instead of local:
+با استفاده از <code dir = "ltr"> shdate.utc () </code>
+بیانیه زیر با استدلال هایی که به عنوان UTC به جای محلی رفتار می شود ، یک شیء تاریخ ایجاد می کند:
 
 ```js
 let utcDate = new SHDate(SHDate.UTC(1348, 9, 11, 0, 0, 0));
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC
+
+```
+
+```

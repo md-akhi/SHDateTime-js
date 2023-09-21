@@ -1,9 +1,7 @@
 # SHDate.setUTCDate()
+روش <code dir = "ltr"> setutcdate () </code> روز ماه یک نمونه تاریخ معین را بر اساس زمان UTC تغییر می دهد.
 
-The setUTCDate() method changes the day of the month of a given Date instance, based on UTC time.
-
-To instead change the day of the month for a given Date instance based on local time, use the setDate() method.
-
+برای تغییر روز ماه برای یک نمونه تاریخ معین بر اساس زمان محلی ، از روش <code dir = "ltr"> setDate () </code> استفاده کنید.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -18,16 +16,13 @@ setUTCDate(dayValue);
 # پارامترها
 
 <code dir="ltr">dayValue</code>
-An integer from 1 to 31, representing the day of the month.
-
+یک عدد صحیح از 1 تا 31 ، نمایانگر روز ماه است.
 # مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
-
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
 # توضیحات
 
-If a parameter you specify is outside of the expected range, setUTCDate() attempts to update the date information in the Date object accordingly. For example, if you use 40 for dayValue, and the month stored in the Date object is June, the day will be changed to 10 and the month will be incremented to July.
-
+اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir = "ltr"> setutcdate () </code> سعی می کند اطلاعات تاریخ را در شیء تاریخ بر این اساس به روز کند.به عنوان مثال ، اگر از 40 برای DayValue استفاده می کنید ، و ماه ذخیره شده در تاریخ تاریخ ژوئن است ، روز به 10 تغییر می یابد و ماه تا ژوئیه افزایش می یابد.
 # نمونه‌ها
 
 ```js

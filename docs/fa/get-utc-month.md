@@ -1,7 +1,6 @@
 # SHDate.getUTCMonth()
 
-The getUTCMonth() returns the month of the specified date according to universal time, as a zero-based value (where zero indicates the first month of the year).
-
+<code dir = "ltr"> getUtCmonth () </code> ماه تاریخ مشخص شده را با توجه به زمان جهانی ، به عنوان یک مقدار مبتنی بر صفر باز می گرداند (جایی که صفر نشانگر ماه اول سال است).
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -15,12 +14,10 @@ getUTCMonth();
 
 # مقدار برگشتی
 
-A number. If the Date object represents a valid date, an integer number, between 0 and 11, corresponding to the month of the given date according to universal time. 0 for Farvardin, 1 for Ordibehesht, 2 for Khordad, and so on. Otherwise, NaN if the Date object doesn't represent a valid date.
-
+یک عدد.اگر موضوع تاریخ یک تاریخ معتبر ، یک عدد صحیح ، بین 0 تا 11 ، مربوط به ماه تاریخ مشخص با توجه به زمان جهانی باشد.0 برای Farvardin ، 1 برای Ordibehesht ، 2 برای Khordad و غیره.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
 # نمونه‌ها
-
-Using getUTCMonth()
-The following example assigns the month portion of the current date to the variable month.
+با استفاده از <code dir = "ltr"> getutcmonth () </code>
+مثال زیر بخش ماه تاریخ فعلی را به ماه متغیر اختصاص می دهد.
 
 ```js
 var today = new SHDate();

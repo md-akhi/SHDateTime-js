@@ -1,7 +1,6 @@
 # SHDate.setUTCHours()
 
-The setUTCHours() method sets the hour for a specified date according to universal time, and returns the number of milliseconds since 11 Dey 1348 00:00:00 UTC until the time represented by the updated Date instance.
-
+روش <code dir = "ltr"> setutchours () </code> ساعت را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند و تعداد میلی ثانیه را از 11 Dey 1348 00:00:00 UTC تا زمان نشان داده شده باز می گرداندنمونه تاریخ به روز شده.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -18,27 +17,27 @@ setUTCHours(hoursValue, minutesValue, secondsValue, msValue);
 
 # پارامترها
 
-<code dir="ltr">hoursValue</code>
-An integer between 0 and 23, representing the hour.
+<code dir = "ltr"> hoursvalue </code>
+یک عدد صحیح بین 0 تا 23 ، نمایانگر ساعت است.
 
-<code dir="ltr">minutesValue</code>
-Optional. An integer between 0 and 59, representing the minutes.
+<code dir = "ltr"> minutevalue </code>
+اختیاری.یک عدد صحیح بین 0 تا 59 ، نمایندگی های دقایق را نشان می دهد.
 
-<code dir="ltr">secondsValue</code>
-Optional. An integer between 0 and 59, representing the seconds. If you specify the secondsValue parameter, you must also specify the minutesValue.
+<code dir = "ltr"> secondsvalue </code>
+اختیاری.یک عدد صحیح بین 0 تا 59 ، نمایانگر ثانیه ها.اگر پارامتر SecondsValue را مشخص کردید ، باید MinuteValue را نیز مشخص کنید.
 
-<code dir="ltr">msValue</code>
-Optional. A number between 0 and 999, representing the milliseconds. If you specify the msValue parameter, you must also specify the minutesValue and secondsValue.
+<code dir = "ltr"> msvalue </code>
+اختیاری.تعدادی بین 0 تا 999 ، نماینده میلی ثانیه.اگر پارامتر MSVALUE را مشخص کردید ، باید MinoryValue و SecondsValue را نیز مشخص کنید.
 
 # مقدار برگشتی
 
-The number of milliseconds between 11 Dey 1348 00:00:00 UTC and the updated date.
+تعداد میلی ثانیه بین 11 Dey 1348 00:00:00 UTC و تاریخ به روز شده.
 
 # توضیحات
 
-If you do not specify the minutesValue, secondsValue, and msValue parameters, the values returned from the getUTCMinutes(), getUTCSeconds(), and getUTCMilliseconds() methods are used.
+اگر پارامترهای MinuteValue ، SecondsValue و MSValue را مشخص نکنید ، از مقادیر برگشتی از <code dir="ltr">GetUtcminutes ()</code> ، <code dir="ltr">GetUtcseconds ()</code> و <code dir="ltr">GetUtcmilliseconds ()</code> استفاده می شود.
 
-If a parameter you specify is outside of the expected range, setUTCHours() attempts to update the date information in the Date object accordingly. For example, if you use 100 for secondsValue, the minutes will be incremented by 1 (minutesValue + 1), and 40 will be used for seconds.
+اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir="ltr">SetUtchours ()</code> سعی می کند اطلاعات تاریخ را در شیء تاریخ بر این اساس به روز کند.به عنوان مثال ، اگر از 100 برای SecondsValue استفاده کنید ، دقیقه ها توسط 1 (MinuteValue + 1) افزایش می یابد و 40 برای ثانیه استفاده می شود.
 
 # نمونه‌ها
 

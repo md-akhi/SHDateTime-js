@@ -1,7 +1,6 @@
 # SHDate.setUTCFullYear()
 
-The setUTCFullYear() method sets the full year for a specified date according to universal time.
-
+روش <code dir = "ltr"> setUtcallyEar () </code> سال کامل را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -16,26 +15,21 @@ setUTCFullYear(yearValue, monthValue, dayValue);
 ```
 
 # پارامترها
+<code dir = "ltr"> yourValue </code>
+یک عدد صحیح که ارزش عددی سال را مشخص می کند ، به عنوان مثال ، 1995.
 
-<code dir="ltr">yearValue</code>
-An integer specifying the numeric value of the year, for example, 1995.
+<code dir = "ltr"> moonvalue </code>
+اختیاری.یک عدد صحیح بین 0 تا 11 نماینده ماه های فارواردین از طریق Esfand.
 
-<code dir="ltr">monthValue</code>
-Optional. An integer between 0 and 11 representing the months Farvardin through Esfand.
-
-<code dir="ltr">dayValue</code>
-Optional. An integer between 1 and 31 representing the day of the month. If you specify the dayValue parameter, you must also specify the monthValue.
-
+<code dir = "ltr"> dayvalue </code>
+اختیاری.یک عدد صحیح بین 1 تا 31 به نمایندگی از روز ماه.اگر پارامتر DayValue را مشخص کردید ، باید MustValue را نیز مشخص کنید.
 # مقدار برگشتی
 
-The number of milliseconds between 25 Dey 1390 00:00:00 UTC and the updated date.
-
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
 # توضیحات
+اگر پارامترهای MustValue و DayValue را مشخص نکنید ، از مقادیر برگشتی از روشهای GetUtCmonth () و GetUtcdate () استفاده می شود.
 
-If you do not specify the monthValue and dayValue parameters, the values returned from the getUTCMonth() and getUTCDate() methods are used.
-
-If a parameter you specify is outside of the expected range, setUTCFullYear() attempts to update the other parameters and the date information in the Date object accordingly. For example, if you specify 15 for monthValue, the year is incremented by 1 (yearValue + 1), and 3 is used for the month.
-
+اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، SetUtcallyEar () سعی در به روزرسانی سایر پارامترها و اطلاعات تاریخ در موضوع تاریخ بر این اساس دارد.به عنوان مثال ، اگر 15 را برای MustValue مشخص کنید ، سال توسط 1 (yourValue + 1) افزایش می یابد و 3 برای ماه استفاده می شود.
 # نمونه‌ها
 
 ```js
