@@ -20,13 +20,13 @@ SHDate()[Symbol.toPrimitive](hint);
 
 # توضیحات
 
-The <code dir="ltr">\[@@toPrimitive]()</code> method of the Date object returns a primitive value, that is either of type number or of type string.
+روش <code dir = "ltr"> \ [toprimitive] () </code> شیء تاریخ یک مقدار بدوی را برمی گرداند ، یعنی از نوع یا نوع رشته.
 
-If hint is string or default, <code dir="ltr">\[@@toPrimitive]()</code> tries to call the toString method. If the toString property does not exist, it tries to call the valueOf method and if the valueOf does not exist either, <code dir="ltr">\[@@toPrimitive]()</code> throws a TypeError.
+اگر اشاره رشته یا پیش فرض باشد ، <code dir = "ltr"> \ [toprimitive] () </code> سعی می کند با روش toString تماس بگیرد.اگر ویژگی toString وجود نداشته باشد ، سعی می کند با روش مقدار مقدار تماس بگیرد و اگر مقدار OF وجود نداشته باشد ، <Code DIR = "LTR"> \ [toprimitive] () </code> یک نوع را پرتاب می کند.
 
-If hint is number, <code dir="ltr">\[@@toPrimitive]()</code> first tries to call valueOf, and if that fails, it calls toString.
+اگر اشاره شماره باشد ، <code dir = "ltr"> \ [toprimitive] () </code> ابتدا سعی می کند با ارزش تماس بگیرید ، و اگر این کار از کار بیفتد ، صدا را صدا می کند.
 
-JavaScript calls the <code dir="ltr">\[@@toPrimitive]()</code> method to convert an object to a primitive value. You rarely need to invoke the <code dir="ltr">\[@@toPrimitive]()</code> method yourself; JavaScript automatically invokes it when encountering an object where a primitive value is expected.
+JavaScript روش <code dir = "ltr"> \ [toprimitive] () </code> را برای تبدیل یک شی به یک مقدار بدوی فراخوانی می کند.شما به ندرت نیاز به استفاده از <code dir = "ltr"> \ [toprimitive] () </code> خود را دارید.JavaScript هنگام مواجهه با شیئی که در آن مقدار بدوی انتظار می رود ، به طور خودکار آن را فراخوانی می کند.
 
 متد <code dir="ltr">\[@toPrimitive]()</code> یک مقدار اولیه را برمی‌گرداند که یا از نوع شماره یا رشته نوع است.
 
