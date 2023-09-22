@@ -19,7 +19,7 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 ## Install
 
 ```bash
- npm i shdatetime
+ npm i shdate
 ```
 
 ## Usage
@@ -27,23 +27,23 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 - ES Modules (ESM):
 
 ```javascript
-import SHDate from "shdatetime";
+import SHDate from "shdate";
 var date = new SHDate();
 ```
 
 - CommonJS (CJS):
 
 ```javascript
-const SHDate = require("shdatetime").default;
+const SHDate = require("shdate").default;
 var date = new SHDate();
 ```
 
 - TypeScript (TS):
 
 ```TypeScript
-const SHDate = require('shdatetime');
+const SHDate = require('shdate');
 // OR
-import SHDate from 'shdatetime';
+import SHDate from 'shdate';
 
 var date = new SHDate();
 ```
@@ -52,7 +52,7 @@ var date = new SHDate();
 
 ```html
 <script type="module">
-	import SHDate from "shdatetime";
+	import SHDate from "shdate";
 	var date = new SHDate();
 </script>
 ```
@@ -62,7 +62,7 @@ var date = new SHDate();
 ```html
 <script
 	type="text/javascript"
-	src="/path/to/shdatetime/dist/browser/shdatetime.min.js"
+	src="/path/to/shdate/dist/browser/shdate.min.js"
 ></script>
 <script>
 	var date = new SHDate();
@@ -72,13 +72,13 @@ var date = new SHDate();
 jsdrive:
 
 ```shell
-https://cdn.jsdelivr.net/npm/shdatetime@latest/dist/browser/shdatetime.min.js
+https://cdn.jsdelivr.net/npm/shdate@latest/dist/browser/shdate.min.js
 ```
 
 ubpkg:
 
 ```shell
-https://unpkg.com/shdatetime@latest/dist/browser/shdatetime.min.js
+https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 ```
 
 ### Note

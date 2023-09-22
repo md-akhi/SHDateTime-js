@@ -275,12 +275,14 @@ export default class SHDate {
 			data = { gmonth: 0, gdate: 0 };
 		if (gdoy < 1)
 			do {
-				gdiy = this.#GDaysInYear(--gyear);
+				--gyear;
+				gdiy = this.#GDaysInYear(gyear);
 				gdoy += gdiy;
 			} while (gdoy < 1);
 		else if (gdoy > gdiy)
 			do {
-				gdiy = this.#GDaysInYear(++gyear);
+				++gyear;
+				gdiy = this.#GDaysInYear(gyear);
 				gdoy -= gdiy;
 			} while (gdoy > gdiy);
 		gleap = this.#GIsLeapYear(gyear) ? 29 : 28;
@@ -326,13 +328,14 @@ export default class SHDate {
 	/**
 	 * Get leap year
 	 * @param {number} year - solar hijri year
-	 * @param {boolean} all - all leap year
+	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 * @since 1.0
 	 */
 	#isLeapYear(year: number, all: boolean = false): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
+		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
 		const years = year + 1127;

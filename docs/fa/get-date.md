@@ -2,7 +2,8 @@
 
 <div dir="rtl" style="text-align: right;">
 روش <code dir="ltr">getDate()</code> روز ماه را برای تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
-Try it
+
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getDate" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

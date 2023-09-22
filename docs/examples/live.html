@@ -41,7 +41,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link href="./asset/codemirror-5-50-2.css" rel="stylesheet" />
 		<link href="./asset/editor-js.css" rel="stylesheet" />
-		<script src="https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js"></script>
 	</head>
 
 	<body
@@ -70,42 +69,17 @@
 				<div id="console" class="output"><code></code></div>
 			</div>
 		</section>
-		<script type="text/javascript">
-			var xhr = false;
-			const url = new URL(document.location);
-			const params = url.searchParams;
-			function loadXMLDoc(theURL, callback) {
-				if (window.XMLHttpRequest) {
-					// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
-					xhr = new XMLHttpRequest();
-				} else {
-					// code for IE6, IE5
-					xhr = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4 && xhr.status == 200) {
-						callback(xhr.responseText);
-					}
-				};
-				xhr.open("GET", theURL);
-				xhr.send(null);
-			}
-			loadXMLDoc(
-				`${url.protocol}//${
-					url.hostname
-				}/SHDateTime-js/examples/code/${params.get("function")}.js`,
-				function (code) {
-					document.getElementById("static-js").innerHTML = code;
-					// Do something with the div here, like inserting it into the page
-				}
-			);
-			if (xhr == false) {
-				/* set timeout or alert() */
-			} else {
-				/* assign `xhr.responseText` to some var */
-			}
-		</script>
 		<script src="./asset/codemirror-5-50-2.js"></script>
 		<script src="./asset/editor-js.js"></script>
+		<script src="./code/data.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js"></script>
+		<script type="text/javascript">
+			const url = new URL(document.location);
+			const params = url.searchParams;
+
+			document.getElementById("static-js").innerHTML = exData(
+				params.get("function")
+			);
+		</script>
 	</body>
 </html>
