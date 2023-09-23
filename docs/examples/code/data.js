@@ -1,5 +1,7 @@
-!(function () {
-	return function exData(ex) {
+data = (function () {
+	function data(arg) {}
+
+	data.ex = function (ex) {
 		switch (ex) {
 			case "now":
 				return `// this example takes 2 seconds to run
@@ -16,4 +18,6 @@
 				}, 2000);`;
 		}
 	};
-})()();
+
+	return data;
+})();

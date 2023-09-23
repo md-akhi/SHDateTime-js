@@ -76,8 +76,8 @@
 		<script type="text/javascript">
 			const url = new URL(document.location);
 			const params = url.searchParams;
-
-			document.getElementById("static-js").innerHTML = exData(
+			const data = new data();
+			document.getElementById("static-js").innerHTML = data.ex(
 				params.get("function")
 			);
 		</script>
