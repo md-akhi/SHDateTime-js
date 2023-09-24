@@ -2,6 +2,10 @@
 
 The <code>\[@@toPrimitive]()</code> method converts a Date object to a primitive value.
 
+Try it
+
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toPrimitive" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+
 # Syntax
 
 ```js

@@ -85,25 +85,73 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 
 - If you want to use ES Modules in Node.js without a transpiler, you need to add `"type": "module"` in your `package.json` or change your file extension from `.js` to `.mjs`.
 
-## API
+# Standard built-in objects
 
-- format: ( [en](https://md-akhi.github.io/SHDateTime-js/en/format) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/format) )
+- SHDate
 
-  - Formatting a Date and Time (Date -> String)
+# Constructor
 
-- parse: ( [en](https://md-akhi.github.io/SHDateTime-js/en/parse) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/parse) )
+- SHDate() constructor
+
+# Methods
+
+- \[@@toPrimitive\](): ( [en](https://md-akhi.github.io/SHDateTime-js/en/@@to-primitive) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/@@to-primitive) )
+
+  - to primitive
+
+- getDate(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-date) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-date) )
+
+  - geting date
+
+- getDay(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-day) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-day) )
+
+  - geting day
+
+- getFullYear(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-full-year) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-full-year) )
+
+  - geting year
+
+- getHours(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-hours) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-hours) )
+
+  - geting hours
+
+- getMilliseconds(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-milliseconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-milliseconds) )
+
+  - seting milliseconds
+
+- getMinutes(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-minutes) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-minutes) )
+
+  - geting minutes
+
+- getMonth(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-month) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-month) )
+
+  - geting month
+
+- getSeconds(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-seconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-seconds) )
+
+  - geting seconds
+
+- getTime()
+
+- getTimezoneOffset()
+- getUTCDate()
+- getUTCDay()
+- getUTCFullYear()
+- getUTCHours()
+- getUTCMilliseconds()
+- getUTCMinutes()
+- getUTCMonth()
+- getUTCSeconds()
+
+- SHDate.now(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/now) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/now) )
+
+  - now
+
+- SHDate.parse(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/parse) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/parse) )
 
   - Parsing a Date and Time string (String -> Date)
 
-- setFullYears: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-full-year) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-full-year) )
-
-  - seting years
-
-- setMonth: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-month) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-month) )
-
-  - seting months
-
-- setDate: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-date) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-date) )
+- setDate(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-date) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-date) )
 
   - seting date
 
@@ -111,53 +159,53 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 
   - seting days
 
-- setHours: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-hours) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-hours) )
+- setFullYear(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-full-year) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-full-year) )
+
+  - seting years
+
+- setHours(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-hours) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-hours) )
 
   - seting hours
 
-- setMinutes: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-minutes) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-minutes) )
+- setMilliseconds(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-milliseconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-milliseconds) )
+
+  - seting milliseconds
+
+- setMinutes(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-minutes) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-minutes) )
 
   - seting minutes
 
-- setSeconds: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-seconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-seconds) )
+- setMonth(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-month) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-month) )
+
+  - seting months
+
+- setSeconds(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-seconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-seconds) )
 
   - seting seconds
 
-- setMilliseconds: ( [en](https://md-akhi.github.io/SHDateTime-js/en/set-milliseconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/set-milliseconds) )
+- setTime()
+- setUTCDate()
+- setUTCFullYear()
+- setUTCHours()
+- setUTCMilliseconds()
+- setUTCMinutes()
+- setUTCMonth()
+- setUTCSeconds()
+- toDateString()
+- toISOString()
+- toJSON()
+- toLocaleDateString()
+- toLocaleString()
+- toLocaleTimeString()
+- toString()
+- toTimeString()
+- toUTCString()
+- SHDate.UTC()
+- valueOf()
 
-  - seting milliseconds
+- format: ( [en](https://md-akhi.github.io/SHDateTime-js/en/format) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/format) )
 
-- getFullYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-full-year) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-full-year) )
-
-  - geting years
-
-- getMonth: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-month) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-month) )
-
-  - geting months
-
-- getDate: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-date) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-date) )
-
-  - geting days
-
-- getDay: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-day) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-day) )
-
-  - geting days
-
-- getHours: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-hours) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-hours) )
-
-  - geting hours
-
-- getMinutes: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-minutes) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-minutes) )
-
-  - geting minutes
-
-- getSeconds: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-seconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-seconds) )
-
-  - geting seconds
-
-- getMilliseconds: ( [en](https://md-akhi.github.io/SHDateTime-js/en/get-milliseconds) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/get-milliseconds) )
-
-  - seting milliseconds
+  - Formatting a Date and Time (Date -> String)
 
 - isLeapYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/is-leap-year) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/is-leap-year) )
 
