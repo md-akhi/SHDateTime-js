@@ -1,46 +1,19 @@
 <!doctype html>
 <!-- saved from url=(0067)https://interactive-examples.mdn.mozilla.net/pages/js/date-now.html -->
-<html lang="en" class="js">
-	<script id="allow-copy_script">
-		(function agent() {
-			let unlock = false;
-			document.addEventListener("allow_copy", (event) => {
-				unlock = event.detail.unlock;
-			});
+<html lang="en" >
 
-			const copyEvents = [
-				"copy",
-				"cut",
-				"contextmenu",
-				"selectstart",
-				"mousedown",
-				"mouseup",
-				"mousemove",
-				"keydown",
-				"keypress",
-				"keyup"
-			];
-			const rejectOtherHandlers = (e) => {
-				if (unlock) {
-					e.stopPropagation();
-					if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-				}
-			};
-			copyEvents.forEach((evt) => {
-				document.documentElement.addEventListener(evt, rejectOtherHandlers, {
-					capture: true
-				});
-			});
-		})();
-	</script>
-	<head>
+<title>JavaScript Demo</title>
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-		<meta http-equiv="x-ua-compatible" content="ie=edge" />
-		<title>JavaScript Demo</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link href="./asset/codemirror-5-50-2.css" rel="stylesheet" />
+		<link href="./asset/codemirror.css" rel="stylesheet" />
 		<link href="./asset/editor-js.css" rel="stylesheet" />
+		<script src="./code/data.js"></script>
+		<script type="text/javascript">
+			const url = new URL(document.location.href);
+			const params = url.searchParams;
+			const exname = params.get("function");
+		</script>
 	</head>
 
 	<body
@@ -50,14 +23,18 @@
 	>
 		<section id="static" class="hidden">
 			<pre>
-				<code id="static-js" data-height="">
-				</code>
+				<script type="text/javascript">
+					document.write(`<code id="static-js" data-height="">${exData(exname)}</code>`) ;
+				</script>
 			</pre>
 		</section>
 
 		<section id="live" class="live">
 			<header class="output-header full-border">
-				<h4 class="output-heading">JavaScript Demo</h4>
+				<script type="text/javascript">
+					document.write(`<h4 class="output-heading">JavaScript Demo: ${exname}</h4>`) ;
+				</script>
+				<!-- <h4 class="output-heading">JavaScript Demo: </h4> -->
 			</header>
 			<div id="editor" class="editor"></div>
 
@@ -69,17 +46,9 @@
 				<div id="console" class="output"><code></code></div>
 			</div>
 		</section>
-		<script src="./asset/codemirror-5-50-2.js"></script>
+		<script src="./asset/codemirror.js"></script>
 		<script src="./asset/editor-js.js"></script>
-		<script src="./code/data.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js"></script>
-		<script type="text/javascript">
-			const url = new URL(document.location);
-			const params = url.searchParams;
-			const data = new data();
-			document.getElementById("static-js").innerHTML = data.ex(
-				params.get("function")
-			);
-		</script>
+
 	</body>
 </html>

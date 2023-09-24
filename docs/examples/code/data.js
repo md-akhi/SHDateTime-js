@@ -1,10 +1,7 @@
-data = (function () {
-	function data(arg) {}
-
-	data.ex = function (ex) {
-		switch (ex) {
-			case "now":
-				return `// this example takes 2 seconds to run
+const exData = function (ex) {
+	switch (ex) {
+		case "now":
+			return `// this example takes 2 seconds to run
 				const start = Date.now();
 
 				console.log("starting timer...");
@@ -16,8 +13,7 @@ data = (function () {
 					console.log(\`seconds elapsed = \${Math.floor(millis / 1000)}\`);
 					// expected output: seconds elapsed = 2
 				}, 2000);`;
-		}
-	};
-
-	return data;
-})();
+		default:
+			return "false";
+	}
+};
