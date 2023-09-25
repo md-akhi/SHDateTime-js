@@ -3,7 +3,7 @@
 متد <code dir="ltr">setFullYear()</code> کل سال را برای یک تاریخ مشخص با توجه به زمان محلی تنظیم می کند. مهر زمانی جدید را برمی گرداند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setFullYear" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

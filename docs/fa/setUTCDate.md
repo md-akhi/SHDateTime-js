@@ -4,7 +4,7 @@
 برای تغییر روز ماه برای یک نمونه تاریخ معین بر اساس زمان محلی ، از روش <code dir = "ltr"> setDate () </code> استفاده کنید.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setUTCDate" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

@@ -5,7 +5,7 @@
 بر اساس RFC7231 و مطابق با ECMA-262 TOUTCSTRING اصلاح شده ، می تواند در نسخه 2021 مقادیر منفی داشته باشد
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toUTCString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

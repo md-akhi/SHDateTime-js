@@ -6,6 +6,8 @@
 
 <div >
 
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toPrimitive" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+
 # Syntax
 
 ```js

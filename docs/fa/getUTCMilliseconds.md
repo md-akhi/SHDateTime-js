@@ -3,7 +3,7 @@
 روش <code dir = "ltr"> getUtcmilliseconds () </code> بخش میلی ثانیه از ارزش شیء زمان را با توجه به زمان جهانی برمی گرداند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCMilliseconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

@@ -3,7 +3,7 @@
 روش <code dir = "ltr"> settime () </code> شیء تاریخ را به زمان نمایش داده شده توسط تعدادی میلی ثانیه از 11 دی 1348 ، 00:00:00 UTC تنظیم می کند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setTime" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

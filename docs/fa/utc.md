@@ -3,7 +3,7 @@
 روش <code dir = "ltr"> shdate.utc () </code> پارامترهای مشابه سازنده تاریخ را می پذیرد ، اما آنها را به عنوان UTC رفتار می کند.این تعداد میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC را برمی گرداند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=UTC" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

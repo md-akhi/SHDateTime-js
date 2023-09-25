@@ -4,7 +4,7 @@
 می توانید از این روش برای کمک به اختصاص تاریخ و زمان به یک شیء تاریخ دیگر استفاده کنید.این روش از نظر عملکردی معادل روش مقدار () است.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getTime" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

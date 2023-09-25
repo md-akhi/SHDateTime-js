@@ -3,7 +3,7 @@
 روش <code dir = "ltr"> setutcseconds () </code> ثانیه ها را برای تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setUTCSeconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

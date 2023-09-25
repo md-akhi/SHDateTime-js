@@ -3,7 +3,7 @@
 متد <code dir="ltr">GetMonth()</code> ماه را در تاریخ مشخص شده با توجه به زمان محلی ، به عنوان یک مقدار مبتنی بر صفر (جایی که صفر نشانگر ماه اول سال است) برمی گرداند.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getMonth" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax

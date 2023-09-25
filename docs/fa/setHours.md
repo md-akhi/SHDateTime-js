@@ -3,7 +3,7 @@
 روش <code dir = "ltr"> sethours () </code> ساعت ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند و تعداد میلی ثانیه را از 11 دیا 1348 00:00:00 UTC تا زمان ارائه شده توسط باز می گرداندنمونه تاریخ به روز شده.
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 
 # Syntax
