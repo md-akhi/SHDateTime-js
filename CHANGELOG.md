@@ -139,7 +139,9 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.3.15...HEAD
+[2.x.x]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.x.x
+[1.3.15]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...1.3.15
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
 [1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0

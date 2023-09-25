@@ -3,7 +3,7 @@ The getUTCDay() method returns the day of the week in the specified date accordi
 
 Try it
 
-<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+<iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCDay" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
 Syntax
 getUTCDay()
