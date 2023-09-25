@@ -339,11 +339,8 @@ export default class SHDate {
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
 		const years = year + 1127;
-		if (all) return parseInt(Math.ceil(years * 0.2422 - 274).toString());
-		return (
-			parseInt(((years + 1) * 0.2422).toString()) -
-			parseInt((years * 0.2422).toString())
-		);
+		if (all) return Math.trunc(Math.ceil(years * 0.2422)) - 274;
+		return Math.trunc((years + 1) * 0.2422) - Math.trunc(years * 0.2422);
 	}
 
 	/**
@@ -352,7 +349,7 @@ export default class SHDate {
 	 * @since 1.0
 	 */
 	public isLeapYear(): boolean {
-		return this.#isLeapYear(this.getFullYear()) ? true : false;
+		return this.#isLeapYear(this.getFullYear()) === 1;
 	}
 
 	/**
