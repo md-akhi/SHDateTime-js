@@ -12,7 +12,6 @@ import Language from "./languages/language.js";
  * @param {string} destination If true, convert to persian digits.
  * @param {string} comma If true, convert to persian digits.
  * @returns {string} The converted string.
- * @since 1.0.0
  */
 export default function NumbersTo(
 	source: string,

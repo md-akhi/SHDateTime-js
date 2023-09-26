@@ -5,7 +5,6 @@
  */
 /**
  * class SHDate Language English
- * @since 1.0.0
  */
 export default class en_US {
 	/**
@@ -126,7 +125,6 @@ export default class en_US {
 	 * Ordinal suffix for the day of the month
 	 * @param {number} num numeric the day of the month
 	 * @return string  Ordinal suffix for the day of the month
-	 * @since 1.0.0
 	 */
 	public static SuffixNames(num: number): string {
 		if (!Number.isInteger(num)) {

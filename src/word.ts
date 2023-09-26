@@ -7,7 +7,6 @@ import Language from "./languages/language.js";
 
 /**
  * Word class
- * @since 1.0.0
  */
 export default class Word {
 	static LANGUAGE_WORD: string = "en_US";
@@ -17,7 +16,6 @@ export default class Word {
 	 * cheeck Language
 	 * @param {string} language
 	 * @return string
-	 * @since 1.0.0
 	 */
 	static checkLanguage(language: string = Word.LANGUAGE_WORD): boolean {
 		return Language.check(language);
@@ -27,7 +25,6 @@ export default class Word {
 	 * Get Language class
 	 * @param {string} language
 	 * @return string
-	 * @since 1.0.0
 	 */
 	static getClassLanguage(language: string = Word.LANGUAGE_WORD): any {
 		return Language.getClass(language);
@@ -38,7 +35,6 @@ export default class Word {
 	 * @param {number} H24 numeric
 	 * @param {string} language_word language word
 	 * @return string Ante/Post meridiem
-	 * @since 1.0.0
 	 */
 	static getMeridienFullNames(
 		H24: number,
@@ -53,7 +49,6 @@ export default class Word {
 	 * @param {number} H24 numeric
 	 * @param {string} language_word language    word
 	 * @return {string} Ante/Post meridiem, two letters
-	 * @since 1.0.0
 	 */
 	static getMeridienShortNames(
 		H24: number,
@@ -68,7 +63,6 @@ export default class Word {
 	 * @param {number} month numeric of a month
 	 * @param {string} language_word language word
 	 * @return {string} A full textual of a month
-	 * @since 1.0.0
 	 */
 	static getMonthFullNames(
 		month: number,
@@ -83,7 +77,6 @@ export default class Word {
 	 * @param {number} month numeric of a month
 	 * @param {string} language_word language word
 	 * @return {string} A short textual of a month, three letters
-	 * @since 1.0.0
 	 */
 	static getMonthShortNames(
 		month: number,
@@ -99,7 +92,6 @@ export default class Word {
 	 * @param {string} language_word language word
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A full textual the day of the week
-	 * @since 1.0.0
 	 */
 	static getDayFullNames(
 		dow: number,
@@ -116,7 +108,6 @@ export default class Word {
 	 * @param {string} language_word language word
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A short textual of a day, three letters
-	 * @since 1.0.0
 	 */
 	static getDayShortNames(
 		dow: number,
@@ -132,7 +123,6 @@ export default class Word {
 	 * @param {number} num numeric the day of the month
 	 * @param {string} language_word language word
 	 * @return {string} Ordinal suffix for the day of the month
-	 * @since 1.0.0
 	 */
 	static getSuffixNames(
 		num: number,

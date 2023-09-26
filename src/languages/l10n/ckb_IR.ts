@@ -5,7 +5,6 @@
  */
 /**
  * class SHDate Language Central Kurdish (Iran)
- * @since 1.2.4
  */
 export default class ckb_IR {
 	/**
@@ -118,7 +117,6 @@ export default class ckb_IR {
 	/**
 	 * Ordinal suffix for the day of the month
 	 * @return string  Ordinal suffix for the day of the month
-	 * @since 1.0.0
 	 */
 	public static SuffixNames(): string {
 		return ckb_IR.SUFFIX;

@@ -5,7 +5,6 @@
  */
 /**
  * class SHDate Language Persian
- * @since 1.0.0
  */
 export default class fa_IR {
 	/**
@@ -139,7 +138,6 @@ export default class fa_IR {
 	/**
 	 * Ordinal suffix for the day of the month
 	 * @return string  Ordinal suffix for the day of the month
-	 * @since 1.0.0
 	 */
 	public static SuffixNames(): string {
 		return fa_IR.SUFFIX;
