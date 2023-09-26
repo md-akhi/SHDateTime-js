@@ -369,49 +369,47 @@ export default class SHParser {
 	 */
 	TZCorrection() {
 		let isTZ: boolean = false;
-		switch (this.nameToken()) {
+		const name = this.nameToken();
+		const setTZ = (name: any, time: any) => {
+			this.data["TZ_NAME"] = name;
+			this.data["TZ_TIME"] = time;
+		};
+		switch (name) {
 			case "UTC": // 0 H
-				this.data["TZ_NAME"] = "GMT";
-				this.data["TZ_TIME"] = 0;
+				setTZ("GMT", 0);
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "IRST": // 3.5 H
-				this.data["TZ_NAME"] = "PST";
-				this.data["TZ_TIME"] = 210 * 60000; // min to ms
+				setTZ("IRST", 210 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EDT": // 4 H
-				this.data["TZ_NAME"] = "EDT";
-				this.data["TZ_TIME"] = 240 * 60000; // min to ms
+				setTZ("EDT", 240 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "EST": // 5 H
 			case "CDT": // 5 H
-				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 300 * 60000; // min to ms
+				setTZ(name, 300 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "CST": // 6 H
 			case "MDT": // 6 H
-				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 360 * 60000; // min to ms
+				setTZ(name, 360 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "MST": // 7 H
 			case "PDT": // 7 H
-				this.data["TZ_NAME"] = this.valueToken();
-				this.data["TZ_TIME"] = 420 * 60000; // min to ms
+				setTZ(name, 420 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
 			case "PST": // 8 H
-				this.data["TZ_NAME"] = "PST";
-				this.data["TZ_TIME"] = 480 * 60000; // min to ms
+				setTZ("PST", 480 * 60000); // min to ms
 				isTZ = true;
 				this.nextToken();
 				break;
@@ -421,10 +419,10 @@ export default class SHParser {
 		}
 		let PLUS_DASH: boolean = false,
 			time: number = 0,
-			sign: number = 1; // deafult plus
+			sign: number = 1; // default plus
 		PLUS_DASH = false;
 		if (this.isTKPlus()) {
-			//sign = 1;  // deafult plus
+			sign = 1; // default plus
 			PLUS_DASH = true;
 		} else if (this.isTKDash()) {
 			sign = -1;
@@ -433,12 +431,12 @@ export default class SHParser {
 		if (PLUS_DASH) {
 			const h12 = this.H12();
 			if (h12) {
-				time += parseInt(h12) * 60;
+				time += h12 * 60;
 				this.isTKColon();
 				const min = this.minutes();
 				if (min) {
-					time += parseInt(min); // min to ms
-					this.data["TZ_TIME"] = sign * time * 60 * 1000; // min to ms
+					time += min * 1; // min to ms
+					setTZ(name, sign * time * 60 * 1000); // min to ms
 					return true;
 				}
 			}
