@@ -4,29 +4,23 @@
 
 تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
 
-</div>
-
-## In the name of Allah, the Beneficent, the Merciful.
-
-Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
-
 [![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
 [![GitHub version release](https://img.shields.io/github/v/release/md-akhi/SHDateTime-js?color=green)](https://github.com/md-akhi/SHDateTime-js/releases)
 [![GitHub version dev](https://img.shields.io/github/v/tag/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/tags)
 [![ workflow test](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)](https://github.com/md-akhi/SHDateTime-js/actions)
 ![ workflow publish](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)
 
-# Language
+# زبان
 
 - [English](https://github.com/md-akhi/SHDateTime-js/blob/dev/README-EN.md) - [فارسی](https://github.com/md-akhi/SHDateTime-js/blob/dev/README-FA.md)
 
-## Install
+## نحوه نصب
 
 ```bash
  npm i shdate
 ```
 
-## Usage
+## نحوه استفاده
 
 - ES Modules (ESM):
 
@@ -52,7 +46,7 @@ import SHDate from 'shdate';
 var date = new SHDate();
 ```
 
-- ES Modules for the browser:
+- ES Modules برای مرورگر:
 
 ```html
 <script type="module">
@@ -61,7 +55,7 @@ var date = new SHDate();
 </script>
 ```
 
-- client side for the browser:
+- سمت کاربر برای مرورگر:
 
 ```html
 <script
@@ -85,15 +79,15 @@ ubpkg:
 https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 ```
 
-### Note
+### توجه
 
-- If you want to use ES Modules in Node.js without a transpiler, you need to add `"type": "module"` in your `package.json` or change your file extension from `.js` to `.mjs`.
+- اگر می‌خواهید از ماژول‌های ES در Node.js بدون transpiler استفاده کنید، باید `"type": "module"` را در `package.json` خود اضافه کنید یا پسوند فایل خود را از `.js` به `.mjs` تغییر دهید.
 
-# Standard built-in objects
+# اشیاء داخلی استاندارد
 
 - SHDate
 
-# Constructor
+# constructor
 
 - SHDate() constructor
 
@@ -198,3 +192,5 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - format: ( [en](https://md-akhi.github.io/SHDateTime-js/en/format) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/format) )
 
 - isLeapYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/isLeapYear) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/isLeapYear) )
+
+</div>
