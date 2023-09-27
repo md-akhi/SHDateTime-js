@@ -83,6 +83,12 @@ function setDescription() {
 				`* @version Release: ${pkg.version}`
 			)
 		)
+		.pipe(
+			replace(
+				/version: string = "([\w\d:\/\.\-]+)"/g,
+				`version: string = "${pkg.version}"`
+			)
+		)
 		.pipe(gulp.dest("src/"));
 }
 

@@ -18,33 +18,9 @@ export default function NumbersTo(
 	destination: string | string[] = "FA",
 	comma: string = ","
 ): string {
-	const EN: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-	const FA: string[] = [
-		"۰",
-		"۱",
-		"۲",
-		"۳",
-		"۴",
-		"۵",
-		"۶",
-		"۷",
-		"۸",
-		"۹",
-		comma
-	];
-	const FA2: string[] = [
-		"٠",
-		"١",
-		"٢",
-		"٣",
-		"٤",
-		"٥",
-		"٦",
-		"٧",
-		"٨",
-		"٩",
-		comma
-	];
+	const EN: string[] = Language.getClass("en_US").DIGIT;
+	const FA: string[] = Language.getClass("fa_IR").DIGIT;
+	const FA2: string[] = Language.getClass("fa_IR").DIGIT2;
 	switch (destination) {
 		case "FA":
 			destination = FA;
