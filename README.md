@@ -18,7 +18,7 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
 # Language
 
-- [English](https://md-akhi.github.io/SHDateTime-js/README-EN) - [فارسی](https://md-akhi.github.io/SHDateTime-js/README-FA)
+- [English](https://md-akhi.github.io/SHDateTime-js/en) - [فارسی](https://md-akhi.github.io/SHDateTime-js/fa)
 
 ## Install
 

@@ -1,7 +1,8 @@
 ---
 layout: default
-title: Another page
-description: This is just another page
+title: SHDate homepage
+description: Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
+
 ---
 
 # SHDate

@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Another page
-description: This is just another page
+title: SHDate صفحه نخست
+description: برنامه افزودنی تاریخ و زمان - SH (هجری شمسی، هجری خورشیدی، هجری ایرانی)
 ---
 
 # SHDate
