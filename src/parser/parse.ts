@@ -1,5 +1,8 @@
-import SHDate from "../base.js";
-
+/**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package shdate - Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}
+ * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
+ */
 import SHLexer from "./lexer.js";
 
 /**
@@ -159,7 +162,7 @@ export default class SHParser {
 			// this.textualMonth4Year() || // Day and textual month
 			this.year4TextualMonth() || // YY ([ \t.])* m    Day reset to 1
 			this.textualMonthYear4() ||
-			// this.textualMonthDayYear1() ||
+			this.textualMonthDayYear() ||
 			// this.monthAbbrDayYear()||
 			this.dateyear4MandatoryPrefix() ||
 			this.dateMonthTextual()
@@ -1017,51 +1020,34 @@ export default class SHParser {
 
 	/**
 	 * Textual month and year
-	 * m ([ .\t-])* dd [,.stndrh\t ]+? y?
+	 * m ([ .\t-])? dd [,.stndrh\t ]? y?
 	 *
 	 * @return bool
-	//  */
-	// textualMonthDayYear1() {
-	// 	let year,
-	// 		month,
-	// 		day,
-	// 		pos = this.getPosition();
-	// 	month = this.monthTextual();
-	// 	if (month) {
-	// 		while (this.isTKSpace() || this.isTKDot() || this.isTKDash());
-	// 		day = this.dayWithSuffix();
-	// 		if (day) {
-	// 			do {
-	// 				if (
-	// 					!(
-	// 						this.isTKSpace() ||
-	// 						this.daySuffixTextual() ||
-	// 						this.isTKComma() ||
-	// 						this.isTKDot()
-	// 					)
-	// 				) {
-	// 					this.data["MONTH"] = month;
-	// 					this.data["DAY"] = day;
-	// 					return true;
-	// 				}
-	// 			} while (
-	// 				this.isTKSpace() ||
-	// 				this.daySuffixTextual() ||
-	// 				this.isTKComma() ||
-	// 				this.isTKDot()
-	// 			);
-	// 			year = this.year1or4();
-	// 			if (year) {
-	// 				this.data["YEAR"] = year;
-	// 			}
-	// 			this.data["MONTH"] = month;
-	// 			this.data["DAY"] = day;
-	// 			return true;
-	// 		}
-	// 	}
-	// 	this.resetPosition(pos);
-	// 	return false;
-	// }
+	 */
+	textualMonthDayYear() {
+		let year,
+			month,
+			day,
+			pos = this.getPosition();
+		month = this.monthTextual();
+		if (month) {
+			this.isTKSpace() || this.isTKDot() || this.isTKDash();
+			day = this.dayWithSuffix();
+			if (day) {
+				this.daySuffixTextual();
+				this.isTKSpace() || this.isTKComma() || this.isTKDot();
+				year = this.year4();
+				if (year) {
+					this.data["YEAR"] = year;
+				}
+				this.data["MONTH"] = month;
+				this.data["DAY"] = day;
+				return true;
+			}
+		}
+		this.resetPosition(pos);
+		return false;
+	}
 
 	/**
 	 * Month abbreviation, day and year

@@ -9,7 +9,6 @@ import Language_ckb_IR from "./l10n/ckb_IR.js";
 
 /**
  * list of supported languages
- * @since 1.0.0
  */
 enum Languages {
 	//i18n
@@ -27,7 +26,6 @@ export default class Language {
 	 * cheeck Language
 	 * @param {string} language
 	 * @return string
-	 * @since 1.0.0
 	 */
 	static check(language: string = Language.WORD): boolean {
 		switch (language) {
@@ -44,7 +42,6 @@ export default class Language {
 	 * Get Language class
 	 * @param {string} language
 	 * @return string
-	 * @since 1.0.0
 	 */
 	static getClass(language: string = Language.WORD): any {
 		switch (language) {

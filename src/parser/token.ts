@@ -1,3 +1,8 @@
+/**
+ * In the name of Allah, the Beneficent, the Merciful.
+ * @package shdate - Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}
+ * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
+ */
 export default class SHToken {
 	//private lexer: Lexer;
 
