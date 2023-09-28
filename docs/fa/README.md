@@ -12,7 +12,7 @@
 
 # زبان
 
-- [English](https://md-akhi.github.io/SHDateTime-js/README-EN.md) - [فارسی](https://md-akhi.github.io/SHDateTime-js/README-FA.md)
+- [English](../en/README) - [فارسی](../fa/README)
 
 ## نحوه نصب
 
