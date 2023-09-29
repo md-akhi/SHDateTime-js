@@ -79,6 +79,16 @@ defaults:
     values:
       layout: page
   - scope:
+      path: "en"
+      type: "en"
+    values:
+      layout: page
+  - scope:
+      path: "fa"
+      type: "fa"
+    values:
+      layout: page
+  - scope:
       path: ""
       type: "pages"
     values:
