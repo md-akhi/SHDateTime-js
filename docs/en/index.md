@@ -1,8 +1,6 @@
 ---
-layout: default
 title: SHDate homepage
 description: Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
-
 ---
 
 # SHDate
@@ -433,20 +431,6 @@ let seconds = Math.floor(SHDate.now() / 1000);
 In this case, it's important to return only an integer—so a simple division won't do. It's also important to only return actually elapsed seconds. (That's why this code uses Math.floor(), and not Math.round().)
 
 [](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## In the name of Allah, the Beneficent, the Merciful.
 
