@@ -12,39 +12,39 @@ workflows:
               ignore: master
 
 build_jekyll: &build_jekyll
-    name: Jekyll Build
-    command: |
-        echo "Building RSE Blog for Preview"
-        cp ~/repo/.circleci/circle_urls.sh ~/repo/circle_urls.sh
-        cd ~/repo
-        chmod u+x circle_urls.sh
-        bash circle_urls.sh              
-        bundle exec jekyll build
-        
+  name: Jekyll Build
+  command: |
+    echo "Building RSE Blog for Preview"
+    cp ~/repo/docs/.circleci/circle_urls.sh ~/repo/docs/circle_urls.sh
+    cd ~/repo
+    chmod u+x circle_urls.sh
+    bash circle_urls.sh
+    bundle exec jekyll build
+
 jobs:
   build-site:
     docker:
       - image: circleci/ruby:2.4.1
-    working_directory: ~/repo
+    working_directory: ~/repo/docs
     environment:
       - JEKYLL_ENV: production
       - NOKOGIRI_USE_SYSTEM_LIBRARIES: true
-      - BUNDLE_PATH: ~/repo/vendor/bundle
+      - BUNDLE_PATH: ~/repo/docs/vendor/bundle
     steps:
       - checkout
       - restore_cache:
           keys:
-          - rubygems-v1
+            - rubygems-v1
       - run:
           name: Bundle Install
           command: |
-              cd ~/repo
-              bundle check || bundle install
+            cd ~/repo/docs
+            bundle check || bundle install
       - save_cache:
           key: rubygems-v1
           paths:
             - vendor/bundle
       - run: *build_jekyll
       - store_artifacts:
-          path: ~/repo/_site
+          path: ~/repo/docs/_site
           destination: mkdocs-jekyll
