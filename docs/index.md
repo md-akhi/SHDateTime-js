@@ -3,14 +3,14 @@ layout: page
 ---
 
 <div dir=rtl>
-  
-## به نام خدا
+
+### به نام خدا
 
 تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
 
 </div>
 
-## In the name of Allah, the Beneficent, the Merciful.
+### In the name of Allah, the Beneficent, the Merciful.
 
 Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
