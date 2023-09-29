@@ -1,6 +1,5 @@
 ---
 title: SHDate homepage
-description: Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 ---
 
 # SHDate
