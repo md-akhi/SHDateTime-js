@@ -18,10 +18,10 @@ title: SHDate homepage
 email: md.akhi.ir@gmail.com
 author: Mohammad Amanalikhani
 description: > # this means to ignore newlines until "baseurl:"
- Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
+  Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
 # DO NOT CHANGE THE LINE OF THIS FILE without editing .circleci/circle_urls.sh
-baseurl: "/mkdocs-jekyll" # the subpath of your site, e.g. /blog
+baseurl: "/SHDateTime-js" # the subpath of your site, e.g. /blog
 
 # This is mostly for testing
 url: "https://md-akhi.github.io/SHDateTime-js" # the base hostname & protocol for your site
@@ -60,10 +60,9 @@ discourse_tags: null # comma separated string, leave null to not filter
 
 accentColor: red # purple, green, etc.
 themeColor: red # purple, green, blue, orange, purple, grey
-fixedNav: 'true' # true or false
+fixedNav: "true" # true or false
 
 permalink: /:year/:title/
-markdown: kramdown
 exclude: [_site, CHANGELOG.md, LICENSE, README.md, vendor]
 
 # Collections
@@ -79,19 +78,16 @@ defaults:
       type: "docs"
     values:
       layout: page
-  -
-    scope:
+  - scope:
       path: ""
       type: "pages"
     values:
       layout: "page"
-  -
-    scope:
+  - scope:
       path: "posts"
       type: "posts"
     values:
       layout: "post"
-
 # show_downloads: true
 # google_analytics:
 # https://github.com/pages-themes/cayman
