@@ -1,6 +1,6 @@
 <!doctype html>
 <html
-	lang="{% if page.direction %}{{ page.direction }}{% else %}{{ site.direction | default: 'en-US' }}{% endif %}"
+	lang="{% if page.language %}{{ page.language }}{% else %}{{ site.language | default: 'en-US' }}{% endif %}"
 >
 	{% include head.html %}
 
