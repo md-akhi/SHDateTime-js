@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toLocaleString()
 
 روش <code dir = "ltr"> tolocalestring () </code> رشته ای را با بازنمایی حساس به زبان از این تاریخ برمی گرداند.

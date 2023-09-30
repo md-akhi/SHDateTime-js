@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toISOString()
 
 روش <code dir = "ltr"> </code> toisostring () رشته ای را با فرمت ISO ساده شده (ISO 8601) باز می گرداند ، که همیشه 24 یا 27 کاراکتر طول دارد (yyyy-mm-ddthh: mm: ss.ssszیا yyyyyyyy-mm-ddthh: به ترتیب MM: SSSSSZ).منطقه زمانی همیشه صفر UTC جبران می شود ، همانطور که توسط پسوند "z" مشخص شده است.

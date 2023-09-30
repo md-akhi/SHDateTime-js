@@ -1,3 +1,19 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.setUTCMonth()
 
 The setUTCMonth() method sets the month for a specified date according to universal time.

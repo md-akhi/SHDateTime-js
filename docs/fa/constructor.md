@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # Date() constructor
 
 سازنده Date() اشیاء Date را ایجاد می کند. هنگامی که به عنوان یک تابع فراخوانی می شود، یک رشته نشان دهنده زمان فعلی را برمی گرداند.

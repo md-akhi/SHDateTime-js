@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.valueOf()
 
 روش <code dir = "ltr"> مقدار () </code> مقدار بدوی یک شیء تاریخ را برمی گرداند.

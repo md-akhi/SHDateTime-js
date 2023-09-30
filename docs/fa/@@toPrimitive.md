@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate[@@toPrimitive]
 
 <div dir="rtl" style="text-align: right;">

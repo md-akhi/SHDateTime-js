@@ -1,3 +1,9 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
 # Date() constructor
 
 The Date() constructor creates Date objects. When called as a function, it returns a string representing the current time.

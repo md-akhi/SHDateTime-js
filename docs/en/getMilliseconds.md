@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getMilliseconds()
 
 The getMilliseconds() method returns the milliseconds in the specified date according to local time.

@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toUTCString()
 
 روش <code dir = "ltr"> toutcstring () </code> با استفاده از منطقه زمانی UTC ، تاریخ را به یک رشته تبدیل می کند.

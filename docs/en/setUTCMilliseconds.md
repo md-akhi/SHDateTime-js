@@ -1,3 +1,19 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.setUTCMilliseconds()
 
 The setUTCMilliseconds() method sets the milliseconds for a specified date according to universal time.

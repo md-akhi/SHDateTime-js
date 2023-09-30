@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.UTC()
 
 روش <code dir = "ltr"> shdate.utc () </code> پارامترهای مشابه سازنده تاریخ را می پذیرد ، اما آنها را به عنوان UTC رفتار می کند.این تعداد میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC را برمی گرداند.

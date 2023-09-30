@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getHours()
 
 The getHours() method returns the hour for the specified date, according to local time.

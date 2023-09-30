@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setUTCFullYear()
 
 The setUTCFullYear() method sets the full year for a specified date according to universal time.

@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setTime()
 
 The setTime() method sets the Date object to the time represented by a number of milliseconds since 11 Dey 1348, 00:00:00 UTC.

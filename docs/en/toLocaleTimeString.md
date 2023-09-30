@@ -1,3 +1,19 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.toLocaleTimeString()
 
 The toLocaleTimeString() method returns a string with a language-sensitive representation of the time portion of the date. The newer locales and options arguments let applications specify the language formatting conventions to use. These arguments can also customize the behavior of the function.

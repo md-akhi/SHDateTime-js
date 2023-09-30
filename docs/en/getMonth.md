@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getMonth()
 
 The getMonth() method returns the month in the specified date according to local time, as a zero-based value (where zero indicates the first month of the year).

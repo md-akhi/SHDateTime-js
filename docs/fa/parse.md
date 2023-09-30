@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.parse()
 
 روش <code dir="ltr">shdate.parse ()</code> بازنمایی رشته ای از یک تاریخ را تجزیه می کند ، و تعداد میلی ثانیه از 11 Dey 1348 ، 00:00:00 UTC یا NAN را برمی گرداند اگر این رشته ناشناخته باشد یا در بعضی موارد حاوی مقادیر غیرقانونی تاریخ باشد (به عنوان مثال 2015-02-31).

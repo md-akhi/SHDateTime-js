@@ -1,3 +1,19 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.valueOf()
 
 The valueOf() method returns the primitive value of a Date object.

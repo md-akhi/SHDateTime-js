@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getUTCHours()
 
 روش <code dir="ltr">GetUtchours ()</code> ساعت ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.

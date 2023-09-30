@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setDate()
 
 روش <code dir = "ltr"> setDate () </code> روز ماه یک نمونه تاریخ معین را بر اساس زمان محلی تغییر می دهد.

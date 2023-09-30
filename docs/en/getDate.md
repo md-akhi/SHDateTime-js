@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getDate()
 
 The <code>getDate()</code> method returns the day of the month for the specified date according to local time.

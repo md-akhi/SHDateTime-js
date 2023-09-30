@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getUTCMilliseconds()
 
 روش <code dir = "ltr"> getUtcmilliseconds () </code> بخش میلی ثانیه از ارزش شیء زمان را با توجه به زمان جهانی برمی گرداند.

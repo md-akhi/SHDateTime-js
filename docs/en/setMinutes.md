@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setMinutes()
 
 The setMinutes() method sets the minutes for a specified date according to local time.

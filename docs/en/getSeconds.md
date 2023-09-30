@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getSeconds()
 
 The getSeconds() method returns the seconds in the specified date according to local time.

@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toLocaleDateString()
 
 روش <code dir = "ltr"> tolocaledatestring () </code> رشته ای را با بازنمایی حساس به زبان از قسمت تاریخ تاریخ مشخص شده در منطقه زمانی عامل کاربر باز می گرداند.
@@ -99,8 +106,10 @@ console.log(date.toLocaleDateString("ja-JP-u-ca-japanese"));
 console.log(date.toLocaleDateString(["ban", "id"]));
 // → "20/12/2012"
 ```
+
 با استفاده از گزینه ها
 نتایج ارائه شده توسط tolocaledatestring () با استفاده از آرگومان گزینه ها قابل تنظیم است:
+
 ```js
 const date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 

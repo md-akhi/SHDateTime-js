@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setMinutes()
 
 روش <code dir = "ltr"> setMinutes () </code> دقیقه ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند.

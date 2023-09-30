@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getMilliseconds()
 
 روش <code dir="ltr">getMilliseconds()</code> میلی ثانیه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.

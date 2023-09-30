@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setTime()
 
 روش <code dir = "ltr"> settime () </code> شیء تاریخ را به زمان نمایش داده شده توسط تعدادی میلی ثانیه از 11 دی 1348 ، 00:00:00 UTC تنظیم می کند.

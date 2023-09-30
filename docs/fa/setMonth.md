@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setMonth()
 
 روش <code dir="ltr">setMonth ()</code> ماه را برای تاریخ مشخص با توجه به سال تعیین شده تعیین می کند.

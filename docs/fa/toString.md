@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toString()
 
 روش <code dir = "ltr"> toString () </code> رشته ای را نشان می دهد که نمایانگر شیء تاریخ مشخص شده است.

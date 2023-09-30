@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toTimeString()
 
 روش <code dir = "ltr"> totimestring () </code> بخش زمان یک شیء تاریخ را به شکل قابل خواندن انسان به زبان انگلیسی برمی گرداند.

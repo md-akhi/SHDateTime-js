@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getHours()
 
 متد <code dir="ltr">getHours()</code> ساعت را برای تاریخ مشخص شده، با توجه به زمان محلی برمی گرداند.

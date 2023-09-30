@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getMinutes()
 
 The getMinutes() method returns the minutes in the specified date according to local time.

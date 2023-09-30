@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setSeconds()
 
 روش <code dir = "ltr"> setSeconds () </code> ثانیه ها را برای تاریخ مشخص با توجه به زمان محلی تعیین می کند.

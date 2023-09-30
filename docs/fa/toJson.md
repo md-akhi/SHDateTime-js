@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.toJSON()
 
 روش <code dir = "ltr"> tojson () </code> بازنمایی رشته ای از شیء تاریخ را برمی گرداند.

@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setHours()
 
 روش <code dir = "ltr"> sethours () </code> ساعت ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند و تعداد میلی ثانیه را از 11 دیا 1348 00:00:00 UTC تا زمان ارائه شده توسط باز می گرداندنمونه تاریخ به روز شده.

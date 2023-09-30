@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getUTCMilliseconds()
 
 The getUTCMilliseconds() method returns the milliseconds portion of the time object's value according to universal time.

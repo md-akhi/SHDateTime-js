@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getFullYear()
 
 The <code>getFullYear()</code> method returns the year of the specified date according to local time.

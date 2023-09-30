@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setFullYear()
 
 The setFullYear() method sets the full year for a specified date according to local time. Returns new timestamp.

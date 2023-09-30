@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getDay()
 
 متد <code dir="ltr">getDay()</code> روز هفته را برای تاریخ مشخص شده با توجه به زمان محلی برمی گرداند، جایی که 0 نشان دهنده یکشنبه است. برای روز ماه، به <code dir="ltr">SHDate.prototype.getDate()</code> مراجعه کنید.

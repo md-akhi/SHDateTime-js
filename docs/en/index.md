@@ -1,5 +1,9 @@
 ---
+layout: page
 title: SHDate homepage
+language: en-US
+contentLanguage: en
+direction: ltr
 ---
 
 # SHDate

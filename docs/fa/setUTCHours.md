@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setUTCHours()
 
 روش <code dir = "ltr"> setutchours () </code> ساعت را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند و تعداد میلی ثانیه را از 11 Dey 1348 00:00:00 UTC تا زمان نشان داده شده باز می گرداندنمونه تاریخ به روز شده.

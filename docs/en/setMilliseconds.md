@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setMilliseconds()
 
 The setMilliseconds() method sets the milliseconds for a specified date according to local time.

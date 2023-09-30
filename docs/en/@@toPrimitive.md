@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate[@@toPrimitive]
 
 The <code>\[@@toPrimitive]()</code> method converts a Date object to a primitive value.

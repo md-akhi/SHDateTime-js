@@ -1,14 +1,9 @@
 ---
 layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
 ---
-
-<div dir=rtl>
-
-### به نام خدا
-
-تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
-
-</div>
 
 ### In the name of Allah, the Beneficent, the Merciful.
 

@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getUTCDate()
 
 روش <code dir = "ltr"> getutcdate () </code> روز ماه (از 1 تا 31) را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.

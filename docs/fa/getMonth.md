@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getMonth()
 
 متد <code dir="ltr">GetMonth()</code> ماه را در تاریخ مشخص شده با توجه به زمان محلی ، به عنوان یک مقدار مبتنی بر صفر (جایی که صفر نشانگر ماه اول سال است) برمی گرداند.
@@ -29,6 +36,7 @@ console.log(month); // 11
 ```
 
 توجه: در صورت لزوم ، نام کامل یک ماه (به عنوان مثال فارواردین) را می توان با استفاده از <code dir = "ltr"> intl.datetimeformat () </code> با یک پارامتر گزینه ها بدست آورد.با استفاده از این روش ، بین المللی سازی آسانتر می شود:
+
 ```js
 var options = { month: "long" };
 console.log(new Intl.DateTimeFormat("en-US", options).format(Xmas95));

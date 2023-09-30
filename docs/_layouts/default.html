@@ -1,13 +1,15 @@
 <!doctype html>
-<html lang="{{ site.lang | default: 'en-US' }}">
+<html
+	lang="{% if page.direction %}{{ page.direction }}{% else %}{{ site.direction | default: 'en-US' }}{% endif %}"
+>
 	{% include head.html %}
 
 	<body
-		dir="ltr"
+		dir="{% if page.direction %}{{ page.direction }}{% else %}{{ site.direction | default: 'ltr' }}{% endif %}"
 		data-md-color-primary="{{ site.themeColor }}"
 		data-md-color-accent="{{ site.accentColor }}"
 	>
-		<a id="skip-to-content" href="#content">Skip to the content.</a>
+		<!-- <a id="skip-to-content" href="#content">Skip to the content.</a> -->
 		{% include navigation.html %}
 
 		<div class="md-container">

@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getSeconds()
 
 روش <code dir="ltr">GetSeconds ()</code> ثانیه ها را در تاریخ مشخص با توجه به زمان محلی برمی گرداند.
@@ -15,9 +22,12 @@ getSeconds();
 # مقدار برگشتی
 
 یک عدد عدد صحیح ، بین 0 تا 59 ، نمایانگر ثانیه در تاریخ معین با توجه به زمان محلی است.
+
 # نمونه‌ها
+
 با استفاده از <code dir="ltr">GetEconds ()</code>
 بیانیه دوم در زیر مقدار 30 را به ثانیه متغیر اختصاص می دهد ، بر اساس مقدار تاریخ تاریخ XMAS95.
+
 ```js
 var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
 var seconds = Xmas95.getSeconds();

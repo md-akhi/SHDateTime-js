@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.getDay()
 
 The <code>getDay()</code> method returns the day of the week for the specified date according to local time, where 0 represents Sunday. For the day of the month, see <code>SHDate.prototype.getDate()</code>.

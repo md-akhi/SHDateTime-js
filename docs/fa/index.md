@@ -1,5 +1,9 @@
 ---
+layout: page
 title: SHDate صفحه نخست
+language: fa-IR
+contentLanguage: fa
+direction: rtl
 ---
 
 # SHDate

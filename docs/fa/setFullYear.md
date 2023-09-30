@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.setFullYear()
 
 متد <code dir="ltr">setFullYear()</code> کل سال را برای یک تاریخ مشخص با توجه به زمان محلی تنظیم می کند. مهر زمانی جدید را برمی گرداند.

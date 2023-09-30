@@ -1,3 +1,10 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+---
+
 # SHDate.getTime()
 
 روش <code dir = "ltr"> getTime () </code> تعداد میلی ثانیه از زمان Ecmascript را برمی گرداند.
@@ -16,9 +23,11 @@ getTime();
 # مقدار برگشتی
 
 تعدادی به نمایندگی از میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ مشخص شده.
+
 # Reduced time precision
 
 برای ارائه محافظت در برابر حملات به موقع و اثر انگشت ، دقت <code dir = "ltr"> shdate جدید (). gettime () </code> بسته به تنظیمات مرورگر ممکن است گرد شود.در Firefox ، اولویت reducetimerprecision به طور پیش فرض و پیش فرض به 20 میکرومتر در Firefox 59 فعال می شود.در 60 این 2 متر خواهد بود.
+
 ```js
 // reduced time precision (2ms) in Firefox 60
 new SHDate().getTime();
@@ -36,6 +45,7 @@ new SHDate().getTime();
 ```
 
 در Firefox ، شما همچنین می توانید حریم خصوصی را فعال کنید. ResistFingerPrinting ، دقت 100ms یا ارزش حریم خصوصی خواهد بود. ResistFingerPrinting.ReducetimerPrecision.microseconds ، هر کدام بزرگتر باشد.
+
 # نمونه‌ها
 
 با استفاده از <code dir = "ltr"> getTime () </code> برای کپی کردن تاریخ

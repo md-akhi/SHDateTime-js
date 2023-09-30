@@ -1,3 +1,10 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+---
+
 # SHDate.setMonth()
 
 The setMonth() method sets the month for a specified date according to the currently set year.
