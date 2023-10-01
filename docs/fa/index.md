@@ -26,7 +26,8 @@ direction: rtl
 
 روش های مختلفی برای به دست آوردن تاریخ در قالب های مختلف و همچنین انجام تبدیل منطقه زمانی وجود دارد. به ویژه توابعی مفید هستند که تاریخ و زمان را در زمان هماهنگ جهانی (UTC)، زمان استاندارد جهانی تعریف شده توسط استاندارد جهانی زمان، خروجی می‌دهند. (این زمان از نظر تاریخی به عنوان زمان گرینویچ شناخته می شود، زیرا UTC در امتداد نصف النهار واقع شده است که لندن و گرینویچ نزدیک آن را در بریتانیا شامل می شود.) دستگاه کاربر زمان محلی را ارائه می دهد.
 
-علاوه بر روش هایی برای خواندن و تغییر اجزای جداگانه تاریخ و زمان محلی (مانند getDay() و setHours())، نسخه هایی از همان روش ها نیز وجود دارد که تاریخ و زمان را با استفاده از UTC می خوانند و دستکاری می کنند (مانند getUTCDay). () و setUTCHours()).
+علاوه بر روش هایی برای خواندن و تغییر اجزای جداگانه تاریخ و زمان محلی (مانند <code dir="ltr">getDay()</code> و <code dir="ltr">setHours()</code>)، نسخه هایی از همان روش ها نیز وجود دارد که تاریخ و زمان را با استفاده از UTC می خوانند و دستکاری می کنند
+(مانند <code dir="ltr">getUTCDay()</code> و <code dir="ltr">setUTCHours()</code>).
 
 # Constructor
 
@@ -34,13 +35,13 @@ direction: rtl
 SHDate();
 ```
 
-هنگامی که به عنوان یک تابع فراخوانی می شود، نمایش رشته ای از تاریخ و زمان فعلی را دقیقاً همانطور که SHDate().toString()» جدید برمی گرداند.
+هنگامی که به عنوان یک تابع فراخوانی می شود، نمایش رشته ای از تاریخ و زمان فعلی را دقیقاً همانطور که <code dir="ltr">SHDate().toString()</code> جدید برمی گرداند.
 
 ```javascript
 new SHDate();
 ```
 
-هنگامی که به عنوان سازنده فراخوانی می شود، یک شی «SHDate جدید» را برمی گرداند.
+هنگامی که به عنوان سازنده فراخوانی می شود، یک شی <code dir="ltr">SHDate</code> جدید» را برمی گرداند.
 
 # Static methods
 
@@ -51,12 +52,12 @@ SHDate.now();
 مقدار عددی مربوط به زمان فعلی را برمی‌گرداند - تعداد میلی‌ثانیه‌های سپری شده از 11 دی 1348 ساعت 00:00:00 UTC، با نادیده گرفتن ثانیه‌های کبیسه.
 
 ```javascript
-SHDate.parse(); // Not Impl
+SHDate.parse();
 ```
 
 نمایش رشته ای از تاریخ را تجزیه می کند و تعداد میلی ثانیه ها را از 11 دی 1348، 00:00:00 UTC، با نادیده گرفتن ثانیه های کبیسه برمی گرداند.
 
-     توجه: تجزیه رشته‌ها با «SHDate.parse» به دلیل تفاوت‌ها و ناسازگاری‌های مرورگر به شدت ممنوع است.
+    توجه: تجزیه رشته‌ها با `SHDate.parse` به دلیل تفاوت‌ها و ناسازگاری‌های مرورگر به شدت ممنوع است.
 
 ```javascript
 SHDate.UTC();
@@ -280,13 +281,13 @@ SHDate.toISOSstring();
 SHDate.toJSON();
 ```
 
-رشته ای را برمی گرداند که نشان دهنده SHDate با استفاده از `toISOSstring()` است. برای استفاده توسط `JSON.stringify()` در نظر گرفته شده است.
+رشته ای را برمی گرداند که نشان دهنده SHDate با استفاده از <code dir="ltr">toISOSstring()</code> است. برای استفاده توسط <code dir="ltr">JSON.stringify()</code> در نظر گرفته شده است.
 
 ```js
 SHDate.toGMTString();
 ```
 
-رشته‌ای را برمی‌گرداند که نشان‌دهنده SHDate بر اساس منطقه زمانی GMT (UTC) است. به جای آن از «toUTCString()» استفاده کنید.
+رشته‌ای را برمی‌گرداند که نشان‌دهنده SHDate بر اساس منطقه زمانی GMT (UTC) است. به جای آن از <code dir="ltr">toUTCString()</code> استفاده کنید.
 
 ```js
 SHDate.toLocaleDateString();
@@ -298,7 +299,7 @@ SHDate.toLocaleDateString();
 SHDate.toLocaleString();
 ```
 
-رشته ای را با نمایشی حساس به محلی از این تاریخ برمی گرداند. روش «Object.toLocaleString()» را لغو می کند.
+رشته ای را با نمایشی حساس به محلی از این تاریخ برمی گرداند. روش <code dir="ltr">Object.toLocaleString()</code> را لغو می کند.
 
 ```js
 SHDate.toLocaleTimeString();
@@ -311,7 +312,7 @@ SHDate.toLocaleTimeString();
 SHDate.toString();
 ```
 
-رشته ای را برمی گرداند که نشان دهنده شیء SHDate مشخص شده است. روش «Object.toString()» را لغو می کند.
+رشته ای را برمی گرداند که نشان دهنده شیء SHDate مشخص شده است. روش <code dir="ltr">Object.toString()</code> را لغو می کند.
 
 ```js
 SHDate.toTimeString();
@@ -329,7 +330,7 @@ SHDate.toUTCString();
 SHDate.valueOf();
 ```
 
-مقدار اولیه یک شی Date را برمی‌گرداند. روش «Object.valueOf()» را لغو می کند.
+مقدار اولیه یک شی Date را برمی‌گرداند. روش <code dir="ltr">Object.valueOf()</code> را لغو می کند.
 
 # Examples
 
@@ -364,7 +365,7 @@ const [hour, minutes, seconds] = [
 ```
 
 تفسیر سالهای دو رقمی
-"New SHDate()" رفتار نامطلوب و متناقض میراثی را با مقادیر سال دو رقمی نشان می دهد. به طور خاص، هنگامی که یک فراخوانی n`SHDate()` یک مقدار سال دو رقمی داده می شود، آن مقدار سال به عنوان یک سال تحت اللفظی در نظر گرفته نمی شود و همانطور که هست استفاده نمی شود، بلکه به عنوان یک افست نسبی تفسیر می شود - در برخی موارد به عنوان یک جبران از سال 1900، اما در موارد دیگر، به عنوان جبران از سال 2000.
+<code dir="ltr">New SHDate()</code> رفتار نامطلوب و متناقض میراثی را با مقادیر سال دو رقمی نشان می دهد. به طور خاص، هنگامی که یک فراخوانی <code dir="ltr">New SHDate()</code> یک مقدار سال دو رقمی داده می شود، آن مقدار سال به عنوان یک سال تحت اللفظی در نظر گرفته نمی شود و همانطور که هست استفاده نمی شود، بلکه به عنوان یک افست نسبی تفسیر می شود - در برخی موارد به عنوان یک جبران از سال 1900، اما در موارد دیگر، به عنوان جبران از سال 2000.
 
 ```js
 let date = new SHDate(1376, 11); // Sun 01 Esf 1376 00:00:00 GMT+0000 (GMT)
@@ -378,7 +379,7 @@ date.setFullYear(1300);
 date.toString(); // Wed 01 Esf 1300 00:00:00 GMT+0000 (GMT)
 ```
 
-بنابراین، برای ایجاد و دریافت تاریخ‌های بین سال‌های 0 و 99، به جای آن از متدهای ترجیحی setFullYear() و getFullYear() استفاده کنید.
+بنابراین، برای ایجاد و دریافت تاریخ‌های بین سال‌های 0 و 99، به جای آن از متدهای ترجیحی <code dir="ltr">setFullYear()</code> و <code dir="ltr">getFullYear()</code> استفاده کنید.
 
 ```js
 // Preferred method; never interprets any value as being a relative offset,
@@ -424,7 +425,7 @@ function printElapsedTime(fTest) {
 let yourFunctionReturn = printElapsedTime(yourFunction);
 ```
 
-توجه: در مرورگرهایی که از ویژگی زمان با وضوح بالا Web Performance API پشتیبانی می‌کنند، Performance.now() می‌تواند اندازه‌گیری‌های مطمئن‌تر و دقیق‌تری از زمان سپری شده را نسبت به SHDate.now () ارائه دهد.
+توجه: در مرورگرهایی که از ویژگی زمان با وضوح بالا Web Performance API پشتیبانی می‌کنند، <code dir="ltr">Performance.now()</code> می‌تواند اندازه‌گیری‌های مطمئن‌تر و دقیق‌تری از زمان سپری شده را نسبت به <code dir="ltr">SHDate.now ()</code> ارائه دهد.
 
 تعداد ثانیه‌های پس از ECMAScript Epoch را دریافت کنید
 
@@ -630,5 +631,3 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - format: ( [en](https://md-akhi.github.io/SHDateTime-js/en/format) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/format) )
 
 - isLeapYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/isLeapYear) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/isLeapYear) )
-
-</div>

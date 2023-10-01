@@ -26,7 +26,7 @@ It should be noted that the maximum Date is not of the same value as the maximum
 
 There are several methods available to obtain a date in various formats, as well as to perform time zone conversions. Particularly useful are the functions that output the date and time in Coordinated Universal Time (UTC), the global standard time defined by the World Time Standard. (This time is historically known as Greenwich Mean Time, as UTC lies along the meridian that includes London—and nearby Greenwich—in the United Kingdom.) The user's device provides the local time.
 
-In addition to methods to read and alter individual components of the local date and time (such as getDay() and setHours()), there are also versions of the same methods that read and manipulate the date and time using UTC (such as getUTCDay() and setUTCHours()).
+In addition to methods to read and alter individual components of the local date and time (such as `getDay()` and `setHours()`), there are also versions of the same methods that read and manipulate the date and time using UTC (such as `getUTCDay()` and `setUTCHours()`).
 
 # Constructor
 
@@ -34,7 +34,7 @@ In addition to methods to read and alter individual components of the local date
 SHDate();
 ```
 
-When called as a function, returns a string representation of the current date and time, exactly as ` new SHDate().toString()` does.
+When called as a function, returns a string representation of the current date and time, exactly as `new SHDate().toString()` does.
 
 ```javascript
 new SHDate();
@@ -363,7 +363,7 @@ const [hour, minutes, seconds] = [
 ```
 
 Interpretation of two-digit years
-`new SHDate()` exhibits legacy undesirable, inconsistent behavior with two-digit year values; specifically, when a n`ew SHDate()` call is given a two-digit year value, that year value does not get treated as a literal year and used as-is but instead gets interpreted as a relative offset — in some cases as an offset from the year 1900, but in other cases, as an offset from the year 2000.
+`new SHDate()` exhibits legacy undesirable, inconsistent behavior with two-digit year values; specifically, when a `new SHDate()` call is given a two-digit year value, that year value does not get treated as a literal year and used as-is but instead gets interpreted as a relative offset — in some cases as an offset from the year 1900, but in other cases, as an offset from the year 2000.
 
 ```js
 let date = new SHDate(1376, 11); // Sun 01 Esf 1376 00:00:00 GMT+0000 (GMT)
@@ -423,7 +423,7 @@ function printElapsedTime(fTest) {
 let yourFunctionReturn = printElapsedTime(yourFunction);
 ```
 
-Note: In browsers that support the Web Performance API's high-resolution time feature, Performance.now() can provide more reliable and precise measurements of elapsed time than SHDate.now().
+Note: In browsers that support the Web Performance API's high-resolution time feature, `Performance.now()` can provide more reliable and precise measurements of elapsed time than `SHDate.now()`.
 
 Get the number of seconds since the ECMAScript Epoch
 
