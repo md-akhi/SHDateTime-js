@@ -1,22 +1,106 @@
 - title: "Getting Started"
-  url: "docs/getting-started"
+  url: "en/index.md"
+- title: "Static Methods"
+  url: "en#Static-Methods"
   children:
-    - title: Features
-      url: "docs/getting-started#getting-started"
-    - title: Development
-      url: "docs/getting-started#development"
-    - title: Customization
-      url: "docs/getting-started#customization"
-- title: "Extras"
-  url: "docs/extras"
+    - title: now
+      url: en/now.md
+    - title: parse
+      url: en/parse.md
+- title: "Instance Methods"
+  url: "en#Instance-Methods"
   children:
-    - title: Quizzes
-      url: "docs/extras/example-quiz"
-    - title: Discussion Forum
-      url: "forum"
-    - title: Interactive Code
-      url: "docs/extras/interactive"
-- title: "About"
-  url: "about"
-- title: "News"
-  url: "news"
+    - title: \@@toPrimitive
+      url: en/@@toPrimitive.md
+    - title: constructor
+      url: en/constructor.md
+    - title: getDate
+      url: en/getDate.md
+    - title: getDay
+      url: en/getDay.md
+    - title: getFullYear
+      url: en/getFullYear.md
+    - title: getHours
+      url: en/getHours.md
+    - title: getMilliseconds
+      url: en/getMilliseconds.md
+    - title: getMinutes
+      url: en/getMinutes.md
+    - title: getMonth
+      url: en/getMonth.md
+    - title: getSeconds
+      url: en/getSeconds.md
+    - title: getTime
+      url: en/getTime.md
+    - title: getTimeZoneOffset
+      url: en/getTimeZoneOffset.md
+    - title: getUTCDate
+      url: en/getUTCDate.md
+    - title: getUTCDay
+      url: en/getUTCDay.md
+    - title: getUTCFullYear
+      url: en/getUTCFullYear.md
+    - title: getUTCHours
+      url: en/getUTCHours.md
+    - title: getUTCMilliseconds
+      url: en/getUTCMilliseconds.md
+    - title: getUTCMinutes
+      url: en/getUTCMinutes.md
+    - title: getUTCMonth
+      url: en/getUTCMonth.md
+    - title: getUTCSeconds
+      url: en/getUTCSeconds.md
+    - title: isLeapYear
+      url: en/isLeapYear.md
+    - title: setDate
+      url: en/setDate.md
+    - title: setFullYear
+      url: en/setFullYear.md
+    - title: setHours
+      url: en/setHours.md
+    - title: setMilliseconds
+      url: en/setMilliseconds.md
+    - title: setMinutes
+      url: en/setMinutes.md
+    - title: setMonth
+      url: en/setMonth.md
+    - title: setSeconds
+      url: en/setSeconds.md
+    - title: setTime
+      url: en/setTime.md
+    - title: setUTCDate
+      url: en/setUTCDate.md
+    - title: setUTCFullYear
+      url: en/setUTCFullYear.md
+    - title: setUTCHours
+      url: en/setUTCHours.md
+    - title: setUTCMilliseconds
+      url: en/setUTCMilliseconds.md
+    - title: setUTCMinutes
+      url: en/setUTCMinutes.md
+    - title: setUTCMonth
+      url: en/setUTCMonth.md
+    - title: setUTCSeconds
+      url: en/setUTCSeconds.md
+    - title: toDateString
+      url: en/toDateString.md
+    - title: toIsoString
+      url: en/toIsoString.md
+    - title: toJson
+      url: en/toJson.md
+    - title: toLocaleDateString
+      url: en/toLocaleDateString.md
+    - title: toLocaleString
+      url: en/toLocaleString.md
+    - title: toLocaleTimeString
+      url: en/toLocaleTimeString.md
+    - title: toString
+      url: en/toString.md
+    - title: toTimeString
+      url: en/toTimeString.md
+    - title: toUTCString
+      url: en/toUTCString.md
+    - title: utc
+      url: en/utc.md
+    - title: valueOf
+      url: en/valueOf.md
