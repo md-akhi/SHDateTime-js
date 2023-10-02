@@ -1,5 +1,5 @@
 - title: "Getting Started"
-  url: "../"
+  url: "../index"
 - title: "Static Methods"
   url: "#Static-Methods"
   children:
@@ -10,7 +10,7 @@
 - title: "Instance Methods"
   url: "#Instance-Methods"
   children:
-    - title: @@toPrimitive
+    - title: toPrimitive
       url: ../@@toPrimitive
     - title: constructor
       url: ../constructor
