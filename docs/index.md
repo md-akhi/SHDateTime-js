@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 language: en-US
 contentLanguage: en
 direction: ltr
