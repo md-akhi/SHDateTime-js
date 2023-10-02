@@ -35,5 +35,7 @@ export default function NumbersTo(
 	EN.forEach((value, index) => {
 		source = source.toString().replace(value, destination[index]);
 	});
+	// for (const [index, value] of EN.entries()) {
+	// 	source = source.split(value).join(destination[index]);
 	return source;
 }

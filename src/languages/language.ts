@@ -20,22 +20,15 @@ enum Languages {
 }
 
 export default class Language {
-	static WORD: string = Languages.en_US;
+	static LANGUAGE: string = Languages.en_US;
 
 	/**
 	 * cheeck Language
 	 * @param {string} language
 	 * @return string
 	 */
-	static check(language: string = Language.WORD): boolean {
-		switch (language) {
-			case Languages.fa_IR:
-			case Languages.en_US:
-			case Languages.ckb_IR:
-				return true;
-			default:
-				return false;
-		}
+	static check(language: string): boolean {
+		return Object.values(Languages).includes(language as Languages);
 	}
 
 	/**
@@ -43,16 +36,18 @@ export default class Language {
 	 * @param {string} language
 	 * @return string
 	 */
-	static getClass(language: string = Language.WORD): any {
+	static getClass(language: string): any {
 		switch (language) {
+			// i18n
 			case Languages.fa_IR:
 				return Language_fa_IR;
 			case Languages.en_US:
 				return Language_en_US;
+			//i10n
 			case Languages.ckb_IR:
 				return Language_ckb_IR;
 			default:
-				return Language_en_US;
+				return Language.getClass(Language.LANGUAGE);
 		}
 	}
 }

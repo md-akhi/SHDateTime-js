@@ -8,128 +8,100 @@ import Language from "./languages/language.js";
 /**
  * Word class
  */
-export default class Word {
-	static LANGUAGE_WORD: string = "en_US";
-	static FIRST_DAY_OF_WEEK: number = 0;
-
-	/**
-	 * cheeck Language
-	 * @param {string} language
-	 * @return string
-	 */
-	static checkLanguage(language: string = Word.LANGUAGE_WORD): boolean {
-		return Language.check(language);
-	}
-
-	/**
-	 * Get Language class
-	 * @param {string} language
-	 * @return string
-	 */
-	static getClassLanguage(language: string = Word.LANGUAGE_WORD): any {
-		return Language.getClass(language);
-	}
+export default class Word extends Language {
+	static word_language: string = Word.LANGUAGE;
+	static FIRST_DAY_OF_WEEK: number = 0; //Saterday
 
 	/**
 	 * Uppercase Ante meridiem and Post meridiem
 	 * @param {number} H24 numeric
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @return string Ante/Post meridiem
 	 */
 	static getMeridienFullNames(
 		H24: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.MERIDIEN_FULL_NAMES[H24 > 11 ? 1 : 0];
+		return Word.getClass(word_language).MERIDIEN_FULL_NAMES[H24 > 11 ? 1 : 0];
 	}
 
 	/**
 	 * Lowercase Ante meridiem and Post meridiem, two letters
 	 * @param {number} H24 numeric
-	 * @param {string} language_word language    word
+	 * @param {string} word_language language    word
 	 * @return {string} Ante/Post meridiem, two letters
 	 */
 	static getMeridienShortNames(
 		H24: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.MERIDIEN_SHORT_NAMES[H24 > 11 ? 1 : 0];
+		return Word.getClass(word_language).MERIDIEN_SHORT_NAMES[H24 > 11 ? 1 : 0];
 	}
 
 	/**
 	 * A full textual representation of a month
 	 * @param {number} month numeric of a month
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @return {string} A full textual of a month
 	 */
 	static getMonthFullNames(
 		month: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.MONTH_FULL_NAMES[month];
+		return Word.getClass(word_language).MONTH_FULL_NAMES[month];
 	}
 
 	/**
 	 * A short textual representation of a month, three letters
 	 * @param {number} month numeric of a month
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @return {string} A short textual of a month, three letters
 	 */
 	static getMonthShortNames(
 		month: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.MONTH_SHORT_NAMES[month];
+		return Word.getClass(word_language).MONTH_SHORT_NAMES[month];
 	}
 
 	/**
 	 * A full textual representation of the day of the week
 	 * @param {number} dow numeric of the day of the week
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A full textual the day of the week
 	 */
 	static getDayFullNames(
 		dow: number,
-		language_word = Word.LANGUAGE_WORD,
+		word_language = Word.LANGUAGE,
 		FDOW: number = Word.FIRST_DAY_OF_WEEK
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.DAY_FULL_NAMES[(dow + FDOW) % 7];
+		return Word.getClass(word_language).DAY_FULL_NAMES[(dow + FDOW) % 7];
 	}
 
 	/**
 	 * A short textual representation of the day of the week, three letters
 	 * @param {number} dow numeric of the day of the week
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A short textual of a day, three letters
 	 */
 	static getDayShortNames(
 		dow: number,
-		language_word = Word.LANGUAGE_WORD,
+		word_language = Word.LANGUAGE,
 		FDOW: number = Word.FIRST_DAY_OF_WEEK
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.DAY_SHORT_NAMES[(dow + FDOW) % 7];
+		return Word.getClass(word_language).DAY_SHORT_NAMES[(dow + FDOW) % 7];
 	}
 
 	/**
 	 * Ordinal suffix for the day of the month
 	 * @param {number} num numeric the day of the month
-	 * @param {string} language_word language word
+	 * @param {string} word_language language word
 	 * @return {string} Ordinal suffix for the day of the month
 	 */
-	static getSuffixNames(
-		num: number,
-		language_word = Word.LANGUAGE_WORD
-	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.SuffixNames(num);
+	static getSuffixNames(num: number, word_language = Word.LANGUAGE): string {
+		return Word.getClass(word_language).SuffixNames(num);
 	}
 
 	/**
@@ -137,10 +109,9 @@ export default class Word {
 	 */
 	static getConstellationsFullNames(
 		month: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.CONSTELLATIONS_FULL_NAMES[month];
+		return Word.getClass(word_language).CONSTELLATIONS_FULL_NAMES[month];
 	}
 
 	/**
@@ -148,10 +119,9 @@ export default class Word {
 	 */
 	static getAnimalsFullNames(
 		year: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.ANIMALS_FULL_NAMES[year % 12];
+		return Word.getClass(word_language).ANIMALS_FULL_NAMES[year % 12];
 	}
 
 	/**
@@ -159,10 +129,11 @@ export default class Word {
 	 */
 	static getSeasonFullNames(
 		month: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		return cls.SEASON_FULL_NAMES[parseInt(((month + 1) / 3.1).toString())];
+		return Word.getClass(word_language).SEASON_FULL_NAMES[
+			parseInt(((month + 1) / 3.1).toString())
+		];
 	}
 
 	/**
@@ -171,11 +142,12 @@ export default class Word {
 	static getSolsticeFullNames(
 		month: number,
 		date: number,
-		language_word = Word.LANGUAGE_WORD
+		word_language = Word.LANGUAGE
 	): string {
-		const cls = Word.getClassLanguage(language_word);
-		if (month === 2 && date === 31) return cls.SOLSTICE_FULL_NAMES[0];
-		else if (month === 8 && date === 30) return cls.SOLSTICE_FULL_NAMES[1];
+		if (month === 2 && date === 31)
+			return Word.getClass(word_language).SOLSTICE_FULL_NAMES[0];
+		else if (month === 8 && date === 30)
+			return Word.getClass(word_language).SOLSTICE_FULL_NAMES[1];
 		return "";
 	}
 }
