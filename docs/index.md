@@ -3,6 +3,7 @@ layout: page
 language: en-US
 contentLanguage: en
 direction: ltr
+sidebar: tocMain
 ---
 
 ### In the name of Allah, the Beneficent, the Merciful.
@@ -18,3 +19,72 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 # Language
 
 - [English](https://md-akhi.github.io/SHDateTime-js/en/index) - [فارسی](https://md-akhi.github.io/SHDateTime-js/fa/index)
+
+## Install
+
+```bash
+ npm i shdate
+```
+
+## Usage
+
+- ES Modules (ESM):
+
+```javascript
+import SHDate from "shdate";
+var date = new SHDate();
+```
+
+- CommonJS (CJS):
+
+```javascript
+const SHDate = require("shdate").default;
+var date = new SHDate();
+```
+
+- TypeScript (TS):
+
+```TypeScript
+const SHDate = require('shdate');
+// OR
+import SHDate from 'shdate';
+
+var date = new SHDate();
+```
+
+- ES Modules for the browser:
+
+```html
+<script type="module">
+	import SHDate from "shdate";
+	var date = new SHDate();
+</script>
+```
+
+- client side for the browser:
+
+```html
+<script
+	type="text/javascript"
+	src="/path/to/shdate/dist/browser/shdate.min.js"
+></script>
+<script>
+	var date = new SHDate();
+</script>
+```
+
+jsdrive:
+
+```shell
+https://cdn.jsdelivr.net/npm/shdate@latest/dist/browser/shdate.min.js
+```
+
+ubpkg:
+
+```shell
+https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
+```
+
+### Note
+
+- If you want to use ES Modules in Node.js without a transpiler, you need to add `"type": "module"` in your `package.json` or change your file extension from `.js` to `.mjs`.

@@ -1,0 +1,106 @@
+- title: "Getting Started"
+  url: en/index
+- title: "Static Methods"
+  url: "en/#Static-Methods"
+  children:
+    - title: now
+      url: en/now
+    - title: parse
+      url: en/parse
+- title: "Instance Methods"
+  url: "en/#Instance-Methods"
+  children:
+    - title: "@@toPrimitive"
+      url: "en/@@toPrimitive"
+    - title: constructor
+      url: en/constructor
+    - title: getDate
+      url: en/getDate
+    - title: getDay
+      url: en/getDay
+    - title: getFullYear
+      url: en/getFullYear
+    - title: getHours
+      url: en/getHours
+    - title: getMilliseconds
+      url: en/getMilliseconds
+    - title: getMinutes
+      url: en/getMinutes
+    - title: getMonth
+      url: en/getMonth
+    - title: getSeconds
+      url: en/getSeconds
+    - title: getTime
+      url: en/getTime
+    - title: getTimeZoneOffset
+      url: en/getTimeZoneOffset
+    - title: getUTCDate
+      url: en/getUTCDate
+    - title: getUTCDay
+      url: en/getUTCDay
+    - title: getUTCFullYear
+      url: en/getUTCFullYear
+    - title: getUTCHours
+      url: en/getUTCHours
+    - title: getUTCMilliseconds
+      url: en/getUTCMilliseconds
+    - title: getUTCMinutes
+      url: en/getUTCMinutes
+    - title: getUTCMonth
+      url: en/getUTCMonth
+    - title: getUTCSeconds
+      url: en/getUTCSeconds
+    - title: isLeapYear
+      url: en/isLeapYear
+    - title: setDate
+      url: en/setDate
+    - title: setFullYear
+      url: en/setFullYear
+    - title: setHours
+      url: en/setHours
+    - title: setMilliseconds
+      url: en/setMilliseconds
+    - title: setMinutes
+      url: en/setMinutes
+    - title: setMonth
+      url: en/setMonth
+    - title: setSeconds
+      url: en/setSeconds
+    - title: setTime
+      url: en/setTime
+    - title: setUTCDate
+      url: en/setUTCDate
+    - title: setUTCFullYear
+      url: en/setUTCFullYear
+    - title: setUTCHours
+      url: en/setUTCHours
+    - title: setUTCMilliseconds
+      url: en/setUTCMilliseconds
+    - title: setUTCMinutes
+      url: en/setUTCMinutes
+    - title: setUTCMonth
+      url: en/setUTCMonth
+    - title: setUTCSeconds
+      url: en/setUTCSeconds
+    - title: toDateString
+      url: en/toDateString
+    - title: toIsoString
+      url: en/toIsoString
+    - title: toJson
+      url: en/toJson
+    - title: toLocaleDateString
+      url: en/toLocaleDateString
+    - title: toLocaleString
+      url: en/toLocaleString
+    - title: toLocaleTimeString
+      url: en/toLocaleTimeString
+    - title: toString
+      url: en/toString
+    - title: toTimeString
+      url: en/toTimeString
+    - title: toUTCString
+      url: en/toUTCString
+    - title: utc
+      url: en/utc
+    - title: valueOf
+      url: en/valueOf

@@ -10,8 +10,8 @@
 - title: "Instance Methods"
   url: "#Instance-Methods"
   children:
-    - title: toPrimitive
-      url: toPrimitive
+    - title: "@@toPrimitive"
+      url: "@@toPrimitive"
     - title: constructor
       url: constructor
     - title: getDate

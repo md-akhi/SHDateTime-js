@@ -52,6 +52,7 @@
 							<label class="md-nav__title" for="__toc">Table of contents</label>
 							<ul class="md-nav__list" data-md-scrollfix="">
 								{% for section in site.data.toc %}
+								<!-- site.data[page.sidebar] -->
 								<li class="md-nav__item">
 									<a
 										class="md-nav__link"
@@ -68,6 +69,7 @@
 
 					<!-- This navigation is completely for mobile -->
 					{% for section in site.data.toc %}
+					<!-- site.data[page.sidebar] -->
 					<li class="md-nav__item mobile-nav" style="display: none">
 						<a
 							class="md-nav__link"
@@ -80,6 +82,7 @@
 
 					<!-- This navigation is completely for non mobile -->
 					{% for section in site.data.toc %}
+					<!-- site.data[page.sidebar] -->
 					<li class="md-nav__item md-nav__item--nested not-mobile-nav">
 						<a
 							class="md-nav__link pancakes-parent"
