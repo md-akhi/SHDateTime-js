@@ -61,7 +61,7 @@
 										title="{{ section.title }}"
 										>{{ section.title }}</a
 									>
-									<!-- {% if item.url == page.url %}active{% endif %} -->
+									<!-- {% if section.url == child.url %}active{% endif %} -->
 								</li>
 								{% endfor %}
 							</ul>
@@ -114,6 +114,7 @@
 										>{{ child.title }}</a
 									>
 								</li>
+								<!-- {% if section.url == child.url %}active{% endif %} -->
 								{% endfor %}
 							</ul>
 						</nav>
