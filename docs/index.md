@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 language: en-US
 contentLanguage: en
 direction: ltr
@@ -17,4 +17,4 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
 # Language
 
-- [English](https://md-akhi.github.io/SHDateTime-js/en) - [فارسی](https://md-akhi.github.io/SHDateTime-js/fa)
+- [English](https://md-akhi.github.io/SHDateTime-js/en/index) - [فارسی](https://md-akhi.github.io/SHDateTime-js/fa/index)
