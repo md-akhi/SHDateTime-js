@@ -3,7 +3,9 @@ layout: page
 language: en-US
 contentLanguage: en
 direction: ltr
+sidebar: sidebarMethod
 ---
+
 # SHDate.getUTCFullYear()
 
 The getUTCFullYear() method returns the year in the specified date according to universal time.

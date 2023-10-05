@@ -3,6 +3,7 @@ layout: page
 language: en-US
 contentLanguage: en
 direction: ltr
+sidebar: sidebarMethod
 ---
 
 # SHDate.getTimezoneOffset()

@@ -3,6 +3,7 @@ layout: page
 language: fa-IR
 contentLanguage: fa
 direction: rtl
+sidebar: sidebarMethod
 ---
 
 # SHDate.getUTCSeconds()

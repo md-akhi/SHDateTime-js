@@ -4,6 +4,7 @@ title: SHDate صفحه نخست
 language: fa-IR
 contentLanguage: fa
 direction: rtl
+sidebar: sidebarMethod
 ---
 
 # SHDate
