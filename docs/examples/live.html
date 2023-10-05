@@ -38,7 +38,10 @@
 				"title"
 			).innerHTML = `JavaScript Demo: ${exname}`;
 
-			document.getElementById("static-js").innerHTML = exData(exname);
+			document.getElementById("static-js").innerHTML = exData(exname).replace(
+				/^\s+/gm,
+				``
+			);
 
 			document.getElementById(
 				"output-heading"
