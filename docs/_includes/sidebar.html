@@ -155,3 +155,10 @@
 		</div>
 	</div>
 </div>
+
+{% for section in site.data[page.sidebar] %} {% if section.children %} {% for
+child in section.children %} {% if section.url == child.url %}active{% endif %}
+{% endfor %}{% endif %} title = {{ section.title }} url = {% if
+section.external_url %}{{ section.external_url }}{% else %}{{ section.url }}{%
+endif %} {% endfor %} site.data[page.sidebar] = {{site.data[page.sidebar]}}
+section.url = {{section.url}} child.url = {{child.url}}
