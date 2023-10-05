@@ -9,7 +9,7 @@ url: setMilliseconds
 
 # SHDate.setMilliseconds()
 
-روش <code dir = "ltr"> </code> setMilliseconds () میلی ثانیه را برای تاریخ مشخص با توجه به زمان محلی تعیین می کند.
+روش <code dir = "ltr">setMilliseconds()</code> میلی ثانیه را برای تاریخ مشخص با توجه به زمان محلی تعیین می کند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setMilliseconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -28,7 +28,7 @@ setMilliseconds(millisecondsValue);
 
 # مقدار برگشتی
 
-تعداد میلی ثانیه بین 25 دی 1390 00:00:00 UTC و تاریخ به روز شده.
+تعداد میلی ثانیه بین 25 دی 1390 00:00:00 `UTC` و تاریخ به روز شده.
 
 # توضیحات
 
@@ -36,7 +36,7 @@ setMilliseconds(millisecondsValue);
 
 # نمونه‌ها
 
-با استفاده از <code dir="ltr"></code>setmilliseconds ()
+با استفاده از <code dir="ltr">setmilliseconds()</code>
 
 ```js
 var theBigDay = new SHDate();

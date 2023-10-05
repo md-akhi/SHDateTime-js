@@ -9,7 +9,7 @@ url: getSeconds
 
 # SHDate.getSeconds()
 
-روش <code dir="ltr">GetSeconds ()</code> ثانیه ها را در تاریخ مشخص با توجه به زمان محلی برمی گرداند.
+روش <code dir="ltr">GetSeconds()</code> ثانیه ها را در تاریخ مشخص با توجه به زمان محلی برمی گرداند.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getSeconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -27,8 +27,8 @@ getSeconds();
 
 # نمونه‌ها
 
-با استفاده از <code dir="ltr">GetEconds ()</code>
-بیانیه دوم در زیر مقدار 30 را به ثانیه متغیر اختصاص می دهد ، بر اساس مقدار تاریخ تاریخ XMAS95.
+با استفاده از <code dir="ltr">GetEconds()</code>
+بیانیه دوم در زیر مقدار 30 را به ثانیه متغیر اختصاص می دهد ، بر اساس مقدار تاریخ تاریخ `XMAS95`.
 
 ```js
 var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");

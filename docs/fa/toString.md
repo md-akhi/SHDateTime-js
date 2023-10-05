@@ -9,7 +9,7 @@ url: toString
 
 # SHDate.toString()
 
-روش <code dir = "ltr"> toString () </code> رشته ای را نشان می دهد که نمایانگر شیء تاریخ مشخص شده است.
+روش <code dir = "ltr">toString()</code> رشته ای را نشان می دهد که نمایانگر شیء تاریخ مشخص شده است.
 Try it
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
@@ -27,7 +27,7 @@ toString();
 
 # توضیحات
 
-نمونه های تاریخ به ارث می برند <code dir = "ltr"> toString () </code> از shdate.prototype ، نه <code dir = "ltr"> object.prototype. </code> <code dir = "ltr">shdate.prototype.toString () </code> بازنمایی رشته ای از تاریخ را در قالب مشخص شده در ECMA-262 برمی گرداند که می تواند به صورت خلاصه شود:
+نمونه های تاریخ به ارث می برند <code dir = "ltr">toString()</code> از `shdate.prototype` ، نه <code dir = "ltr">object.prototype.</code> <code dir = "ltr">shdate.prototype.toString()</code> بازنمایی رشته ای از تاریخ را در قالب مشخص شده در `ECMA-262` برمی گرداند که می تواند به صورت خلاصه شود:
 Week day: نام 3 حرف هفته انگلیسی ، به عنوان مثال"شنبه"
 space
 Month name: نام ماه انگلیسی 3 نامه ، به عنوان مثال"روز"
@@ -53,13 +53,13 @@ space
 E.g. "Sat Sep 01 2018 14:53:26 GMT+1400 (LINT)"
 تا زمان ECMAScript 2018 (نسخه 9) ، فرمت رشته ای که توسط <code dir="ltr">shdate.prototype.tostring</code> برگردانده شده بود ، وابسته بود.بنابراین نباید به آن اعتماد کرد که در قالب مشخص شده باشد.
 
-روش <code dir = "ltr"> toString () </code> به طور خودکار هنگام نمایش تاریخ به عنوان یک مقدار متن ، به عنوان مثال ، به طور خودکار فراخوانی می شود.<code dir = "ltr"> console.log (shdate جدید ()) </code> ، یا هنگامی که یک تاریخ در یک کنسرت رشته ای استفاده می شود ، مانند <code dir = "ltr"> var today = "امروز است"+ shdate جدید () </code>.
-<code dir = "ltr"> toString () </code> یک روش عمومی است ، نیازی به این نیست که این یک نمونه تاریخ باشد.با این حال ، باید یک خاصیت داخلی [[TimeValue]] داشته باشد که با استفاده از JavaScript بومی ساخته نمی شود ، بنابراین به طور موثری محدود به استفاده با نمونه های تاریخ است.اگر به یک نمونه غیر دات فراخوانده شود ، یک نوع پرتاب می شود.
+روش <code dir = "ltr">toString()</code> به طور خودکار هنگام نمایش تاریخ به عنوان یک مقدار متن ، به عنوان مثال ، به طور خودکار فراخوانی می شود.<code dir = "ltr"> console.log (shdate جدید ()) </code> ، یا هنگامی که یک تاریخ در یک کنسرت رشته ای استفاده می شود ، مانند <code dir = "ltr"> var today = "امروز است"+ shdate جدید () </code>.
+<code dir = "ltr"> toString () </code> یک روش عمومی است ، نیازی به این نیست که این یک نمونه تاریخ باشد.با این حال ، باید یک خاصیت داخلی [[TimeValue]] داشته باشد که با استفاده از `JavaScript` بومی ساخته نمی شود ، بنابراین به طور موثری محدود به استفاده با نمونه های تاریخ است.اگر به یک نمونه غیر دات فراخوانده شود ، یک نوع پرتاب می شود.
 
 # نمونه‌ها
 
-با استفاده از <code dir = "ltr"> toString () </code>
-موارد زیر مقدار <code dir = "ltr"> toString () </code> یک شیء تاریخ را به Myvar اختصاص می دهد:
+با استفاده از <code dir = "ltr">toString()</code>
+موارد زیر مقدار <code dir = "ltr">toString()</code> یک شیء تاریخ را به `Myvar` اختصاص می دهد:
 
 ```js
 var x = new SHDate();
