@@ -79,7 +79,7 @@
 										title="{{ section.title }}"
 										>{{ section.title }}</a
 									>
-									<!-- {% if section.url == child.url %}active{% endif %} -->
+									<!-- {{section.url}},{{child.url}},{{site.url}} -->
 								</li>
 								{% endfor %}
 							</ul>
@@ -132,8 +132,8 @@
 										>{{ child.title }}</a
 									>
 								</li>
-								section.url={{section.url}} child.url={{child.url}}
-								<!-- {% if section.url == child.url %}active{% endif %} -->
+
+								<!-- {{section.url}},{{child.url}},{{site.url}} -->
 								{% endfor %}
 							</ul>
 						</nav>
