@@ -4,6 +4,7 @@ language: fa-IR
 contentLanguage: fa
 direction: rtl
 sidebar: sidebarMethod
+url: setFullYear
 ---
 
 # SHDate.setFullYear()

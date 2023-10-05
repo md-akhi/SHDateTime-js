@@ -4,6 +4,7 @@ language: en-US
 contentLanguage: en
 direction: ltr
 sidebar: sidebarMethod
+url: setUTCDate
 ---
 
 # SHDate.setUTCDate()
