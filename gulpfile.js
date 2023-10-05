@@ -31,7 +31,7 @@ const infoShort = [
  */
 function combineTS() {
 	return gulp
-		.src(["src/**/*.ts"])
+		.src(["./src/languages/**/*.ts", "./src/parser/**/*.ts", "src/*.ts"])
 		.pipe(concat("shdate.ts"))
 		.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
 		.pipe(replace(/export default (function|class)/g, "$1"))
