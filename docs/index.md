@@ -3,7 +3,7 @@ layout: page
 language: en-US
 contentLanguage: en
 direction: ltr
-sidebar: tocMain
+sidebar: sidebarLanguage
 ---
 
 ### In the name of Allah, the Beneficent, the Merciful.
