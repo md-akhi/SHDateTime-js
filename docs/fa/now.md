@@ -9,8 +9,8 @@ url: now
 
 # SHDate.now()
 
-روش استاتیک <code dir = "ltr">shdate.now()</code> تعداد میلی ثانیه از 11 `Dey 1348 00:00:00 UTC` را باز می گرداند.
-Try it
+متد استاتیک <code dir = "ltr">shdate.now()</code> تعداد میلی ثانیه از 11 `Dey 1348 00:00:00 UTC` را باز می گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=now" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

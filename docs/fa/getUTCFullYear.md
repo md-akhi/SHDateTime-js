@@ -9,8 +9,8 @@ url: getUTCFullYear
 
 # SHDate.getUTCFullYear()
 
-روش <code dir="ltr">getUTCFullYear()</code> سال را در تاریخ مشخص با توجه به زمان جهانی برمی گرداند.
-Try it
+متد <code dir="ltr">getUTCFullYear()</code> سال را در تاریخ مشخص با توجه به زمان جهانی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCFullYear" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

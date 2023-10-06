@@ -9,8 +9,8 @@ url: getSeconds
 
 # SHDate.getSeconds()
 
-روش <code dir="ltr">GetSeconds()</code> ثانیه ها را در تاریخ مشخص با توجه به زمان محلی برمی گرداند.
-Try it
+متد <code dir="ltr">GetSeconds()</code> ثانیه ها را در تاریخ مشخص با توجه به زمان محلی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getSeconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

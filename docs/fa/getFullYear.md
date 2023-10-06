@@ -13,7 +13,7 @@ url: getFullYear
 
 به جای متد <code dir="ltr">getYear()</code> از این متد استفاده کنید.
 
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getFullYear" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

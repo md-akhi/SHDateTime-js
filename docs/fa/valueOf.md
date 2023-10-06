@@ -9,8 +9,8 @@ url: valueOf
 
 # SHDate.valueOf()
 
-روش <code dir = "ltr">valueOf()</code> مقدار بدوی یک شیء تاریخ را برمی گرداند.
-Try it
+متد <code dir = "ltr">valueOf()</code> مقدار بدوی یک شیء تاریخ را برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=valueOf" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -27,9 +27,9 @@ valueOf();
 
 # توضیحات
 
-روش <code dir = "ltr">valueOf()</code> مقدار بدوی یک شیء تاریخ را به عنوان نوع داده شماره ، تعداد میلی ثانیه از نیمه شب 11 روز ، 1348 UTC برمی گرداند.
-این روش از نظر عملکردی معادل روش <code dir = "ltr">shdate.gettime()</code> است.
-این روش معمولاً توسط `JavaScript` داخلی خوانده می شود و صریحاً در کد نیست.
+متد <code dir = "ltr">valueOf()</code> مقدار بدوی یک شیء تاریخ را به عنوان نوع داده شماره ، تعداد میلی ثانیه از نیمه شب 11 روز ، 1348 UTC برمی گرداند.
+این متد از نظر عملکردی معادل متد <code dir = "ltr">shdate.gettime()</code> است.
+این متد معمولاً توسط `JavaScript` داخلی خوانده می شود و صریحاً در کد نیست.
 
 # نمونه‌ها
 

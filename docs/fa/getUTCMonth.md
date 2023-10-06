@@ -10,7 +10,7 @@ url: getUTCMonth
 # SHDate.getUTCMonth()
 
 <code dir = "ltr">getUtCmonth()</code> ماه تاریخ مشخص شده را با توجه به زمان جهانی ، به عنوان یک مقدار مبتنی بر صفر باز می گرداند (جایی که صفر نشانگر ماه اول سال است).
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCMonth" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

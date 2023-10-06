@@ -11,7 +11,7 @@ url: getMinutes
 
 متد <code dir="ltr">getMinutes()</code> دقیقه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getMinutes" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

@@ -9,8 +9,8 @@ url: toJSON
 
 # SHDate.toJSON()
 
-روش <code dir = "ltr">tojson()</code> بازنمایی رشته ای از شیء تاریخ را برمی گرداند.
-Try it
+متد <code dir = "ltr">tojson()</code> بازنمایی رشته ای از شیء تاریخ را برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toJSON" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -27,7 +27,7 @@ toJSON();
 
 # توضیحات
 
-نمونه های تاریخ به یک نکته خاص در زمان مراجعه می کنند.فراخوانی <code dir = "ltr">tojson()</code> یک رشته (با استفاده از <code dir = "ltr"> toisostring()</code>) را نشان می دهد که مقدار شیء تاریخ را نشان می دهد.این روش به طور کلی در نظر گرفته شده است ، به طور پیش فرض ، اشیاء تاریخ را در طول سریال سازی `JSON` سریال سازی کنید.
+نمونه های تاریخ به یک نکته خاص در زمان مراجعه می کنند.فراخوانی <code dir = "ltr">tojson()</code> یک رشته (با استفاده از <code dir = "ltr"> toisostring()</code>) را نشان می دهد که مقدار شیء تاریخ را نشان می دهد.این متد به طور کلی در نظر گرفته شده است ، به طور پیش فرض ، اشیاء تاریخ را در طول سریال سازی `JSON` سریال سازی کنید.
 
 # نمونه‌ها
 

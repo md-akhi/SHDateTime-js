@@ -9,8 +9,8 @@ url: setHours
 
 # SHDate.setHours()
 
-روش <code dir = "ltr">sethours()</code> ساعت ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند و تعداد میلی ثانیه را از 11 دیا 1348 00:00:00 UTC تا زمان ارائه شده توسط باز می گرداندنمونه تاریخ به روز شده.
-Try it
+متد <code dir = "ltr">sethours()</code> ساعت ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند و تعداد میلی ثانیه را از 11 دیا 1348 00:00:00 UTC تا زمان ارائه شده توسط باز می گرداندنمونه تاریخ به روز شده.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -44,7 +44,7 @@ setHours(hoursValue, minutesValue, secondsValue, msValue);
 
 # توضیحات
 
-اگر پارامترهای `MinuteValue` ، `SecondsValue` و `MSValue` را مشخص نکردید ، مقادیر برگشتی از روشهای <code dir="ltr">GetMinutes()</code> ، <code dir="ltr">GetConds()</code> و <code dir="ltr">GetMilliseconds()</code> استفاده می شود.
+اگر پارامترهای `MinuteValue` ، `SecondsValue` و `MSValue` را مشخص نکردید ، مقادیر برگشتی از متدهای <code dir="ltr">GetMinutes()</code> ، <code dir="ltr">GetConds()</code> و <code dir="ltr">GetMilliseconds()</code> استفاده می شود.
 
 اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir="ltr">Sethours()</code> سعی می کند اطلاعات تاریخ را در شیء تاریخ بر این اساس به روز کند.به عنوان مثال ، اگر از 100 برای `SecondsValue` استفاده کنید ، دقیقه ها توسط 1 (`MinuteValue + 1`) افزایش می یابد و 40 برای ثانیه استفاده می شود.
 

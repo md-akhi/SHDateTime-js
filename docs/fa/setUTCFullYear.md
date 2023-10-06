@@ -9,8 +9,8 @@ url: setUTCFullYear
 
 # SHDate.setUTCFullYear()
 
-روش <code dir = "ltr">setUtcallyEar()</code> سال کامل را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
-Try it
+متد <code dir = "ltr">setUtcallyEar()</code> سال کامل را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setUTCFullYear" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -40,7 +40,7 @@ setUTCFullYear(yearValue, monthValue, dayValue);
 
 # توضیحات
 
-اگر پارامترهای `MustValue` و `DayValue` را مشخص نکنید ، از مقادیر برگشتی از روشهای <code dir="ltr">GetUtCmonth()</code> و <code dir="ltr">GetUtcdate()</code> استفاده می شود.
+اگر پارامترهای `MustValue` و `DayValue` را مشخص نکنید ، از مقادیر برگشتی از متدهای <code dir="ltr">GetUtCmonth()</code> و <code dir="ltr">GetUtcdate()</code> استفاده می شود.
 
 اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir="ltr">SetUtcallyEar()</code> سعی در به روزرسانی سایر پارامترها و اطلاعات تاریخ در موضوع تاریخ بر این اساس دارد.به عنوان مثال ، اگر 15 را برای `MustValue` مشخص کنید ، سال توسط 1 (`yourValue + 1`) افزایش می یابد و 3 برای ماه استفاده می شود.
 

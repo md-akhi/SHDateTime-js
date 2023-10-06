@@ -9,8 +9,8 @@ url: setMilliseconds
 
 # SHDate.setMilliseconds()
 
-روش <code dir = "ltr">setMilliseconds()</code> میلی ثانیه را برای تاریخ مشخص با توجه به زمان محلی تعیین می کند.
-Try it
+متد <code dir = "ltr">setMilliseconds()</code> میلی ثانیه را برای تاریخ مشخص با توجه به زمان محلی تعیین می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setMilliseconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

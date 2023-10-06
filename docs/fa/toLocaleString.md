@@ -9,12 +9,12 @@ url: toLocaleString
 
 # SHDate.toLocaleString()
 
-روش <code dir = "ltr">tolocalestring()</code> رشته ای را با بازنمایی حساس به زبان از این تاریخ برمی گرداند.
+متد <code dir = "ltr">tolocalestring()</code> رشته ای را با بازنمایی حساس به زبان از این تاریخ برمی گرداند.
 
 آرگومان های محلی و گزینه های جدید به برنامه ها اجازه می دهند زبانی را که از کنوانسیون های قالب بندی استفاده می شود ، مشخص کنند و رفتار عملکرد را سفارشی کنند.
 
 در پیاده سازی های قدیمی ، که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محل مورد استفاده و شکل رشته برگشتی کاملاً وابسته به اجرای است.
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toLocaleString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

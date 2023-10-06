@@ -9,10 +9,10 @@ url: toUTCString
 
 # SHDate.toUTCString()
 
-روش <code dir = "ltr">toutcstring()</code> با استفاده از منطقه زمانی `UTC` ، تاریخ را به یک رشته تبدیل می کند.
+متد <code dir = "ltr">toutcstring()</code> با استفاده از منطقه زمانی `UTC` ، تاریخ را به یک رشته تبدیل می کند.
 
 بر اساس `RFC7231` و مطابق با `ECMA-262` `TOUTCSTRING` اصلاح شده ، می تواند در نسخه 2021 مقادیر منفی داشته باشد
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toUTCString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

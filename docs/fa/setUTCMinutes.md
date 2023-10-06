@@ -9,8 +9,8 @@ url: setUTCMinutes
 
 # SHDate.setUTCMinutes()
 
-روش <code dir = "ltr">setutcminutes()</code> دقیقه ها را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
-Try it
+متد <code dir = "ltr">setutcminutes()</code> دقیقه ها را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setUTCMinutes" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -40,7 +40,7 @@ setUTCMinutes(minutesValue, secondsValue, msValue);
 
 # توضیحات
 
-اگر پارامترهای `SecondsValue` و `MSValue` را مشخص نکنید ، از مقادیر برگشتی از روشهای <code dir="ltr">GetUtcseconds()</code> و <code dir="ltr">GetUtcmilliseconds()</code> استفاده می شود.
+اگر پارامترهای `SecondsValue` و `MSValue` را مشخص نکنید ، از مقادیر برگشتی از متدهای <code dir="ltr">GetUtcseconds()</code> و <code dir="ltr">GetUtcmilliseconds()</code> استفاده می شود.
 
 اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir="ltr">SetUtcminutes()</code> سعی در به روزرسانی اطلاعات تاریخ در موضوع تاریخ بر این اساس دارد.به عنوان مثال ، اگر از 100 برای `SecondsValue` استفاده کنید ، دقیقه ها توسط 1 (`MinuteValue + 1`) افزایش می یابد و 40 برای ثانیه استفاده می شود.
 

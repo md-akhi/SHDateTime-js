@@ -9,11 +9,9 @@ url: "@@toPrimitive"
 
 # SHDate[@@toPrimitive]
 
-<div dir="rtl" style="text-align: right;">
-
 متد <code dir="ltr">[@@toPrimitive]()</code> یک شی `Date` را به یک مقدار اولیه تبدیل می کند.
 
-<div >
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toPrimitive" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 
@@ -31,13 +29,13 @@ SHDate()[Symbol.toPrimitive](hint);
 
 # توضیحات
 
-روش <code dir = "ltr"> [@@toPrimitive]() </code> شیء تاریخ یک مقدار بدوی را برمی گرداند ، یعنی از نوع یا نوع رشته.
+متد <code dir = "ltr">[@@toPrimitive]()</code> شیء تاریخ یک مقدار بدوی را برمی گرداند ، یعنی از نوع یا نوع رشته.
 
-اگر اشاره رشته یا پیش فرض باشد ، <code dir = "ltr"> [@@toPrimitive]() </code> سعی می کند با روش `toString` تماس بگیرد.اگر ویژگی `toString` وجود نداشته باشد ، سعی می کند با روش مقدار مقدار تماس بگیرد و اگر مقدار OF وجود نداشته باشد ، <Code DIR = "ltr"> [@@toPrimitive]() </code> یک نوع را پرتاب می کند.
+اگر اشاره رشته یا پیش فرض باشد ، <code dir = "ltr">[@@toPrimitive]()</code> سعی می کند با متد `toString` تماس بگیرد.اگر ویژگی `toString` وجود نداشته باشد ، سعی می کند با متد مقدار مقدار تماس بگیرد و اگر مقدار OF وجود نداشته باشد ، <Code DIR = "ltr">[@@toPrimitive]()</code> یک نوع را پرتاب می کند.
 
-اگر اشاره شماره باشد ، <code dir = "ltr"> [@@toPrimitive]() </code> ابتدا سعی می کند با ارزش تماس بگیرید ، و اگر این کار از کار بیفتد ، صدا را صدا می کند.
+اگر اشاره شماره باشد ، <code dir = "ltr">[@@toPrimitive]()</code> ابتدا سعی می کند با ارزش تماس بگیرید ، و اگر این کار از کار بیفتد ، صدا را صدا می کند.
 
-`JavaScript` روش <code dir = "ltr"> [@@toPrimitive]() </code> را برای تبدیل یک شی به یک مقدار بدوی فراخوانی می کند.شما به ندرت نیاز به استفاده از <code dir = "ltr"> [@@toPrimitive]() </code> خود را دارید.`JavaScript` هنگام مواجهه با شیئی که در آن مقدار بدوی انتظار می رود ، به طور خودکار آن را فراخوانی می کند.
+`JavaScript` متد <code dir = "ltr">[@@toPrimitive]()</code> را برای تبدیل یک شی به یک مقدار بدوی فراخوانی می کند.شما به ندرت نیاز به استفاده از <code dir = "ltr">[@@toPrimitive]()</code> خود را دارید.`JavaScript` هنگام مواجهه با شیئی که در آن مقدار بدوی انتظار می رود ، به طور خودکار آن را فراخوانی می کند.
 
 متد <code dir="ltr">[@@toPrimitive]()</code> یک مقدار اولیه را برمی‌گرداند که یا از نوع شماره یا رشته نوع است.
 

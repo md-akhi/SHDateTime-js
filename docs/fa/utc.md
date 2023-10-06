@@ -9,8 +9,8 @@ url: UTC
 
 # SHDate.UTC()
 
-روش <code dir = "ltr">shdate.utc()</code> پارامترهای مشابه سازنده تاریخ را می پذیرد ، اما آنها را به عنوان `UTC` رفتار می کند.این تعداد میلی ثانیه از 11 `Dey 1348 ، 00:00:00 UTC` را برمی گرداند.
-Try it
+متد <code dir = "ltr">shdate.utc()</code> پارامترهای مشابه سازنده تاریخ را می پذیرد ، اما آنها را به عنوان `UTC` رفتار می کند.این تعداد میلی ثانیه از 11 `Dey 1348 ، 00:00:00 UTC` را برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=UTC" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -62,8 +62,8 @@ Years between 0 and 99 are converted to a year in the 14th century (1348 + year)
 سالهای بین 0 تا 99 در قرن چهاردهم (1348 + سال) به یک سال تبدیل می شود.به عنوان مثال ، 95 به سال 1395 تبدیل می شود.The U<code dir="ltr"></code>TC() method differs from the Date constructor in two ways:
 rrowش u <code dir = "ltr"> </code> tc () ba saزndhe tharیخ be adw rruش methahahahttette:زمان.
 <code dir = "ltr"> shdate.utc () </code> به جای ایجاد یک شیء تاریخ ، مقدار زمان را به عنوان یک عدد برمی گرداند.
-اگر یک پارامتر خارج از محدوده مورد انتظار باشد ، روش <code dir = "ltr"> utc () </code> پارامترهای دیگر را برای قرار دادن مقدار به روز می کند.به عنوان مثال ، اگر 15 برای ماه استفاده شود ، سال توسط 1 (سال + 1) افزایش می یابد و 3 برای ماه استفاده می شود.
-<code dir="ltr">UTC ()</code> یک روش استاتیک تاریخ است ، بنابراین به عنوان <code dir = "ltr"> shdate.utc () </code> نامیده می شود و نه به عنوان یک روش یک نمونه تاریخ.# نمونه‌ها
+اگر یک پارامتر خارج از محدوده مورد انتظار باشد ، متد <code dir = "ltr"> utc () </code> پارامترهای دیگر را برای قرار دادن مقدار به روز می کند.به عنوان مثال ، اگر 15 برای ماه استفاده شود ، سال توسط 1 (سال + 1) افزایش می یابد و 3 برای ماه استفاده می شود.
+<code dir="ltr">UTC ()</code> یک متد استاتیک تاریخ است ، بنابراین به عنوان <code dir = "ltr"> shdate.utc () </code> نامیده می شود و نه به عنوان یک متد یک نمونه تاریخ.# نمونه‌ها
 
 با استفاده از <code dir = "ltr">shdate.utc()</code>
 بیانیه زیر با استدلال هایی که به عنوان `UTC` به جای محلی رفتار می شود ، یک شیء تاریخ ایجاد می کند:

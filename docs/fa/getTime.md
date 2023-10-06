@@ -9,9 +9,9 @@ url: getTime
 
 # SHDate.getTime()
 
-روش <code dir = "ltr">getTime()</code> تعداد میلی ثانیه از زمان `Ecmascript` را برمی گرداند.
-می توانید از این روش برای کمک به اختصاص تاریخ و زمان به یک شیء تاریخ دیگر استفاده کنید.این روش از نظر عملکردی معادل روش مقدار () است.
-Try it
+متد <code dir = "ltr">getTime()</code> تعداد میلی ثانیه از زمان `Ecmascript` را برمی گرداند.
+می توانید از این متد برای کمک به اختصاص تاریخ و زمان به یک شیء تاریخ دیگر استفاده کنید.این متد از نظر عملکردی معادل متد مقدار () است.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getTime" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

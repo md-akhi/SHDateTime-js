@@ -9,8 +9,8 @@ url: setUTCMilliseconds
 
 # SHDate.setUTCMilliseconds()
 
-روش <code dir = "ltr"> setutcmilliseconds()</code> `milliseconds` را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
-Try it
+متد <code dir = "ltr"> setutcmilliseconds()</code> `milliseconds` را برای یک تاریخ مشخص با توجه به زمان جهانی تعیین می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setUTCMilliseconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

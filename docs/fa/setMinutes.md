@@ -9,8 +9,8 @@ url: setMinutes
 
 # SHDate.setMinutes()
 
-روش <code dir = "ltr">setMinutes()</code> دقیقه ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند.
-Try it
+متد <code dir = "ltr">setMinutes()</code> دقیقه ها را برای یک تاریخ مشخص با توجه به زمان محلی تعیین می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setMinutes" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -40,7 +40,7 @@ setMinutes(minutesValue, secondsValue, msValue);
 
 # توضیحات
 
-اگر پارامترهای `SecondsValue` و `MSValue` را مشخص نکنید ، از مقادیر برگشتی از روشهای <code dir="ltr">GetSeconds()</code> و <code dir="ltr">GetMilliseconds()</code> استفاده می شود.
+اگر پارامترهای `SecondsValue` و `MSValue` را مشخص نکنید ، از مقادیر برگشتی از متدهای <code dir="ltr">GetSeconds()</code> و <code dir="ltr">GetMilliseconds()</code> استفاده می شود.
 
 اگر پارامتری که مشخص کرده اید خارج از محدوده مورد انتظار است ، <code dir="ltr">SetMinutes()</code> سعی می کند اطلاعات تاریخ را در شیء تاریخ بر این اساس به روز کند.به عنوان مثال ، اگر از 100 برای `SecondsValue` استفاده کنید ، دقیقه ها توسط 1 (`MinuteValue + 1`) افزایش می یابد و 40 برای ثانیه استفاده می شود.
 

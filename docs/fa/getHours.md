@@ -11,7 +11,7 @@ url: getHours
 
 متد <code dir="ltr">getHours()</code> ساعت را برای تاریخ مشخص شده، با توجه به زمان محلی برمی گرداند.
 
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

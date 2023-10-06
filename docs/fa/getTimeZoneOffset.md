@@ -9,8 +9,8 @@ url: getTimezoneOffset
 
 # SHDate.getTimezoneOffset()
 
-روش <code dir="ltr">GetTimeZoneOffset()</code> تفاوت ، در عرض چند دقیقه ، بین تاریخی را که در منطقه زمانی UTC ارزیابی شده و همان تاریخ ارزیابی شده در منطقه زمانی محلی را برمی گرداند.
-Try it
+متد <code dir="ltr">GetTimeZoneOffset()</code> تفاوت ، در عرض چند دقیقه ، بین تاریخی را که در منطقه زمانی UTC ارزیابی شده و همان تاریخ ارزیابی شده در منطقه زمانی محلی را برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getTimezoneOffset" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

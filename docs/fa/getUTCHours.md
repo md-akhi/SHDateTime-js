@@ -9,8 +9,8 @@ url: getUTCHours
 
 # SHDate.getUTCHours()
 
-روش <code dir="ltr">getUTCHours()</code> ساعت ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
-Try it
+متد <code dir="ltr">getUTCHours()</code> ساعت ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCHours" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

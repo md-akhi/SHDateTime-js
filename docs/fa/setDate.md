@@ -9,10 +9,10 @@ url: setDate
 
 # SHDate.setDate()
 
-روش <code dir = "ltr">setDate()</code> روز ماه یک نمونه تاریخ معین را بر اساس زمان محلی تغییر می دهد.
+متد <code dir = "ltr">setDate()</code> روز ماه یک نمونه تاریخ معین را بر اساس زمان محلی تغییر می دهد.
 
-برای تغییر روز ماه برای یک نمونه تاریخ معین بر اساس زمان UTC ، از روش <code dir = "ltr">setutcdate()</code> استفاده کنید.
-Try it
+برای تغییر روز ماه برای یک نمونه تاریخ معین بر اساس زمان UTC ، از متد <code dir = "ltr">setutcdate()</code> استفاده کنید.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setDate" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

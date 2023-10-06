@@ -11,7 +11,7 @@ url: getDay
 
 متد <code dir="ltr">getDay()</code> روز هفته را برای تاریخ مشخص شده با توجه به زمان محلی برمی گرداند، جایی که 0 نشان دهنده یکشنبه است. برای روز ماه، به <code dir="ltr">SHDate.prototype.getDate()</code> مراجعه کنید.
 
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getDay" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -37,7 +37,7 @@ var weekday = Xmas95.getDay();
 console.log(weekday); // 1
 ```
 
-توجه: در صورت نیاز، نام کامل یک روز (به عنوان مثال "دوشنبه") را می توان با استفاده از `Intl.DateTimeFormat` با پارامتر گزینه به دست آورد. با استفاده از این روش، بین المللی سازی آسان تر می شود:
+توجه: در صورت نیاز، نام کامل یک روز (به عنوان مثال "دوشنبه") را می توان با استفاده از `Intl.DateTimeFormat` با پارامتر گزینه به دست آورد. با استفاده از این متد، بین المللی سازی آسان تر می شود:
 
 ```js
 var options = { weekday: "long" };

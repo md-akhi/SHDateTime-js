@@ -10,7 +10,7 @@ url: getMonth
 # SHDate.getMonth()
 
 متد <code dir="ltr">GetMonth()</code> ماه را در تاریخ مشخص شده با توجه به زمان محلی ، به عنوان یک مقدار مبتنی بر صفر (جایی که صفر نشانگر ماه اول سال است) برمی گرداند.
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getMonth" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -37,7 +37,7 @@ var month = Xmas95.getMonth();
 console.log(month); // 11
 ```
 
-توجه: در صورت لزوم ، نام کامل یک ماه (به عنوان مثال فارواردین) را می توان با استفاده از <code dir = "ltr">intl.datetimeformat()</code> با یک پارامتر گزینه ها بدست آورد.با استفاده از این روش ، بین المللی سازی آسانتر می شود:
+توجه: در صورت لزوم ، نام کامل یک ماه (به عنوان مثال فارواردین) را می توان با استفاده از <code dir = "ltr">intl.datetimeformat()</code> با یک پارامتر گزینه ها بدست آورد.با استفاده از این متد ، بین المللی سازی آسانتر می شود:
 
 ```js
 var options = { month: "long" };

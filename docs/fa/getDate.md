@@ -10,7 +10,7 @@ url: getDate
 # SHDate.getDate()
 
 <div dir="rtl" style="text-align: right;">
-روش <code dir="ltr">getDate()</code> روز ماه را برای تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
+متد <code dir="ltr">getDate()</code> روز ماه را برای تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 
 امتحان کنید
 

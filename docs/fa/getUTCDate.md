@@ -9,8 +9,8 @@ url: getUTCDate
 
 # SHDate.getUTCDate()
 
-روش <code dir = "ltr">getutcdate()</code> روز ماه (از 1 تا 31) را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
-Try it
+متد <code dir = "ltr">getutcdate()</code> روز ماه (از 1 تا 31) را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCDate" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

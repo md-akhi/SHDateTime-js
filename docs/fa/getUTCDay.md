@@ -9,8 +9,8 @@ url: getUTCDay
 
 # SHDate.getUTCDay()
 
-روش <code dir="ltr">getUTCday()</code> روز هفته را در تاریخ مشخص با توجه به زمان جهانی ، جایی که 0 یکشنبه را نشان می دهد ، برمی گرداند.
-Try it
+متد <code dir="ltr">getUTCday()</code> روز هفته را در تاریخ مشخص با توجه به زمان جهانی ، جایی که 0 یکشنبه را نشان می دهد ، برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCDay" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

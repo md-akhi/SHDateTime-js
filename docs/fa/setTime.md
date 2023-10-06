@@ -9,8 +9,8 @@ url: setTime
 
 # SHDate.setTime()
 
-روش <code dir = "ltr">settime()</code> شیء تاریخ را به زمان نمایش داده شده توسط تعدادی میلی ثانیه از 11 دی 1348 ، 00:00:00 `UTC` تنظیم می کند.
-Try it
+متد <code dir = "ltr">settime()</code> شیء تاریخ را به زمان نمایش داده شده توسط تعدادی میلی ثانیه از 11 دی 1348 ، 00:00:00 `UTC` تنظیم می کند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=setTime" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -32,7 +32,7 @@ setTime(timeValue);
 
 # توضیحات
 
-برای کمک به اختصاص یک تاریخ و زمان به یک موضوع تاریخ دیگر ، از روش <code dir = "ltr">settime()</code> استفاده کنید.
+برای کمک به اختصاص یک تاریخ و زمان به یک موضوع تاریخ دیگر ، از متد <code dir = "ltr">settime()</code> استفاده کنید.
 
 # نمونه‌ها
 
