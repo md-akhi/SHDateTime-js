@@ -27,8 +27,8 @@ export default class Language {
 	 * @param {string} language
 	 * @return string
 	 */
-	static check(language: string): boolean {
-		return Object.values(Languages).includes(language as Languages);
+	static check(language: any): boolean {
+		return Object.values(Languages).includes(language);
 	}
 
 	/**

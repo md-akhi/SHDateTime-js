@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.0.5
+ * @version Release: 2.0.20
  */
 
 import Word from "./word.js";
@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static version: string = "2.0.5";
+	static version: string = "2.0.20";
 
 	/**
 	 * @type {number[]} days in month without leap year
@@ -120,9 +120,9 @@ export default class SHDate {
 
 	#config: any = {
 		time_zone: "Asia/Tehran",
-		language_Word: "en_US",
-		first_day_of_week: 0,
-		time_server_diff: 0 // miliseconds
+		word_language: Word.LANGUAGE,
+		first_day_of_week: Word.FIRST_DAY_OF_WEEK,
+		time_difference_server: 0 // miliseconds
 	};
 
 	/**
@@ -203,7 +203,9 @@ export default class SHDate {
 	 * @returns {null}
 	 */
 	#updateTime(): void {
-		this.#date.setTime(this.#date.getTime() + this.#config.time_server_diff);
+		this.#date.setTime(
+			this.#date.getTime() + this.#config.time_difference_server
+		);
 		return;
 	}
 
@@ -814,7 +816,7 @@ export default class SHDate {
 					str.push(this.#daysInMonth(year, month));
 					break;
 				case "Dow": // day Of Week
-					str.push(weekday.toString().padStart(2, "0"));
+					str.push(`${weekday}`.padStart(2, "0"));
 					break;
 				case "dow":
 					str.push(weekday);
@@ -828,8 +830,8 @@ export default class SHDate {
 				case "Woy": //week Of Year
 					const [iso_week, iso_year] = this.#weekOfYear(year, month, date);
 					str.push([
-						iso_week.toString().padStart(2, "0"),
-						iso_year.toString().padStart(4, "0")
+						`${iso_week}`.padStart(2, "0"),
+						`${iso_year}`.padStart(4, "0")
 					]);
 					break;
 				case "woy": //week Of Year
@@ -839,7 +841,7 @@ export default class SHDate {
 					str.push(
 						Word.getDayShortNames(
 							weekday,
-							this.#config.language_Word,
+							this.#config.word_language,
 							this.#config.first_day_of_week
 						)
 					);
@@ -848,45 +850,45 @@ export default class SHDate {
 					str.push(
 						Word.getDayFullNames(
 							weekday,
-							this.#config.language_Word,
+							this.#config.word_language,
 							this.#config.first_day_of_week
 						)
 					);
 					break;
 				case "efn": //meridien full names
 					str.push(
-						Word.getMeridienFullNames(hours, this.#config.language_Word)
+						Word.getMeridienFullNames(hours, this.#config.word_language)
 					);
 					break;
 				case "esn": //meridien short names
 					str.push(
-						Word.getMeridienShortNames(hours, this.#config.language_Word)
+						Word.getMeridienShortNames(hours, this.#config.word_language)
 					);
 					break;
 				case "mfn": //month full names
-					str.push(Word.getMonthFullNames(month, this.#config.language_Word));
+					str.push(Word.getMonthFullNames(month, this.#config.word_language));
 					break;
 				case "msn": //month short names
-					str.push(Word.getMonthShortNames(month, this.#config.language_Word));
+					str.push(Word.getMonthShortNames(month, this.#config.word_language));
 					break;
 				case "asn": //animals full names
-					str.push(Word.getAnimalsFullNames(year, this.#config.language_Word));
+					str.push(Word.getAnimalsFullNames(year, this.#config.word_language));
 					break;
 				case "csn": //constellations full names
 					str.push(
-						Word.getConstellationsFullNames(month, this.#config.language_Word)
+						Word.getConstellationsFullNames(month, this.#config.word_language)
 					);
 					break;
 				case "ssn": //season full names
-					str.push(Word.getSeasonFullNames(month, this.#config.language_Word));
+					str.push(Word.getSeasonFullNames(month, this.#config.word_language));
 					break;
 				case "osn": //solstice full names
 					str.push(
-						Word.getSolsticeFullNames(month, date, this.#config.language_Word)
+						Word.getSolsticeFullNames(month, date, this.#config.word_language)
 					);
 					break;
 				case "sun": //suffix names
-					str.push(Word.getSuffixNames(date, this.#config.language_Word));
+					str.push(Word.getSuffixNames(date, this.#config.word_language));
 					break;
 				case "LPS":
 				case "lps":
@@ -1404,7 +1406,7 @@ export default class SHDate {
 	 */
 	public setTime(time: number): number {
 		//if (isUTC) return this.#date.setUTCTime(time);
-		this.#date.setTime(time + this.#config.time_server_diff);
+		this.#date.setTime(time + this.#config.time_difference_server);
 		this.#updateDate();
 		return this.getTime();
 	}
@@ -1691,7 +1693,7 @@ export default class SHDate {
 	 */
 	public [Symbol.toPrimitive](hint: string | number): string | number {
 		if (hint === "number") {
-			return this.getTime() - this.#config.time_server_diff;
+			return this.getTime() - this.#config.time_difference_server;
 		} else if (hint === "string" || hint === "default") {
 			return `SHDate ${this.toString()}`;
 		}
@@ -1729,14 +1731,14 @@ export default class SHDate {
 	 * Set The time difference with the server - miliseconds
 	 */
 	setTimeServerDiff(time: number): void {
-		this.#config.time_server_diff = time;
+		this.#config.time_difference_server = time;
 		this.#date.setTime(this.#date.getTime() - time);
 	}
 	/**
 	 * Get The time difference with the server - miliseconds
 	 */
 	getTimeServerDiff(): number {
-		return this.#config.time_server_diff;
+		return this.#config.time_difference_server;
 	}
 
 	/**
@@ -1758,7 +1760,7 @@ export default class SHDate {
 	 * @returns void
 	 */
 	setLanguage(language: string): void {
-		if (Word.check(language)) this.#config.language_Word = language;
+		if (Word.check(language)) this.#config.word_language = language;
 		else throw new Error("setLanguage: " + language + " not found");
 	}
 	/**
@@ -1766,7 +1768,7 @@ export default class SHDate {
 	 * @returns Language words (en_US, fa_IR, ...)
 	 */
 	getLanguage(): string {
-		return this.#config.language_Word;
+		return this.#config.word_language;
 	}
 
 	/**
@@ -1835,9 +1837,9 @@ export default class SHDate {
 	public setConfig(...args: any[]): void {
 		const config = { ...this.#config, ...args };
 		this.setFirstDayOfWeek(config.first_day_of_week);
-		this.setLanguage(config.language_Word);
+		this.setLanguage(config.word_language);
 		this.setTimeZone(config.time_zone);
-		this.setTimeServerDiff(config.time_server_diff);
+		this.setTimeServerDiff(config.time_difference_server);
 	}
 
 	#isFalse(data: number | false, defaultData: any): number {
