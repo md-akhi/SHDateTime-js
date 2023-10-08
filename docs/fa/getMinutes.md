@@ -29,11 +29,11 @@ getMinutes();
 # نمونه‌ها
 
 با استفاده از <code dir="ltr">getMinutes()</code>
-عبارت دوم زیر مقدار 15 را به متغیر دقیقه بر اساس مقدار شیء `Date Xmas95` اختصاص می دهد.
+عبارت دوم زیر مقدار 15 را به متغیر دقیقه بر اساس مقدار شیء `Date min15` اختصاص می دهد.
 
 ```js
-var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
-var minutes = Xmas95.getMinutes();
+var min15 = new SHDate("Dey 25, 1390 23:15:30");
+var minutes = min15.getMinutes();
 
 console.log(minutes); // 15
 ```

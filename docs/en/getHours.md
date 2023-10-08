@@ -29,11 +29,11 @@ An integer number, between 0 and 23, representing the hour for the given date ac
 # Examples
 
 Using getHours()
-The second statement below assigns the value 23 to the variable hours, based on the value of the Date object Xmas95.
+The second statement below assigns the value 23 to the variable hours, based on the value of the `Date` object `h23`.
 
 ```js
-let Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
-let hours = Xmas95.getHours();
+let h23 = new SHDate("Dey 25, 1390 23:15:30");
+let hours = h23.getHours();
 
 console.log(hours); // 23
 ```

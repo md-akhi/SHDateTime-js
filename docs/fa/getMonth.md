@@ -28,22 +28,22 @@ getMonth();
 # نمونه‌ها
 
 با استفاده از <code dir="ltr">getMonth()</code>
-بیانیه دوم در زیر مقدار 11 را به ماه متغیر ، بر اساس مقدار موضوع تاریخ `XMAS95` اختصاص می دهد.
+بیانیه دوم در زیر مقدار 11 را به ماه متغیر ، بر اساس مقدار موضوع تاریخ `mon9` اختصاص می دهد.
 
 ```js
-var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
-var month = Xmas95.getMonth();
+var mon9 = new SHDate("Dey 25, 1390 23:15:30");
+var month = mon9.getMonth();
 
-console.log(month); // 11
+console.log(month); // 9
 ```
 
 توجه: در صورت لزوم ، نام کامل یک ماه (به عنوان مثال فارواردین) را می توان با استفاده از <code dir = "ltr">intl.datetimeformat()</code> با یک پارامتر گزینه ها بدست آورد.با استفاده از این متد ، بین المللی سازی آسانتر می شود:
 
 ```js
 var options = { month: "long" };
-console.log(new Intl.DateTimeFormat("en-US", options).format(Xmas95));
+console.log(new Intl.DateTimeFormat("en-US", options).format(mon9));
 // Esfand
-console.log(new Intl.DateTimeFormat("de-DE", options).format(Xmas95));
+console.log(new Intl.DateTimeFormat("de-DE", options).format(mon9));
 // Dezember
 ```
 

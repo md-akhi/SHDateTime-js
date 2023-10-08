@@ -28,11 +28,11 @@ getSeconds();
 # نمونه‌ها
 
 با استفاده از <code dir="ltr">GetEconds()</code>
-بیانیه دوم در زیر مقدار 30 را به ثانیه متغیر اختصاص می دهد ، بر اساس مقدار تاریخ تاریخ `XMAS95`.
+بیانیه دوم در زیر مقدار 30 را به ثانیه متغیر اختصاص می دهد ، بر اساس مقدار تاریخ تاریخ `sec30`.
 
 ```js
-var Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
-var seconds = Xmas95.getSeconds();
+var sec30 = new SHDate("Dey 25, 1390 23:15:30");
+var seconds = sec30.getSeconds();
 
 console.log(seconds); // 30
 ```

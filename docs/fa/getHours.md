@@ -29,11 +29,11 @@ getHours();
 # نمونه‌ها
 
 استفاده از <code dir="ltr">getHours()</code>
-عبارت دوم زیر مقدار 23 را بر اساس مقدار شیء `Date Xmas95` به متغیر ساعت اختصاص می دهد.
+عبارت دوم زیر مقدار 23 را بر اساس مقدار شیء `Date h23` به متغیر ساعت اختصاص می دهد.
 
 ```js
-let Xmas95 = new SHDate("Dey 25, 1390 23:15:30");
-let hours = Xmas95.getHours();
+let h23 = new SHDate("Dey 25, 1390 23:15:30");
+let hours = h23.getHours();
 
 console.log(hours); // 23
 ```
