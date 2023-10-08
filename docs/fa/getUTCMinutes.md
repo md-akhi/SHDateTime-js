@@ -1,7 +1,16 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: getUTCMinutes
+---
+
 # SHDate.getUTCMinutes()
 
-روش <code dir = "ltr"> getutcminutes () </code> دقیقه ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
-Try it
+متد <code dir = "ltr">getutcminutes()</code> دقیقه ها را در تاریخ مشخص شده با توجه به زمان جهانی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getUTCMinutes" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -14,9 +23,11 @@ getUTCMinutes();
 
 # مقدار برگشتی
 
-یک عدد.اگر شیء تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح بین 0 تا 59 ، نمایندگی صورتجلسه در تاریخ معین با توجه به زمان جهانی است.در غیر این صورت ، NAN اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
+یک عدد.اگر شیء تاریخ یک تاریخ معتبر را نشان دهد ، یک عدد صحیح بین 0 تا 59 ، نمایندگی صورتجلسه در تاریخ معین با توجه به زمان جهانی است.در غیر این صورت ، `NAN` اگر موضوع تاریخ یک تاریخ معتبر را نشان نمی دهد.
+
 # نمونه‌ها
-با استفاده از <code dir = "ltr"> getutcminutes () </code>
+
+با استفاده از <code dir = "ltr">getutcminutes()</code>
 مثال زیر بخش دقیقه از زمان فعلی را به دقیقه های متغیر اختصاص می دهد.
 
 ```js

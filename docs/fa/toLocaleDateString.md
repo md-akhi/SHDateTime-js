@@ -1,9 +1,18 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: toLocaleDateString
+---
+
 # SHDate.toLocaleDateString()
 
-روش <code dir = "ltr"> tolocaledatestring () </code> رشته ای را با بازنمایی حساس به زبان از قسمت تاریخ تاریخ مشخص شده در منطقه زمانی عامل کاربر باز می گرداند.
+متد <code dir = "ltr">tolocaledatestring()</code> رشته ای را با بازنمایی حساس به زبان از قسمت تاریخ تاریخ مشخص شده در منطقه زمانی عامل کاربر باز می گرداند.
 
 آرگومان های محلی و گزینه ها به برنامه ها اجازه می دهند زبانی را که از کنوانسیون های قالب بندی استفاده می شود ، مشخص کنند و اجازه می دهند تا رفتار عملکرد را سفارشی کنند.در پیاده سازی های قدیمی ، که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محلی که مورد استفاده قرار می گیرد و شکل رشته برگشتی کاملاً وابسته است.
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toLocaleDateString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -20,7 +29,7 @@ toLocaleDateString(locales, options);
 
 آرگومان های محلی و گزینه ها رفتار عملکرد را سفارشی می کنند و به برنامه ها اجازه می دهند زبانی را که از کنوانسیون های قالب بندی استفاده می شود ، مشخص کنند.در پیاده سازی ها ، که آرگومان های محلی و گزینه ها را نادیده می گیرند ، محلی که مورد استفاده قرار می گیرد و شکل رشته برگشتی کاملاً وابسته است.
 
-برای جزئیات بیشتر در مورد این پارامترها و نحوه استفاده از آنها ، به سازنده <code dir = "ltr"> intl.datetimeformat () </code> مراجعه کنید.
+برای جزئیات بیشتر در مورد این پارامترها و نحوه استفاده از آنها ، به سازنده <code dir = "ltr">intl.datetimeformat()</code> مراجعه کنید.
 
 مقدار پیش فرض برای هر خاصیت مؤلفه تاریخ مشخص نشده است ، اما اگر روزهای هفته ، سال ، ماه ، روز همه تعریف نشده باشد ، در آن زمان ، سال ، ماه و روز فرض می شود که "عددی" هستند.
 
@@ -30,11 +39,11 @@ toLocaleDateString(locales, options);
 
 # Performance
 
-هنگام قالب بندی تعداد زیادی از تاریخ ها ، بهتر است یک شیء intl.datetimeformat ایجاد کرده و از عملکرد ارائه شده توسط ویژگی فرمت آن استفاده کنید.
+هنگام قالب بندی تعداد زیادی از تاریخ ها ، بهتر است یک شیء `intl.datetimeformat` ایجاد کرده و از عملکرد ارائه شده توسط ویژگی فرمت آن استفاده کنید.
 
 # نمونه‌ها
 
-با استفاده از <code dir = "ltr"> tolocaledatestring () </code>
+با استفاده از <code dir = "ltr">tolocaledatestring()</code>
 در استفاده اساسی بدون مشخص کردن یک مکان ، یک رشته فرمت شده در محل پیش فرض و با گزینه های پیش فرض بازگردانده می شود.
 
 ```js
@@ -47,7 +56,7 @@ console.log(date.toLocaleDateString());
 ```
 
 بررسی پشتیبانی از آرگومان های محلی و گزینه ها
-آرگومان های محلی و گزینه ها هنوز در همه مرورگرها پشتیبانی نمی شوند.برای بررسی اینکه آیا یک اجرای از قبل از آنها پشتیبانی می کند ، می توانید از الزامی که برچسب های زبان غیرقانونی با یک استثناء RangeRror رد می شوند ، استفاده کنید:
+آرگومان های محلی و گزینه ها هنوز در همه مرورگرها پشتیبانی نمی شوند.برای بررسی اینکه آیا یک اجرای از قبل از آنها پشتیبانی می کند ، می توانید از الزامی که برچسب های زبان غیرقانونی با یک استثناء `RangeRror` رد می شوند ، استفاده کنید:
 
 ```js
 function toLocaleDateStringSupportsLocales() {
@@ -99,8 +108,10 @@ console.log(date.toLocaleDateString("ja-JP-u-ca-japanese"));
 console.log(date.toLocaleDateString(["ban", "id"]));
 // → "20/12/2012"
 ```
+
 با استفاده از گزینه ها
-نتایج ارائه شده توسط tolocaledatestring () با استفاده از آرگومان گزینه ها قابل تنظیم است:
+نتایج ارائه شده توسط <code dir="ltr">tolocaledatestring()</code> با استفاده از آرگومان گزینه ها قابل تنظیم است:
+
 ```js
 const date = new SHDate(SHDate.UTC(1402, 11, 20, 3, 0, 0));
 
@@ -122,7 +133,3 @@ console.log(date.toLocaleDateString("en-US", options));
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-
-```
-
-```

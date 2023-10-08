@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: setHours
+---
+
 # SHDate.setHours()
 
 The setHours() method sets the hours for a specified date according to local time, and returns the number of milliseconds since 11 Dey 1348 00:00:00 UTC until the time represented by the updated Date instance.

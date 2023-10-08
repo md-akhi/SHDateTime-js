@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: getUTCSeconds
+---
+
 # SHDate.getUTCSeconds()
 
 The getUTCSeconds() method returns the seconds in the specified date according to universal time.

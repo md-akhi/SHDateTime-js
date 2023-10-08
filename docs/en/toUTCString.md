@@ -1,3 +1,21 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: constructor
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.toUTCString()
 
 The toUTCString() method converts a date to a string, using the UTC time zone.

@@ -1,3 +1,21 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: constructor
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.toJSON()
 
 The toJSON() method returns a string representation of the Date object.

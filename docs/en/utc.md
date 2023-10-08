@@ -1,3 +1,21 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: constructor
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.UTC()
 
 The SHDate.UTC() method accepts parameters similar to the Date constructor, but treats them as UTC. It returns the number of milliseconds since 11 Dey 1348, 00:00:00 UTC.

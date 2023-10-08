@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: setSeconds
+---
+
 # SHDate.setSeconds()
 
 The setSeconds() method sets the seconds for a specified date according to local time.

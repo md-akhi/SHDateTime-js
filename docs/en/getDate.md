@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: getDate
+---
+
 # SHDate.getDate()
 
 The <code>getDate()</code> method returns the day of the month for the specified date according to local time.
@@ -19,11 +28,11 @@ An integer number, between 1 and 31, representing the day of the month for the g
 
 # Examples
 
-The second statement below assigns the value 25 to the variable day, based on the value of the Date object Xmas95.
+The second statement below assigns the value 25 to the variable day, based on the value of the `Date` object `day25`.
 
 ```js
-var Xdey95 = new SHDate("Dey 25, 1390 23:15:30");
-var day = Xdey95.getDate();
+var day25 = new SHDate("Dey 25, 1390 23:15:30");
+var day = day25.getDate();
 
 console.log(day); // 25
 ```

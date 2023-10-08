@@ -1,7 +1,16 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: getMilliseconds
+---
+
 # SHDate.getMilliseconds()
 
-روش <code dir="ltr">getMilliseconds()</code> میلی ثانیه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
-Try it
+متد <code dir="ltr">getMilliseconds()</code> میلی ثانیه ها را در تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getMilliseconds" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

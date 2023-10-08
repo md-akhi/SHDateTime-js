@@ -1,7 +1,16 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: toISOString
+---
+
 # SHDate.toISOString()
 
-روش <code dir = "ltr"> </code> toisostring () رشته ای را با فرمت ISO ساده شده (ISO 8601) باز می گرداند ، که همیشه 24 یا 27 کاراکتر طول دارد (yyyy-mm-ddthh: mm: ss.ssszیا yyyyyyyy-mm-ddthh: به ترتیب MM: SSSSSZ).منطقه زمانی همیشه صفر UTC جبران می شود ، همانطور که توسط پسوند "z" مشخص شده است.
-Try it
+متد <code dir = "ltr">toisostring()</code> رشته ای را با فرمت `ISO` ساده شده (`ISO 8601`) باز می گرداند ، که همیشه 24 یا 27 کاراکتر طول دارد (`yyyy-mm-ddthh: mm: ss.sssz`یا به ترتیب :`yyyyyyyy-mm-ddthhMM: SSSSSZ`).منطقه زمانی همیشه صفر `UTC` جبران می شود ، همانطور که توسط پسوند "z" مشخص شده است.
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=toISOString" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>

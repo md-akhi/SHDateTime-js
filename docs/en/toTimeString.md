@@ -1,3 +1,21 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: constructor
+---
+
+---
+
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+
+---
+
 # SHDate.toTimeString()
 
 The toTimeString() method returns the time portion of a Date object in human readable form in English.

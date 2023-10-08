@@ -1,7 +1,15 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: getDate
+---
+
 # SHDate.getDate()
 
-<div dir="rtl" style="text-align: right;">
-روش <code dir="ltr">getDate()</code> روز ماه را برای تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
+متد <code dir="ltr">getDate()</code> روز ماه را برای تاریخ مشخص شده بر اساس زمان محلی برمی گرداند.
 
 امتحان کنید
 
@@ -14,21 +22,23 @@
 getDate();
 ```
 
-<div dir="rtl" style="text-align: right;">
+# پارامتر
+
+ندارد.
 
 # مقدار برگشتی
 
-یک عدد صحیح، بین 1 و 31، که نشان دهنده روز ماه برای تاریخ معین بر اساس زمان محلی است.
+یک عدد صحیح، بین 1 و 31، که نشان دهنده روز ماه برای تاریخ معین بر اساس زمان محلی است. اگر تاریخ نامعتبر باشد `NaN` را برمی‌گرداند.
 
 # نمونه‌ها
 
-عبارت دوم زیر مقدار 25 را به متغیر روز بر اساس مقدار شیء Date Xmas95 اختصاص می دهد.
+### استفاده از <code dir="ltr">getDate()</code>
 
-</div>
+عبارت دوم زیر مقدار 25 را به متغیر روز بر اساس مقدار شیء `Date` `dey90` اختصاص می دهد.
 
 ```js
-var Xdey95 = new SHDate("Dey 25, 1390 23:15:30");
-var day = Xdey95.getDate();
+var dey90 = new SHDate("Dey 25, 1390 23:15:30");
+var day = dey90.getDate();
 
 console.log(day); // 25
 ```

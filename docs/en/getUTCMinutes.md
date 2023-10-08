@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: getUTCMinutes
+---
+
 # SHDate.getUTCMinutes()
 
 The getUTCMinutes() method returns the minutes in the specified date according to universal time.

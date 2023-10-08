@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: getTime
+---
+
 # SHDate.getTime()
 
 The getTime() method returns the number of milliseconds since the ECMAScript epoch.

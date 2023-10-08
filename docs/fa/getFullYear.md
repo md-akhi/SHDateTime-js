@@ -1,10 +1,19 @@
+---
+layout: page
+language: fa-IR
+contentLanguage: fa
+direction: rtl
+sidebar: sidebarMethod
+url: getFullYear
+---
+
 # SHDate.getFullYear()
 
 متد <code dir="ltr">getFullYear()</code> سال تاریخ مشخص شده را بر اساس زمان محلی برمی گرداند.
 
 به جای متد <code dir="ltr">getYear()</code> از این متد استفاده کنید.
 
-Try it
+امتحان کنید
 
 <iframe style="width: 830px; height: 460px;" src="/SHDateTime-js/examples/live.html?function=getFullYear" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
 <br/>
@@ -15,21 +24,34 @@ Try it
 getFullYear();
 ```
 
+# پارامتر
+
+ندارد.
+
 # مقدار برگشتی
 
-با توجه به زمان محلی ، تعدادی مربوط به سال تاریخ مشخص شده است.
+یک عدد صحیح که نشان دهنده سال برای تاریخ معین بر اساس زمان محلی است. اگر تاریخ نامعتبر باشد `NaN` را برمی‌گرداند.
 
 # توضیحات
 
-مقدار برگردانده شده توسط <code dir = "ltr"> getClyear () </code> یک عدد مطلق است.برای تاریخ های بین سالهای 1000 و 9999 ، <code dir = "ltr"> getCressear () </code> یک شماره چهار رقمی را به عنوان مثال ، 1390 باز می گرداند. از این عملکرد استفاده کنید تا مطمئن شوید سال پس از سال 2000 مطابقت داردبشر
+برخلاف <code dir = "ltr">getYear()</code>، مقدار بازگشتی توسط <code dir = "ltr">getFullYear()</code> یک عدد مطلق است. برای تاریخ‌های بین سال‌های 1000 و 9999، <code dir = "ltr">getFullYear()</code> یک عدد چهار رقمی را برمی‌گرداند، به عنوان مثال، 1402.
 
 # نمونه‌ها
 
-مثال زیر مقدار چهار رقمی سال جاری را به سال متغیر اختصاص می دهد.
+مثال زیر مقدار چهار رقمی سال جاری را به متغیر اختصاص می دهد.
 
 ```js
 var today = new SHDate();
 var year = today.getFullYear();
+```
+
+متغیر `fullYear` بر اساس مقدار شیء `Date` `year402` دارای مقدار 1402 است.
+
+```js
+const year402 = new SHDate("1402-12-25T23:15:30");
+const fullYear = year402.getFullYear();
+
+console.log(fullYear); // 1402
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear

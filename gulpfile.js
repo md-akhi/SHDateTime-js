@@ -31,7 +31,7 @@ const infoShort = [
  */
 function combineTS() {
 	return gulp
-		.src(["src/*.ts"])
+		.src(["./src/languages/**/*.ts", "./src/parser/**/*.ts", "src/*.ts"])
 		.pipe(concat("shdate.ts"))
 		.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
 		.pipe(replace(/export default (function|class)/g, "$1"))
@@ -39,7 +39,6 @@ function combineTS() {
 		.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
 		.pipe(replace(/ Language_([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguage_$1"))
 		.pipe(replace(/class (Language|Word)/g, "class SHDate$1"))
-		.pipe(replace(/extends (Language)/g, "extends SHDate$1"))
 		.pipe(replace(/(Language\.|Word\.)/g, "SHDate$1"))
 		.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
 		.pipe(replace(/ Languages.([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguages.$1"))

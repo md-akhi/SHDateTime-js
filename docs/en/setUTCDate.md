@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: setUTCDate
+---
+
 # SHDate.setUTCDate()
 
 The setUTCDate() method changes the day of the month of a given Date instance, based on UTC time.

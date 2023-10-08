@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: setDate
+---
+
 # SHDate.setDate()
 
 The setDate() method changes the day of the month of a given Date instance, based on local time.

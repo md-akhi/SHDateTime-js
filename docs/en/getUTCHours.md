@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: getUTCHours
+---
+
 # SHDate.getUTCHours()
 
 The getUTCHours() method returns the hours in the specified date according to universal time.
