@@ -1,8 +1,7 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import * as UntilString from "./Until-String.js";
-import * as UntilDate from "./Until-Date.js";
+import { solarDate } from "./Until-Date.js";
 import SHDate from "../src/base.js";
 
 const merge = (target: any, source: any) => {
@@ -15,8 +14,8 @@ const merge = (target: any, source: any) => {
 	Object.assign(target || {}, source);
 	return target;
 };
-const Until = merge(UntilString.DateString, UntilDate.solarDate);
-// console.log(Until);
+//const UntilDate = merge(UntilDateString.DateString, UntilDateDate.solarDate);
+// console.log(UntilDate);
 const tests = (isarray = false, ...data: any) => {
 	if (!isarray) console.log(data);
 	else if (JSON.stringify(data[0]) !== JSON.stringify(data[1]))
@@ -25,8 +24,8 @@ const tests = (isarray = false, ...data: any) => {
 
 describe("String", () => {
 	it("correctly Date Day Of Year YYYY.doy", () => {
-		Until.forEach(({ sdata }: any) => {
-			const sdate = new SHDate(sdata.DateDoy);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const sdate = new SHDate(sdatastring.DateDoy);
 			const doy = sdate.getDayOfYear();
 			const year = sdate.getFullYear();
 			assert.equal(year, sdata.solar[0]);
@@ -35,8 +34,8 @@ describe("String", () => {
 	});
 
 	it("correctly Date Week Of Year YYYY-Ww-D", () => {
-		Until.forEach(({ sdata }: any) => {
-			const sdate = new SHDate(sdata.DateWoy);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const sdate = new SHDate(sdatastring.DateWoy);
 			const woy = sdate.getWeekOfYear();
 			const year = sdate.getFullYear();
 			const dow = sdate.getDay();
@@ -47,16 +46,16 @@ describe("String", () => {
 	});
 
 	it("correctly Date YYYY-MM-DD HH:II:SS", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
+		solarDate.forEach(({ sdata, sdate, sdatastring }: any) => {
 			const [
-				untilYears,
-				untilMonths,
-				untilDays,
-				untilHours,
-				untilMinutes,
-				untilSeconds
+				UntilDateYears,
+				UntilDateMonths,
+				UntilDateDays,
+				UntilDateHours,
+				UntilDateMinutes,
+				UntilDateSeconds
 			] = sdate;
-			const date = new SHDate(sdata.DateTime);
+			const date = new SHDate(sdatastring.DateTime);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
 			const days = date.getDate();
@@ -66,20 +65,20 @@ describe("String", () => {
 			assert.deepEqual(
 				[years, months, days, hours, minutes, seconds],
 				[
-					untilYears,
-					untilMonths,
-					untilDays,
-					untilHours,
-					untilMinutes,
-					untilSeconds
+					UntilDateYears,
+					UntilDateMonths,
+					UntilDateDays,
+					UntilDateHours,
+					UntilDateMinutes,
+					UntilDateSeconds
 				]
 			);
 		});
 	});
 
 	it("correctly Date YYYY/MM/DD ", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateWithSlash);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateWithSlash);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
@@ -88,30 +87,30 @@ describe("String", () => {
 	});
 
 	it("correctly Date YYYY ", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateYear);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateYear);
 			const years = date.getFullYear();
 			assert.equal(years, sdata.solar[0]);
 		});
 	});
 
 	it("correctly Date YYYYMMDD ", () => {
-		Until.forEach(({ sdata, sdate }: any) => {
-			const [untilYears, untilMonths, untilDays] = sdate;
-			const date = new SHDate(sdata.DateWithOutSlash);
+		solarDate.forEach(({ sdata, sdate, sdatastring }: any) => {
+			const [UntilDateYears, UntilDateMonths, UntilDateDays] = sdate;
+			const date = new SHDate(sdatastring.DateWithOutSlash);
 			const years = date.getFullYear();
 			const months = date.getMonth() + 1;
 			const days = date.getDate();
 			assert.deepEqual(
 				[years, months, days],
-				[untilYears, untilMonths, untilDays]
+				[UntilDateYears, UntilDateMonths, UntilDateDays]
 			);
 		});
 	});
 
 	it("correctly Date Abbr YYYY[.-]M ", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateYearMonth);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateYearMonth);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
@@ -124,16 +123,16 @@ describe("String", () => {
 	});
 
 	it("correctly Date Abbr M ", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateMonth);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateMonth);
 			const months = date.getMonth();
 			assert.equal(months, sdata.solar[1]);
 		});
 	});
 
 	it("correctly Date Abbr DD, M YYYY", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateAber);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateAber);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
@@ -143,8 +142,8 @@ describe("String", () => {
 	});
 
 	it("correctly Date Abbr DayName , DD M YYYY", () => {
-		Until.forEach(({ sdata }: any) => {
-			const date = new SHDate(sdata.DateAberWithDate);
+		solarDate.forEach(({ sdata, sdatastring }: any) => {
+			const date = new SHDate(sdatastring.DateAberWithDate);
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();

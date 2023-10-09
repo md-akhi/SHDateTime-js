@@ -1,8 +1,8 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import * as UntilDate from "./Until-Date.js";
-import * as UntilLeapYear from "./Until-Leap-Year.js";
+import { solarDate } from "./Until-Date.js";
+import { leapYear } from "./Until-Leap-Year.js";
 import SHDate from "../src/base.js";
 
 describe("now()", () => {
@@ -13,7 +13,7 @@ describe("now()", () => {
 
 describe("Convert Date Gregorian() And Solar()", () => {
 	it("correctly leap & leaps", () => {
-		UntilLeapYear.leapYear.forEach(({ sdata }) => {
+		leapYear.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [leaps] = date.format("LPS");
@@ -23,7 +23,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 	});
 
 	it("correctly gregorian to solar", () => {
-		UntilDate.solarDate.forEach(({ gdata, sdata }) => {
+		solarDate.forEach(({ gdata, sdata }) => {
 			const [gyear, gmonth, gday] = gdata.gregorian;
 			let gdate = new Date(gyear, gmonth, gday);
 			let sdate = new SHDate(gdate.getTime());
@@ -35,7 +35,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 	});
 
 	it("correctly solar to gregorian", () => {
-		UntilDate.solarDate.forEach(({ sdata, gdata }) => {
+		solarDate.forEach(({ sdata, gdata }) => {
 			const [year, month, day] = sdata.solar;
 			let sdate = new SHDate(year, month, day);
 			let gdate = new Date(sdate.getTime());
@@ -50,7 +50,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 describe("get in/of date", () => {
 	describe("week", () => {
 		it("correctly day of week (dow)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				assert.equal(date.getDay(), sdata.Dow);
@@ -58,7 +58,7 @@ describe("get in/of date", () => {
 		});
 
 		it("correctly week of year (woy)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				const [woy] = date.format("woy");
@@ -67,7 +67,7 @@ describe("get in/of date", () => {
 		});
 
 		it("correctly weeks in year (wiy)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				const [Wiys] = date.format("wiy");
@@ -78,7 +78,7 @@ describe("get in/of date", () => {
 
 	describe("year", () => {
 		it("correctly days in year (diy)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				const [Diy] = date.format("diy");
@@ -87,7 +87,7 @@ describe("get in/of date", () => {
 		});
 
 		it("correctly day of year (doy)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				const [Doy] = date.format("doy");
@@ -98,7 +98,7 @@ describe("get in/of date", () => {
 
 	describe("month", () => {
 		it("correctly days in month (dim)", () => {
-			UntilDate.solarDate.forEach(({ sdata }) => {
+			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
 				const [Dim] = date.format("dim");
@@ -110,7 +110,7 @@ describe("get in/of date", () => {
 
 describe("set function", () => {
 	it("correctly setWeek", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			// [iw, iy] = sdata.Woy;
 			let date = new SHDate();
 			date.setHours(0, 0, 0, 0);
@@ -120,7 +120,7 @@ describe("set function", () => {
 	});
 
 	it("correctly setdateOfDayOfYear", () => {
-		UntilDate.solarDate.forEach(({ sdata, stime, gtime }) => {
+		solarDate.forEach(({ sdata, stime, gtime }) => {
 			// [year, month, day] = sdata.solar;
 			let date = new SHDate();
 			date.setHours(0, 0, 0, 0);
