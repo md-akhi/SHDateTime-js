@@ -75,35 +75,35 @@ describe("get in/of date", () => {
 			});
 		});
 	});
+});
 
-	describe("year", () => {
-		it("correctly days in year (diy)", () => {
-			solarDate.forEach(({ sdata }) => {
-				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
-				const [Diy] = date.format("diy");
-				assert.equal(Diy, sdata.Diy);
-			});
-		});
-
-		it("correctly day of year (doy)", () => {
-			solarDate.forEach(({ sdata }) => {
-				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
-				const [Doy] = date.format("doy");
-				assert.equal(Doy, sdata.Doy);
-			});
+describe("year", () => {
+	it("correctly days in year (diy)", () => {
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [Diy] = date.format("diy");
+			assert.equal(Diy, sdata.Diy);
 		});
 	});
 
-	describe("month", () => {
-		it("correctly days in month (dim)", () => {
-			solarDate.forEach(({ sdata }) => {
-				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
-				const [Dim] = date.format("dim");
-				assert.equal(Dim, sdata.Dim);
-			});
+	it("correctly day of year (doy)", () => {
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [Doy] = date.format("doy");
+			assert.equal(Doy, sdata.Doy);
+		});
+	});
+});
+
+describe("month", () => {
+	it("correctly days in month (dim)", () => {
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [Dim] = date.format("dim");
+			assert.equal(Dim, sdata.Dim);
 		});
 	});
 });

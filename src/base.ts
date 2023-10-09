@@ -1466,6 +1466,7 @@ export default class SHDate {
 		hours: number,
 		minutes: number,
 		seconds: number,
+		milliseconds: number,
 		H12: boolean = false
 	): boolean {
 		return !(
@@ -1474,14 +1475,26 @@ export default class SHDate {
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||
-			seconds > 59
+			seconds > 59 ||
+			milliseconds < 0 ||
+			milliseconds > 999
 		);
 	}
-	public checkTime(hours: number, minutes: number, seconds: number): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, false);
+	public checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds, false);
 	}
-	public checkTime12(hours: number, minutes: number, seconds: number): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, true);
+	public checkTime12(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds, true);
 	}
 
 	/**
