@@ -3,6 +3,8 @@ import { it, describe } from "mocha";
 
 import { solarDate } from "./Until-Date.js";
 import { leapYear } from "./Until-Leap-Year.js";
+import { checkDate, checkTime, checkWeek } from "./Until-Check.js";
+
 import SHDate from "../src/base.js";
 
 describe("now()", () => {
@@ -131,11 +133,39 @@ describe("set function", () => {
 
 	describe("correctly date & time & week", () => {
 		describe("check date & time & week", () => {
-			it("correctly checkdate", () => {});
-			it("correctly checktime", () => {});
-			it("correctly checkTime12", () => {});
-			it("correctly checkweek", () => {});
+			it("correctly checkdate", () => {
+				checkDate.forEach(({ date, check }) => {
+					const [year, month, day] = date;
+					let sdate = new SHDate();
+					assert.equal(sdate.checkDate(year, month, day), check);
+				});
+			});
+
+			it("correctly checktime", () => {
+				checkTime.forEach(({ time, check24 }) => {
+					const [h24, min, sec, ms] = time;
+					let date = new SHDate();
+					assert.equal(date.checkTime(h24, min, sec, ms), check24);
+				});
+			});
+
+			it("correctly checkTime12", () => {
+				checkTime.forEach(({ time, check12 }) => {
+					const [h24, min, sec, ms] = time;
+					let date = new SHDate();
+					assert.equal(date.checkTime12(h24, min, sec, ms), check12);
+				});
+			});
+
+			it("correctly checkweek", () => {
+				checkWeek.forEach(({ week, check }) => {
+					const [year, wk, day] = week;
+					let sdate = new SHDate();
+					assert.equal(sdate.checkWeek(year, wk, day), check);
+				});
+			});
 		});
+
 		describe("correctly date & time Correction", () => {
 			it("correctly dateCorrection", () => {});
 			it("correctly timeCorrection", () => {});

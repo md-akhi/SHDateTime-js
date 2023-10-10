@@ -677,9 +677,9 @@ export default class SHDate {
 		let time: number, doy: number;
 		time = hours * 3600000 + minute * 60000 + second * 1000 + millisecond;
 		millisecond = time % 1000;
-		second = (time / 1000) % 60;
-		minute = (time / 60000) % 60;
-		hours = (time / 3600000) % 24;
+		second = Math.trunc(time / 1000) % 60;
+		minute = Math.trunc(time / 60000) % 60;
+		hours = Math.trunc(time / 3600000) % 24;
 		doy = Math.trunc(time / 86400000);
 		return [doy, hours, minute, second, millisecond];
 	}
@@ -696,6 +696,16 @@ export default class SHDate {
 		const doy = this.#dayOfYear(month, day);
 		return this.#dateOfDayOfYear(year, doy);
 	}
+
+	/**
+	 * week correction
+	 *
+	 * @param  int year
+	 * @param  int week
+	 * @param  int day
+	 * @return array
+	 */
+	weekCorrection(year: number, week: number, day: number = 1) {}
 
 	/**
 	 * Get date/time information
