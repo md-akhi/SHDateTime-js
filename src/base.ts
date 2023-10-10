@@ -656,10 +656,11 @@ export default class SHDate {
 	/**
 	 * time correction
 	 *
-	 * @param  int hours
-	 * @param  int minute
-	 * @param  int second
-	 * @param  int millisecond
+	 * @param  {number} hours
+	 * @param  {number} minute
+	 * @param  {number} second
+	 * @param  {number} millisecond
+	 * @param  {number} day of year
 	 * @return array
 	 */
 	timeCorrection(
@@ -681,18 +682,30 @@ export default class SHDate {
 		minute = Math.trunc(time / 60000) % 60;
 		hours = Math.trunc(time / 3600000) % 24;
 		doy = Math.trunc(time / 86400000);
-		return [doy, hours, minute, second, millisecond];
+		return [hours, minute, second, millisecond, doy];
 	}
 
 	/**
 	 * date correction
 	 *
-	 * @param  int year
-	 * @param  int month
-	 * @param  int day
+	 * @param  {number} year
+	 * @param  {number} month
+	 * @param  {number} day
 	 * @return array
 	 */
 	dateCorrection(year: number, month: number = 0, day: number = 1) {
+		month++;
+		if (month < 1)
+			do {
+				year--;
+				month += 12;
+			} while (month < 1);
+		else if (month > 12)
+			do {
+				year++;
+				month -= 12;
+			} while (month > 12);
+		month--;
 		const doy = this.#dayOfYear(month, day);
 		return this.#dateOfDayOfYear(year, doy);
 	}
@@ -700,16 +713,116 @@ export default class SHDate {
 	/**
 	 * week correction
 	 *
-	 * @param  int year
-	 * @param  int week
-	 * @param  int day
+	 * @param  {number} year
+	 * @param  {number} week
+	 * @param  {number} day
 	 * @return array
 	 */
-	weekCorrection(year: number, week: number, day: number = 1) {}
+	weekCorrection(year: number, week: number, day: number = 1) {
+		const [y4, month, date] = this.#weekOfDay(year, week, day);
+		const [iw, iy] = this.#weekOfYear(y4, month, date);
+		const dow = this.#dayOfWeek(y4, month, date);
+		return [iy, iw, dow];
+	}
+
+	/**
+	 * Validate a date
+	 * @param {number} year Year of the date
+	 * @param {number} month Month of the date
+	 * @param {number} date Date of the date
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkDate(year: number, month: number, date: number): boolean {
+		return !(
+			year < 1 ||
+			year > 1700 /* 3,500,000 */ ||
+			month < 0 ||
+			month > 11 ||
+			date < 1 ||
+			date > this.#daysInMonth(year, month)
+		);
+	}
+
+	/**
+	 * Validate a time
+	 * @param {number} hours Hour of the time
+	 * @param {number} minutes Minutes of the time
+	 * @param {number} seconds Seconds of the time
+	 * @param {number} milliseconds Milliseconds of the time
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	static checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number,
+		H12: boolean = false
+	): boolean {
+		return !(
+			hours < 0 ||
+			(H12 ? hours > 11 : hours > 23) ||
+			minutes < 0 ||
+			minutes > 59 ||
+			seconds < 0 ||
+			seconds > 59 ||
+			milliseconds < 0 ||
+			milliseconds > 999
+		);
+	}
+
+	/**
+	 * Validate a time H24
+	 * @param {number} hours Hour of the time
+	 * @param {number} minutes Minutes of the time
+	 * @param {number} seconds Seconds of the time
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds, false);
+	}
+
+	/**
+	 * Validate a time H12
+	 * @param {number} hours Hour of the time
+	 * @param {number} minutes Minutes of the time
+	 * @param {number} seconds Seconds of the time
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime12(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds, true);
+	}
+
+	/**
+	 * Validate a week
+	 * @param year  Year of the weeks
+	 * @param week  Week of the weeks
+	 * @param day  Day of the weeks
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkWeek(year: number, week: number, day: number): boolean {
+		return !(
+			year < 1 ||
+			year > 10000 /* 3,500,000 */ ||
+			week < 1 ||
+			week > this.#weeksInYear(year) ||
+			day < 0 ||
+			day > 7
+		);
+	}
 
 	/**
 	 * Get date/time information
-	 * @param   int  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
+	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
 	 * @return  object  an associative object of information related to the timestamp.
 	 */
 	#getDates(timestamp: any = this.getTime(), isUTC: boolean = false) {
@@ -1445,84 +1558,6 @@ export default class SHDate {
 	 */
 	public valueOf(): number {
 		return this.#date.valueOf();
-	}
-
-	/**
-	 * Validate a date
-	 * @param {number} year Year of the date
-	 * @param {number} month Month of the date
-	 * @param {number} date Date of the date
-	 * @returns {boolean} TRUE if valid; otherwise FALSE
-	 */
-	public checkDate(year: number, month: number, date: number): boolean {
-		return !(
-			year < 1 ||
-			year > 1700 /* 3,500,000 */ ||
-			month < 0 ||
-			month > 11 ||
-			date < 1 ||
-			date > this.#daysInMonth(year, month)
-		);
-	}
-
-	/**
-	 * Validate a time
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @returns {boolean} TRUE if valid; otherwise FALSE
-	 */
-	static checkTime(
-		hours: number,
-		minutes: number,
-		seconds: number,
-		milliseconds: number,
-		H12: boolean = false
-	): boolean {
-		return !(
-			hours < 0 ||
-			(H12 ? hours > 11 : hours > 23) ||
-			minutes < 0 ||
-			minutes > 59 ||
-			seconds < 0 ||
-			seconds > 59 ||
-			milliseconds < 0 ||
-			milliseconds > 999
-		);
-	}
-	public checkTime(
-		hours: number,
-		minutes: number,
-		seconds: number,
-		milliseconds: number
-	): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, milliseconds, false);
-	}
-	public checkTime12(
-		hours: number,
-		minutes: number,
-		seconds: number,
-		milliseconds: number
-	): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, milliseconds, true);
-	}
-
-	/**
-	 * Validate a week
-	 * @param year  Year of the weeks
-	 * @param week  Week of the weeks
-	 * @param day  Day of the weeks
-	 * @returns {boolean} TRUE if valid; otherwise FALSE
-	 */
-	public checkWeek(year: number, week: number, day: number): boolean {
-		return !(
-			year < 1 ||
-			year > 1700 /* 3,500,000 */ ||
-			week < 1 ||
-			week > this.#weeksInYear(year) ||
-			day < 1 ||
-			day > 7
-		);
 	}
 
 	/**
