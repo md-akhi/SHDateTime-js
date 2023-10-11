@@ -1,3 +1,12 @@
+---
+layout: page
+language: en-US
+contentLanguage: en
+direction: ltr
+sidebar: sidebarMethod
+url: now
+---
+
 # SHDate.now()
 
 The static SHDate.now() method returns the number of milliseconds elapsed since 11 Dey 1348 00:00:00 UTC.

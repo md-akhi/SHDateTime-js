@@ -1,9 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "outDir": "dist",
     "sourceMap": false,
-    "declaration": false
+    "declaration": false,
+    "removeComments": true
   },
   "include": ["tests"]
 }

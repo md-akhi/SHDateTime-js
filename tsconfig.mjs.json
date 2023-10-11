@@ -1,14 +1,15 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "outDir": "dist/mjs",
-    "target": "esnext",
+    "target": "ESNext",
     "sourceMap": true
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "esnext"
+      "module": "ESNext"
     }
   }
 }

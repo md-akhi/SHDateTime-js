@@ -11,15 +11,15 @@ env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 jobs:
-  build-test:
+  build-test: #TEST Packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.x"
       - run: |
-          npm install
+          npm ci
           npm run build --if-present
           npm test
 
@@ -30,18 +30,25 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to NPM Packages
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.x"
+      # Setup .npmrc file to publish to NPM Packages
       - name: Set package registry
+        # With Scop
         run: npm config set @md-akhi:registry https://registry.npmjs.org/
       - name: Npm registry authentication
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
-          npm install
+          npm ci
           npm run build
+          npm publish --access public
+
+      # WithOut Scop
+      - name: Set package registry without -scope
+        run: npm config set registry https://registry.npmjs.org/
+      - run: |
           npm publish --access public
         env:
           NPM_TOKEN: $NPM_TOKEN
@@ -53,18 +60,25 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.x"
+      # Setup .npmrc file to publish to GitHub Packages
       - name: Set package registry
+        # With Scop
         run: npm config set @md-akhi:registry https://npm.pkg.github.com/
       - name: Github package registry authentication
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
-          npm install
+          npm ci
           npm run build
+          npm publish
+
+      # WithOut Scop
+      - name: Set package registry without -scope
+        run: npm config set registry https://npm.pkg.github.com/
+      - run: |
           npm publish
         env:
           GITHUB_TOKEN: $GITHUB_TOKEN

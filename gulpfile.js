@@ -9,23 +9,89 @@ const del = require("del");
 const banner = require("gulp-header");
 const pkg = require("./package.json");
 
+const link = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
+const infoLong = [
+	`/**
+	* In the name of Allah, the Beneficent, the Merciful.
+	* @package ${pkg.name} - ${pkg.description}
+	* @author ${pkg.author}
+	* @link ${link}
+	* @copyright ${pkg.copyright}
+	* @license ${pkg.license} License
+	* @version Release: ${pkg.version}
+	*/
+	`
+].join("\n");
+const infoShort = [
+	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.copyright} | ${pkg.license} License | ${link} */`
+].join("\n");
+
 /**
  * combine all .ts files into one
  */
 function combineTS() {
 	return gulp
-		.src(["src/**/*.ts"])
-		.pipe(concat("shdatetime.ts"))
-		.pipe(replace(/class ([a-z]{2}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
+		.src(["./src/languages/**/*.ts", "./src/parser/**/*.ts", "src/*.ts"])
+		.pipe(concat("shdate.ts"))
 		.pipe(replace(/export default (function|class)/g, "$1"))
-		.pipe(replace(/import [a-zA-z_]* from [0-9a-zA-z_/\.\"]*;/g, " "))
-		.pipe(replace(/ ([a-z]{2}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
-		.pipe(replace(/ Language_([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage_$1"))
-		.pipe(replace(/class (Word)/g, "class SHDate$1"))
-		.pipe(replace(/(Word\.)/g, " SHDate$1"))
+		.pipe(replace(/import [a-zA-Z_]* from [0-9a-zA-Z_/\.\"]*;/g, " "))
+		.pipe(replace(/extends (Language)/g, "extends SHDate$1"))
+		.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
+		.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
+		.pipe(replace(/ Language_([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguage_$1"))
+		.pipe(replace(/\((Languages)\)/g, "(SHDate$1)"))
+		.pipe(replace(/class (Language|Word)/g, "class SHDate$1"))
+		.pipe(replace(/(Language\.|Word\.)/g, "SHDate$1"))
 		.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
-		.pipe(replace(/ Language.([a-z]{2}_[A-Z]{2})/g, " SHDateLanguage.$1"))
+		.pipe(replace(/ Languages.([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguages.$1"))
+		.pipe(replace(/SH(Parser|Lexer|Token)/g, "SHDate$1"))
 		.pipe(gulp.dest("src/browser"));
+}
+
+function setDescription() {
+	/**
+	 * In the name of Allah, the Beneficent, the Merciful. | \* In the name of Allah, the Beneficent, the Merciful\./im;
+	 */
+	return gulp
+		.src(["src/**/*.ts"])
+		.pipe(
+			replace(
+				/\* @(package( [\w\/\-\,\{\}@]+)+)/g,
+				`* @package ${pkg.name} - ${pkg.description}`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(author( [\w\/\-\,\{\}@<>\.\(\):]+)+)/g,
+				`* @author ${pkg.author}`
+			)
+		)
+		.pipe(replace(/\* @(link( [\w:\/\.\|#-]+)+)/g, `* @link ${link}`))
+		.pipe(
+			replace(
+				/\* @(copyright( [\w\d.\(\)\-\,]+)+)/g,
+				`* @copyright ${pkg.copyright}`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(license( [\w\d:\/.\(\)\-]+)+)/g,
+				`* @license ${pkg.license} License`
+			)
+		)
+		.pipe(
+			replace(
+				/\* @(version( [\w\d:\/\.\-]+)+)/g,
+				`* @version Release: ${pkg.version}`
+			)
+		)
+		.pipe(
+			replace(
+				/version: string = "([\w\d:\/\.\-]+)"/g,
+				`version: string = "${pkg.version}"`
+			)
+		)
+		.pipe(gulp.dest("src/"));
 }
 
 function moveDTS() {
@@ -36,44 +102,32 @@ function delDTS() {
 }
 
 function browser() {
-	var infoLong = [
-		"/**",
-		"* In the name of Allah, the Beneficent, the Merciful.",
-		`* @package ${pkg.name} - ${pkg.description}`,
-		`* @author ${pkg.author}`,
-		"* @link http://codehub.akhi.ir/js/SHDateTime",
-		"* @copyright Copyright (C) 2015 - 2022 . All right reserved.",
-		`* @license https://www.gnu.org/licenses/agpl-3.0.en.html ${pkg.license} License`,
-		`* @version Release: ${pkg.version}`,
-		"*/"
-	].join("\n");
-	var infoShort = [
-		`/** In the name of Allah. | ${pkg.name}@${pkg.version} | (C) 2015 - 2022 All right reserved. | ${pkg.license} | http://codehub.akhi.ir/js/SHDateTime */`,
-		""
-	].join("\n");
-
 	return gulp
-		.src("dist/browser/shdatetime.js",{sourcemaps:true})
+		.src("dist/browser/shdate.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
 		.pipe(banner(infoLong))
 		.pipe(gulp.dest("dist/browser"))
+		.pipe(babel({ presets: ["@babel/env"] }))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
 		.pipe(banner(infoShort))
-		.pipe(gulp.dest("./dist/browser",{sourcemaps:"."}));
+		.pipe(gulp.dest("./dist/browser", { sourcemaps: "." }));
 }
 
 function delTSBrowser() {
-	return del(["src/browser","dist/browser/*.d.ts"]);
+	return del(["src/browser", "dist/browser/*.d.ts"]);
 }
 function moveTSBrowser() {
-	return gulp.src(["src/browser/*.ts","dist/browser/*.d.ts"]).pipe(gulp.dest("dist/types"));
+	return gulp
+		.src(["src/browser/*.ts", "dist/browser/*.d.ts"])
+		.pipe(gulp.dest("dist/types"));
 }
 
 /**
  * Run default.
  */
-exports.default = gulp.series(browser,moveTSBrowser, delTSBrowser);
+exports.default = gulp.series(browser, moveTSBrowser, delTSBrowser);
 exports.combineTS = combineTS;
 exports.moveDTS = moveDTS;
 exports.delDTS = delDTS;
+exports.setDescription = setDescription;

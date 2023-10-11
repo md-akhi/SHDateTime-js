@@ -13,11 +13,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "traceResolution": false,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "types": ["node"],
+    "lib": ["ESNext"],
+    "types": ["node", "gulp"],
     "typeRoots": ["node_modules/@types"]
-    // "removeComments": true
   },
   "compileOnSave": false,
   "exclude": ["node_modules", "dist"],

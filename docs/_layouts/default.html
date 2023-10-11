@@ -1,0 +1,33 @@
+<!doctype html>
+<html
+	lang="{% if page.language %}{{ page.language }}{% else %}{{ site.language | default: 'en-US' }}{% endif %}"
+>
+	{% include head.html %}
+
+	<body
+		dir="{% if page.direction %}{{ page.direction }}{% else %}{{ site.direction | default: 'ltr' }}{% endif %}"
+		data-md-color-primary="{{ site.themeColor }}"
+		data-md-color-accent="{{ site.accentColor }}"
+	>
+		<!-- <a id="skip-to-content" href="#content">Skip to the content.</a> -->
+		{% include navigation.html %}
+
+		<div class="md-container">
+			<main class="md-main">
+				<div class="md-main__inner md-grid" data-md-component="container">
+					{% include sidebar.html %}
+					<div id="md-container-pancakes">{{ content }}</div>
+				</div>
+			</main>
+		</div>
+		{% include footer.html %} {% include headers.html %} {% include tags.html %}
+		{% include scrolltop.html %} {% include google-analytics.html %}
+	</body>
+</html>
+<!--
+{% if site.github.is_project_page %}
+<a href="{{  .repository_url }}" class="btn">View on GitHub</a>
+{% endif %} {% if site.show_downloads %}
+<a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
+<a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
+{% endif %} -->
