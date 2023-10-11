@@ -1,12 +1,12 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import * as UntilDate from "./Until-Date.js";
+import { solarDate } from "./Until-Date.js";
 import SHDate from "../src/base.js";
 
 describe("word", () => {
 	it("correctly dsn and dfn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [dsn, dfn] = date.format("dsn=dfn");
@@ -16,7 +16,7 @@ describe("word", () => {
 	});
 
 	it("correctly esn and efn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [esn, efn] = date.format("esn=efn");
@@ -26,7 +26,7 @@ describe("word", () => {
 	});
 
 	it("correctly msn and mfn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [msn, mfn] = date.format("msn=mfn");
@@ -36,7 +36,7 @@ describe("word", () => {
 	});
 
 	it("correctly asn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [asn] = date.format("asn");
@@ -45,7 +45,7 @@ describe("word", () => {
 	});
 
 	it("correctly csn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [csn] = date.format("csn");
@@ -54,7 +54,7 @@ describe("word", () => {
 	});
 
 	it("correctly ssn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [ssn] = date.format("ssn");
@@ -63,7 +63,7 @@ describe("word", () => {
 	});
 
 	it("correctly osn", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [osn] = date.format("osn");
@@ -72,7 +72,7 @@ describe("word", () => {
 	});
 
 	it("correctly sun", () => {
-		UntilDate.solarDate.forEach(({ sdata }) => {
+		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
 			let date = new SHDate(year, month, day);
 			const [sun] = date.format("sun");

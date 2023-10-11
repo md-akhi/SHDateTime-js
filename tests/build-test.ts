@@ -1,5 +1,6 @@
 import SHDate from "../src/base";
 
+let shdate = new SHDate();
 function padstring(str: any, pad: number = 2) {
 	return `${str}`.padStart(pad, "0");
 }
@@ -7,254 +8,51 @@ function strtoint(str: string | number) {
 	return (str as any) * 1;
 }
 
-for (let year = 1200; year <= 1700; year += 20) {
-	[
-		[1, 1],
-		[1, 2],
-		[1, 3],
-		[1, 4],
-		[1, 5],
-		[1, 6],
-		[1, 7],
-		[1, 15],
-		[1, 29],
-		[1, 30],
-		[1, 31],
+[0, 1, 2, 11, 12, 13, 23, 24, 25].forEach((H24) => {
+	[0, 1, 2, 20, 59, 60, 61].forEach((min) => {
+		[0, 1, 2, 20, 59, 60, 61].forEach((sec) => {
+			[0, 1, 2, 300, 500, 998, 999, 1000, 1001].forEach((ms) => {
+				console.log(
+					`{
+						time:[${H24},${min},${sec},${ms}],
+						correction:[${shdate.timeCorrection(H24, min, sec, ms)}],
+						check24:${SHDate.checkTime(H24, min, sec, ms)},
+						check12:${SHDate.checkTime(H24, min, sec, ms, true)}
+				},`
+				);
+			});
+		});
+	});
+});
 
-		[2, 1],
-		[2, 2],
-		[2, 15],
-		[2, 30],
-		[2, 31],
+console.log(`\\**************** split **************** `);
 
-		[3, 1],
-		[3, 2],
-		[3, 15],
-		[3, 30],
-		[3, 31],
-
-		[4, 1],
-		[4, 2],
-		[4, 15],
-		[4, 30],
-		[4, 31],
-
-		[5, 1],
-		[5, 2],
-		[5, 15],
-		[5, 30],
-		[5, 31],
-
-		[6, 1],
-		[6, 2],
-		[6, 15],
-		[6, 29],
-		[6, 30],
-
-		[7, 1],
-		[7, 2],
-		[7, 15],
-		[7, 29],
-		[7, 30],
-
-		[8, 1],
-		[8, 2],
-		[8, 15],
-		[8, 29],
-		[8, 30],
-
-		[9, 1],
-		[9, 2],
-		[9, 15],
-		[9, 29],
-		[9, 30],
-
-		[10, 1],
-		[10, 2],
-		[10, 15],
-		[10, 29],
-		[10, 30],
-
-		[11, 1],
-		[11, 2],
-		[11, 15],
-		[11, 29],
-		[11, 30],
-
-		[12, 1],
-		[12, 2],
-		[12, 3],
-		[12, 4],
-		[12, 15],
-		[12, 25],
-		[12, 26],
-		[12, 27],
-		[12, 28],
-		[1, 2],
-		[1, 3],
-		[1, 4],
-		[1, 5],
-		[1, 6],
-		[1, 7],
-		[1, 15],
-		[1, 29],
-		[1, 30],
-		[1, 31],
-
-		[2, 1],
-		[2, 2],
-		[2, 15],
-		[2, 30],
-		[2, 31],
-
-		[3, 1],
-		[3, 2],
-		[3, 15],
-		[3, 30],
-		[3, 31],
-
-		[4, 1],
-		[4, 2],
-		[4, 15],
-		[4, 30],
-		[4, 31],
-
-		[5, 1],
-		[5, 2],
-		[5, 15],
-		[5, 30],
-		[5, 31],
-
-		[6, 1],
-		[6, 2],
-		[6, 15],
-		[6, 29],
-		[6, 30],
-
-		[7, 1],
-		[7, 2],
-		[7, 15],
-		[7, 29],
-		[7, 30],
-
-		[8, 1],
-		[8, 2],
-		[8, 15],
-		[8, 29],
-		[8, 30],
-
-		[9, 1],
-		[9, 2],
-		[9, 15],
-		[9, 29],
-		[9, 30],
-
-		[10, 1],
-		[10, 2],
-		[10, 15],
-		[10, 29],
-		[10, 30],
-
-		[11, 1],
-		[11, 2],
-		[11, 15],
-		[11, 29],
-		[11, 30],
-
-		[12, 1],
-		[12, 2],
-		[12, 3],
-		[12, 4],
-		[12, 15],
-		[12, 25],
-		[12, 26],
-		[12, 27],
-		[12, 28],
-		[12, 29],
-		[12, 30]
-	].forEach(([month, day]) => {
-		let shdate = new SHDate(year, month - 1, day);
-		const [
-			years,
-			months,
-			days,
-			hours,
-			minutes,
-			seconds,
-			milliseconds,
-			dow,
-			diy,
-			doy,
-			dim,
-			wiy,
-			[woyw, woyy],
-			dsn,
-			msn,
-			dfn,
-			efn,
-			esn,
-			mfn,
-			asn,
-			csn,
-			ssn,
-			osn,
-			sun,
-			leaps
-		] = shdate.format(
-			"yy=mm=dd=hh=ii=ss=ms=dow=diy=doy=dim=wiy=woy=dsn=msn=dfn=efn=esn=mfn=asn=csn=ssn=osn=sun=lps"
-		);
-
-		let gdate = new Date(shdate.getTime());
-		const [gyears, gmonths, gdays, ghours, gminutes, gseconds, gdow] = [
-			gdate.getFullYear(),
-			gdate.getMonth(),
-			gdate.getDate(),
-			gdate.getHours(),
-			gdate.getMinutes(),
-			gdate.getSeconds(),
-			gdate.getDay()
-		];
-		if (month == 12 && day !== parseInt(days)) {
-			console.log("");
-		} else
+[0, 1, 2, 1200, 1390, 1405, 1699, 1700, 1701].forEach((year) => {
+	[-1, 0, 1, 6, 11, 12].forEach((month) => {
+		[0, 1, 2, 15, 29, 30, 31, 32].forEach((day) => {
 			console.log(
 				`{
-					sdate:[${years},${
-					strtoint(months) + 1
-				},${days},${hours},${minutes},${seconds},${milliseconds}],
-				sdata:{
-					solar:[${years},${months},${days}],
-					DateTime:"${padstring(years, 4)}-${padstring(
-					strtoint(months) + 1,
-					2
-				)}-${padstring(days, 2)} ${padstring(hours, 2)}:${padstring(
-					minutes,
-					2
-				)}:${padstring(seconds, 2)}",
-				DateAber:"${padstring(days, 2)} ${msn} ${padstring(years)}",
-				DateMonth:"${msn}",
-				DateYearMonth:"${padstring(years, 4)}${month % 2 & 0 ? "." : "-"}${msn}",
-				DateYear:"${padstring(years, 4)}",
-				DateAberWithDate:"${dsn} ${padstring(days, 2)} ${msn} ${padstring(years, 4)}",
-				DateDoy:"${padstring(years, 4)}.${padstring(doy, 3)}",
-				DateWoy:"${padstring(woyy)}W${padstring(woyw)}-${dow + 1}" ,
-				DateWithSlash:"${padstring(years, 4)}/${padstring(
-					strtoint(months) + 1,
-					2
-				)}/${padstring(days, 2)}" ,
-				DateWithOutSlash:"${padstring(years, 4)}${padstring(
-					strtoint(months) + 1,
-					2
-				)}${padstring(days, 2)}" },
-				stime:${shdate.getTime()},
-					gdate:[${gyears},${
-					gmonths * 1 + 1
-				},${gdays},${ghours},${gminutes},${gseconds},${milliseconds}],
-				gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,
-				gtime:${gdate.getTime()}
-				gdata:{gregorian:[${gyears},${gmonths},${gdays}]} ,
-				gtime:${gdate.getTime()}
+					date:[${year},${month},${day}],
+					correction:[${shdate.dateCorrection(year, month, day)}],
+					check:${shdate.checkDate(year, month, day)}
 			},`
 			);
+		});
 	});
-}
+});
+
+console.log(`\\**************** split **************** `);
+
+[0, 1, 2, 1200, 1390, 1405, 1699, 1700, 1701].forEach((year) => {
+	[0, 1, 2, 20, 51, 52, 53, 54].forEach((week) => {
+		[0, 1, 2, 3, 4, 5, 6, 7, 8].forEach((day) => {
+			console.log(
+				`{
+					week:[${year},${week},${day}],
+					correction:[${shdate.weekCorrection(year, week, day)}],
+					check:${shdate.checkWeek(year, week, day)}
+				},`
+			);
+		});
+	});
+});
