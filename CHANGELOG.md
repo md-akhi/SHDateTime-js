@@ -1,3 +1,12 @@
+## 2.1.12 (2023-10-11)
+
+
+### Bug Fixes
+
+* **ci:** اصلاح ci ([d3ec101](https://github.com/md-akhi/SHDateTime-js/commits/d3ec10107559241fa5aa6853a72a78fde6379522))
+
+
+
 ## 2.1.11 (2023-10-11)
 
 
