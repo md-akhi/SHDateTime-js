@@ -716,23 +716,22 @@ export default class SHDate {
 	}
 
 	/**
-	 * Validate a time
+	 * Validate a time H24
 	 * @param {number} hours Hour of the time
 	 * @param {number} minutes Minutes of the time
 	 * @param {number} seconds Seconds of the time
 	 * @param {number} milliseconds Milliseconds of the time (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
-	static checkTime(
+	public static checkTime(
 		hours: number,
 		minutes: number,
 		seconds: number,
-		milliseconds: number = 0,
-		H12: boolean = false
+		milliseconds: number = 0
 	): boolean {
 		return !(
 			hours < 0 ||
-			(H12 ? hours > 11 : hours > 23) ||
+			hours > 23 ||
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||
@@ -743,35 +742,29 @@ export default class SHDate {
 	}
 
 	/**
-	 * Validate a time H24
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @returns {boolean} TRUE if valid; otherwise FALSE
-	 */
-	public checkTime(
-		hours: number,
-		minutes: number,
-		seconds: number,
-		milliseconds: number
-	): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, milliseconds, false);
-	}
-
-	/**
 	 * Validate a time H12
 	 * @param {number} hours Hour of the time
 	 * @param {number} minutes Minutes of the time
 	 * @param {number} seconds Seconds of the time
+	 * @param {number} milliseconds Milliseconds of the time (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
-	public checkTime12(
+	public static checkTime12(
 		hours: number,
 		minutes: number,
 		seconds: number,
 		milliseconds: number
 	): boolean {
-		return SHDate.checkTime(hours, minutes, seconds, milliseconds, true);
+		return !(
+			hours < 0 ||
+			hours > 11 ||
+			minutes < 0 ||
+			minutes > 59 ||
+			seconds < 0 ||
+			seconds > 59 ||
+			milliseconds < 0 ||
+			milliseconds > 999
+		);
 	}
 
 	/**
