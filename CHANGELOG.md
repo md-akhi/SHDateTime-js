@@ -1,3 +1,12 @@
+## 2.1.11 (2023-10-11)
+
+
+### Bug Fixes
+
+* **ci:** اصلاح npm ci به npm install ([4f9818e](https://github.com/md-akhi/SHDateTime-js/commits/4f9818e8f7ce558427813c961b241818621a57a8))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
