@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: "18.x"
       - run: |
-          npm ci
+          npm install
           npm run build --if-present
           npm test
 
@@ -41,7 +41,7 @@ jobs:
       - name: Npm registry authentication
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
-          npm ci
+          npm install
           npm run build
           npm publish --access public
 
@@ -71,7 +71,7 @@ jobs:
       - name: Github package registry authentication
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
-          npm ci
+          npm install
           npm run build
           npm publish
 
