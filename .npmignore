@@ -3,6 +3,7 @@
 .github
 node_modules
 docs
+docs/**/*
 src
 tests
 coverage
