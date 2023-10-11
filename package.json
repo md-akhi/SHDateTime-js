@@ -1,6 +1,6 @@
 {
   "name": "shdate",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
