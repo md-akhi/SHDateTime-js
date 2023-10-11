@@ -33,9 +33,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18.x"
+
       # Setup .npmrc file to publish to NPM Packages
+
+      # With Scop
       - name: Set package registry
-        # With Scop
         run: npm config set @md-akhi:registry https://registry.npmjs.org/
       - name: Npm registry authentication
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
@@ -49,6 +51,8 @@ jobs:
       # WithOut Scop
       - name: Set package registry without -scope
         run: npm config set registry https://registry.npmjs.org/
+      - name: Npm registry authentication
+        run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
           npm publish --access public
         env:
@@ -65,9 +69,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18.x"
+
       # Setup .npmrc file to publish to GitHub Packages
+
+      # With Scop
       - name: Set package registry
-        # With Scop
         run: npm config set @md-akhi:registry https://npm.pkg.github.com/
       - name: Github package registry authentication
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
@@ -81,6 +87,8 @@ jobs:
       # WithOut Scop
       - name: Set package registry without -scope
         run: npm config set registry https://npm.pkg.github.com/
+      - name: Github package registry authentication
+        run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
           npm publish
         env:
