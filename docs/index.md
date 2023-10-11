@@ -8,7 +8,7 @@ sidebar: sidebarLanguage
 
 ### In the name of Allah, the Beneficent, the Merciful.
 
-Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
+Date and Time - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 
 [![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
 [![GitHub version release](https://img.shields.io/github/v/release/md-akhi/SHDateTime-js?color=green)](https://github.com/md-akhi/SHDateTime-js/releases)
