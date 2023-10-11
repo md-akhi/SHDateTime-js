@@ -21,6 +21,7 @@ jobs:
       - run: |
           npm install
           npm test
+          git mv docs doc
 
   publish-npm: #NPM Packages
     needs: build-test
