@@ -21,7 +21,6 @@ jobs:
       - run: |
           npm install
           npm test
-          git mv docs doc
 
   publish-npm: #NPM Packages
     needs: build-test
@@ -43,6 +42,7 @@ jobs:
       - name: Npm registry authentication
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
+          git rm -r docs
           npm install
           npm run build
           npm publish --access public
@@ -79,6 +79,7 @@ jobs:
       - name: Github package registry authentication
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
+          git rm -r docs
           npm install
           npm run build
           npm publish
