@@ -15,6 +15,10 @@ Date and Time Related Extensions - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 [![GitHub version dev](https://img.shields.io/github/v/tag/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/tags)
 [![ workflow test](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)](https://github.com/md-akhi/SHDateTime-js/actions)
 ![ workflow publish](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)
+[![Static Badge npm](https://img.shields.io/badge/shdate-npm-red)](https://www.npmjs.com/package/shdate)
+
+<!-- [![Static Badge npm](https://img.shields.io/badge/shdate-yarn-red)](https://yarnpkg.com/package/@md-akhi/shdatetime) -->
+<!-- [![Static Badge npm](https://img.shields.io/badge/shdate-pnpm-red)](https://pnpm.io/package/@md-akhi/shdatetime) -->
 
 # Language
 
