@@ -173,11 +173,11 @@ export default class SHDate {
 		return this;
 	}
 
-	/** //todo  change name to synceDate
-	 * update date
+	/**
+	 * synchronize date
 	 * @returns {null}
 	 */
-	#updateDate(): void {
+	#dateSync(): void {
 		const [UTC_year, UTC_month, UTC_date] = this.#GregorianToSolar(
 			this.#date.getUTCFullYear(),
 			this.#date.getUTCMonth(),
@@ -198,11 +198,11 @@ export default class SHDate {
 		return;
 	}
 
-	/** //todo  change name to synceTime
-	 * update time
+	/**
+	 * synchronize time
 	 * @returns {null}
 	 */
-	#updateTime(): void {
+	#timeSync(): void {
 		this.#date.setTime(
 			this.#date.getTime() + this.#config.time_difference_server
 		);
@@ -442,7 +442,6 @@ export default class SHDate {
 			iy: number; //iso_year
 		const doy: number = this.#dayOfYear(month, date) + 1, // 1 through 366
 			far1weekday: number = this.#dayOfWeek(year, 0, 1, FDOW) + 1; // 1 through 7 - first dow of farvardin
-
 		/* Find if Y M D falls in YearNumber --Y, WeekNumber 52 or 53 */
 		if (doy <= 8 - far1weekday && far1weekday > 4) {
 			iy = --year;
@@ -450,7 +449,7 @@ export default class SHDate {
 				far1weekday == 5 || (far1weekday == 6 && this.#isLeapYear(iy))
 					? 53
 					: 52;
-			return [iw, iy];
+			return [iy, iw];
 		}
 
 		/* Find if Y M D falls in YearNumber ++Y, WeekNumber 1 */
@@ -459,7 +458,7 @@ export default class SHDate {
 		if (doy > this.#daysInYear(year) - esf29weekday && esf29weekday < 4) {
 			iy = ++year;
 			iw = 1;
-			return [iw, iy];
+			return [iy, iw];
 		}
 
 		/* Find if Y M D falls in YearNumber Y, WeekNumber 1 through 52|53 */
@@ -467,7 +466,7 @@ export default class SHDate {
 		//(doy+(7-(this.#dayOfWeek(year,month,date,FDOW)+1))+(far1weekday-1))/7
 		iw = (5 + doy + far1weekday - this.#dayOfWeek(year, month, date, FDOW)) / 7;
 		if (far1weekday > 4) iw--;
-		return [iw, iy];
+		return [iy, iw];
 	}
 
 	/**
@@ -527,7 +526,7 @@ export default class SHDate {
 	 * Get week of day (wod)
 	 * @param year  - solar hijri year
 	 * @param week - solar hijri week
-	 * @param date - solar hijri date
+	 * @param date - solar hijri date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
@@ -539,7 +538,7 @@ export default class SHDate {
 	 * Set week of day (wod)
 	 * @param year  - solar hijri year
 	 * @param week - solar hijri week
-	 * @param date - solar hijri date
+	 * @param date - solar hijri date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	setWeek(year: number, week: number, date: number = 0): number {
@@ -550,7 +549,7 @@ export default class SHDate {
 	/**
 	 * Get date of days of year (dodoy)
 	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (range: 0 - 365)
+	 * @param doy  - solar hijri day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	#dateOfDayOfYear(year: number, doy: number): number[] {
@@ -582,7 +581,7 @@ export default class SHDate {
 	/**
 	 * Set date of days of year (dodoy)
 	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (range: 0 - 365)
+	 * @param doy  - solar hijri day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setdateOfDayOfYear(year: number, doy: number): number {
@@ -593,7 +592,7 @@ export default class SHDate {
 	/**
 	 * Set UTC date of days of year (dodoy)
 	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (range: 0 - 365)
+	 * @param doy  - solar hijri day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setUTCdateOfDayOfYear(year: number, doy: number): number {
@@ -656,17 +655,16 @@ export default class SHDate {
 	/**
 	 * time correction
 	 *
-	 * @param  {number} hours
-	 * @param  {number} minute
-	 * @param  {number} second
-	 * @param  {number} millisecond
-	 * @param  {number} day of year
+	 * @param  {number} hours hours in time
+	 * @param  {number} minute minute in time
+	 * @param  {number} second second in time
+	 * @param  {number} millisecond millisecond in time (default: 0)
 	 * @return array
 	 */
 	timeCorrection(
 		hours: number,
-		minute: number = 0,
-		second: number = 0,
+		minute: number,
+		second: number,
 		millisecond: number = 0
 	) {
 		/**
@@ -688,9 +686,9 @@ export default class SHDate {
 	/**
 	 * date correction
 	 *
-	 * @param  {number} year
-	 * @param  {number} month
-	 * @param  {number} day
+	 * @param  {number} year Year of the date
+	 * @param  {number} month month of the date
+	 * @param  {number} day day of the date
 	 * @return array
 	 */
 	dateCorrection(year: number, month: number = 0, day: number = 1) {
@@ -713,14 +711,14 @@ export default class SHDate {
 	/**
 	 * week correction
 	 *
-	 * @param  {number} year
-	 * @param  {number} week
-	 * @param  {number} day
+	 * @param  {number} year Year of the date
+	 * @param  {number} week Week of the date
+	 * @param  {number} day Day of the date
 	 * @return array
 	 */
-	weekCorrection(year: number, week: number, day: number = 1) {
+	weekCorrection(year: number, week: number, day: number = 0) {
 		const [y4, month, date] = this.#weekOfDay(year, week, day);
-		const [iw, iy] = this.#weekOfYear(y4, month, date);
+		const [iy, iw] = this.#weekOfYear(y4, month, date);
 		const dow = this.#dayOfWeek(y4, month, date);
 		return [iy, iw, dow];
 	}
@@ -748,14 +746,14 @@ export default class SHDate {
 	 * @param {number} hours Hour of the time
 	 * @param {number} minutes Minutes of the time
 	 * @param {number} seconds Seconds of the time
-	 * @param {number} milliseconds Milliseconds of the time
+	 * @param {number} milliseconds Milliseconds of the time (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	static checkTime(
 		hours: number,
 		minutes: number,
 		seconds: number,
-		milliseconds: number,
+		milliseconds: number = 0,
 		H12: boolean = false
 	): boolean {
 		return !(
@@ -822,7 +820,7 @@ export default class SHDate {
 
 	/**
 	 * Get date/time information
-	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of jtime().
+	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of SHDate.now().
 	 * @return  object  an associative object of information related to the timestamp.
 	 */
 	#getDates(timestamp: any = this.getTime(), isUTC: boolean = false) {
@@ -1075,7 +1073,7 @@ export default class SHDate {
 				? this.#date.setUTCFullYear(gyear, gmonth)
 				: this.#date.setFullYear(gyear, gmonth);
 		else this.#date.setFullYear(gyear);
-		this.#updateDate();
+		this.#dateSync();
 		return this.getTime();
 	}
 	/**
@@ -1125,9 +1123,10 @@ export default class SHDate {
 				? this.#date.setUTCMonth(gmonth, gdate)
 				: this.#date.setMonth(gmonth, gdate);
 		else isUTC ? this.#date.setUTCMonth(gmonth) : this.#date.setMonth(gmonth);
-		this.#updateDate();
+		this.#dateSync();
 		return this.getTime();
 	}
+
 	/**
 	 * Sets the month value in the Date object using local time.
 	 * @param {number} month — A numeric value equal to the month. The value for Farvardin is 0, and other month values follow * consecutively.
@@ -1155,9 +1154,10 @@ export default class SHDate {
 			date
 		);
 		isUTC ? this.#date.setUTCDate(gdate) : this.#date.setDate(gdate);
-		this.#updateDate();
+		this.#dateSync();
 		return this.getTime();
 	}
+
 	/**
 	 * Sets the numeric day-of-the-month value of the Date object using local time.
 	 * @param {number} date — A numeric value equal to the day of the month.
@@ -1217,7 +1217,7 @@ export default class SHDate {
 				? this.#date.setUTCHours(hours, minutes)
 				: this.#date.setHours(hours, minutes);
 		else isUTC ? this.#date.setUTCHours(hours) : this.#date.setHours(hours);
-		this.#updateTime();
+		this.#timeSync();
 		return this.getTime();
 	}
 	public setHours(
@@ -1281,7 +1281,7 @@ export default class SHDate {
 			isUTC
 				? this.#date.setUTCMinutes(minutes)
 				: this.#date.setMinutes(minutes);
-		this.#updateTime();
+		this.#timeSync();
 		return this.getTime();
 	}
 	public setMinutes(
@@ -1332,7 +1332,7 @@ export default class SHDate {
 			isUTC
 				? this.#date.setUTCSeconds(seconds)
 				: this.#date.setSeconds(seconds);
-		this.#updateTime();
+		this.#timeSync();
 		return this.getTime();
 	}
 	public setSeconds(
@@ -1364,7 +1364,7 @@ export default class SHDate {
 		isUTC
 			? this.#date.setUTCMilliseconds(milliseconds)
 			: this.#date.setMilliseconds(milliseconds);
-		this.#updateTime();
+		this.#timeSync();
 		return this.getTime();
 	}
 	public setMilliseconds(milliseconds: number): number {
@@ -1530,7 +1530,7 @@ export default class SHDate {
 	public setTime(time: number): number {
 		//if (isUTC) return this.#date.setUTCTime(time);
 		this.#date.setTime(time + this.#config.time_difference_server);
-		this.#updateDate();
+		this.#dateSync();
 		return this.getTime();
 	}
 

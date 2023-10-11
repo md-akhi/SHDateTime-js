@@ -114,9 +114,9 @@ describe("set function", () => {
 	let date = new SHDate();
 	it("correctly setWeek", () => {
 		solarDate.forEach(({ sdata }) => {
-			// [iw, iy] = sdata.Woy;
+			// [iy,iw ] = sdata.Woy;
 			date.setHours(0, 0, 0, 0);
-			date.setWeek(sdata.Woy[1], sdata.Woy[0], sdata.Dow);
+			date.setWeek(sdata.Woy[0], sdata.Woy[1], sdata.Dow);
 			assert.deepEqual(date.getWeekOfYear(), sdata.Woy);
 		});
 	});
