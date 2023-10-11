@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.0.20
+ * @version Release: 2.1.05
  */
 
 import Word from "./word.js";
@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static version: string = "2.0.20";
+	static VERSION: string = "2.1.05";
 
 	/**
 	 * @type {number[]} days in month without leap year
@@ -369,32 +369,6 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get day of week (dow)
-	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
-	 */
-	getDayOfWeek(): number {
-		return this.#dayOfWeek(
-			this.getFullYear(),
-			this.getMonth(),
-			this.getDate(),
-			this.#config.first_day_of_week
-		);
-	}
-
-	/**
-	 * Get UTC day of week (dow)
-	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
-	 */
-	getUTCDayOfWeek(): number {
-		return this.#dayOfWeek(
-			this.getUTCFullYear(),
-			this.getUTCMonth(),
-			this.getUTCDate(),
-			this.#config.first_day_of_week
-		);
-	}
-
-	/**
 	 * Get day of year (doy)
 	 * @param {number} month - solar hijri month
 	 * @param {number} date - solar hijri date
@@ -584,7 +558,7 @@ export default class SHDate {
 	 * @param doy  - solar hijri day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
-	setdateOfDayOfYear(year: number, doy: number): number {
+	setDateOfDayOfYear(year: number, doy: number): number {
 		const [years, months, days] = this.#dateOfDayOfYear(year, doy);
 		return this.setFullYear(years, months, days);
 	}
@@ -595,7 +569,7 @@ export default class SHDate {
 	 * @param doy  - solar hijri day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
-	setUTCdateOfDayOfYear(year: number, doy: number): number {
+	setUTCDateOfDayOfYear(year: number, doy: number): number {
 		const [years, months, days] = this.#dateOfDayOfYear(year, doy);
 		return this.setUTCFullYear(years, months, days);
 	}
@@ -1335,6 +1309,14 @@ export default class SHDate {
 		this.#timeSync();
 		return this.getTime();
 	}
+
+	/**
+	 * Sets the seconds value in the Date object using local time.
+	 *
+	 * @param {number} seconds — A numeric value equal to the seconds value.
+	 * @param {number} milliseconds — A numeric value equal to the milliseconds value.
+	 * @returns {object} SHDate
+	 */
 	public setSeconds(
 		seconds: number,
 		milliseconds: number | false = false
@@ -1698,7 +1680,7 @@ export default class SHDate {
 					break;
 				case "DAY_OF_YEAR":
 					doy = Math.trunc(value);
-					date.setdateOfDayOfYear(year, doy);
+					date.setDateOfDayOfYear(year, doy);
 					year = date.getFullYear();
 					month = date.getMonth();
 					day = date.getDate();
@@ -1925,6 +1907,6 @@ export default class SHDate {
 	 * @returns {string} The version of the SHDate class
 	 */
 	public static getVersion(): string {
-		return SHDate.version;
+		return SHDate.VERSION;
 	}
 }

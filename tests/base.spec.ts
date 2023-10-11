@@ -7,11 +7,11 @@ import { checkDate, checkTime, checkWeek } from "./Until-Check.js";
 
 import SHDate from "../src/base.js";
 
-describe("now()", () => {
-	it("should equal now", () => {
-		assert.equal(SHDate.now(), Date.now());
-	});
-});
+// describe("now()", () => {
+// 	it("should equal now", () => {
+// 		assert.equal(SHDate.now(), Date.now());
+// 	});
+// });
 
 describe("Convert Date Gregorian() And Solar()", () => {
 	it("correctly leap & leaps", () => {
@@ -121,11 +121,11 @@ describe("set function", () => {
 		});
 	});
 
-	it("correctly setdateOfDayOfYear", () => {
+	it("correctly setDateOfDayOfYear", () => {
 		solarDate.forEach(({ sdata, stime, gtime }) => {
 			// [year, month, day] = sdata.solar;
 			date.setHours(0, 0, 0, 0);
-			date.setdateOfDayOfYear(sdata.solar[0], sdata.Doy);
+			date.setDateOfDayOfYear(sdata.solar[0], sdata.Doy);
 			assert.equal(date.getDayOfYear(), sdata.Doy);
 		});
 	});

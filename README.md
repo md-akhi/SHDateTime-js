@@ -2,7 +2,7 @@
   
 ## به نام خدا
 
-تاریخ و زمان گاهشماری هجری شمسی(هجری خورشیدی)
+تاریخ و زمان گاهشماری هجری شمسی (هجری خورشیدی, جلالی)
 
 </div>
 
@@ -198,3 +198,65 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - format: ( [en](https://md-akhi.github.io/SHDateTime-js/en/format) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/format) )
 
 - isLeapYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/isLeapYear) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/isLeapYear) )
+
+## Documents are being prepared
+
+- static VERSION
+- static DAYS_IN_MONTH
+- static DAYS_IN_MONTH_LEAP
+- static DAY_OF_YEAR
+- static DAYS_IN_YEAR
+- static DAYS_IN_YEAR_LEAP
+- static WEEKS_IN_YEAR
+- static WEEKS_IN_YEAR_LEAP
+
+- setWeek()
+- setDateOfDayOfYear()
+- setUTCDateOfDayOfYear()
+
+- getDayOfYear()
+- getUTCDayOfYear()
+- getDaysInYear()
+- getUTCDaysInYear()
+- getWeekOfYear()
+- getUTCWeekOfYear()
+- getWeeksInYear()
+- getUTCWeeksInYear()
+- getDaysInMonth()
+- getUTCDaysInMonth()
+- getDates()
+- getUTCDates()
+- toUTCDateString()
+- getUTCTime()
+- toUTCTimeString()
+
+- checkDate()
+- dateCorrection()
+
+- checkWeek()
+- weekCorrection()
+
+- static checkTime() || checkTime()
+- checkTime12()
+- timeCorrection()
+- restTime()
+- restUTCTime()
+
+- getLanguage()
+- getFirstDayOfWeek()
+- getTimeServerDiff()
+- getTimeZone()
+
+- setTimeServerDiff()
+- setTimeZone()
+- setLanguage()
+- setFirstDayOfWeek()
+
+- setConfig()
+
+- clone()
+- instance()
+
+- getVersion()
+
+- NumbersTo()
