@@ -89,10 +89,18 @@
   },
   "typesVersions": {
     "*": {
-      ".": ["dist/types/base.d.ts"],
-      "./words?": ["./dist/types/word.d.ts"],
-      "./tools?": ["./dist/types/tools.d.ts"],
-      "./*": ["./dist/types/i18n/*.d.ts"]
+      ".": [
+        "dist/types/base.d.ts"
+      ],
+      "./words?": [
+        "./dist/types/word.d.ts"
+      ],
+      "./tools?": [
+        "./dist/types/tools.d.ts"
+      ],
+      "./*": [
+        "./dist/types/i18n/*.d.ts"
+      ]
     }
   },
   "directories": {
@@ -101,8 +109,16 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
-  "man": ["./docs/**/*.md"],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "docs",
+    "dist"
+  ],
+  "man": [
+    "./docs/**/*.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -153,7 +169,14 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
-    "*": ["prettier --write", "git add"]
+    "/**/*.{ts}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

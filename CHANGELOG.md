@@ -21,6 +21,44 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
+-
+
+### [تغییر کرد][#]
+
+-
+
+### [رفع / درست شد][#]
+
+-
+
+</div>
+
+## [Unreleased]
+
+### [Added][#]
+
+-
+
+### [Changed][#]
+
+-
+
+### [Fixed][#]
+
+-
+
+#
+
+<div style="text-align: center;">
+
+## [2.1.10] - SH 1402-07-19 - G 2023-10-11
+
+</div>
+
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
 - اضافه شدن قالب `Jekyll` برای مستندات
 - اضافه شدن مستندات به زبان انگلیسی
 - اضافه شدن مستندات به زبان فارسی
@@ -70,17 +108,15 @@ All notable changes to this project will be documented in this file.
 
 ### [رفع / درست شد][#]
 
-- اصلاح نمایش دقیقه و ثانیه در تابع `format`
+- اصلاح نمایش دقیقه و ثانیه در تابع `format` ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
 
 </div>
 
-## [Unreleased]
-
 ### [Added][#]
 
-- Added Jekyll template for documentation
-- Added documentation in English language
-- Added documentation in Farsi language
+- Added `Jekyll` template for documentation
+- Added documentation in `English` language
+- Added documentation in `Farsi` language
 - Adding part of the documentation
 - Added ability to work with strings by the `parse` function
 - Adding necessary tests
@@ -115,19 +151,19 @@ All notable changes to this project will be documented in this file.
 
 ### [Changed][#]
 
-- Rename the index file to base
+- Rename the `index` file to `base`
 - Move the language files to the language folder
-- Changing program call and address from @md-akhi/shdatetime to shdate
-- Rename function updateDate to dateSync
-- Rename function updateTime to timeSync
-- Change the isLeapYear function parameter to no parameter
-- Change the return value of the weekOfYear function from [week, year] to [year, week]
-- Rename function dateOfDoy to dateOfDayOfYear
-- Changing the default value of the date parameter of the weekOfDay function from 1 to 0
+- Changing program call and address from `@md-akhi/shdatetime` to `shdate`
+- Rename function `updateDate` to `dateSync`
+- Rename function `updateTime` to `timeSync`
+- Change the `isLeapYear` function parameter to no parameter
+- Change the return value of the `weekOfYear` function from `[week, year]` to `[year, week]`
+- Rename function `dateOfDoy` to `dateOfDayOfYear`
+- Changing the default value of the date parameter of the `weekOfDay` function from 1 to 0
 
 ### [Fixed][#]
 
-- Correcting the display of minutes and seconds in the format function
+- Correcting the display of minutes and seconds in the `format` function ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
 
 #
 
@@ -217,9 +253,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/1.3.15...HEAD
-[2.x.x]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.x.x
-[1.3.15]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...1.3.15
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...HEAD
+[2.1.10]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.1.10
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
 [1.1.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.0.0-rc1...1.1.0
