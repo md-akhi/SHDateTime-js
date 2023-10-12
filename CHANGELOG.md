@@ -1,3 +1,12 @@
+## 2.1.18 (2023-10-12)
+
+
+### Bug Fixes
+
+* **ci:** اصلاح ci ([c65e9e4](https://github.com/md-akhi/SHDateTime-js/commits/c65e9e41b7341a66cf72ba1d74c779bba46949f9))
+
+
+
 <div dir="rtl" style="text-align: right;">
 
 # تغییرات
