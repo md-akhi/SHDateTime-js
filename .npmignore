@@ -3,7 +3,6 @@
 .github
 node_modules
 docs
-doc
 wiki
 src
 tests
