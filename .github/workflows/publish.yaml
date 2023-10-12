@@ -1,4 +1,4 @@
-name: Publish Package to GitHub Packages And NPMJS
+name: Publish Packages to GitHub Packages And NPMJS
 on:
   push:
     branches: [main]
@@ -11,7 +11,7 @@ env:
 #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 jobs:
-  build-test: #TEST Packages
+  tests-pkgs: #TEST Packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,8 +24,8 @@ jobs:
           npm install
           npm test
 
-  publish-npmjs-pkg: #NPM Packages
-    needs: build-test
+  publish-npmjs-pkgs: #NPM Packages
+    needs: tests-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -67,8 +67,8 @@ jobs:
       # - run: |
       #     npm publish --access public
 
-  publish-gitHub-pkg: #GitHub Packages
-    needs: build-test
+  publish-gitHub-pkgs: #GitHub Packages
+    needs: tests-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: $NODE_VERSION
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://npm.pkgs.github.com"
           # Defaults to the user or organization that owns the workflow file
           scope: "@md-akhi"
           always-auth: true
@@ -91,7 +91,7 @@ jobs:
         shell: bash
         run: |
           npm install
-          npm pkg set name="@md-akhi/shdate"
+          npm pkgs set name="@md-akhi/shdate"
           npm run build
           npm publish
         env:
@@ -99,17 +99,17 @@ jobs:
       # With Scop
       # Setup .npmrc file to publish to GitHub Packages
       # - name: Set package registry with -scope
-      #   run: npm config set @md-akhi:registry=https://npm.pkg.github.com
+      #   run: npm config set @md-akhi:registry=https://npm.pkgs.github.com
       # - name: Github package registry authentication
-      #   run: npm set //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
+      #   run: npm set //npm.pkgs.github.com/:_authToken=$GITHUB_TOKEN
       # - run: |
-      #     npm pkg set name="@md-akhi/shdate"
+      #     npm pkgs set name="@md-akhi/shdate"
       #     npm publish
       # WithOut Scop
       # - name: Set package registry without -scope
-      #   run: npm config set registry https://npm.pkg.github.com/
+      #   run: npm config set registry https://npm.pkgs.github.com/
       # - name: Github package registry authentication
-      #   run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
+      #   run: npm set //npm.pkgs.github.com/:_authToken $GITHUB_TOKEN
       # - run: |
-      #     npm pkg set name="@md-akhi/shdate"
+      #     npm pkgs set name="@md-akhi/shdate"
       #     npm publish
