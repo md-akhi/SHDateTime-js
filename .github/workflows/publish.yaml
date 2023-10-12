@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: $NODE_VERSION
+          cache: "npm"
       - name: Install dependencies
         run: |
           npm ci
@@ -44,6 +45,7 @@ jobs:
           path: docs
       - name: Install dependencies
         run: |
+          npm ci
           npm run build
           npm publish --access public
         env:
@@ -86,6 +88,7 @@ jobs:
           path: docs
       - name: Install dependencies
         run: |
+          npm ci
           npm pkg set name="@md-akhi/shdate"
           npm run build
           npm publish
