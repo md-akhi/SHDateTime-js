@@ -1,71 +1,9 @@
-## 2.1.17 (2023-10-12)
+## 2.1.18 (2023-10-12)
 
 
 ### Bug Fixes
 
-* **ci:** اصلاح ci ([61407cd](https://github.com/md-akhi/SHDateTime-js/commits/61407cd173eb06fd00bfa3eba2677b0113045aae))
-* **ci:** اصلاح ci ([4e80931](https://github.com/md-akhi/SHDateTime-js/commits/4e809310aa94e48e9111f2ffd7adad9a600e41df))
-* **ci:** اصلاح ci ([e62314d](https://github.com/md-akhi/SHDateTime-js/commits/e62314d90cc056f1b8312af3211b5b693432475d))
-* **ci:** اصلاح ci ([873156d](https://github.com/md-akhi/SHDateTime-js/commits/873156d39c8949dfa19624633c05898b0eba5ed9))
-* **ci:** اصلاح ci ([f5ce2bf](https://github.com/md-akhi/SHDateTime-js/commits/f5ce2bf6c2d73016b58b37be7d7e67319ffbaca6))
-* **ci:** اصلاح ci ([d3ec101](https://github.com/md-akhi/SHDateTime-js/commits/d3ec10107559241fa5aa6853a72a78fde6379522))
-* **ci:** اصلاح npm ci به npm install ([4f9818e](https://github.com/md-akhi/SHDateTime-js/commits/4f9818e8f7ce558427813c961b241818621a57a8))
-* **ex:** اصلاح live ([c700c71](https://github.com/md-akhi/SHDateTime-js/commits/c700c7192248dc2797105e62c612a247b1ba9ba2))
-
-
-
-## 2.1.16 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح ci ([4e80931](https://github.com/md-akhi/SHDateTime-js/commits/4e809310aa94e48e9111f2ffd7adad9a600e41df))
-
-
-
-## 2.1.15 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح ci ([e62314d](https://github.com/md-akhi/SHDateTime-js/commits/e62314d90cc056f1b8312af3211b5b693432475d))
-
-
-
-## 2.1.14 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح ci ([873156d](https://github.com/md-akhi/SHDateTime-js/commits/873156d39c8949dfa19624633c05898b0eba5ed9))
-
-
-
-## 2.1.13 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح ci ([f5ce2bf](https://github.com/md-akhi/SHDateTime-js/commits/f5ce2bf6c2d73016b58b37be7d7e67319ffbaca6))
-* **ex:** اصلاح live ([c700c71](https://github.com/md-akhi/SHDateTime-js/commits/c700c7192248dc2797105e62c612a247b1ba9ba2))
-
-
-
-## 2.1.12 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح ci ([d3ec101](https://github.com/md-akhi/SHDateTime-js/commits/d3ec10107559241fa5aa6853a72a78fde6379522))
-
-
-
-## 2.1.11 (2023-10-11)
-
-
-### Bug Fixes
-
-* **ci:** اصلاح npm ci به npm install ([4f9818e](https://github.com/md-akhi/SHDateTime-js/commits/4f9818e8f7ce558427813c961b241818621a57a8))
+* **ci:** اصلاح ci ([c65e9e4](https://github.com/md-akhi/SHDateTime-js/commits/c65e9e41b7341a66cf72ba1d74c779bba46949f9))
 
 
 
