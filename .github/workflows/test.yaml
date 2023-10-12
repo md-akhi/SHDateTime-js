@@ -18,7 +18,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
+      - name: Install dependencies
+        shell: bash
+        run: |
           npm install
           npm test
       #   npm run build --if-present
