@@ -14,8 +14,8 @@ jobs:
   build-test: #TEST Packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
       - run: |
@@ -29,18 +29,17 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
 
       # Setup .npmrc file to publish to NPM Packages
       - run: |
           npm install
           npm run build
-        env:
-          NPM_TOKEN: $NPM_TOKEN
-      - name: Remove File
+      - name: Remove File Docs
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
@@ -55,9 +54,11 @@ jobs:
 
       # WithOut Scop
       - name: Set package registry without -scope
-        run: npm config set registry https://registry.npmjs.org/
+        run: npm config set registry=https://registry.npmjs.org/
       - name: Npm registry authentication
-        run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+        run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+      - name: registry always authentication
+        run: npm set always-auth=true
       - run: |
           npm publish --access public
 
@@ -68,34 +69,37 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@md-akhi"
 
       # Setup .npmrc file to publish to GitHub Packages
 
       - run: |
           npm install
           npm run build
-        env:
-          GITHUB_TOKEN: $GITHUB_TOKEN
-      - name: Remove File
+      - name: Remove File Docs
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
       # With Scop
       - name: Set package registry
-        run: npm config set @md-akhi:registry https://npm.pkg.github.com/
+        run: npm config set @md-akhi:registry=https://npm.pkg.github.com/
       - name: Github package registry authentication
-        run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
+        run: npm set //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
+      - name: registry always authentication
+        run: npm set always-auth=true
       - run: |
+          npm pkg set name='@md-akhi/shdate'
           npm publish
 
       # WithOut Scop
-      - name: Set package registry without -scope
-        run: npm config set registry https://npm.pkg.github.com/
-      - name: Github package registry authentication
-        run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
-      - run: |
-          npm publish
+      # - name: Set package registry without -scope
+      #   run: npm config set registry https://npm.pkg.github.com/
+      # - name: Github package registry authentication
+      #   run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
+      # - run: |
+      #     npm publish
