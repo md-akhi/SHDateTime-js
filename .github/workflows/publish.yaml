@@ -20,7 +20,7 @@ jobs:
           node-version: $NODE_VERSION
       - name: Install dependencies
         run: |
-          npm i
+          npm install
           npm test
 
   publish-npmjs-pkg: #NPM Packages
@@ -44,7 +44,7 @@ jobs:
           path: docs
       - name: Install dependencies
         run: |
-          npm i
+          npm install
           npm run build
           npm publish --access public
         env:
@@ -87,7 +87,7 @@ jobs:
           path: docs
       - name: Install dependencies
         run: |
-          npm i
+          npm install
           npm pkg set name="@md-akhi/shdate"
           npm run build
           npm publish
