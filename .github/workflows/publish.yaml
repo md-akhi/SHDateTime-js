@@ -35,19 +35,23 @@ jobs:
           node-version: "18.x"
 
       # Setup .npmrc file to publish to NPM Packages
-
-      # With Scop
-      - name: Set package registry
-        run: npm config set @md-akhi:registry https://registry.npmjs.org/
-      - name: Npm registry authentication
-        run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
-          git rm -r docs
           npm install
           npm run build
-          npm publish --access public
         env:
           NPM_TOKEN: $NPM_TOKEN
+      - name: Remove File
+        uses: JesseTG/rm@v1.0.3
+        with:
+          path: docs
+
+      # With Scop
+      # - name: Set package registry
+      #   run: npm config set @md-akhi:registry https://registry.npmjs.org/
+      # - name: Npm registry authentication
+      #   run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      # - run: |
+      #     npm publish --access public
 
       # WithOut Scop
       - name: Set package registry without -scope
@@ -56,8 +60,6 @@ jobs:
         run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
       - run: |
           npm publish --access public
-        env:
-          NPM_TOKEN: $NPM_TOKEN
 
   publish-gpr: #GitHub Packages
     needs: build-test
@@ -73,18 +75,22 @@ jobs:
 
       # Setup .npmrc file to publish to GitHub Packages
 
+      - run: |
+          npm install
+          npm run build
+        env:
+          GITHUB_TOKEN: $GITHUB_TOKEN
+      - name: Remove File
+        uses: JesseTG/rm@v1.0.3
+        with:
+          path: docs
       # With Scop
       - name: Set package registry
         run: npm config set @md-akhi:registry https://npm.pkg.github.com/
       - name: Github package registry authentication
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
-          git rm -r docs
-          npm install
-          npm run build
           npm publish
-        env:
-          GITHUB_TOKEN: $GITHUB_TOKEN
 
       # WithOut Scop
       - name: Set package registry without -scope
@@ -93,5 +99,3 @@ jobs:
         run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
       - run: |
           npm publish
-        env:
-          GITHUB_TOKEN: $GITHUB_TOKEN
