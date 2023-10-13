@@ -2,6 +2,15 @@ let chai = require("chai");
 let mocha = require("mocha").default;
 let SHDate = require("./dev.cjs");
 
+const { exec } = require("node:child_process");
+exec("node ./dev.cjs", (error, stdout, stderr) => {
+	if (error) {
+		console.error(`exec error: ${error}`);
+		return;
+	}
+	console.log(`stdout: ${stdout}`);
+	console.error(`stderr: ${stderr}`);
+});
 // mocha.describe("now()", () => {
 // 	mocha.it("should equal now", () => {
 // 		chai.assert.equal(SHDate.now(), Date.now());
