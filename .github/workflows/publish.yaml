@@ -1,100 +1,115 @@
-name: Publish Package to GitHub And NPM
-
+name: Publish Packages to GitHub Packages And NPMJS
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
+  release:
+    types: [published]
 env:
-  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
+  NODE_VERSION: "18.x"
+#   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+#   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 jobs:
-  build-test: #TEST Packages
+  tests-pkgs: #TEST Packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
-      - run: |
+          node-version: $NODE_VERSION
+      - name: Install dependencies
+        shell: bash
+        run: |
           npm install
           npm test
 
-  publish-npm: #NPM Packages
-    needs: build-test
+  publish-npmjs-pkgs: #NPM Packages
+    needs: tests-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: $NODE_VERSION
           registry-url: "https://registry.npmjs.org"
-
-      - run: |
-          npm install
-          npm run build
-      - name: Remove File Docs
+          # scope: "@md-akhi"
+          always-auth: true
+      - name: Removed Docs File
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-
+      - name: Install dependencies
+        shell: bash
+        run: |
+          npm install
+          npm run build
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       # With Scop
       # - name: Set package registry
       #   run: npm config set @md-akhi:registry https://registry.npmjs.org/
       # - name: Npm registry authentication
-      #   run: npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      #   run: npm set //registry.npmjs.org/:_authToken $NODE_AUTH_TOKEN
+      # - run: |
+      #     npm publish --access public
+      # WithOut Scop
+      # Setup .npmrc file to publish to NPM Packages
+      # - name: Set package registry without -scope
+      #   run: npm config set registry=https://registry.npmjs.org
+      # - name: Npm registry authentication
+      #   run: npm set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
       # - run: |
       #     npm publish --access public
 
-      # WithOut Scop
-      # Setup .npmrc file to publish to NPM Packages
-      - name: Set package registry without -scope
-        run: npm config set registry=https://registry.npmjs.org/
-      - name: Npm registry authentication
-        run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-      - run: |
-          npm publish --access public
-
-  publish-gpr: #GitHub Packages
-    needs: build-test
+  publish-gitHub-pkgs: #GitHub Packages
+    needs: tests-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
-          registry-url: "https://npm.pkg.github.com"
-          # scope: "@md-akhi"
-
-      - run: |
-          npm install
-          npm run build
-      - name: Remove File Docs
+          node-version: $NODE_VERSION
+          registry-url: "https://npm.pkgs.github.com"
+          # Defaults to the user or organization that owns the workflow file
+          scope: "@md-akhi"
+          always-auth: true
+      - name: Removed Docs File
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-
+      - name: Install dependencies
+        shell: bash
+        run: |
+          npm install
+          npm pkgs set name="@md-akhi/shdate"
+          npm run build
+          npm publish
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # With Scop
       # Setup .npmrc file to publish to GitHub Packages
-      - name: Set package registry
-        run: npm config set @md-akhi:registry=https://npm.pkg.github.com/
-      - name: Github package registry authentication
-        run: npm set //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
-      - run: |
-          npm publish
-
+      # - name: Set package registry with -scope
+      #   run: npm config set @md-akhi:registry=https://npm.pkgs.github.com
+      # - name: Github package registry authentication
+      #   run: npm set //npm.pkgs.github.com/:_authToken=$GITHUB_TOKEN
+      # - run: |
+      #     npm pkgs set name="@md-akhi/shdate"
+      #     npm publish
       # WithOut Scop
       # - name: Set package registry without -scope
-      #   run: npm config set registry https://npm.pkg.github.com/
+      #   run: npm config set registry https://npm.pkgs.github.com/
       # - name: Github package registry authentication
-      #   run: npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN
+      #   run: npm set //npm.pkgs.github.com/:_authToken $GITHUB_TOKEN
       # - run: |
+      #     npm pkgs set name="@md-akhi/shdate"
       #     npm publish
