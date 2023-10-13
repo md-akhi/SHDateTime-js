@@ -90,7 +90,7 @@ jobs:
         shell: bash
         run: |
           npm install
-          npm pkgs set name="@md-akhi/shdate"
+          npm pkg set name="@md-akhi/shdate"
           npm run build
           npm publish
         env:
