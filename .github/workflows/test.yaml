@@ -1,11 +1,11 @@
-name: Tests Package
+name: Tests Packages
 on:
   push:
     branches: [dev, rls/*]
   pull_request:
     branches: [dev, rls/*]
 jobs:
-  test-pkg:
+  tests-pkgs:
     runs-on: ubuntu-latest
     strategy:
       matrix:

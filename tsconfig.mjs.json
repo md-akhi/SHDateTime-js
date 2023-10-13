@@ -1,15 +1,17 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
+    // "strict": true,
+    "moduleResolution": "bundler",
+    "module": "es2022",
     "outDir": "dist/mjs",
-    "target": "ESNext",
+    "target": "es2022",
     "sourceMap": true
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "ESNext"
+      "module": "es2022",
+      "lib": ["dom", "es2022"]
     }
   }
 }

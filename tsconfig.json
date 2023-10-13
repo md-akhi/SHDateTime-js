@@ -1,16 +1,17 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "strict": true,
     "moduleResolution": "Node10",
-    "module": "CommonJS",
+    "module": "commonjs",
     "outDir": "dist/cjs",
-    "target": "ES6",
+    "target": "es2022",
     "sourceMap": true,
     "declaration": true
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "commonjs"
     }
   }
 }
