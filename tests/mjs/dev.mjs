@@ -1,6 +1,22 @@
-/**
- * node ./dist/tests/mjs/dev.mjs
- */
-import SHDate from "../../mjs/base.js";
+import { assert, expect } from "chai";
+import { it, describe } from "mocha";
 
-console.log("now:" + new SHDate().toString());
+import SHDate from "./dev.cjs";
+
+// describe("now()", () => {
+// 	it("should equal now", () => {
+// 		assert.equal(SHDate.now(), Date.now());
+// 	});
+// });
+
+describe("Convert Date Gregorian() And Solar()", () => {
+	it("correctly leap & leaps", () => {
+		[].forEach(({ sdata }) => {
+			// const [year, month, day] = sdata.solar;
+			// let date = new SHDate(year, month, day);
+			// const [leaps] = date.format("LPS");
+			// assert.equal(date.isLeapYear(), sdata.Leap);
+			// assert.equal(leaps, sdata.Leaps);
+		});
+	});
+});
