@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.1.10
+ * @version Release: 2.1.21
  */
 
 import Word from "./word.js";

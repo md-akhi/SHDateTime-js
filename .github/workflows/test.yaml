@@ -1,5 +1,4 @@
-name: Tests
-
+name: Tests Packages
 on:
   push:
     branches: [dev, rls/*, main]
@@ -7,7 +6,7 @@ on:
     branches: [dev, rls/*, main]
 
 jobs:
-  build:
+  tests-pkg:
     runs-on: ubuntu-latest
 
     strategy:

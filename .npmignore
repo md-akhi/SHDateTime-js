@@ -1,6 +1,4 @@
-.git
-.vscode
-.github
+.*
 node_modules
 docs
 doc
@@ -8,14 +6,6 @@ wiki
 src
 tests
 coverage
-.eslintrc
-.eslintignore
-.editorconfig
-.gitignore
-.prettierrc
-.prettierignore
-.travis.yml
-.mocharc.json
 nodemon.json
 tsconfig*.json
 nodemon.json

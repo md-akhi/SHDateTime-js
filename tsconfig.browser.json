@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "moduleResolution": "Node10",
-    "module": "UMD",
+    "moduleResolution": "node10",
+    "module": "umd",
     "outDir": "dist/browser",
-    "target": "ES6",
-    "lib": ["ES2016", "DOM"],
+    "target": "es2022",
+    "lib": ["dom","es2022" ],
     "esModuleInterop": false,
     "noImplicitAny": true,
     "sourceMap": true,
