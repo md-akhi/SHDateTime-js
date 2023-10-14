@@ -8,6 +8,7 @@ const dataYear = 1402;
 
 describe("CommonJS (CJS)", () => {
 	let dataCJS: any;
+
 	before(function (done) {
 		exec(
 			`node dist/tests/cjs/dev.cjs ${dataYear}`,
@@ -28,6 +29,7 @@ describe("CommonJS (CJS)", () => {
 
 describe("ES Modules (ESM)", () => {
 	let dataMJS: any;
+
 	before(function (done) {
 		exec(
 			`node dist/tests/mjs/dev.mjs ${dataYear}`,
