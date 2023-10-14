@@ -3,5 +3,5 @@
  */
 import SHDate from "../../mjs/base.js";
 
-console.log("now:" + new SHDate().toString());
-JSON.stringify("now:" + new SHDate().toString());
+console.log(new SHDate(1402).toDateString());
+// export default testMJS = new SHDate(1402).toString();

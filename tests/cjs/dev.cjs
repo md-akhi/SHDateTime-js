@@ -3,5 +3,5 @@
  */
 const SHDate = require("../../cjs/base.js").default;
 
-console.log("now:" + new SHDate().toString());
-JSON.stringify("now:" + new SHDate().toString());
+console.log(new SHDate(1402).toDateString());
+// exports.default = exports.testCJS = new SHDate(1402).toString();

@@ -50,7 +50,7 @@
     "tsc:cjs": "tsc --project tsconfig.json  && echo {\"type\":\"commonjs\"}>dist/cjs/package.json && gulp moveDTS && gulp delDTS",
     "tsc:mjs": "tsc --project tsconfig.mjs.json && echo {\"type\":\"module\"}>dist/mjs/package.json",
     "tsc:browser": "gulp combineTS && tsc --project tsconfig.browser.json",
-    "tsc:test": "tsc --project tsconfig.test.json",
+    "tsc:test": "tsc --project tsconfig.test.json && echo {\"type\":\"commonjs\"}>dist/tests/cjs/package.json && echo {\"type\":\"module\"}>dist/tests/mjs/package.json",
     "test:build": "npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
     "prepare": "husky install"
   },
@@ -89,18 +89,10 @@
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "dist/types/base.d.ts"
-      ],
-      "./words?": [
-        "./dist/types/word.d.ts"
-      ],
-      "./tools?": [
-        "./dist/types/tools.d.ts"
-      ],
-      "./*": [
-        "./dist/types/i18n/*.d.ts"
-      ]
+      ".": ["dist/types/base.d.ts"],
+      "./words?": ["./dist/types/word.d.ts"],
+      "./tools?": ["./dist/types/tools.d.ts"],
+      "./*": ["./dist/types/i18n/*.d.ts"]
     }
   },
   "directories": {
@@ -109,16 +101,8 @@
     "tests": "./tests",
     "docs": "./docs"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "docs",
-    "dist"
-  ],
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -169,14 +153,7 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }
