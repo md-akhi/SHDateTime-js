@@ -28,3 +28,5 @@ console.log(ggdate.toString());
 
 console.log(ssdate.toString());
 // Expected output: 818035920000
+
+console.log(SHDate);

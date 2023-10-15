@@ -33,7 +33,6 @@ export default class SHDate {
 
 	/**
 	 * @type {number[]} days in month without leap year
-	 */ /**
 	 * This static property represents the number of days in each month of a specific calendar.
 	 */
 	public static DAYS_IN_MONTH: number[] = [
@@ -111,7 +110,7 @@ export default class SHDate {
 	/**
 	 * @type {Date} Date
 	 */
-	#date: Date;
+	#date: Date = new Date();
 
 	/**
 	 * @type {object} year, month, date, UTC_year, UTC_month, UTC_date
@@ -140,12 +139,13 @@ export default class SHDate {
 	 * @returns {string} a Date object whose toString() method returns the literal string Invalid Date.
 	 */
 	constructor(mix: any = false, ...args: number[] | undefined[]) {
-		if (!new.target || !this) {
+		if (!(new.target || this)) {
 			// if you run me without new
-			throw new Error("You must use new to create a instance of this class");
-			//return new SHDate().toString();
+			//throw new Error("You must use new to create a instance of this class");
+			let shdate = new SHDate(...arguments);
+			return shdate;
 		}
-		this.#date = new Date();
+		// this.#date = new Date();
 		if (typeof mix == "number")
 			if (mix.toString().length == 4 && (mix >= 1200 || mix < 1700)) {
 				const [

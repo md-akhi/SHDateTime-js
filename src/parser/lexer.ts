@@ -248,7 +248,7 @@ export default class SHLexer {
 
 		SIGN_TIME: "t",
 		SIGN_WEEK: "w",
-		UTC: "utc|gmt",
+		UTC: "utc|gmt|z",
 		EST: "est",
 		EDT: "edt",
 		CST: "cst",

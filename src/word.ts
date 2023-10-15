@@ -20,7 +20,7 @@ export default class Word extends Language {
 	 */
 	static getMeridienFullNames(
 		H24: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).MERIDIEN_FULL_NAMES[H24 > 11 ? 1 : 0];
 	}
@@ -33,7 +33,7 @@ export default class Word extends Language {
 	 */
 	static getMeridienShortNames(
 		H24: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).MERIDIEN_SHORT_NAMES[H24 > 11 ? 1 : 0];
 	}
@@ -46,7 +46,7 @@ export default class Word extends Language {
 	 */
 	static getMonthFullNames(
 		month: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).MONTH_FULL_NAMES[month];
 	}
@@ -59,7 +59,7 @@ export default class Word extends Language {
 	 */
 	static getMonthShortNames(
 		month: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).MONTH_SHORT_NAMES[month];
 	}
@@ -73,7 +73,7 @@ export default class Word extends Language {
 	 */
 	static getDayFullNames(
 		dow: number,
-		word_language = Word.LANGUAGE,
+		word_language: string = Word.LANGUAGE,
 		FDOW: number = Word.FIRST_DAY_OF_WEEK
 	): string {
 		return Word.getClass(word_language).DAY_FULL_NAMES[(dow + FDOW) % 7];
@@ -88,7 +88,7 @@ export default class Word extends Language {
 	 */
 	static getDayShortNames(
 		dow: number,
-		word_language = Word.LANGUAGE,
+		word_language: string = Word.LANGUAGE,
 		FDOW: number = Word.FIRST_DAY_OF_WEEK
 	): string {
 		return Word.getClass(word_language).DAY_SHORT_NAMES[(dow + FDOW) % 7];
@@ -100,7 +100,10 @@ export default class Word extends Language {
 	 * @param {string} word_language language word
 	 * @return {string} Ordinal suffix for the day of the month
 	 */
-	static getSuffixNames(num: number, word_language = Word.LANGUAGE): string {
+	static getSuffixNames(
+		num: number,
+		word_language: string = Word.LANGUAGE
+	): string {
 		return Word.getClass(word_language).SuffixNames(num);
 	}
 
