@@ -1,3 +1,6 @@
-node_modules/*
-.git/*
-public/*
+node_modules
+public
+dist
+docs/examples/asset/*
+.git
+*.log

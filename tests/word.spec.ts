@@ -1,84 +1,82 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import * as UntilWord from "./Until-Word.js";
-import SHDate from "../src/index.js";
-import SHWord from "../src/Word.js";
-const date = new SHDate();
+import { solarDate } from "./Until-Date.js";
+import SHDate from "../src/base.js";
 
 describe("word", () => {
 	it("correctly dsn and dfn", () => {
-		UntilWord.solarWord.forEach(({ solar, dsn, dfn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [dsns, dfns] = solardate.format("dsn=dfn");
-			assert.equal(dsns, dsn);
-			assert.equal(dfns, dfn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [dsn, dfn] = date.format("dsn=dfn");
+			assert.equal(dsn, sdata.dsn);
+			assert.equal(dfn, sdata.dfn);
 		});
 	});
 
 	it("correctly esn and efn", () => {
-		UntilWord.solarWord.forEach(({ solar, esn, efn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [esns, efns] = solardate.format("esn=efn");
-			assert.equal(esns, esn);
-			assert.equal(efns, efn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [esn, efn] = date.format("esn=efn");
+			assert.equal(esn, sdata.esn);
+			assert.equal(efn, sdata.efn);
 		});
 	});
 
 	it("correctly msn and mfn", () => {
-		UntilWord.solarWord.forEach(({ solar, msn, mfn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [msns, mfns] = solardate.format("msn=mfn");
-			assert.equal(msns, msn);
-			assert.equal(mfns, mfn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [msn, mfn] = date.format("msn=mfn");
+			assert.equal(msn, sdata.msn);
+			assert.equal(mfn, sdata.mfn);
 		});
 	});
 
 	it("correctly asn", () => {
-		UntilWord.solarWord.forEach(({ solar, asn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [asns] = solardate.format("asn");
-			assert.equal(asns, asn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [asn] = date.format("asn");
+			assert.equal(asn, sdata.asn);
 		});
 	});
 
 	it("correctly csn", () => {
-		UntilWord.solarWord.forEach(({ solar, csn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [csns] = solardate.format("csn");
-			assert.equal(csns, csn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [csn] = date.format("csn");
+			assert.equal(csn, sdata.csn);
 		});
 	});
 
 	it("correctly ssn", () => {
-		UntilWord.solarWord.forEach(({ solar, ssn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [ssns] = solardate.format("ssn");
-			assert.equal(ssns, ssn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [ssn] = date.format("ssn");
+			assert.equal(ssn, sdata.ssn);
 		});
 	});
 
 	it("correctly osn", () => {
-		UntilWord.solarWord.forEach(({ solar, osn }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [osns] = solardate.format("osn");
-			assert.equal(osns, osn);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [osn] = date.format("osn");
+			assert.equal(osn, sdata.osn);
 		});
 	});
 
 	it("correctly sun", () => {
-		UntilWord.solarWord.forEach(({ solar, sun }) => {
-			const [shyear, shmonth, shdate] = solar;
-			let solardate = new SHDate(shyear, shmonth, shdate);
-			const [suns] = solardate.format("sun");
-			assert.equal(suns, sun);
+		solarDate.forEach(({ sdata }) => {
+			const [year, month, day] = sdata.solar;
+			let date = new SHDate(year, month, day);
+			const [sun] = date.format("sun");
+			assert.equal(sun, sdata.sun);
 		});
 	});
 });

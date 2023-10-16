@@ -1,7 +1,6 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "strict": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -13,12 +12,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "traceResolution": false,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "types": ["node"],
-    "typeRoots": ["node_modules/@types"],
-    "removeComments": true,
-    "importHelpers": true
+    "lib": ["dom", "es2022"],
+    "types": ["node", "gulp"],
+    "typeRoots": ["node_modules/@types"]
   },
   "compileOnSave": false,
   "exclude": ["node_modules", "dist"],
