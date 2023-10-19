@@ -77,14 +77,14 @@
       "types": "./dist/types/tools.d.ts"
     },
     "./l10n/*": {
-      "require": "./dist/cjs/l10n/*.js",
-      "import": "./dist/mjs/l10n/*.js",
-      "types": "./dist/types/l10n/*.d.ts"
+      "require": "./dist/cjs/languages/l10n/*.js",
+      "import": "./dist/mjs/languages/l10n/*.js",
+      "types": "./dist/types/languages/l10n/*.d.ts"
     },
     "./i18n/*": {
-      "require": "./dist/cjs/i18n/*.js",
-      "import": "./dist/mjs/i18n/*.js",
-      "types": "./dist/types/i18n/*.d.ts"
+      "require": "./dist/cjs/languages/i18n/*.js",
+      "import": "./dist/mjs/languages/i18n/*.js",
+      "types": "./dist/types/languages/i18n/*.d.ts"
     }
   },
   "typesVersions": {
@@ -92,7 +92,8 @@
       ".": ["dist/types/base.d.ts"],
       "./words?": ["./dist/types/word.d.ts"],
       "./tools?": ["./dist/types/tools.d.ts"],
-      "./*": ["./dist/types/i18n/*.d.ts"]
+      "./l10n/*": ["./dist/types/languages/l10n/*.d.ts"],
+      "./i18n/*": ["./dist/types/languages/i18n/*.d.ts"]
     }
   },
   "directories": {
