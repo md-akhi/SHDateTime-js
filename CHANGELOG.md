@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### [تغییر کرد][#]
 
--
+- تغییر نام تابع تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
 
 ### [رفع / درست شد][#]
 
@@ -41,7 +41,7 @@ All notable changes to this project will be documented in this file.
 
 ### [Changed][#]
 
--
+- Rename conversion function from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
 
 ### [Fixed][#]
 
