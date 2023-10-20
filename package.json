@@ -1,6 +1,6 @@
 {
   "name": "shdate",
-  "version": "2.1.22",
+  "version": "2.1.23",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
@@ -13,23 +13,21 @@
     "shdate",
     "sdate",
     "jdate",
+    "jalali",
+    "shamsi",
     "shamsi hijri",
-    "Shamsi Hijri",
-    "Solar Hijri",
+    "shamsi hijri",
     "solar hijri",
     "iranian hijri",
-    "Iranian Hijri",
     "parser",
     "typescript",
     "ts",
     "javascript",
     "js",
     "commonjs",
-    "CommonJS",
     "cjs",
-    "ES",
-    "ESM",
-    "ES Modules",
+    "es modules",
+    "esm",
     "mjs"
   ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
@@ -57,49 +55,49 @@
   "main": "./dist/cjs/base.js",
   "module": "./dist/mjs/base.js",
   "types": "./dist/types/base.d.ts",
-  "browser": "./dist/browser/shdatetime.min.js",
-  "unpkg": "https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
-  "jsdrive": "https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
+  "browser": "./dist/browser/shdate.min.js",
   "exports": {
     ".": {
+      "browser": "./dist/browser/shdate.min.js",
       "require": "./dist/cjs/base.js",
       "import": "./dist/mjs/base.js",
       "types": "./dist/types/base.d.ts"
     },
-    "./words?": {
+    "./words": {
       "require": "./dist/cjs/word.js",
       "import": "./dist/mjs/word.js",
       "types": "./dist/types/word.d.ts"
     },
-    "./tools?": {
+    "./tools": {
       "require": "./dist/cjs/tools.js",
       "import": "./dist/mjs/tools.js",
       "types": "./dist/types/tools.d.ts"
     },
-    "./l10n/*": {
-      "require": "./dist/cjs/languages/l10n/*.js",
-      "import": "./dist/mjs/languages/l10n/*.js",
-      "types": "./dist/types/languages/l10n/*.d.ts"
-    },
-    "./i18n/*": {
+    "./lang/*": {
       "require": "./dist/cjs/languages/i18n/*.js",
       "import": "./dist/mjs/languages/i18n/*.js",
       "types": "./dist/types/languages/i18n/*.d.ts"
+    },
+    "./lang/l10n/*": {
+      "require": "./dist/cjs/languages/l10n/*.js",
+      "import": "./dist/mjs/languages/l10n/*.js",
+      "types": "./dist/types/languages/l10n/*.d.ts"
     }
   },
   "typesVersions": {
     "*": {
       ".": ["dist/types/base.d.ts"],
-      "./words?": ["./dist/types/word.d.ts"],
-      "./tools?": ["./dist/types/tools.d.ts"],
-      "./l10n/*": ["./dist/types/languages/l10n/*.d.ts"],
-      "./i18n/*": ["./dist/types/languages/i18n/*.d.ts"]
+      "./words": ["./dist/types/word.d.ts"],
+      "./tools": ["./dist/types/tools.d.ts"],
+      "./lang/*": ["./dist/types/languages/i18n/*.d.ts"],
+      "./lang/l10n/*": ["./dist/types/languages/l10n/*.d.ts"]
     }
   },
   "directories": {
     "dist": "./dist",
     "src": "./src",
     "tests": "./tests",
+    "man": "./docs",
     "docs": "./docs"
   },
   "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
@@ -108,6 +106,9 @@
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
   },
+  "npmjs": "https://www.npmjs.com/package/shdate",
+  "unpkg": "https://unpkg.com/shdate@latest/dist/browser/shdate.min.js",
+  "jsdrive": "https://cdn.jsdelivr.net/npm/shdate@latest/dist/browser/shdate.min.js",
   "bugs": {
     "url": "https://github.com/md-akhi/SHDateTime-js/issues"
   },
