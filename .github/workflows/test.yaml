@@ -22,5 +22,5 @@ jobs:
         shell: bash
         run: |
           npm install
+          npm run build --if-present
           npm test
-      #   npm run build --if-present

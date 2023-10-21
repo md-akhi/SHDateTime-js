@@ -21,6 +21,7 @@ jobs:
         shell: bash
         run: |
           npm install
+          npm run build --if-present
           npm test
 
   publish-npmjs-pkgs: #NPM Packages
@@ -87,8 +88,8 @@ jobs:
         shell: bash
         run: |
           npm install
-          npm run build
           npm pkg set name="@md-akhi/shdatetime"
+          npm run build
           npm publish --access public
 
   publish-gitHub-pkgs: #GitHub Packages
