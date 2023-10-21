@@ -23,7 +23,7 @@ describe("CommonJS (CJS)", () => {
 	});
 
 	it("run CJS", () => {
-		assert.equal(dataCJS, new SHDate(1402).toDateString());
+		assert.equal(dataCJS, new SHDate(dataYear).toDateString());
 	});
 });
 
@@ -44,6 +44,6 @@ describe("ES Modules (ESM)", () => {
 	});
 
 	it("run ESM", () => {
-		assert.equal(dataMJS, new SHDate(1402).toDateString());
+		assert.equal(dataMJS, new SHDate(dataYear).toDateString());
 	});
 });
