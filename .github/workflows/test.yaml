@@ -1,9 +1,9 @@
 name: Tests Packages
 on:
   push:
-    branches: [dev, rls/*]
+    branches: [dev, release/*]
   pull_request:
-    branches: [dev, rls/*]
+    branches: [dev, release/*]
 jobs:
   tests-pkgs:
     runs-on: ubuntu-latest
