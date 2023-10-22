@@ -1,8 +1,12 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import SHDate from "../src/base.js";
 import { exec } from "node:child_process";
+import SHDate from "../src/base.js";
+import words from "../src/word.js";
+import { toNumber } from "../src/tools.js";
+import fa_IR from "../src/languages/i18n/fa_IR";
+import ckb_IR from "../src/languages/l10n/ckb_IR";
 
 const dataYear = 1402;
 
@@ -48,16 +52,15 @@ describe("test ES Modules (ESM)", () => {
 	});
 });
 
-
 describe("test exports pkgs", () => {
-	let dataMJS: any;
+	let dataPKGS: any;
 
 	before(function (done) {
 		exec(
-			`node dist/tests/mjs/dev.mjs ${dataYear}`,
+			`node dist/tests/pkgs/test.js ${dataYear}`,
 			function (error, stdout, stderr) {
 				if (error) done(error); // Handle errors.
-				dataMJS = stdout.trim();
+				dataPKGS = stdout.trim();
 				done();
 				// console.log(`stdout: ${stdout}`);
 				// console.error(`stderr: ${stderr}`);
@@ -65,7 +68,13 @@ describe("test exports pkgs", () => {
 		);
 	});
 
-	it("run ESM", () => {
-		assert.equal(dataMJS, new SHDate(dataYear).toDateString());
+	it("run pkgs", () => {
+		assert.deepEqual(dataPKGS, [
+			SHDate.VERSION,
+			words.word_language,
+			toNumber,
+			fa_IR.LANGUAGE,
+			ckb_IR.LANGUAGE
+		]);
 	});
 });
