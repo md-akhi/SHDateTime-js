@@ -8,28 +8,31 @@ const replace = require("gulp-replace");
 const del = require("del");
 const banner = require("gulp-header");
 const pkg = require("./package.json");
+const { argv } = require("node:process");
+const { exec } = require("node:child_process");
 
-const link = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
-const infoLong = [
+const linkDocBlockLong = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
+const infoDocBlockLong = [
 	`/**
 	* In the name of Allah, the Beneficent, the Merciful.
 	* @package ${pkg.name} - ${pkg.description}
 	* @author ${pkg.author}
-	* @link ${link}
+	* @link ${linkDocBlockLong}
 	* @copyright ${pkg.copyright}
 	* @license ${pkg.license} License
 	* @version Release: ${pkg.version}
 	*/
 	`
 ].join("\n");
-const infoShort = [
-	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.copyright} | ${pkg.license} License | ${link} */`
+
+const infoDocBlockShort = [
+	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.copyright} | ${pkg.license} License | ${linkDocBlockLong} */`
 ].join("\n");
 
 /**
  * combine all .ts files into one
  */
-function combineTS() {
+function MergeFilesBrowserTS() {
 	return gulp
 		.src(["./src/languages/**/*.ts", "./src/parser/**/*.ts", "src/*.ts"])
 		.pipe(concat("shdate.ts"))
@@ -48,7 +51,7 @@ function combineTS() {
 		.pipe(gulp.dest("src/browser"));
 }
 
-function setDescription() {
+function setDocBlockDescription() {
 	/**
 	 * In the name of Allah, the Beneficent, the Merciful. | \* In the name of Allah, the Beneficent, the Merciful\./im;
 	 */
@@ -94,30 +97,43 @@ function setDescription() {
 		.pipe(gulp.dest("src/"));
 }
 
-function moveDTS() {
+function moveDotDToTypes() {
 	return gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types"));
 }
-function delDTS() {
+function deletDotDFromCJSTS() {
 	return del(["dist/cjs/**/*.d.ts"]);
+	return exec("rm -rf dist/cjs/**/*.d.ts", function (err, stdout, stderr) {
+		// console.log(stdout);
+		// console.log(stderr);
+		cb(err);
+	});
 }
 
-function browser() {
+function settingBrowserJS() {
 	return gulp
 		.src("dist/browser/shdate.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
-		.pipe(banner(infoLong))
+		.pipe(banner(infoDocBlockLong))
 		.pipe(gulp.dest("dist/browser"))
 		.pipe(babel({ presets: ["@babel/env"] }))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
-		.pipe(banner(infoShort))
+		.pipe(banner(infoDocBlockShort))
 		.pipe(gulp.dest("./dist/browser", { sourcemaps: "." }));
 }
 
-function delTSBrowser() {
+function deletMergeFilesBrowserTS() {
 	return del(["src/browser", "dist/browser/*.d.ts"]);
+	return exec(
+		"rm -rf src/browser dist/browser/*.d.ts",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
 }
-function moveTSBrowser() {
+function moveDotDBrowserTSToTypes() {
 	return gulp
 		.src(["src/browser/*.ts", "dist/browser/*.d.ts"])
 		.pipe(gulp.dest("dist/types"));
@@ -126,8 +142,13 @@ function moveTSBrowser() {
 /**
  * Run default.
  */
-exports.default = gulp.series(browser, moveTSBrowser, delTSBrowser);
-exports.combineTS = combineTS;
-exports.moveDTS = moveDTS;
-exports.delDTS = delDTS;
-exports.setDescription = setDescription;
+exports.default = gulp.series(
+	settingBrowserJS,
+	moveDotDBrowserTSToTypes,
+	deletMergeFilesBrowserTS
+);
+exports.deletMergeTS = gulp.series()
+exports.MergeFilesBrowserTS = MergeFilesBrowserTS;
+exports.moveDotDToTypes = moveDotDToTypes;
+exports.deletDotDFromCJSTS = deletDotDFromCJSTS;
+exports.setDocBlockDescription = setDocBlockDescription;
