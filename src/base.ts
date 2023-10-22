@@ -1826,12 +1826,19 @@ export default class SHDate {
 	}
 
 	/**
-	 * resets the time of the SHDate instance.
+	 * Equinoxes and Solstices are for a given year
+	 * @link https://stellafane.org/misc/equinox.html
+	 * @returns number
+	 */
+	getEquinoxOrSolstice() {} // TODO: implement
+
+	/**
+	 * resets the time
 	 * @param {number} hours - The hours value (default: 0)
 	 * @param {number} minutes - The minutes value (default: 0)
 	 * @param {number} seconds - The seconds value (default: 0)
 	 * @param {number} milliseconds - The milliseconds value (default: 0)
-	 * @returns {boolean} Returns true after resetting the time
+	 * @returns {boolean} After setting the time, it returns the input value
 	 */
 	#restTime(
 		hours: number = 0,
