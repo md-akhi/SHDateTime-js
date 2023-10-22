@@ -1,8 +1,8 @@
 /**
- * node ./dist/tests/mjs/dev.mjs
+ * node ./dist/tests/cjs/dev.cjs
  */
-import { argv } from "node:process";
-import SHDate from "../../mjs/base.js";
+const { argv } = require("node:process");
+const SHDate = require("shdate").default;
 
 // print process.argv
 argv.forEach((val, index) => {

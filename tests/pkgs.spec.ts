@@ -6,7 +6,7 @@ import { exec } from "node:child_process";
 
 const dataYear = 1402;
 
-describe("CommonJS (CJS)", () => {
+describe("test CommonJS (CJS)", () => {
 	let dataCJS: any;
 
 	before(function (done) {
@@ -27,7 +27,29 @@ describe("CommonJS (CJS)", () => {
 	});
 });
 
-describe("ES Modules (ESM)", () => {
+describe("test ES Modules (ESM)", () => {
+	let dataMJS: any;
+
+	before(function (done) {
+		exec(
+			`node dist/tests/mjs/dev.mjs ${dataYear}`,
+			function (error, stdout, stderr) {
+				if (error) done(error); // Handle errors.
+				dataMJS = stdout.trim();
+				done();
+				// console.log(`stdout: ${stdout}`);
+				// console.error(`stderr: ${stderr}`);
+			}
+		);
+	});
+
+	it("run ESM", () => {
+		assert.equal(dataMJS, new SHDate(dataYear).toDateString());
+	});
+});
+
+
+describe("test exports pkgs", () => {
 	let dataMJS: any;
 
 	before(function (done) {
