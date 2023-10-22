@@ -2,7 +2,7 @@
  * node ./dist/tests/mjs/dev.mjs
  */
 import { argv } from "node:process";
-import shdate from "shdate";
+import SHDate from "shdate";
 
 // print process.argv
 argv.forEach((val, index) => {
