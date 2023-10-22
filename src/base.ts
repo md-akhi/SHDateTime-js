@@ -1827,7 +1827,7 @@ export default class SHDate {
 
 	/**
 	 * Equinoxes and Solstices are for a given year
-	 * @link https://stellafane.org/misc/equinox.html
+	 * @links https://stellafane.org/misc/equinox.html
 	 * @returns number
 	 */
 	getEquinoxOrSolstice() {} // TODO: implement

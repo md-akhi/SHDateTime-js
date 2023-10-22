@@ -11,22 +11,26 @@ const pkg = require("./package.json");
 const { argv } = require("node:process");
 const { exec } = require("node:child_process");
 
-const linkDocBlockLong = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
-const infoDocBlockLong = [
+const COPY_RIGHT =
+	"(C) 2015 - 2023 Open Source Matters,Inc. All right reserved.";
+
+const LINK_DOCBLOCK_LONG = `http://git.akhi.ir/js/SHDate | ${pkg.homepage}`;
+
+const INFO_DOCBLOCK_LONG = [
 	`/**
 	* In the name of Allah, the Beneficent, the Merciful.
 	* @package ${pkg.name} - ${pkg.description}
 	* @author ${pkg.author}
-	* @link ${linkDocBlockLong}
-	* @copyright ${pkg.copyright}
+	* @link ${LINK_DOCBLOCK_LONG}
+	* @copyright ${COPY_RIGHT}
 	* @license ${pkg.license} License
 	* @version Release: ${pkg.version}
 	*/
 	`
 ].join("\n");
 
-const infoDocBlockShort = [
-	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${pkg.copyright} | ${pkg.license} License | ${linkDocBlockLong} */`
+const INFO_DOCBLOCK_SHORT = [
+	`/** In the name of Allah. | ${pkg.name}@${pkg.version} | ${COPY_RIGHT} | ${pkg.license} License | ${LINK_DOCBLOCK_LONG} */`
 ].join("\n");
 
 /**
@@ -69,11 +73,13 @@ function setDocBlockDescription() {
 				`* @author ${pkg.author}`
 			)
 		)
-		.pipe(replace(/\* @(link( [\w:\/\.\|#-]+)+)/g, `* @link ${link}`))
+		.pipe(
+			replace(/\* @(link( [\w:\/\.\|#-]+)+)/g, `* @link ${LINK_DOCBLOCK_LONG}`)
+		)
 		.pipe(
 			replace(
 				/\* @(copyright( [\w\d.\(\)\-\,]+)+)/g,
-				`* @copyright ${pkg.copyright}`
+				`* @copyright ${COPY_RIGHT}`
 			)
 		)
 		.pipe(
@@ -97,33 +103,36 @@ function setDocBlockDescription() {
 		.pipe(gulp.dest("src/"));
 }
 
-function moveDotDToTypes() {
-	return gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types"));
-}
-function deletDotDFromCJSTS() {
-	return del(["dist/cjs/**/*.d.ts"]);
-	return exec("rm -rf dist/cjs/**/*.d.ts", function (err, stdout, stderr) {
-		// console.log(stdout);
-		// console.log(stderr);
-		cb(err);
-	});
+function moveDotDToTypes(cb) {
+	// return del(["dist/cjs/**/*.d.ts"]);//rm -rf dist/cjs/**/*.d.ts
+	return (
+		gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types")) &&
+		exec(
+			"rm -rf dist/cjs/*.d.ts dist/cjs/parser/*.d.ts dist/cjs/languages/*.d.ts dist/cjs/languages/i18n/*.d.ts dist/cjs/languages/l10n/*.d.ts",
+			function (err, stdout, stderr) {
+				// console.log(stdout);
+				// console.log(stderr);
+				cb(err);
+			}
+		)
+	);
 }
 
 function settingBrowserJS() {
 	return gulp
 		.src("dist/browser/shdate.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
-		.pipe(banner(infoDocBlockLong))
+		.pipe(banner(INFO_DOCBLOCK_LONG))
 		.pipe(gulp.dest("dist/browser"))
 		.pipe(babel({ presets: ["@babel/env"] }))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
-		.pipe(banner(infoDocBlockShort))
+		.pipe(banner(INFO_DOCBLOCK_SHORT))
 		.pipe(gulp.dest("./dist/browser", { sourcemaps: "." }));
 }
 
-function deletMergeFilesBrowserTS() {
-	return del(["src/browser", "dist/browser/*.d.ts"]);
+function deleteMergeFilesBrowserTS(cb) {
+	// return del(["src/browser", "dist/browser/*.d.ts"]);
 	return exec(
 		"rm -rf src/browser dist/browser/*.d.ts",
 		function (err, stdout, stderr) {
@@ -139,16 +148,82 @@ function moveDotDBrowserTSToTypes() {
 		.pipe(gulp.dest("dist/types"));
 }
 
+function buildCjs() {
+	//"tsc:cjs"
+	return exec(
+		'tsc --project tsconfig.json  && echo {"type":"commonjs"}>dist/cjs/package.json && gulp moveDotDToTypes',
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+function buildMjs() {
+	//"tsc:mjs"
+	return exec(
+		'tsc --project tsconfig.mjs.json && echo {"type":"module"}>dist/mjs/package.json',
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+function buildBrowser() {
+	//"tsc:browser"
+	return exec(
+		"gulp MergeFilesBrowserTS && tsc --project tsconfig.browser.json",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+
+function devClean() {
+	return exec(
+		"rm -rf dist/src dist/tests tests/tst.out",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+
+function buildTests() {
+	return exec(
+		'tsc --project tsconfig.test.json && echo {"type":"commonjs"}>dist/tests/cjs/package.json && echo {"type":"module"}>dist/tests/mjs/package.json',
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+
+function buildUntilTests() {
+	return exec(
+		"npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+
 /**
  * Run default.
  */
 exports.default = gulp.series(
 	settingBrowserJS,
 	moveDotDBrowserTSToTypes,
-	deletMergeFilesBrowserTS
+	deleteMergeFilesBrowserTS
 );
-exports.deletMergeTS = gulp.series()
+// exports.deleteMergeTS = gulp.series();
 exports.MergeFilesBrowserTS = MergeFilesBrowserTS;
 exports.moveDotDToTypes = moveDotDToTypes;
-exports.deletDotDFromCJSTS = deletDotDFromCJSTS;
 exports.setDocBlockDescription = setDocBlockDescription;

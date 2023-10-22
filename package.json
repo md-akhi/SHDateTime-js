@@ -45,7 +45,7 @@
     "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
     "test": "npm run tsc:test && mocha",
     "test:dev": "nodemon npm run test",
-    "tsc:cjs": "tsc --project tsconfig.json  && echo {\"type\":\"commonjs\"}>dist/cjs/package.json && gulp moveDotDToTypes && gulp deletDotDFromCJSTS",
+    "tsc:cjs": "tsc --project tsconfig.json  && echo {\"type\":\"commonjs\"}>dist/cjs/package.json && gulp moveDotDToTypes",
     "tsc:mjs": "tsc --project tsconfig.mjs.json && echo {\"type\":\"module\"}>dist/mjs/package.json",
     "tsc:browser": "gulp MergeFilesBrowserTS && tsc --project tsconfig.browser.json",
     "tsc:test": "tsc --project tsconfig.test.json && echo {\"type\":\"commonjs\"}>dist/tests/cjs/package.json && echo {\"type\":\"module\"}>dist/tests/mjs/package.json",
