@@ -1,5 +1,6 @@
 "use strict";
 const gulp = require("gulp");
+// const { task, src, dest } = require("gulp");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
@@ -142,13 +143,14 @@ function deleteMergeFilesBrowserTS(cb) {
 		}
 	);
 }
+
 function moveDotDBrowserTSToTypes() {
 	return gulp
 		.src(["src/browser/*.ts", "dist/browser/*.d.ts"])
 		.pipe(gulp.dest("dist/types"));
 }
 
-function buildCjs() {
+function buildCjs(cb) {
 	//"tsc:cjs"
 	return exec(
 		'tsc --project tsconfig.json  && echo {"type":"commonjs"}>dist/cjs/package.json && gulp moveDotDToTypes',
@@ -159,7 +161,9 @@ function buildCjs() {
 		}
 	);
 }
-function buildMjs() {
+gulp.task(buildCjs);
+
+function buildMjs(cb) {
 	//"tsc:mjs"
 	return exec(
 		'tsc --project tsconfig.mjs.json && echo {"type":"module"}>dist/mjs/package.json',
@@ -170,7 +174,9 @@ function buildMjs() {
 		}
 	);
 }
-function buildBrowser() {
+gulp.task(buildMjs);
+
+function buildBrowser(cb) {
 	//"tsc:browser"
 	return exec(
 		"gulp MergeFilesBrowserTS && tsc --project tsconfig.browser.json",
@@ -181,8 +187,9 @@ function buildBrowser() {
 		}
 	);
 }
+gulp.task(buildBrowser);
 
-function devClean() {
+function devClean(cb) {
 	return exec(
 		"rm -rf dist/src dist/tests tests/tst.out",
 		function (err, stdout, stderr) {
@@ -192,19 +199,44 @@ function devClean() {
 		}
 	);
 }
+gulp.task(devClean);
 
-function buildTests() {
-	return exec(
-		'tsc --project tsconfig.test.json && echo {"type":"commonjs"}>dist/tests/cjs/package.json && echo {"type":"module"}>dist/tests/mjs/package.json',
-		function (err, stdout, stderr) {
+function testsCJS(cb) {
+	return exec(" cd dist/tests/cjs/ && npm i", function (err, stdout, stderr) {
+		// console.log(stdout);
+		// console.log(stderr);
+		cb(err);
+	});
+}
+function testsMJS(cb) {
+	return exec(" cd ../mjs/ && npm i", function (err, stdout, stderr) {
+		// console.log(stdout);
+		// console.log(stderr);
+		cb(err);
+	});
+}
+function testsPKGS(cb) {
+	return exec(" cd ../pkgs/ && npm i ", function (err, stdout, stderr) {
+		// console.log(stdout);
+		// console.log(stderr);
+		cb(err);
+	});
+}
+function buildTests(cb) {
+	return (
+		exec("tsc --project tsconfig.test.json", function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
 			cb(err);
-		}
+		}) &&
+		testsCJS &&
+		testsMJS &&
+		testsPKGS
 	);
 }
+gulp.task(buildTests);
 
-function buildUntilTests() {
+function buildUntilTests(cb) {
 	return exec(
 		"npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
 		function (err, stdout, stderr) {
@@ -214,6 +246,7 @@ function buildUntilTests() {
 		}
 	);
 }
+gulp.task(buildUntilTests);
 
 /**
  * Run default.
@@ -227,3 +260,7 @@ exports.default = gulp.series(
 exports.MergeFilesBrowserTS = MergeFilesBrowserTS;
 exports.moveDotDToTypes = moveDotDToTypes;
 exports.setDocBlockDescription = setDocBlockDescription;
+
+// buildUntilTests.displayName = 'clean:all';
+// buildUntilTests.description = 'Build the project';
+// buildUntilTests.flags = { '-e': 'An example flag' };
