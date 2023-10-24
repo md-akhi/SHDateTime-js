@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "shdate": "file:../.."
+    "shdate": "file:../../.."
   },
   "type": "module"
 }

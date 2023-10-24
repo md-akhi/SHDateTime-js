@@ -32,7 +32,6 @@
   ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
   "license": "AGPL-3.0",
-  "copyright": "(C) 2015 - 2023 Open Source Matters,Inc. All right reserved.",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon --exec run-s dev:clean tsc:test dev:watch --watch ./src",
