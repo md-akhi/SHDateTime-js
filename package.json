@@ -42,13 +42,10 @@
     "build": "run-s build:*",
     "build:version": "gulp setDocBlockDescription",
     "build:clean": "rm -rf dist src/browser",
-    "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
+    "build:tsc": "gulp buildTSC && gulp",
     "test": "npm run tsc:test && mocha",
     "test:dev": "nodemon npm run test",
-    "tsc:cjs": "gulp buildCjs",
-    "tsc:mjs": "gulp buildMjs",
-    "tsc:browser": "gulp buildBrowser",
-    "tsc:test": "gulp buildTests",
+    "tsc:test": "gulp buildTestsTSC",
     "test:build": "gulp buildUntilTests",
     "prepare": "husky install"
   },
@@ -86,21 +83,11 @@
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "dist/types/base.d.ts"
-      ],
-      "./words": [
-        "./dist/types/word.d.ts"
-      ],
-      "./tools": [
-        "./dist/types/tools.d.ts"
-      ],
-      "./lang/*": [
-        "./dist/types/languages/i18n/*.d.ts"
-      ],
-      "./lang/l10n/*": [
-        "./dist/types/languages/l10n/*.d.ts"
-      ]
+      ".": ["dist/types/base.d.ts"],
+      "./words": ["./dist/types/word.d.ts"],
+      "./tools": ["./dist/types/tools.d.ts"],
+      "./lang/*": ["./dist/types/languages/i18n/*.d.ts"],
+      "./lang/l10n/*": ["./dist/types/languages/l10n/*.d.ts"]
     }
   },
   "directories": {
@@ -110,16 +97,8 @@
     "man": "./docs",
     "docs": "./docs"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "docs",
-    "dist"
-  ],
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
@@ -173,15 +152,8 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   },
   "dependencies": {
     "test_cjs": "file:tests/cjs",

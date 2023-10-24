@@ -161,7 +161,6 @@ function buildCjs(cb) {
 		}
 	);
 }
-gulp.task(buildCjs);
 
 function buildMjs(cb) {
 	//"tsc:mjs"
@@ -174,7 +173,6 @@ function buildMjs(cb) {
 		}
 	);
 }
-gulp.task(buildMjs);
 
 function buildBrowser(cb) {
 	//"tsc:browser"
@@ -187,7 +185,8 @@ function buildBrowser(cb) {
 		}
 	);
 }
-gulp.task(buildBrowser);
+
+gulp.task("buildTSC", gulp.parallel(buildCjs, buildMjs, buildBrowser));
 
 function devClean(cb) {
 	return exec(
@@ -201,40 +200,61 @@ function devClean(cb) {
 }
 gulp.task(devClean);
 
-function testsCJS(cb) {
-	return exec(" cd dist/tests/cjs/ && npm i", function (err, stdout, stderr) {
+function moveTestsCJS(cb) {
+	return gulp.src(["tests/cjs/*"]).pipe(gulp.dest("dist/tests/cjs"));
+}
+function installTestsCJS(cb) {
+	return exec("(cd dist/tests/cjs && npm i)", function (err, stdout, stderr) {
 		// console.log(stdout);
 		// console.log(stderr);
 		cb(err);
 	});
 }
-function testsMJS(cb) {
-	return exec(" cd ../mjs/ && npm i", function (err, stdout, stderr) {
+function moveTestsMJS(cb) {
+	return gulp.src(["tests/mjs/*"]).pipe(gulp.dest("dist/tests/mjs"));
+}
+function installTestsMJS(cb) {
+	return exec("(cd dist/tests/mjs && npm i)", function (err, stdout, stderr) {
 		// console.log(stdout);
 		// console.log(stderr);
 		cb(err);
 	});
 }
-function testsPKGS(cb) {
-	return exec(" cd ../pkgs/ && npm i ", function (err, stdout, stderr) {
+function moveTestsPKGS(cb) {
+	return gulp.src(["tests/pkgs/*"]).pipe(gulp.dest("dist/tests/pkgs"));
+}
+function installTestsPKGS(cb) {
+	return exec("(cd dist/tests/pkgs && npm i) ", function (err, stdout, stderr) {
 		// console.log(stdout);
 		// console.log(stderr);
 		cb(err);
 	});
 }
 function buildTests(cb) {
-	return (
-		exec("tsc --project tsconfig.test.json", function (err, stdout, stderr) {
+	return exec(
+		"tsc --project tsconfig.test.json",
+		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
 			cb(err);
-		}) &&
-		testsCJS &&
-		testsMJS &&
-		testsPKGS
+		}
 	);
 }
-gulp.task(buildTests);
+
+gulp.task(
+	"buildTestsTSC",
+	gulp.series(
+		buildTests,
+		gulp.parallel(
+			moveTestsCJS,
+			installTestsCJS,
+			moveTestsMJS,
+			installTestsMJS,
+			moveTestsPKGS,
+			installTestsPKGS
+		)
+	)
+);
 
 function buildUntilTests(cb) {
 	return exec(
