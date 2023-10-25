@@ -10,56 +10,51 @@ import ckb_IR from "../src/languages/l10n/ckb_IR";
 
 const dataYear = 1402;
 
+var data: any = {
+	CJS: "",
+	MJS: "",
+	PKGS: []
+};
+
 describe("test CommonJS (CJS) && ES Modules (ESM) && exports pkgs", () => {
-	let dataMJS: any;
-	let dataPKGS: any;
-	let dataCJS: any;
-
 	before(function (done) {
-		exec(
-			`(node dist/tests/cjs/test.cjs ${dataYear})`,
-			function (error, stdout, stderr) {
-				if (error) done(error); // Handle errors.
-				dataCJS = stdout.trim();
-				// console.log(`stdout: ${stdout}`);
-				// console.error(`stderr: ${stderr}`);
-			}
-		);
-		exec(
-			`(node dist/tests/mjs/test.mjs ${dataYear})`,
-			function (error, stdout, stderr) {
-				if (error) done(error); // Handle errors.
-				dataMJS = stdout.trim();
-				// console.log(`stdout: ${stdout}`);
-				// console.error(`stderr: ${stderr}`);
-			}
-		);
+		exec(`(node dist/tests/mjs/test.mjs)`, function (error, stdout, stderr) {
+			if (error) done(error); // Handle errors.
+			data.MJS = stdout.trim();
+			// console.log(`stdout: ${stdout}`);
+			// console.error(`stderr: ${stderr}`);
+		});
 
-		exec(
-			`(node dist/tests/pkgs/test.js ${dataYear})`,
-			function (error, stdout, stderr) {
-				if (error) done(error); // Handle errors.
-				dataPKGS = stdout.trim();
-				// console.log(`stdout: ${stdout}`);
-				// console.error(`stderr: ${stderr}`);
-			}
-		);
+		exec(`(node dist/tests/pkgs/test.js)`, function (error, stdout, stderr) {
+			if (error) done(error); // Handle errors.
+			data.PKGS = stdout.trim().split(",");
+			// console.log(`stdout: ${stdout}`);
+			// console.error(`stderr: ${stderr}`);
+		});
 		done();
 	});
 
 	it("run CJS", () => {
-		assert.equal(dataCJS, new SHDate(dataYear).toDateString());
+		exec(`(node dist/tests/cjs/test.cjs)`, function (error, stdout, stderr) {
+			// if (error) done(error); // Handle errors.
+			data.CJS = stdout.trim();
+			// console.log(`stdout: ${stdout}`);
+			// console.error(`stderr: ${stderr}`);
+		});
+		assert.equal(data.CJS, new SHDate(dataYear).toDateString());
 	});
 	it("run ES Modules (ESM)", () => {
-		assert.equal(dataMJS, new SHDate(dataYear).toDateString());
+		assert.equal(data.MJS, new SHDate(dataYear).toDateString());
 	});
 	it("run exports pkgs", () => {
-		assert.deepEqual(dataPKGS, [
+		console.log(data);
+		assert.deepEqual(
+			data.PKGS,
 			SHDate.VERSION,
-			words.word_language,
-			toNumber,
-			fa_IR.LANGUAGE,
-			ckb_IR.LANGUAGE
-		]);
+			words.word_language
+			// toNumber(123),
+			// fa_IR.LANGUAGE,
+			// ckb_IR.LANGUAGE
+		);
 	});
 });

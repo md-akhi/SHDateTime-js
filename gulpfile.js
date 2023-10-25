@@ -200,6 +200,15 @@ function devClean(cb) {
 }
 gulp.task(devClean);
 
+function buildClean(cb) {
+	return exec("rm -rf dist src/browser", function (err, stdout, stderr) {
+		// console.log(stdout);
+		// console.log(stderr);
+		cb(err);
+	});
+}
+gulp.task(buildClean);
+
 function moveTestsCJS(cb) {
 	return gulp.src(["tests/cjs/*"]).pipe(gulp.dest("dist/tests/cjs"));
 }
