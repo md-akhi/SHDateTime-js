@@ -201,7 +201,7 @@ function devClean(cb) {
 gulp.task(devClean);
 
 function buildClean(cb) {
-	return exec("rm -rf dist src/browser", function (err, stdout, stderr) {
+	return exec("rm -rf dist/* src/browser", function (err, stdout, stderr) {
 		// console.log(stdout);
 		// console.log(stderr);
 		cb(err);
