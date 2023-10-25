@@ -7,7 +7,7 @@ import ckb_IR from "shdate/lang/l10n/ckb_IR";
 console.log(
 	SHDate.VERSION,
 	words.word_language
-	// toNumber,
+	// // toNumber,
 	// fa_IR.LANGUAGE,
 	// ckb_IR.LANGUAGE
 );
