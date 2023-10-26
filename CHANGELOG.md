@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 <div dir="rtl" style="text-align: right;">
 
-## [منتشر نشده][unreleased]
+## [منتشر نشده][2.1.23]
 
 ### [ایجاد / اضافه شد][#]
 
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 </div>
 
-## [UnReleased][unreleased]
+## [2.1.23][unreleased]
 
 ### [Added][#]
 
@@ -293,7 +293,7 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...HEAD
+[2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...HEAD
 [2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23
 [2.1.10]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.1.10
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
