@@ -146,10 +146,5 @@
   "lint-staged": {
     "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
     "*": ["prettier --write", "git add"]
-  },
-  "dependencies": {
-    "test_cjs": "file:tests/cjs",
-    "test_mjs": "file:tests/mjs",
-    "tests": "file:tests/pkgs"
   }
 }
