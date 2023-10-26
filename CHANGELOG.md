@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### [تغییر کرد][#]
 
-- تغییر نام تابع تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+-
 
 ### [رفع / درست شد][#]
 
@@ -41,11 +41,51 @@ All notable changes to this project will be documented in this file.
 
 ### [Changed][#]
 
-- Rename conversion function from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+-
 
 ### [Fixed][#]
 
 -
+
+#
+
+<div style="text-align: center;">
+
+## [2.1.23] - SH 1402-07-19 - G 2023-10-11
+
+</div>
+
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- ایجاد تست برای exports PKGS [[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+
+### [تغییر کرد][#]
+
+- تغییر نام تابع تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- بازنویسی gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+- بازنویسی دستورات PKGS [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+
+### [رفع / درست شد][#]
+
+- اصلاح آدرس‌های exports PKGS برای فراخوانی‌ها [[8b6a11a](https://github.com/md-akhi/SHDateTime-js/commit/8b6a11a53446074eec0711876c2c66982868cc88)]
+
+</div>
+
+### [Added][#]
+
+- Create tests for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+
+### [Changed][#]
+
+- Rename conversion function from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- Rewrite gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+- Rewriting PKGS commands [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+
+### [Fixed][#]
+
+- Modification of export PKGS addresses for calls [[8b6a11a](https://github.com/md-akhi/SHDateTime-js/commit/8b6a11a53446074eec0711876c2c66982868cc88)]
 
 #
 
@@ -253,7 +293,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...HEAD
+[2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23
 [2.1.10]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.1.10
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0
