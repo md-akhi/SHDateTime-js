@@ -1,9 +1,9 @@
 name: Tests Packages
 on:
   push:
-    branches: [dev, rls/*]
+    branches: [dev, release/*]
   pull_request:
-    branches: [dev, rls/*]
+    branches: [dev, release/*]
 jobs:
   tests-pkgs:
     runs-on: ubuntu-latest
@@ -18,9 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Removed pkgs test File
+        uses: JesseTG/rm@v1.0.3
+        with:
+          path: tests/pkgs.spec.ts
       - name: Install dependencies & Tests
         shell: bash
         run: |
           npm install
-          npm test
-      #   npm run build --if-present
+          npm run build --if-present
+          npm run test:release

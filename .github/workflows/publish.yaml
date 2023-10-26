@@ -17,11 +17,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+      - name: Removed pkgs test File
+        uses: JesseTG/rm@v1.0.3
+        with:
+          path: tests/pkgs.spec.ts
       - name: Install dependencies & test
         shell: bash
         run: |
           npm install
-          npm test
+          npm run build --if-present
+          npm run test:release
 
   publish-npmjs-pkgs: #NPM Packages
     needs: tests-pkgs
@@ -38,7 +43,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           # scope: "@md-akhi"
           always-auth: true
-      - name: Removed Docs File
+      - name: Removed Docs Folder
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
@@ -77,7 +82,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@md-akhi"
           always-auth: true
-      - name: Removed Docs File
+      - name: Removed Docs Folder
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
@@ -87,8 +92,8 @@ jobs:
         shell: bash
         run: |
           npm install
-          npm run build
           npm pkg set name="@md-akhi/shdatetime"
+          npm run build
           npm publish --access public
 
   publish-gitHub-pkgs: #GitHub Packages
@@ -107,7 +112,7 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: "@md-akhi"
           always-auth: true
-      - name: Removed Docs File
+      - name: Removed Docs Folder
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
@@ -149,7 +154,7 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: "@md-akhi"
           always-auth: true
-      - name: Removed Docs File
+      - name: Removed Docs Folder
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs

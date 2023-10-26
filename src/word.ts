@@ -14,8 +14,8 @@ export default class Word extends Language {
 
 	/**
 	 * Uppercase Ante meridiem and Post meridiem
-	 * @param {number} H24 numeric
-	 * @param {string} word_language language word
+	 * @param {number} H24 numeric of hours
+	 * @param {string} word_language word language
 	 * @return string Ante/Post meridiem
 	 */
 	static getMeridienFullNames(
@@ -27,8 +27,8 @@ export default class Word extends Language {
 
 	/**
 	 * Lowercase Ante meridiem and Post meridiem, two letters
-	 * @param {number} H24 numeric
-	 * @param {string} word_language language    word
+	 * @param {number} H24 numeric of hours
+	 * @param {string} word_language word language
 	 * @return {string} Ante/Post meridiem, two letters
 	 */
 	static getMeridienShortNames(
@@ -41,7 +41,7 @@ export default class Word extends Language {
 	/**
 	 * A full textual representation of a month
 	 * @param {number} month numeric of a month
-	 * @param {string} word_language language word
+	 * @param {string} word_language word language
 	 * @return {string} A full textual of a month
 	 */
 	static getMonthFullNames(
@@ -54,7 +54,7 @@ export default class Word extends Language {
 	/**
 	 * A short textual representation of a month, three letters
 	 * @param {number} month numeric of a month
-	 * @param {string} word_language language word
+	 * @param {string} word_language word language
 	 * @return {string} A short textual of a month, three letters
 	 */
 	static getMonthShortNames(
@@ -67,7 +67,7 @@ export default class Word extends Language {
 	/**
 	 * A full textual representation of the day of the week
 	 * @param {number} dow numeric of the day of the week
-	 * @param {string} word_language language word
+	 * @param {string} word_language word language
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A full textual the day of the week
 	 */
@@ -82,7 +82,7 @@ export default class Word extends Language {
 	/**
 	 * A short textual representation of the day of the week, three letters
 	 * @param {number} dow numeric of the day of the week
-	 * @param {string} word_language language word
+	 * @param {string} word_language word language
 	 * @param {number} FDOW numeric of the first day of the week
 	 * @return {string} A short textual of a day, three letters
 	 */
@@ -96,43 +96,52 @@ export default class Word extends Language {
 
 	/**
 	 * Ordinal suffix for the day of the month
-	 * @param {number} num numeric the day of the month
-	 * @param {string} word_language language word
+	 * @param {number} date numeric the day of the month
+	 * @param {string} word_language word language
 	 * @return {string} Ordinal suffix for the day of the month
 	 */
 	static getSuffixNames(
-		num: number,
+		date: number,
 		word_language: string = Word.LANGUAGE
 	): string {
-		return Word.getClass(word_language).SuffixNames(num);
+		return Word.getClass(word_language).SuffixNames(date);
 	}
 
 	/**
-	 *
+	 * A full textual representation of the constellations
+	 * @param {number} month numeric the month of the year
+	 * @param {string} word_language word language
+	 * @return {string} full textual the constellations
 	 */
 	static getConstellationsFullNames(
 		month: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).CONSTELLATIONS_FULL_NAMES[month];
 	}
 
 	/**
-	 *
+	 * A full textual representation of the animal of the year
+	 * @param {number} year numeric the year
+	 * @param {string} word_language word language
+	 * @return {string} full textual the animal of the year
 	 */
 	static getAnimalsFullNames(
 		year: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).ANIMALS_FULL_NAMES[year % 12];
 	}
 
 	/**
-	 *
+	 * A full textual representation of the seasons of the year
+	 * @param {number} month numeric the month of the year
+	 * @param {string} word_language word language
+	 * @return {string} full textual the season of the year
 	 */
 	static getSeasonFullNames(
 		month: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		return Word.getClass(word_language).SEASON_FULL_NAMES[
 			parseInt(((month + 1) / 3.1).toString())
@@ -141,11 +150,15 @@ export default class Word extends Language {
 
 	/**
 	 *
+	 * @param {number} month numeric the month of the year
+	 * @param {number} date numeric the day of the month
+	 * @param {string} word_language word language
+	 * @return {string}
 	 */
 	static getSolsticeFullNames(
 		month: number,
 		date: number,
-		word_language = Word.LANGUAGE
+		word_language: string = Word.LANGUAGE
 	): string {
 		if (month === 2 && date === 31)
 			return Word.getClass(word_language).SOLSTICE_FULL_NAMES[0];
