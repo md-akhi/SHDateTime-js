@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 </div>
 
-## [2.1.23][unreleased]
+## [2.1.23][2.1.24]
 
 ### [Added][#]
 
