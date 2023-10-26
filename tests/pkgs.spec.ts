@@ -41,7 +41,7 @@ execPromise("(node dist/tests/mjs/test.mjs)")
 	});
 
 // pkgs
-execPromise("(node dist/tests/pkgs/test.js)")
+execPromise("(node dist/tests/pkgs/test.mjs)")
 	.then((rs) => {
 		data.pkg = rs;
 	})

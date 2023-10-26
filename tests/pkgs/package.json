@@ -2,9 +2,9 @@
   "name": "tests",
   "version": "1.0.0",
   "description": "",
-  "main": "test.js",
+  "main": "test.mjs",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.mjs"
   },
   "author": "",
   "license": "ISC",
