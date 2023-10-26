@@ -85,9 +85,38 @@ function replaceDocBlockInfo() {
 }
 
 function cleanCompile(cb) {
-	return del(["dist", "src/browser"], cb);
+	return del(["dist"], cb);
 }
-gulp.task(cleanCompile);
+
+function compileCjs(cb) {
+	//"tsc:cjs"
+	return exec(
+		'tsc --project tsconfig.json  && echo {"type":"commonjs"} > dist/cjs/package.json',
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+function makeTypes() {
+	return gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types"));
+}
+function cleanTSCJS(cb) {
+	return del(["dist/cjs/**/*.d.ts"], cb);
+}
+
+function compileMjs(cb) {
+	//"tsc:mjs"
+	return exec(
+		'tsc --project tsconfig.mjs.json && echo {"type":"module"} > dist/mjs/package.json',
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
 
 /**
  * combine all .ts files into one
@@ -110,38 +139,6 @@ function concatBrowserTS() {
 		.pipe(replace(/SH(Parser|Lexer|Token)/g, "SHDate$1"))
 		.pipe(gulp.dest("src/browser"));
 }
-
-function makeTypes(cb) {
-	return (
-		gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types")) &&
-		del(["dist/cjs/**/*.d.ts"], cb)
-	);
-}
-
-function compileCjs(cb) {
-	//"tsc:cjs"
-	return exec(
-		'tsc --project tsconfig.json  && echo {"type":"commonjs"} > dist/cjs/package.json',
-		function (err, stdout, stderr) {
-			// console.log(stdout);
-			// console.log(stderr);
-			cb(err);
-		}
-	);
-}
-
-function compileMjs(cb) {
-	//"tsc:mjs"
-	return exec(
-		'tsc --project tsconfig.mjs.json && echo {"type":"module"} > dist/mjs/package.json',
-		function (err, stdout, stderr) {
-			// console.log(stdout);
-			// console.log(stderr);
-			cb(err);
-		}
-	);
-}
-
 function compileBrowser(cb) {
 	//"tsc:browser"
 	return exec(
@@ -153,17 +150,13 @@ function compileBrowser(cb) {
 		}
 	);
 }
-
-function makeBrowserTypes() {
-	return gulp
-		.src(["src/browser/*.ts", "dist/browser/*.d.ts"])
-		.pipe(gulp.dest("dist/types"));
-}
+// function makeBrowserTypes() {
+// 	return gulp.src(["dist/browser/*.d.ts"]).pipe(gulp.dest("dist/types"));
+// }
 
 function cleanBrowserTS(cb) {
 	return del(["src/browser", "dist/browser/*.d.ts"], cb);
 }
-
 function compressBrowserJS() {
 	return gulp
 		.src("dist/browser/shdate.js", { sourcemaps: true })
@@ -184,22 +177,18 @@ exports.default = gulp.task(
 	"build",
 	gulp.series(
 		cleanCompile,
-		gulp.parallel(
-			compileCjs,
-			makeTypes,
-			compileMjs,
-			concatBrowserTS,
-			compileBrowser
-		),
+		gulp.parallel(gulp.series(compileCjs, makeTypes, cleanTSCJS), compileMjs),
+		concatBrowserTS,
+		compileBrowser,
 		compressBrowserJS,
-		makeBrowserTypes,
+		// makeBrowserTypes,
 		cleanBrowserTS,
 		replaceDocBlockInfo
 	)
 );
 
 function cleanDev(cb) {
-	return del(["dist/src", "dist/tests", "tests/tst.out"], cb);
+	return del(["dist/src", "dist/tests"], cb);
 }
 
 function compileTest(cb) {
