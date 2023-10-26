@@ -1,7 +1,6 @@
 import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
-import util from "node:util";
 import { exec } from "node:child_process";
 import SHDate from "../src/base.js";
 import words from "../src/word.js";
@@ -11,12 +10,8 @@ import ckb_IR from "../src/languages/l10n/ckb_IR.js";
 
 const dataYear = 1402;
 
-async function callExec(cmd = "") {
-	return await util.promisify(exec)(cmd);
-}
-
-function execPromise(command = "") {
-	return new Promise(function (resolve, reject) {
+async function execPromise(command = "") {
+	return await new Promise(function (resolve, reject) {
 		exec(command, (error, stdout, stderr) => {
 			if (error) {
 				reject(error);
@@ -26,7 +21,7 @@ function execPromise(command = "") {
 		});
 	});
 }
-var data: any = { cjs: "", mjs: "", pkg: [] };
+var data: any = { cjs: "", mjs: "", pkg: "" };
 // cjs
 execPromise("(node dist/tests/cjs/test.cjs)")
 	.then((rs) => {
