@@ -17,7 +17,7 @@
     "editor.formatOnSave": true
   },
 
-  "git.branchProtection": ["main", "release/*"],
+  "git.branchProtection": ["main", "rls/*"],
   "git.branchProtectionPrompt": "alwaysCommitToNewBranch",
   "git.branchRandomName.enable": true,
   "git.mergeEditor": true,

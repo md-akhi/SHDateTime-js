@@ -1,1 +1,15 @@
-{"type":"commonjs"} 
+{
+  "name": "test_cjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.cjs",
+  "scripts": {
+    "test": "node test.cjs > test.log"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "shdate": "file:../../.."
+  },
+  "type": "commonjs"
+}

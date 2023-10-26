@@ -1,11 +1,10 @@
 {
   "name": "shdate",
-  "version": "2.1.22",
+  "version": "2.1.23",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
     "time",
-    "date time",
     "date and time",
     "datetime",
     "shdatetime",
@@ -13,116 +12,92 @@
     "shdate",
     "sdate",
     "jdate",
+    "jalali",
+    "shamsi",
     "shamsi hijri",
-    "Shamsi Hijri",
-    "Solar Hijri",
     "solar hijri",
     "iranian hijri",
-    "Iranian Hijri",
     "parser",
     "typescript",
     "ts",
     "javascript",
     "js",
     "commonjs",
-    "CommonJS",
     "cjs",
-    "ES",
-    "ESM",
-    "ES Modules",
+    "es modules",
+    "esm",
     "mjs"
   ],
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
   "license": "AGPL-3.0",
-  "copyright": "(C) 2015 - 2023 Open Source Matters,Inc. All right reserved.",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "nodemon --exec run-s dev:clean tsc:test dev:watch --watch ./src",
-    "dev:clean": "rm -rf dist/src dist/tests tests/tst.out",
-    "dev:watch": "node dist/tests/dev.js",
+    "start": "gulp test && node dist/tests/dev.js",
+    "dev": "nodemon --exec npm start",
     "watch": "tsc -w",
-    "build": "run-s build:*",
-    "build:version": "gulp setDescription",
-    "build:clean": "rm -rf dist src/browser",
-    "build:tsc": "run-p tsc:cjs tsc:mjs tsc:browser && gulp",
-    "test": "npm run tsc:test && mocha",
-    "test:dev": "nodemon npm run test",
-    "tsc:cjs": "tsc --project tsconfig.json  && echo {\"type\":\"commonjs\"}>dist/cjs/package.json && gulp moveDTS && gulp delDTS",
-    "tsc:mjs": "tsc --project tsconfig.mjs.json && echo {\"type\":\"module\"}>dist/mjs/package.json",
-    "tsc:browser": "gulp combineTS && tsc --project tsconfig.browser.json",
-    "tsc:test": "tsc --project tsconfig.test.json",
-    "test:build": "npm run tsc:test && node dist/tests/build-test.js > tests/build-test.log",
+    "build": "gulp build",
+    "test": "gulp test && mocha",
+    "test:release": "gulp testRelease && mocha",
+    "dev:test": "nodemon --exec npm test",
+    "test:build": "gulp compileTest && node dist/tests/build-test.js > tests/build-test.log",
     "prepare": "husky install"
   },
   "main": "./dist/cjs/base.js",
   "module": "./dist/mjs/base.js",
   "types": "./dist/types/base.d.ts",
-  "browser": "./dist/browser/shdatetime.min.js",
-  "unpkg": "https://unpkg.com/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
-  "jsdrive": "https://cdn.jsdelivr.net/npm/@md-akhi/shdatetime@latest/dist/browser/shdatetime.min.js",
+  "browser": "./dist/browser/shdate.min.js",
   "exports": {
     ".": {
+      "browser": "./dist/browser/shdate.min.js",
       "require": "./dist/cjs/base.js",
       "import": "./dist/mjs/base.js",
       "types": "./dist/types/base.d.ts"
     },
-    "./words?": {
+    "./words": {
       "require": "./dist/cjs/word.js",
       "import": "./dist/mjs/word.js",
       "types": "./dist/types/word.d.ts"
     },
-    "./tools?": {
+    "./tools": {
       "require": "./dist/cjs/tools.js",
       "import": "./dist/mjs/tools.js",
       "types": "./dist/types/tools.d.ts"
     },
-    "./l10n/*": {
-      "require": "./dist/cjs/l10n/*.js",
-      "import": "./dist/mjs/l10n/*.js",
-      "types": "./dist/types/l10n/*.d.ts"
+    "./lang/*": {
+      "require": "./dist/cjs/languages/i18n/*.js",
+      "import": "./dist/mjs/languages/i18n/*.js",
+      "types": "./dist/types/languages/i18n/*.d.ts"
     },
-    "./i18n/*": {
-      "require": "./dist/cjs/i18n/*.js",
-      "import": "./dist/mjs/i18n/*.js",
-      "types": "./dist/types/i18n/*.d.ts"
+    "./lang/l10n/*": {
+      "require": "./dist/cjs/languages/l10n/*.js",
+      "import": "./dist/mjs/languages/l10n/*.js",
+      "types": "./dist/types/languages/l10n/*.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "dist/types/base.d.ts"
-      ],
-      "./words?": [
-        "./dist/types/word.d.ts"
-      ],
-      "./tools?": [
-        "./dist/types/tools.d.ts"
-      ],
-      "./*": [
-        "./dist/types/i18n/*.d.ts"
-      ]
+      ".": ["dist/types/base.d.ts"],
+      "./words": ["./dist/types/word.d.ts"],
+      "./tools": ["./dist/types/tools.d.ts"],
+      "./lang/*": ["./dist/types/languages/i18n/*.d.ts"],
+      "./lang/l10n/*": ["./dist/types/languages/l10n/*.d.ts"]
     }
   },
   "directories": {
     "dist": "./dist",
     "src": "./src",
     "tests": "./tests",
+    "man": "./docs",
     "docs": "./docs"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "docs",
-    "dist"
-  ],
-  "man": [
-    "./docs/**/*.md"
-  ],
+  "files": ["LICENSE", "README.md", "CHANGELOG.md", "docs", "dist"],
+  "man": ["./docs/**/*.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/md-akhi/SHDateTime-js.git"
   },
+  "npmjs": "https://www.npmjs.com/package/shdate",
+  "unpkg": "https://unpkg.com/shdate@latest/dist/browser/shdate.min.js",
+  "jsdrive": "https://cdn.jsdelivr.net/npm/shdate@latest/dist/browser/shdate.min.js",
   "bugs": {
     "url": "https://github.com/md-akhi/SHDateTime-js/issues"
   },
@@ -169,14 +144,7 @@
     }
   },
   "lint-staged": {
-    "/**/*.{ts}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*": [
-      "prettier --write",
-      "git add"
-    ]
+    "/**/*.{ts}": ["prettier --write", "eslint --fix", "git add"],
+    "*": ["prettier --write", "git add"]
   }
 }

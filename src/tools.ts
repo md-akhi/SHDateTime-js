@@ -13,20 +13,19 @@ import Language from "./languages/language.js";
  * @param {string} comma If true, convert to persian digits.
  * @returns {string} The converted string.
  */
-export default function NumbersTo(
+export function toNumber(
 	source: string,
 	destination: string | string[] = "FA",
 	comma: string = ","
 ): string {
 	const EN: string[] = Language.getClass("en_US").DIGIT;
 	const FA: string[] = Language.getClass("fa_IR").DIGIT;
-	const FA2: string[] = Language.getClass("fa_IR").DIGIT2;
 	switch (destination) {
 		case "FA":
 			destination = FA;
 			break;
-		case "FA2":
-			destination = FA2;
+		case "EN":
+			destination = EN;
 			break;
 		default:
 			destination = FA;
