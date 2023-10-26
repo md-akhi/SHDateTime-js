@@ -105,17 +105,9 @@ function setDocBlockDescription() {
 }
 
 function moveDotDToTypes(cb) {
-	// return del(["dist/cjs/**/*.d.ts"]);//rm -rf dist/cjs/**/*.d.ts
 	return (
 		gulp.src("dist/cjs/**/*.d.ts").pipe(gulp.dest("dist/types")) &&
-		exec(
-			"rm -rf dist/cjs/*.d.ts dist/cjs/parser/*.d.ts dist/cjs/languages/*.d.ts dist/cjs/languages/i18n/*.d.ts dist/cjs/languages/l10n/*.d.ts",
-			function (err, stdout, stderr) {
-				// console.log(stdout);
-				// console.log(stderr);
-				cb(err);
-			}
-		)
+		del(["dist/cjs/**/*.d.ts"], cb)
 	);
 }
 
@@ -133,15 +125,7 @@ function settingBrowserJS() {
 }
 
 function deleteMergeFilesBrowserTS(cb) {
-	// return del(["src/browser", "dist/browser/*.d.ts"]);
-	return exec(
-		"rm -rf src/browser dist/browser/*.d.ts",
-		function (err, stdout, stderr) {
-			// console.log(stdout);
-			// console.log(stderr);
-			cb(err);
-		}
-	);
+	return del(["src/browser", "dist/browser/*.d.ts"], cb);
 }
 
 function moveDotDBrowserTSToTypes() {
@@ -153,7 +137,7 @@ function moveDotDBrowserTSToTypes() {
 function buildCjs(cb) {
 	//"tsc:cjs"
 	return exec(
-		'tsc --project tsconfig.json  && echo {"type":"commonjs"}>dist/cjs/package.json && gulp moveDotDToTypes',
+		'tsc --project tsconfig.json  && echo {"type":"commonjs"}>dist/cjs/package.json',
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -177,7 +161,7 @@ function buildMjs(cb) {
 function buildBrowser(cb) {
 	//"tsc:browser"
 	return exec(
-		"gulp MergeFilesBrowserTS && tsc --project tsconfig.browser.json",
+		" tsc --project tsconfig.browser.json",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -186,26 +170,24 @@ function buildBrowser(cb) {
 	);
 }
 
-gulp.task("buildTSC", gulp.parallel(buildCjs, buildMjs, buildBrowser));
+gulp.task(
+	"buildTSC",
+	gulp.parallel(
+		buildCjs,
+		moveDotDToTypes,
+		buildMjs,
+		MergeFilesBrowserTS,
+		buildBrowser
+	)
+);
 
 function devClean(cb) {
-	return exec(
-		"rm -rf dist/src dist/tests tests/tst.out",
-		function (err, stdout, stderr) {
-			// console.log(stdout);
-			// console.log(stderr);
-			cb(err);
-		}
-	);
+	return del(["dist/src", "dist/tests", "tests/tst.out"], cb);
 }
 gulp.task(devClean);
 
 function buildClean(cb) {
-	return exec("rm -rf dist/* src/browser", function (err, stdout, stderr) {
-		// console.log(stdout);
-		// console.log(stderr);
-		cb(err);
-	});
+	return del(["dist", "src/browser"], cb);
 }
 gulp.task(buildClean);
 
