@@ -195,31 +195,40 @@ function moveTestsCJS(cb) {
 	return gulp.src(["tests/cjs/*"]).pipe(gulp.dest("dist/tests/cjs"));
 }
 function installTestsCJS(cb) {
-	return exec("(cd dist/tests/cjs && npm i)", function (err, stdout, stderr) {
-		// console.log(stdout);
-		// console.log(stderr);
-		cb(err);
-	});
+	return exec(
+		"(cd dist/tests/cjs && npm i && npm test)",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
 }
 function moveTestsMJS(cb) {
 	return gulp.src(["tests/mjs/*"]).pipe(gulp.dest("dist/tests/mjs"));
 }
 function installTestsMJS(cb) {
-	return exec("(cd dist/tests/mjs && npm i)", function (err, stdout, stderr) {
-		// console.log(stdout);
-		// console.log(stderr);
-		cb(err);
-	});
+	return exec(
+		"(cd dist/tests/mjs && npm i && npm test)",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
 }
 function moveTestsPKGS(cb) {
 	return gulp.src(["tests/pkgs/*"]).pipe(gulp.dest("dist/tests/pkgs"));
 }
 function installTestsPKGS(cb) {
-	return exec("(cd dist/tests/pkgs && npm i) ", function (err, stdout, stderr) {
-		// console.log(stdout);
-		// console.log(stderr);
-		cb(err);
-	});
+	return exec(
+		"(cd dist/tests/pkgs && npm i && npm test) ",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
 }
 function buildTests(cb) {
 	return exec(

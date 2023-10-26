@@ -7,6 +7,7 @@ import words from "../src/word.js";
 import { toNumber } from "../src/tools.js";
 import en_US from "../src/languages/i18n/en_US.js";
 import ckb_IR from "../src/languages/l10n/ckb_IR.js";
+import * as fs from "fs";
 
 const dataYear = 1402;
 
@@ -21,44 +22,53 @@ async function execPromise(command = "") {
 		});
 	});
 }
-var data: any = { cjs: "", mjs: "", pkg: "" };
+
 // cjs
-execPromise("(node dist/tests/cjs/test.cjs)")
-	.then((rs) => {
-		data.cjs = rs;
-	})
-	.catch(function (err) {
-		console.error(err.message);
-	});
+const wordFileCJS = fs
+	.readFileSync("./dist/tests/cjs/test.log", "utf-8")
+	.trim();
+// execPromise("(node dist/tests/cjs/test.cjs)")
+// 	.then((rs) => {
+// 		data.cjs = rs;
+// 	})
+// 	.catch(function (err) {
+// 		console.error(err.message);
+// 	});
 
 // mjs
-execPromise("(node dist/tests/mjs/test.mjs)")
-	.then((rs) => {
-		data.mjs = rs;
-	})
-	.catch(function (err) {
-		console.error(err.message);
-	});
+const wordFileMJS = fs
+	.readFileSync("./dist/tests/mjs/test.log", "utf-8")
+	.trim();
+// execPromise("(node dist/tests/mjs/test.mjs)")
+// 	.then((rs) => {
+// 		data.mjs = rs;
+// 	})
+// 	.catch(function (err) {
+// 		console.error(err.message);
+// 	});
 
 // pkgs
-execPromise("(node dist/tests/pkgs/test.mjs)")
-	.then((rs) => {
-		data.pkg = rs;
-	})
-	.catch(function (err) {
-		console.error(err.message);
-	});
+const wordFilePKGS = fs
+	.readFileSync("./dist/tests/pkgs/test.log", "utf-8")
+	.trim();
+// execPromise("(node dist/tests/pkgs/test.mjs)")
+// 	.then((rs) => {
+// 		data.pkg = rs;
+// 	})
+// 	.catch(function (err) {
+// 		console.error(err.message);
+// 	});
 
 describe("test CommonJS (CJS) && ES Modules (ESM) && exports pkgs", () => {
 	it("run CJS", () => {
-		assert.equal(data.cjs, new SHDate(dataYear).toDateString());
+		assert.equal(wordFileCJS, new SHDate(dataYear).toDateString());
 	});
 	it("run ES Modules (ESM)", () => {
-		assert.equal(data.mjs, new SHDate(dataYear).toDateString());
+		assert.equal(wordFileMJS, new SHDate(dataYear).toDateString());
 	});
 	it("run exports pkgs", () => {
 		assert.equal(
-			data.pkg,
+			wordFilePKGS,
 			`${SHDate.VERSION} ${words.word_language}`
 			// toNumber(123),
 			// en_US.LANGUAGE,
