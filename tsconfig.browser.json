@@ -5,7 +5,7 @@
     "module": "umd",
     "outDir": "dist/browser",
     "target": "es2022",
-    "lib": ["dom","es2022" ],
+    "lib": ["dom", "es2022"],
     "esModuleInterop": false,
     "noImplicitAny": true,
     "sourceMap": true,
@@ -13,6 +13,6 @@
     "removeComments": true
   },
   "compileOnSave": false,
-  "include": ["src/browser/**.ts"],
+  "include": ["src/browser"],
   "exclude": ["node_modules", "dist"]
 }

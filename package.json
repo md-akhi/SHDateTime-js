@@ -1,6 +1,6 @@
 {
   "name": "shdate",
-  "version": "2.1.23",
+  "version": "2.1.24",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
@@ -75,7 +75,7 @@
   },
   "typesVersions": {
     "*": {
-      ".": ["dist/types/base.d.ts"],
+      ".": ["./dist/types/base.d.ts"],
       "./words": ["./dist/types/word.d.ts"],
       "./tools": ["./dist/types/tools.d.ts"],
       "./lang/*": ["./dist/types/languages/i18n/*.d.ts"],
