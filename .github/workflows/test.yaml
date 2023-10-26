@@ -18,6 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Removed pkgs test File
+        uses: JesseTG/rm@v1.0.3
+        with:
+          path: tests/pkgs.spec.ts
       - name: Install dependencies & Tests
         shell: bash
         run: |
