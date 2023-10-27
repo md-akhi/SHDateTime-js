@@ -4,7 +4,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  */
 
-import Language from "./languages/language.js";
+import Language, { Languages } from "./languages/language.js";
 
 /**
  * Convert a number to Persian digit
@@ -14,27 +14,30 @@ import Language from "./languages/language.js";
  * @returns {string} The converted string.
  */
 export function toNumber(
-	source: string,
-	destination: string | string[] = "FA",
-	comma: string = ","
+	source: string | number,
+	destination: string = "FA"
+	// comma: string = ","
 ): string {
-	const EN: string[] = Language.getClass("en_US").DIGIT;
-	const FA: string[] = Language.getClass("fa_IR").DIGIT;
-	switch (destination) {
+	const EN: string[] = Language.getClass(Languages.en_US).DIGIT;
+	const FA: string[] = Language.getClass(Languages.fa_IR).DIGIT;
+	let digits: string[];
+	switch (destination.toUpperCase()) {
 		case "FA":
-			destination = FA;
+		case "FA_IR":
+			digits = FA;
 			break;
 		case "EN":
-			destination = EN;
+		case "EN_US":
+			digits = EN;
 			break;
 		default:
-			destination = FA;
+			digits = FA;
 			break;
 	}
 	EN.forEach((value, index) => {
-		source = source.toString().replace(value, destination[index]);
+		source = `${source}`.replace(value, digits[index]);
 	});
 	// for (const [index, value] of EN.entries()) {
 	// 	source = source.split(value).join(destination[index]);
-	return source;
+	return `${source}`;
 }

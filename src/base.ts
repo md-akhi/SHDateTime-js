@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static VERSION: string = "2.1.05";
+	static VERSION: string = "2.1.24";
 
 	/**
 	 * @type {number[]} days in month without leap year

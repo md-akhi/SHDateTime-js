@@ -10,7 +10,7 @@ import Language_ckb_IR from "./l10n/ckb_IR.js";
 /**
  * list of supported languages
  */
-enum Languages {
+export enum Languages {
 	//i18n
 	fa_IR = "fa_IR",
 	en_US = "en_US",
