@@ -77,15 +77,15 @@ function replaceDocBlockInfo() {
 		)
 		.pipe(
 			replace(
-				/version: string = "([\w\d:\/\.\-]+)"/g,
-				`version: string = "${pkg.version}"`
+				/VERSION: string = "([\w\d:\/\.\-]+)"/g,
+				`VERSION: string = "${pkg.version}"`
 			)
 		)
 		.pipe(gulp.dest("src/"));
 }
 
 function cleanCompile(cb) {
-	return del(["dist"], cb);
+	return del(["dist", "src/browser"], cb);
 }
 
 function compileCjs(cb) {
@@ -125,17 +125,10 @@ function concatBrowserTS() {
 	return gulp
 		.src(["./src/languages/**/*.ts", "./src/parser/**/*.ts", "src/*.ts"])
 		.pipe(concat("shdate.ts"))
-		.pipe(replace(/export default (function|class)/g, "$1"))
-		.pipe(replace(/import [a-zA-Z_]* from [0-9a-zA-Z_/\.\"]*;/g, " "))
-		.pipe(replace(/extends (Language)/g, "extends SHDate$1"))
-		.pipe(replace(/class ([a-z]{2,3}_[A-Z]{2})/g, "class SHDateLanguage_$1"))
-		.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})\./g, " SHDateLanguage_$1."))
-		.pipe(replace(/ Language_([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguage_$1"))
-		.pipe(replace(/\((Languages)\)/g, "(SHDate$1)"))
-		.pipe(replace(/class (Language|Word)/g, "class SHDate$1"))
-		.pipe(replace(/(Language\.|Word\.)/g, "SHDate$1"))
-		.pipe(replace(/enum (Language)/g, "enum SHDate$1"))
-		.pipe(replace(/ Languages.([a-z]{2,3}_[A-Z]{2})/g, " SHDateLanguages.$1"))
+		.pipe(replace(/export (default)?/g, ""))
+		.pipe(replace(/import [a-zA-Z_,{ }]* from [0-9a-zA-Z_\/\.\"]*;/g, ""))
+		.pipe(replace(/(Languages?|Word)(\.)?/g, "SHDate$1$2"))
+		.pipe(replace(/ ([a-z]{2,3}_[A-Z]{2})(\.)?/g, " SHDateLanguage_$1$2"))
 		.pipe(replace(/SH(Parser|Lexer|Token)/g, "SHDate$1"))
 		.pipe(gulp.dest("src/browser"));
 }
@@ -187,7 +180,7 @@ exports.default = gulp.task(
 	)
 );
 
-function cleanDev(cb) {
+function cleanTest(cb) {
 	return del(["dist/src", "dist/tests"], cb);
 }
 
@@ -203,6 +196,20 @@ function compileTest(cb) {
 }
 gulp.task(compileTest);
 
+function copyTestBrowser(cb) {
+	return gulp.src(["tests/browser/*"]).pipe(gulp.dest("dist/tests/browser"));
+}
+function installTestsBrowser(cb) {
+	return exec(
+		"(cd dist/tests/browser && npm i && npm test)",
+		function (err, stdout, stderr) {
+			// console.log(stdout);
+			// console.log(stderr);
+			cb(err);
+		}
+	);
+}
+
 function copyTestCJS(cb) {
 	return gulp.src(["tests/cjs/*"]).pipe(gulp.dest("dist/tests/cjs"));
 }
@@ -216,6 +223,7 @@ function installTestsCJS(cb) {
 		}
 	);
 }
+
 function copyTestMJS(cb) {
 	return gulp.src(["tests/mjs/*"]).pipe(gulp.dest("dist/tests/mjs"));
 }
@@ -246,9 +254,10 @@ function installTestsPKGS(cb) {
 gulp.task(
 	"test",
 	gulp.series(
-		cleanDev,
+		cleanTest,
 		compileTest,
 		gulp.parallel(
+			gulp.series(copyTestBrowser, installTestsBrowser),
 			gulp.series(copyTestCJS, installTestsCJS),
 			gulp.series(copyTestMJS, installTestsMJS),
 			gulp.series(copyTestPKG, installTestsPKGS)
@@ -256,7 +265,7 @@ gulp.task(
 	)
 );
 
-gulp.task("testRelease", gulp.series(cleanDev, compileTest));
+gulp.task("testRelease", gulp.series(cleanTest, compileTest));
 
 // buildUntilTests.displayName = 'clean:all';
 // buildUntilTests.description = 'Build the project';

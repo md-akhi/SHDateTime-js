@@ -1,6 +1,6 @@
 {
   "name": "shdate",
-  "version": "2.1.24",
+  "version": "2.1.25",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
@@ -36,8 +36,8 @@
     "watch": "tsc -w",
     "build": "gulp build",
     "test": "gulp test && mocha",
-    "test:release": "gulp testRelease && mocha",
     "dev:test": "nodemon --exec npm test",
+    "test:release": "gulp testRelease && mocha",
     "test:build": "gulp compileTest && node dist/tests/build-test.js > tests/build-test.log",
     "prepare": "husky install"
   },
@@ -127,13 +127,11 @@
     "gulp-header": "^2.0.9",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.1.4",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "mocha": "^10.2.0",
     "nodemon": "^3.0.1",
-    "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
