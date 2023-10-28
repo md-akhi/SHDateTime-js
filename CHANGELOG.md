@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 <div dir="rtl" style="text-align: right;">
 
-## [منتشر نشده][unreleased]
+## [منتشر نشده][2.1.25]
 
 ### [ایجاد / اضافه شد][#]
 
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 </div>
 
-## [UnReleased][unreleased]
+## [2.1.25][unreleased]
 
 ### [Added][#]
 
@@ -46,6 +46,43 @@ All notable changes to this project will be documented in this file.
 ### [Fixed][#]
 
 -
+
+#
+
+<div style="text-align: center;">
+
+## [2.1.25] - SH 1402-08-06 - G 2023-10-28
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- افزودن تست برای مرورگر [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [تغییر کرد][#]
+
+- اصلاح و تغییر در gulpfile [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [رفع / درست شد][#]
+
+- رفع خطای انتشار در github [[4ece537](https://github.com/md-akhi/SHDateTime-js/commit/4ece537ae13cae68003ec1f06710cca4b2bfab2e)]
+- رفع خطای اجرا در مرورگر [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+</div>
+
+### [Added][#]
+
+- Add test for browser [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [Changed][#]
+
+- Fixes and changes in gulpfile [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [Fixed][#]
+
+- Fix release error on github [[4ece537](https://github.com/md-akhi/SHDateTime-js/commit/4ece537ae13cae68003ec1f06710cca4b2bfab2e)]
+- Fix execution error in browser [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
 
 #
 
@@ -293,7 +330,9 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...HEAD
+[2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...HEAD
+[2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.24...2.1.25
+[2.1.24]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...2.1.24
 [2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23
 [2.1.10]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.1.10
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
