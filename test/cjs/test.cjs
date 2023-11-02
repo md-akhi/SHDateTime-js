@@ -1,8 +1,8 @@
 /**
- * node ./dist/tests/mjs/dev.mjs
+ * node ./dist/test/cjs/dev.cjs
  */
-import { argv } from "node:process";
-import SHDate from "shdate";
+const { argv } = require("node:process");
+const SHDate = require("shdate").default;
 
 console.log(new SHDate(1402).toDateString());
 

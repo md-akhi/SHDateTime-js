@@ -112,7 +112,7 @@ All notable changes to this project will be documented in this file.
 
 ### [Added][#]
 
-- Create tests for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+- Create test for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
 
 ### [Changed][#]
 
@@ -196,7 +196,7 @@ All notable changes to this project will be documented in this file.
 - Added documentation in `Farsi` language
 - Adding part of the documentation
 - Added ability to work with strings by the `parse` function
-- Adding necessary tests
+- Adding necessary test
 - Implementation of `getDayOfYear` function
 - Implementation of `getUTCDayOfYear` function
 - Implementation of the `getWeekOfYear` function

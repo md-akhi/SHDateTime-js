@@ -16,7 +16,7 @@ const merge = (target: any, source: any) => {
 };
 //const UntilDate = merge(UntilDateString.DateString, UntilDateDate.solarDate);
 // console.log(UntilDate);
-const tests = (isarray = false, ...data: any) => {
+const test = (isarray = false, ...data: any) => {
 	if (!isarray) console.log(data);
 	else if (JSON.stringify(data[0]) !== JSON.stringify(data[1]))
 		console.log(data);
@@ -136,7 +136,7 @@ describe("String", () => {
 			const years = date.getFullYear();
 			const months = date.getMonth();
 			const days = date.getDate();
-			// tests(false, sdata.DateAber, [years, months, days]);
+			// test(false, sdata.DateAber, [years, months, days]);
 			assert.deepEqual([years, months, days], sdata.solar);
 		});
 	});

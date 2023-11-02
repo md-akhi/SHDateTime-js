@@ -10,18 +10,14 @@ import * as fs from "node:fs";
 const dataYear = 1402;
 
 // cjs
-const wordFileCJS = fs
-	.readFileSync("./dist/tests/cjs/test.log", "utf-8")
-	.trim();
+const wordFileCJS = fs.readFileSync("./dist/test/cjs/test.log", "utf-8").trim();
 
 // mjs
-const wordFileMJS = fs
-	.readFileSync("./dist/tests/mjs/test.log", "utf-8")
-	.trim();
+const wordFileMJS = fs.readFileSync("./dist/test/mjs/test.log", "utf-8").trim();
 
 // pkgs
 const wordFilePKGS = fs
-	.readFileSync("./dist/tests/pkgs/test.log", "utf-8")
+	.readFileSync("./dist/test/pkgs/test.log", "utf-8")
 	.trim();
 
 describe("test CommonJS (CJS) && ES Modules (ESM) && exports pkgs", () => {
