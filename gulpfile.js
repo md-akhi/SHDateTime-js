@@ -154,9 +154,11 @@ function compressBrowserJS() {
 	return gulp
 		.src("dist/browser/shdate.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
+		.pipe(replace(/_a/g, "_SHDate"))
 		.pipe(banner(INFO_DOCBLOCK_LONG))
 		.pipe(gulp.dest("dist/browser"))
 		.pipe(babel({ presets: ["@babel/env"] }))
+		.pipe(replace(/_a/g, "_SHDate"))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
 		.pipe(banner(INFO_DOCBLOCK_SHORT))
