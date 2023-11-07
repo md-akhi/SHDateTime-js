@@ -143,12 +143,18 @@ function compileBrowser(cb) {
 		}
 	);
 }
-// function makeBrowserTypes() {
-// 	return gulp.src(["dist/browser/*.d.ts"]).pipe(gulp.dest("dist/types"));
-// }
+function makeBrowserTypes() {
+	return gulp.src(["src/browser/*.ts"]).pipe(gulp.dest("dist/browser"));
+}
 
 function cleanBrowserTS(cb) {
-	return del(["src/browser", "dist/browser/*.d.ts"], cb);
+	return del(
+		[
+			"src/browser"
+			// , "dist/browser/*.d.ts"
+		],
+		cb
+	);
 }
 function compressBrowserJS() {
 	return gulp
@@ -176,7 +182,7 @@ exports.default = gulp.task(
 		concatBrowserTS,
 		compileBrowser,
 		compressBrowserJS,
-		// makeBrowserTypes,
+		makeBrowserTypes,
 		cleanBrowserTS,
 		replaceDocBlockInfo
 	)
