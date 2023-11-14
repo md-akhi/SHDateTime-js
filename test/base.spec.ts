@@ -2,6 +2,7 @@ import { assert, expect } from "chai";
 import { it, describe } from "mocha";
 
 import { solarDate } from "./Until-Date.js";
+import { solarDates } from "./Until-Dates.js";
 import { leapYear } from "./Until-Leap-Year.js";
 import { checkDate, checkTime, checkWeek } from "./Until-Check.js";
 
@@ -44,6 +45,23 @@ describe("Convert Date Gregorian() And Solar()", () => {
 			assert.deepEqual(
 				[gdate.getFullYear(), gdate.getMonth(), gdate.getDate()],
 				gdata.gregorian
+			);
+		});
+	});
+
+	it("correctly solar and gregorian for date", () => {
+		solarDates.forEach(({ sdata, gdata }) => {
+			const [year, month, day] = sdata.solar;
+			const [gyear, gmonth, gday] = gdata.gregorian;
+			let gdate = new Date(gyear, gmonth, gday);
+			let sdate = new SHDate(year, month, day);
+			assert.deepEqual(
+				[gdate.getFullYear(), gdate.getMonth(), gdate.getDate()],
+				gdata.gregorian
+			);
+			assert.deepEqual(
+				[sdate.getFullYear(), sdate.getMonth(), sdate.getDate()],
+				sdata.solar
 			);
 		});
 	});
@@ -129,57 +147,57 @@ describe("set function", () => {
 			assert.equal(date.getDayOfYear(), sdata.Doy);
 		});
 	});
+});
 
-	describe("correctly date & time & week", () => {
+describe("correctly date & time & week", () => {
+	let sdate = new SHDate();
+	describe("check date & time & week", () => {
+		it("correctly checktime", () => {
+			checkTime.forEach(({ time, check24 }) => {
+				const [h24, min, sec, ms] = time;
+				assert.equal(SHDate.checkTime(h24, min, sec, ms), check24);
+			});
+		});
+		it("correctly checkTime12", () => {
+			checkTime.forEach(({ time, check12 }) => {
+				const [h24, min, sec, ms] = time;
+				assert.equal(SHDate.checkTime12(h24, min, sec, ms), check12);
+			});
+		});
+		it("correctly checkdate", () => {
+			checkDate.forEach(({ date, check }) => {
+				const [year, month, day] = date;
+				assert.equal(sdate.checkDate(year, month, day), check);
+			});
+		});
+		it("correctly checkweek", () => {
+			checkWeek.forEach(({ week, check }) => {
+				const [year, wk, day] = week;
+				assert.equal(sdate.checkWeek(year, wk, day), check);
+			});
+		});
+	});
+
+	describe("correctly date & time Correction", () => {
 		let sdate = new SHDate();
-		describe("check date & time & week", () => {
-			it("correctly checktime", () => {
-				checkTime.forEach(({ time, check24 }) => {
-					const [h24, min, sec, ms] = time;
-					assert.equal(SHDate.checkTime(h24, min, sec, ms), check24);
-				});
-			});
-			it("correctly checkTime12", () => {
-				checkTime.forEach(({ time, check12 }) => {
-					const [h24, min, sec, ms] = time;
-					assert.equal(SHDate.checkTime12(h24, min, sec, ms), check12);
-				});
-			});
-			it("correctly checkdate", () => {
-				checkDate.forEach(({ date, check }) => {
-					const [year, month, day] = date;
-					assert.equal(sdate.checkDate(year, month, day), check);
-				});
-			});
-			it("correctly checkweek", () => {
-				checkWeek.forEach(({ week, check }) => {
-					const [year, wk, day] = week;
-					assert.equal(sdate.checkWeek(year, wk, day), check);
-				});
+		it("correctly timeCorrection", () => {
+			checkTime.forEach(({ time, correction }) => {
+				const [h24, min, sec, ms] = time;
+				assert.deepEqual(sdate.timeCorrection(h24, min, sec, ms), correction);
 			});
 		});
 
-		describe("correctly date & time Correction", () => {
-			let sdate = new SHDate();
-			it("correctly timeCorrection", () => {
-				checkTime.forEach(({ time, correction }) => {
-					const [h24, min, sec, ms] = time;
-					assert.deepEqual(sdate.timeCorrection(h24, min, sec, ms), correction);
-				});
+		it("correctly dateCorrection", () => {
+			checkDate.forEach(({ date, correction }) => {
+				const [year, month, day] = date;
+				assert.deepEqual(sdate.dateCorrection(year, month, day), correction);
 			});
+		});
 
-			it("correctly dateCorrection", () => {
-				checkDate.forEach(({ date, correction }) => {
-					const [year, month, day] = date;
-					assert.deepEqual(sdate.dateCorrection(year, month, day), correction);
-				});
-			});
-
-			it("correctly weekCorrection", () => {
-				checkWeek.forEach(({ week, correction }) => {
-					const [year, wk, day] = week;
-					assert.deepEqual(sdate.weekCorrection(year, wk, day), correction);
-				});
+		it("correctly weekCorrection", () => {
+			checkWeek.forEach(({ week, correction }) => {
+				const [year, wk, day] = week;
+				assert.deepEqual(sdate.weekCorrection(year, wk, day), correction);
 			});
 		});
 	});
