@@ -5,7 +5,6 @@
   "git.enableCommitSigning": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.enable": true,
-  "eslint.alwaysShowStatus": true,
 
   // Enable per-language
   "[javascript]": {
@@ -17,9 +16,9 @@
     "editor.formatOnSave": true
   },
 
-  "git.branchProtection": ["main", "release/*"],
-  "git.branchProtectionPrompt": "alwaysCommitToNewBranch",
-  "git.branchRandomName.enable": true,
+  "git.branchProtection": ["main", "dev"],
+  "git.branchProtectionPrompt": "alwaysPrompt",
+  // "git.branchRandomName.enable": true,
   "git.mergeEditor": true,
 
   "files.insertFinalNewline": true,

@@ -30,9 +30,10 @@ describe("test CommonJS (CJS) && ES Modules (ESM) && exports pkgs", () => {
 	it("run exports pkgs", () => {
 		assert.equal(
 			wordFilePKGS,
-			`${SHDate.VERSION} ${words.word_language} ${toNumber("١٢٣", "en")} ${
-				fa_IR.LANGUAGE
-			} ${ckb_IR.LANGUAGE}`
+			`${SHDate.checkTime(23, 59, 59, 999)} ${words.word_language} ${toNumber(
+				"١٢٣",
+				"en"
+			)} ${fa_IR.LANGUAGE} ${ckb_IR.LANGUAGE}`
 		);
 	});
 });
