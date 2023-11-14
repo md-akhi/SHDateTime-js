@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 <div dir="rtl" style="text-align: right;">
 
-## [منتشر نشده][2.1.25]
+## [منتشر نشده][unreleased]
 
 ### [ایجاد / اضافه شد][#]
 
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 </div>
 
-## [2.1.25][unreleased]
+## [unreleased][unreleased]
 
 ### [Added][#]
 
@@ -112,7 +112,7 @@ All notable changes to this project will be documented in this file.
 
 ### [Added][#]
 
-- Create tests for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+- Create test for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
 
 ### [Changed][#]
 
@@ -196,7 +196,7 @@ All notable changes to this project will be documented in this file.
 - Added documentation in `Farsi` language
 - Adding part of the documentation
 - Added ability to work with strings by the `parse` function
-- Adding necessary tests
+- Adding necessary test
 - Implementation of `getDayOfYear` function
 - Implementation of `getUTCDayOfYear` function
 - Implementation of the `getWeekOfYear` function
@@ -330,7 +330,7 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...HEAD
 [2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.24...2.1.25
 [2.1.24]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...2.1.24
 [2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23

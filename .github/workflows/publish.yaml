@@ -10,7 +10,7 @@ on:
 #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 #   NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 jobs:
-  tests-pkgs: #TEST Packages
+  test-pkgs: #TEST Packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +20,8 @@ jobs:
       - name: Removed pkgs test File
         uses: JesseTG/rm@v1.0.3
         with:
-          path: tests/pkgs.spec.ts
-      - name: Install dependencies & test
+          path: test/pkgs.spec.ts
+      - name: Install Dependencies & Test
         shell: bash
         run: |
           npm install
@@ -29,7 +29,7 @@ jobs:
           npm run test:release
 
   publish-npmjs-pkgs: #NPM Packages
-    needs: tests-pkgs
+    needs: test-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -47,7 +47,7 @@ jobs:
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-      - name: Install dependencies & publish
+      - name: Install Dependencies & Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         shell: bash
@@ -86,7 +86,7 @@ jobs:
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-      - name: Install dependencies & publish
+      - name: Install Dependencies & Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         shell: bash
@@ -97,7 +97,7 @@ jobs:
           npm publish --access public
 
   publish-gitHub-pkgs: #GitHub Packages
-    needs: tests-pkgs
+    needs: test-pkgs
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -116,7 +116,7 @@ jobs:
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-      - name: Install dependencies & publish
+      - name: Install Dependencies & Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         shell: bash
@@ -158,7 +158,7 @@ jobs:
         uses: JesseTG/rm@v1.0.3
         with:
           path: docs
-      - name: Install dependencies & publish
+      - name: Install Dependencies & Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         shell: bash

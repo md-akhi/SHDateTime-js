@@ -5,7 +5,7 @@ import fa_IR from "shdate/lang/fa_IR";
 import ckb_IR from "shdate/lang/l10n/ckb_IR";
 
 console.log(
-	SHDate.VERSION,
+	SHDate.checkTime(23, 59, 59, 999),
 	words.word_language,
 	toNumber("١٢٣", "en"),
 	fa_IR.LANGUAGE,

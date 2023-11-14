@@ -143,20 +143,28 @@ function compileBrowser(cb) {
 		}
 	);
 }
-// function makeBrowserTypes() {
-// 	return gulp.src(["dist/browser/*.d.ts"]).pipe(gulp.dest("dist/types"));
-// }
+function makeBrowserTypes() {
+	return gulp.src(["src/browser/*.ts"]).pipe(gulp.dest("dist/browser"));
+}
 
 function cleanBrowserTS(cb) {
-	return del(["src/browser", "dist/browser/*.d.ts"], cb);
+	return del(
+		[
+			"src/browser"
+			// , "dist/browser/*.d.ts"
+		],
+		cb
+	);
 }
 function compressBrowserJS() {
 	return gulp
 		.src("dist/browser/shdate.js", { sourcemaps: true })
 		.pipe(babel({ presets: ["@babel/env"] }))
+		.pipe(replace(/_a/g, "_SHDate"))
 		.pipe(banner(INFO_DOCBLOCK_LONG))
 		.pipe(gulp.dest("dist/browser"))
 		.pipe(babel({ presets: ["@babel/env"] }))
+		.pipe(replace(/_a/g, "_SHDate"))
 		.pipe(uglify())
 		.pipe(rename({ extname: ".min.js" }))
 		.pipe(banner(INFO_DOCBLOCK_SHORT))
@@ -174,14 +182,14 @@ exports.default = gulp.task(
 		concatBrowserTS,
 		compileBrowser,
 		compressBrowserJS,
-		// makeBrowserTypes,
+		makeBrowserTypes,
 		cleanBrowserTS,
 		replaceDocBlockInfo
 	)
 );
 
 function cleanTest(cb) {
-	return del(["dist/src", "dist/tests"], cb);
+	return del(["dist/src", "dist/test"], cb);
 }
 
 function compileTest(cb) {
@@ -197,11 +205,11 @@ function compileTest(cb) {
 gulp.task(compileTest);
 
 function copyTestBrowser(cb) {
-	return gulp.src(["tests/browser/*"]).pipe(gulp.dest("dist/tests/browser"));
+	return gulp.src(["test/browser/*"]).pipe(gulp.dest("dist/test/browser"));
 }
-function installTestsBrowser(cb) {
+function installTestBrowser(cb) {
 	return exec(
-		"(cd dist/tests/browser && npm i && npm test)",
+		"(cd dist/test/browser && npm i && npm test)",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -211,11 +219,11 @@ function installTestsBrowser(cb) {
 }
 
 function copyTestCJS(cb) {
-	return gulp.src(["tests/cjs/*"]).pipe(gulp.dest("dist/tests/cjs"));
+	return gulp.src(["test/cjs/*"]).pipe(gulp.dest("dist/test/cjs"));
 }
-function installTestsCJS(cb) {
+function installTestCJS(cb) {
 	return exec(
-		"(cd dist/tests/cjs && npm i && npm test)",
+		"(cd dist/test/cjs && npm i && npm test)",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -225,11 +233,11 @@ function installTestsCJS(cb) {
 }
 
 function copyTestMJS(cb) {
-	return gulp.src(["tests/mjs/*"]).pipe(gulp.dest("dist/tests/mjs"));
+	return gulp.src(["test/mjs/*"]).pipe(gulp.dest("dist/test/mjs"));
 }
-function installTestsMJS(cb) {
+function installTestMJS(cb) {
 	return exec(
-		"(cd dist/tests/mjs && npm i && npm test)",
+		"(cd dist/test/mjs && npm i && npm test)",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -238,11 +246,11 @@ function installTestsMJS(cb) {
 	);
 }
 function copyTestPKG(cb) {
-	return gulp.src(["tests/pkgs/*"]).pipe(gulp.dest("dist/tests/pkgs"));
+	return gulp.src(["test/pkgs/*"]).pipe(gulp.dest("dist/test/pkgs"));
 }
-function installTestsPKGS(cb) {
+function installTestPKGS(cb) {
 	return exec(
-		"(cd dist/tests/pkgs && npm i && npm test) ",
+		"(cd dist/test/pkgs && npm i && npm test) ",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
@@ -257,10 +265,10 @@ gulp.task(
 		cleanTest,
 		compileTest,
 		gulp.parallel(
-			gulp.series(copyTestBrowser, installTestsBrowser),
-			gulp.series(copyTestCJS, installTestsCJS),
-			gulp.series(copyTestMJS, installTestsMJS),
-			gulp.series(copyTestPKG, installTestsPKGS)
+			gulp.series(copyTestBrowser, installTestBrowser),
+			gulp.series(copyTestCJS, installTestCJS),
+			gulp.series(copyTestMJS, installTestMJS),
+			gulp.series(copyTestPKG, installTestPKGS)
 		)
 	)
 );

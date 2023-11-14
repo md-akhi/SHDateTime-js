@@ -1,15 +1,16 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "node10",
-    "module": "umd",
+    "module": "commonjs",
     "outDir": "dist/browser",
     "target": "es6",
     "lib": ["dom", "es6"],
     "esModuleInterop": false,
     "noImplicitAny": true,
     "sourceMap": false,
-    "declaration": false,
+    "declaration": true,
     "removeComments": true
   },
   "compileOnSave": false,

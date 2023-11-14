@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.1.25
+ * @version Release: 2.1.26
  */
 
 import Word from "./word.js";
@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static VERSION: string = "2.1.25";
+	static VERSION: string = "2.1.26";
 
 	/**
 	 * @type {number[]} days in month without leap year
@@ -178,23 +178,26 @@ export default class SHDate {
 	 * @returns {null}
 	 */
 	#dateSync(): void {
-		const [UTC_year, UTC_month, UTC_date] = this.#GregorianToSolar(
-			this.#date.getUTCFullYear(),
-			this.#date.getUTCMonth(),
-			this.#date.getUTCDate()
-		);
-		this.#sh.UTC_year = UTC_year;
-		this.#sh.UTC_month = UTC_month;
-		this.#sh.UTC_date = UTC_date;
-
-		const [year, month, date] = this.#GregorianToSolar(
-			this.#date.getFullYear(),
-			this.#date.getMonth(),
-			this.#date.getDate()
-		);
-		this.#sh.year = year;
-		this.#sh.month = month;
-		this.#sh.date = date;
+		const _year = this.#date.getFullYear(),
+			_month = this.#date.getMonth(),
+			_date = this.#date.getDate(),
+			_utc_year = this.#date.getUTCFullYear(),
+			_utc_month = this.#date.getUTCMonth(),
+			_utc_date = this.#date.getUTCDate();
+		if (_utc_year == _year && _utc_month == _month && _utc_date == _date) {
+			const [year, month, date] = this.#GregorianToSolar(_year, _month, _date);
+			this.#sh.year = this.#sh.UTC_year = year;
+			this.#sh.month = this.#sh.UTC_month = month;
+			this.#sh.date = this.#sh.UTC_date = date;
+		} else {
+			[this.#sh.UTC_year, this.#sh.UTC_month, this.#sh.UTC_date] =
+				this.#GregorianToSolar(_utc_year, _utc_month, _utc_date);
+			[this.#sh.year, this.#sh.month, this.#sh.date] = this.#GregorianToSolar(
+				this.#date.getFullYear(),
+				this.#date.getMonth(),
+				this.#date.getDate()
+			);
+		}
 		return;
 	}
 
@@ -225,11 +228,7 @@ export default class SHDate {
 	): number[] {
 		// 0622/03/22 = 0001/01/01
 		var gdoy: number, doy: number, year: number;
-		gdoy =
-			(gyear - 1) * 365 +
-			([0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] +
-				gdate) -
-			226745; //226745 = 621*365+80
+		gdoy = (gyear - 1) * 365 + this.#GdayOfYear(gmonth, gdate) - 226745; //226745 = 621*365+80
 		if (this.#GIsLeapYear(gyear) && gmonth > 1) gdoy++;
 		year = Math.trunc(gdoy / 365) + 1;
 		doy =
@@ -265,6 +264,11 @@ export default class SHDate {
 		return this.#GdateOfDayOfYear(gyear, gdoy);
 	}
 
+	#GdayOfYear(gmonth: number, gdate: number) {
+		return (
+			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] + gdate
+		);
+	}
 	#GdateOfDayOfYear(gyear: number, gdoy: number): number[] {
 		var gdiy: number = this.#GDaysInYear(gyear),
 			gleap: number,
@@ -281,16 +285,21 @@ export default class SHDate {
 				gdiy = this.#GDaysInYear(gyear);
 				gdoy -= gdiy;
 			} while (gdoy > gdiy);
-		gleap = this.#GIsLeapYear(gyear) ? 29 : 28;
-		[0, 31, gleap, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].forEach(
-			(gdim: number, gmoy: number) => {
-				if (gdoy <= gdim) return;
-				gdoy -= gdim;
-				data.gmonth = gmoy;
-				data.gdate = Math.trunc(gdoy);
-			}
-		);
+		this.#GdaysInMonths(gyear).every((gdim: number, gmoy: number) => {
+			if (gdoy <= gdim) return false;
+			gdoy -= gdim;
+			data.gmonth = gmoy;
+			data.gdate = Math.trunc(gdoy);
+			return true;
+		});
 		return [gyear, data.gmonth, data.gdate];
+	}
+
+	#GdaysInMonths(year: number): number[] {
+		if (this.#GIsLeapYear(year))
+			return [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		// SHDate.DAYS_IN_MONTH_LEAP[month] : SHDate.DAYS_IN_MONTH[month];
 	}
 
 	#GDaysInYear(year: number): number {
@@ -1883,8 +1892,8 @@ export default class SHDate {
 	}
 
 	#isFalse(data: number | false, defaultData: any): number {
-		if (typeof data == "boolean") return defaultData;
-		else return data;
+		if (data === false) return defaultData;
+		return data;
 	}
 
 	/**

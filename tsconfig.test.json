@@ -9,5 +9,5 @@
     "declaration": false,
     "removeComments": true
   },
-  "include": ["tests"]
+  "include": ["test"]
 }

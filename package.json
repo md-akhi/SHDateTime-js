@@ -1,6 +1,6 @@
 {
   "name": "shdate",
-  "version": "2.1.25",
+  "version": "2.1.26",
   "description": "Date and Time Related Extensions SH{Shamsi Hijri, Solar Hijri, Iranian Hijri}",
   "keywords": [
     "date",
@@ -31,14 +31,14 @@
   "author": "Mohammad Amanalikhani <md.akhi.ir@gmail.com> (http://md.akhi.ir)",
   "license": "AGPL-3.0",
   "scripts": {
-    "start": "gulp test && node dist/tests/dev.js",
+    "start": "gulp test && node dist/test/dev.js",
     "dev": "nodemon --exec npm start",
     "watch": "tsc -w",
     "build": "gulp build",
     "test": "gulp test && mocha",
     "dev:test": "nodemon --exec npm test",
     "test:release": "gulp testRelease && mocha",
-    "test:build": "gulp compileTest && node dist/tests/build-test.js > tests/build-test.log",
+    "test:build": "gulp compileTest && node dist/test/build-test.js > test/build-test.log",
     "prepare": "husky install"
   },
   "main": "./dist/cjs/base.js",
@@ -85,7 +85,7 @@
   "directories": {
     "dist": "./dist",
     "src": "./src",
-    "tests": "./tests",
+    "test": "./test",
     "man": "./docs",
     "docs": "./docs"
   },
