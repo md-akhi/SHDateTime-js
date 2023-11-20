@@ -265,8 +265,19 @@ export default class SHDate {
 	}
 
 	#GdayOfYear(gmonth: number, gdate: number) {
+		let sign = 0;
+		while (gmonth < 0) {
+			gmonth = (12 - gmonth) % 12;
+			sign -= 1;
+		}
+		while (gmonth > 11) {
+			gmonth %= 12;
+			sign += 1;
+		}
+		sign = sign || 1;
 		return (
-			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] + gdate
+			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] * sign +
+			gdate
 		);
 	}
 	#GdateOfDayOfYear(gyear: number, gdoy: number): number[] {
@@ -384,7 +395,17 @@ export default class SHDate {
 	 * @returns {number} - day of year
 	 */
 	#dayOfYear(month: number, date: number): number {
-		return SHDate.DAY_OF_YEAR[month] + date - 1;
+		let sign = 0;
+		while (month < 0) {
+			month = (12 - month) % 12;
+			sign -= 1;
+		}
+		while (month > 11) {
+			month %= 12;
+			sign += 1;
+		}
+		sign = sign || 1;
+		return SHDate.DAY_OF_YEAR[month] * sign + date - 1;
 		/*  var doy: number;
 		 month++;
 		 if (month < 7) doy = (month - 1) * 31;
