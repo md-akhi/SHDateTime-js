@@ -7,8 +7,8 @@ function strtoint(str: string | number) {
 
 let shdate = new SHDate();
 for (var iyear = 1400; iyear <= 1405; iyear++)
-	for (var imonth = 0; imonth <= 11; imonth++)
-		for (var iday = 1; iday <= SHDate.DAYS_IN_MONTH[imonth]; iday++) {
+	for (var imonth = -1; imonth <= 12; imonth++)
+		for (var iday = -1; iday <= SHDate.DAYS_IN_MONTH[imonth]+1; iday++) {
 			shdate.setFullYear(iyear, imonth, iday);
 			const [year, month, day] = [
 				shdate.getFullYear(),
