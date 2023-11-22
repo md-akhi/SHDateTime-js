@@ -142,8 +142,7 @@ export default class SHDate {
 		if (!(new.target || this)) {
 			// if you run me without new
 			//throw new Error("You must use new to create a instance of this class");
-			let shdate = new SHDate(...arguments);
-			return shdate;
+			return new SHDate(...arguments);
 		}
 		// this.#date = new Date();
 		if (typeof mix == "number")
@@ -209,14 +208,15 @@ export default class SHDate {
 		this.#date.setTime(
 			this.#date.getTime() + this.#config.time_difference_server
 		);
+		this.#dateSync();
 		return;
 	}
 
 	/**
-	 *  Convert gregorian date to solar hijri date
-	 * @param {number} gyear - gregorian year
-	 * @param {number} gmonth - gregorian month
-	 * @param {number} gdate - gregorian date
+	 * Convert gregorian date to solar hijri date
+	 * @param {number} g_year - gregorian year
+	 * @param {number} g_month - gregorian month
+	 * @param {number} g_date - gregorian date
 	 * @param {boolean} julian - julian date
 	 * @returns {array} - solar hijri date
 	 */
@@ -227,62 +227,54 @@ export default class SHDate {
 		julian: boolean = false
 	): number[] {
 		// 0622/03/22 = 0001/01/01
-		var gdoy: number, doy: number, year: number;
-		gdoy = (gyear - 1) * 365 + this.#GdayOfYear(gmonth, gdate) - 226745; //226745 = 621*365+80
+		var gdoy: number =
+			(gyear - 1) * 365 + this.#GDayOfYear(gmonth, gdate) - 226745; //226745 = 621*365+80
 		if (this.#GIsLeapYear(gyear) && gmonth > 1) gdoy++;
-		year = Math.trunc(gdoy / 365) + 1;
-		doy =
+		const syear = Math.trunc(gdoy / 365) + 1;
+		const sdoy =
 			(gdoy % 365) +
 			this.#GIsLeapYear(gyear, true) -
-			this.#isLeapYear(year, true);
-		return this.#dateOfDayOfYear(year, doy - 1);
+			this.#isLeapYear(syear, true);
+		return this.#dateOfDayOfYear(syear, sdoy - 1);
 	}
 
 	/**
 	 * Convert solar hijri date to gregorian date
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} s_year - solar hijri year
+	 * @param {number} s_month - solar hijri month
+	 * @param {number} s_date - solar hijri date
 	 * @param {boolean} julian - julian date
 	 * @returns {array} - gregorian date
 	 */
 	#SolarToGregorian(
-		year: number,
-		month: number,
-		date: number,
+		s_year: number,
+		s_month: number,
+		s_date: number,
 		julian: boolean = false
 	): number[] {
 		// 0001/01/01 = 0622/03/22
-		var doy: number, gdoy: number, gyear: number;
-		doy =
-			(year - 1) * 365 + this.#dayOfYear(month, date) + 226746 /*621*365+80*/;
-		gyear = Math.trunc(doy / 365) + 1;
-		gdoy =
-			(doy % 365) +
-			this.#isLeapYear(year, true) -
+		const [syear, smonth, sdate] = this.checkDate(s_year, s_month, s_date)
+			? [s_year, s_month, s_date]
+			: this.dateCorrection(s_year, s_month, s_date);
+		const sdoy =
+			(syear - 1) * 365 +
+			this.#dayOfYear(smonth, sdate) +
+			226746; /*621*365+80*/
+		const gyear = Math.trunc(sdoy / 365) + 1;
+		const gdoy =
+			(sdoy % 365) +
+			this.#isLeapYear(syear, true) -
 			this.#GIsLeapYear(gyear, true);
-		return this.#GdateOfDayOfYear(gyear, gdoy);
+		return this.#GDateOfDayOfYear(gyear, gdoy);
 	}
 
-	#GdayOfYear(gmonth: number, gdate: number) {
-		let sign = 0;
-		while (gmonth < 0) {
-			gmonth = (12 - gmonth) % 12;
-			sign -= 1;
-		}
-		while (gmonth > 11) {
-			gmonth %= 12;
-			sign += 1;
-		}
-		sign = sign || 1;
+	#GDayOfYear(gmonth: number, gdate: number) {
 		return (
-			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] * sign +
-			gdate
+			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] + gdate
 		);
 	}
-	#GdateOfDayOfYear(gyear: number, gdoy: number): number[] {
+	#GDateOfDayOfYear(gyear: number, gdoy: number): number[] {
 		var gdiy: number = this.#GDaysInYear(gyear),
-			gleap: number,
 			data = { gmonth: 0, gdate: 0 };
 		if (gdoy < 1)
 			do {
@@ -296,7 +288,7 @@ export default class SHDate {
 				gdiy = this.#GDaysInYear(gyear);
 				gdoy -= gdiy;
 			} while (gdoy > gdiy);
-		this.#GdaysInMonths(gyear).every((gdim: number, gmoy: number) => {
+		this.#GDaysInMonths(gyear).every((gdim: number, gmoy: number) => {
 			if (gdoy <= gdim) return false;
 			gdoy -= gdim;
 			data.gmonth = gmoy;
@@ -306,11 +298,10 @@ export default class SHDate {
 		return [gyear, data.gmonth, data.gdate];
 	}
 
-	#GdaysInMonths(year: number): number[] {
-		if (this.#GIsLeapYear(year))
-			return [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		// SHDate.DAYS_IN_MONTH_LEAP[month] : SHDate.DAYS_IN_MONTH[month];
+	#GDaysInMonths(year: number): number[] {
+		return this.#GIsLeapYear(year)
+			? [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+			: [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	}
 
 	#GDaysInYear(year: number): number {
@@ -340,19 +331,19 @@ export default class SHDate {
 
 	/**
 	 * Get leap year
-	 * @param {number} year - solar hijri year
+	 * @param {number} s_year - solar hijri year
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 */
-	#isLeapYear(year: number, all: boolean = false): number {
+	#isLeapYear(s_year: number, all: boolean = false): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
 		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
-		const years = year + 1127;
-		if (all) return Math.trunc(Math.ceil(years * 0.2422)) - 274;
-		return Math.trunc((years + 1) * 0.2422) - Math.trunc(years * 0.2422);
+		const year = s_year + 1127;
+		if (all) return Math.trunc(Math.ceil(year * 0.2422)) - 274;
+		return Math.trunc((year + 1) * 0.2422) - Math.trunc(year * 0.2422);
 	}
 
 	/**
@@ -395,17 +386,7 @@ export default class SHDate {
 	 * @returns {number} - day of year
 	 */
 	#dayOfYear(month: number, date: number): number {
-		let sign = 0;
-		while (month < 0) {
-			month = (12 - month) % 12;
-			sign -= 1;
-		}
-		while (month > 11) {
-			month %= 12;
-			sign += 1;
-		}
-		sign = sign || 1;
-		return SHDate.DAY_OF_YEAR[month] * sign + date - 1;
+		return SHDate.DAY_OF_YEAR[month] + date - 1;
 		/*  var doy: number;
 		 month++;
 		 if (month < 7) doy = (month - 1) * 31;
