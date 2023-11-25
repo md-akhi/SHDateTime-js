@@ -214,17 +214,17 @@ export default class SHDate {
 
 	/**
 	 * Convert gregorian date to solar hijri date
-	 * @param {number} g_year - gregorian year
-	 * @param {number} g_month - gregorian month
-	 * @param {number} g_date - gregorian date
-	 * @param {boolean} julian - julian date
+	 * @param {number} gyear - gregorian year
+	 * @param {number} gmonth - gregorian month
+	 * @param {number} gdate - gregorian date
+	 * @param {boolean} is_julian - julian date (default: false)
 	 * @returns {array} - solar hijri date
 	 */
 	#GregorianToSolar(
 		gyear: number,
 		gmonth: number,
 		gdate: number,
-		julian: boolean = false
+		is_julian: boolean = false
 	): number[] {
 		// 0622/03/22 = 0001/01/01
 		var gdoy: number =
@@ -243,19 +243,20 @@ export default class SHDate {
 	 * @param {number} s_year - solar hijri year
 	 * @param {number} s_month - solar hijri month
 	 * @param {number} s_date - solar hijri date
-	 * @param {boolean} julian - julian date
+	 * @param {boolean} is_julian - julian date (default: false)
 	 * @returns {array} - gregorian date
 	 */
 	#SolarToGregorian(
 		s_year: number,
 		s_month: number,
 		s_date: number,
-		julian: boolean = false
+		is_julian: boolean = false
 	): number[] {
 		// 0001/01/01 = 0622/03/22
-		const [syear, smonth, sdate] = this.checkDate(s_year, s_month, s_date)
-			? [s_year, s_month, s_date]
-			: this.dateCorrection(s_year, s_month, s_date);
+		const [syear, smonth, sdate] =
+			s_month < 0 || s_month > 11
+				? this.dateCorrection(s_year, s_month, s_date)
+				: [s_year, s_month, s_date];
 		const sdoy =
 			(syear - 1) * 365 +
 			this.#dayOfYear(smonth, sdate) +
