@@ -49,12 +49,13 @@ describe("Convert Date Gregorian() And Solar()", () => {
 		});
 	});
 
-	it("correctly solar and gregorian for date", () => {
-		solarDates.forEach(({ sdata, gdata }) => {
-			const [year, month, day] = sdata.solar;
+	it("correctly solar and gregorian for dates", () => {
+		solarDates.forEach(({ idata, sdata, gdata }) => {
+			const [iyear, imonth, iday] = idata.solar;
+			// const [syear, smonth, sday] = sdata.solar;
 			const [gyear, gmonth, gday] = gdata.gregorian;
+			let sdate = new SHDate(iyear, imonth, iday);
 			let gdate = new Date(gyear, gmonth, gday);
-			let sdate = new SHDate(year, month, day);
 			assert.deepEqual(
 				[gdate.getFullYear(), gdate.getMonth(), gdate.getDate()],
 				gdata.gregorian
