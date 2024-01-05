@@ -25,7 +25,9 @@ All notable changes to this project will be documented in this file.
 
 ### [تغییر کرد][#]
 
--
+- تغییر نام GdayOfYear به GDayOfYear
+- تغییر نام GdateOfDayOfYear به GDateOfDayOfYear
+- تغییر نام GdaysInMonths به GDaysInMonths
 
 ### [رفع / درست شد][#]
 
@@ -41,7 +43,9 @@ All notable changes to this project will be documented in this file.
 
 ### [Changed][#]
 
--
+- Rename function from GdayOfYear to GDayOfYear
+- Rename function from GdateOfDayOfYear to GDateOfDayOfYear
+- Rename function from GdaysInMonths to GDaysInMonths
 
 ### [Fixed][#]
 
