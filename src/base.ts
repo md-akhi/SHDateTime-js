@@ -385,22 +385,44 @@ export default class SHDate {
 	 *
 	 * @param {number} year - solar hijri year
 	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
-	 * @param {number} nth - instance of day, 1 to 4
-	 * @param {number} day - day of week, Sun 0, Mon 1, etc.
-	 * @returns {Date} that is nth instance of day in month
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number[]} that is nth instance of day in month
 	 */
 	#nthDayInMonth(
 		year: number,
 		month: number,
-		day: number,
-		nth: number = 1
+		day: number
+		// nth: number = 1
 	): number[] {
 		const first_dow: number = this.#dayOfWeek(year, month, 1);
-		// Move to first instance of day in month and
-		// add (n - 1) weeks
-		const date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7;
-		return [year, month, date];
+		const first_nth: number = 1 + ((7 - first_dow + day) % 7);
+		// Move to first instance of day in month and add (n - 1) weeks
+		// date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7
+		let nth = [
+			first_nth,
+			first_nth + 7,
+			first_nth + 14,
+			first_nth + 21,
+			first_nth + 28
+		];
+		if (nth[4] > this.#daysInMonth(year, month)) nth.pop();
+		return nth;
+	}
+
+	/**
+	 * Get nth instance of a particular weekday in a month
+	 *
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number} that is nth instance of day in month
+	 */
+	getNthDayInMonth(day: number, nth: number = 1): number {
+		const dates = this.#nthDayInMonth(this.getFullYear(), this.getMonth(), day),
+			length = dates.length;
+		if (nth < 1) nth = 1;
+		if (nth > length) nth = length;
+		return dates[nth - 1];
 	}
 
 	/**
