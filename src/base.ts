@@ -381,6 +381,69 @@ export default class SHDate {
 	}
 
 	/**
+	 * Get nth instance of a particular weekday in a month (wom)
+	 *
+	 * @param {number} year - solar hijri year
+	 * @param {number} month - solar hijri month
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number[]} that is nth instance of Weekday in month
+	 */
+	#nthWeekdayOfMonth(
+		year: number,
+		month: number,
+		day: number
+		// nth: number = 1
+	): number[] {
+		const first_dow: number = this.#dayOfWeek(year, month, 1),
+			first_nth: number = ((7 - first_dow + day) % 7) + 1;
+		// Move to first instance of day in month and add (n - 1) weeks
+		// date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7
+		let nth = [first_nth, first_nth + 7, first_nth + 14, first_nth + 21];
+		if (first_nth + 28 <= this.#daysInMonth(year, month))
+			nth.push(first_nth + 28);
+		return nth;
+	}
+
+	/**
+	 * Get nth instance of a particular weekday in a month (wom)
+	 *
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number} the Nth Weekday of current Month
+	 */
+	getNthWeekdayInMonth(
+		day: number,
+		nth: number | boolean = false
+	): number | number[] | boolean {
+		const dates = this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			day
+		);
+		if (nth == false) return dates;
+		else if (
+			day < 0 ||
+			day > 6 ||
+			(nth as number) < 1 ||
+			(nth as number) > dates.length
+		)
+			return false;
+		return dates[(nth as number) - 1];
+	}
+	getFirstWeekdayInMonth(day: number): number {
+		return this.#nthWeekdayOfMonth(this.getFullYear(), this.getMonth(), day)[0];
+	}
+	getLastWeekdayInMonth(day: number): number {
+		const dates = this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			day
+		);
+		return dates[dates.length - 1];
+	}
+
+	/**
 	 * Get day of year (doy)
 	 * @param {number} month - solar hijri month
 	 * @param {number} date - solar hijri date
