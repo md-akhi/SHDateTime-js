@@ -405,6 +405,12 @@ export default class SHDate {
 		return nth;
 	}
 
+	#nthWeekdayInMonth(year: number, month: number, date: number): number[] {
+		const dow: number = this.#dayOfWeek(year, month, date);
+		const nth = date / 7 + 1;
+		return [dow, nth];
+	}
+
 	/**
 	 * Get nth instance of a particular weekday in a month (wom)
 	 *
@@ -431,9 +437,11 @@ export default class SHDate {
 			return false;
 		return dates[(nth as number) - 1];
 	}
+
 	getFirstWeekdayInMonth(day: number): number {
 		return this.#nthWeekdayOfMonth(this.getFullYear(), this.getMonth(), day)[0];
 	}
+
 	getLastWeekdayInMonth(day: number): number {
 		const dates = this.#nthWeekdayOfMonth(
 			this.getFullYear(),
