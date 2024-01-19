@@ -96,12 +96,21 @@ describe("get in/of date", () => {
 			});
 		});
 
+		it("correctly nth weekday of month (wom)", () => {
+			solarDate.forEach(({ sdata }) => {
+				const [year, month, day] = sdata.solar;
+				let date = new SHDate(year, month, day);
+				const Wim_date = date.getNthWeekdayOfMonth(sdata.Dow, sdata.Wim);
+				assert.equal(Wim_date, day);
+			});
+		});
+
 		it("correctly nth weekday in month (wim)", () => {
 			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				let date = new SHDate(year, month, day);
-				const Wim_date = date.getNthWeekdayInMonth(sdata.Dow, sdata.Wim);
-				assert.equal(Wim_date, day);
+				const nth = date.getWeekdayInMonth(year, month, day);
+				assert.equal(nth, sdata.Wim);
 			});
 		});
 	});

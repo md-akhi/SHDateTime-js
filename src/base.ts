@@ -387,7 +387,7 @@ export default class SHDate {
 	 * @param {number} month - solar month
 	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
 	 * @param {number} nth - instance of day, 1 to 5
-	 * @returns {number[]} that is nth instance of Weekday in month
+	 * @returns {number[]} that is nth instance of Weekday of month
 	 */
 	#nthWeekdayOfMonth(
 		year: number,
