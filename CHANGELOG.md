@@ -21,7 +21,12 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
--
+- ایجاد تابع #nthWeekdayOfMonth
+- ایجاد تابع getNthWeekdayOfMonth
+- ایجاد تابع getFirstWeekdayOfMonth
+- ایجاد تابع getLastWeekdayOfMonth
+- ایجاد تابع #WeekdayInMonth
+- ایجاد تابع getWeekdayInMonth
 
 ### [تغییر کرد][#]
 
@@ -39,7 +44,12 @@ All notable changes to this project will be documented in this file.
 
 ### [Added][#]
 
--
+- Create function #nthWeekdayOfMonth
+- Create function getNthWeekdayOfMonth
+- Create function getFirstWeekdayOfMonth
+- Create function getLastWeekdayOfMonth
+- Create function #WeekdayInMonth
+- Create function getWeekdayInMonth
 
 ### [Changed][#]
 

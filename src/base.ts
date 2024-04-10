@@ -213,12 +213,12 @@ export default class SHDate {
 	}
 
 	/**
-	 * Convert gregorian date to solar hijri date
+	 * Convert gregorian date to solar date
 	 * @param {number} gyear - gregorian year
 	 * @param {number} gmonth - gregorian month
 	 * @param {number} gdate - gregorian date
 	 * @param {boolean} is_julian - julian date (default: false)
-	 * @returns {array} - solar hijri date
+	 * @returns {array} - solar date
 	 */
 	#GregorianToSolar(
 		gyear: number,
@@ -239,10 +239,10 @@ export default class SHDate {
 	}
 
 	/**
-	 * Convert solar hijri date to gregorian date
-	 * @param {number} s_year - solar hijri year
-	 * @param {number} s_month - solar hijri month
-	 * @param {number} s_date - solar hijri date
+	 * Convert solar date to gregorian date
+	 * @param {number} s_year - solar year
+	 * @param {number} s_month - solar month
+	 * @param {number} s_date - solar date
 	 * @param {boolean} is_julian - julian date (default: false)
 	 * @returns {array} - gregorian date
 	 */
@@ -332,7 +332,7 @@ export default class SHDate {
 
 	/**
 	 * Get leap year
-	 * @param {number} s_year - solar hijri year
+	 * @param {number} s_year - solar year
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 */
@@ -357,9 +357,9 @@ export default class SHDate {
 
 	/**
 	 * Get day of week (dow)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
 	 */
 	#dayOfWeek(
@@ -381,13 +381,13 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get nth instance of a particular weekday in a month (wom)
+	 * Get nth instance of a particular weekday of a month (wom)
 	 *
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
 	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
 	 * @param {number} nth - instance of day, 1 to 5
-	 * @returns {number[]} that is nth instance of Weekday in month
+	 * @returns {number[]} that is nth instance of Weekday of month
 	 */
 	#nthWeekdayOfMonth(
 		year: number,
@@ -406,13 +406,13 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get nth instance of a particular weekday in a month (wom)
+	 * Get nth instance of a particular weekday of a month (wom)
 	 *
 	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
 	 * @param {number} nth - instance of day, 1 to 5
 	 * @returns {number} the Nth Weekday of current Month
 	 */
-	getNthWeekdayInMonth(
+	getNthWeekdayOfMonth(
 		day: number,
 		nth: number | boolean = false
 	): number | number[] | boolean {
@@ -431,10 +431,12 @@ export default class SHDate {
 			return false;
 		return dates[(nth as number) - 1];
 	}
-	getFirstWeekdayInMonth(day: number): number {
+
+	getFirstWeekdayOfMonth(day: number): number {
 		return this.#nthWeekdayOfMonth(this.getFullYear(), this.getMonth(), day)[0];
 	}
-	getLastWeekdayInMonth(day: number): number {
+
+	getLastWeekdayOfMonth(day: number): number {
 		const dates = this.#nthWeekdayOfMonth(
 			this.getFullYear(),
 			this.getMonth(),
@@ -444,9 +446,28 @@ export default class SHDate {
 	}
 
 	/**
+	 * Get nth instance of a particular weekday in a month (wim)
+	 *
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
+	 * @returns {number} the Nth Weekday of current Month
+	 */
+	#WeekdayInMonth(year: number, month: number, date: number): number {
+		return this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			this.#dayOfWeek(year, month, date)
+		).findIndex((item) => item == date);
+	}
+	getWeekdayInMonth(year: number, month: number, date: number) {
+		return this.#WeekdayInMonth(year, month, date);
+	}
+
+	/**
 	 * Get day of year (doy)
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - day of year
 	 */
 	#dayOfYear(month: number, date: number): number {
@@ -476,9 +497,9 @@ export default class SHDate {
 
 	/**
 	 * Get week of year (woy)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - week of year
 	 */
 	#weekOfYear(
@@ -546,7 +567,7 @@ export default class SHDate {
 
 	/**
 	 * Get weeks in year (wiy)
-	 * @param {number} year - solar hijri year
+	 * @param {number} year - solar year
 	 * @returns {number} - weeks in year
 	 */
 	#weeksInYear(year: number): number {
@@ -573,9 +594,9 @@ export default class SHDate {
 
 	/**
 	 * Get week of day (wod)
-	 * @param year  - solar hijri year
-	 * @param week - solar hijri week
-	 * @param date - solar hijri date (default: 0)
+	 * @param year  - solar year
+	 * @param week - solar week
+	 * @param date - solar date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
@@ -585,9 +606,9 @@ export default class SHDate {
 
 	/**
 	 * Set week of day (wod)
-	 * @param year  - solar hijri year
-	 * @param week - solar hijri week
-	 * @param date - solar hijri date (default: 0)
+	 * @param year  - solar year
+	 * @param week - solar week
+	 * @param date - solar date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	setWeek(year: number, week: number, date: number = 0): number {
@@ -597,8 +618,8 @@ export default class SHDate {
 
 	/**
 	 * Get date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	#dateOfDayOfYear(year: number, doy: number): number[] {
@@ -629,8 +650,8 @@ export default class SHDate {
 
 	/**
 	 * Set date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setDateOfDayOfYear(year: number, doy: number): number {
@@ -640,8 +661,8 @@ export default class SHDate {
 
 	/**
 	 * Set UTC date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setUTCDateOfDayOfYear(year: number, doy: number): number {
@@ -651,8 +672,8 @@ export default class SHDate {
 
 	/**
 	 * Get days in month (dim)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
 	 * @returns {number} - days in month
 	 */
 	#daysInMonth(year: number, month: number): number {
@@ -678,7 +699,7 @@ export default class SHDate {
 
 	/**
 	 * Get days in year (diy)
-	 * @param {number} year - solar hijri year
+	 * @param {number} year - solar year
 	 * @returns {number} - days in year
 	 */
 	#daysInYear(year: number): number {
@@ -900,7 +921,7 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get private data of solar hijri date
+	 * Get private data of solar date
 	 * @param {string} format - format of data
 	 * @returns {array}
 	 */
