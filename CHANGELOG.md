@@ -21,11 +21,18 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
--
+- ایجاد تابع #nthWeekdayOfMonth
+- ایجاد تابع getNthWeekdayOfMonth
+- ایجاد تابع getFirstWeekdayOfMonth
+- ایجاد تابع getLastWeekdayOfMonth
+- ایجاد تابع #WeekdayInMonth
+- ایجاد تابع getWeekdayInMonth
 
 ### [تغییر کرد][#]
 
--
+- تغییر نام GdayOfYear به GDayOfYear
+- تغییر نام GdateOfDayOfYear به GDateOfDayOfYear
+- تغییر نام GdaysInMonths به GDaysInMonths
 
 ### [رفع / درست شد][#]
 
@@ -33,19 +40,103 @@ All notable changes to this project will be documented in this file.
 
 </div>
 
-## [Unreleased]
+## [unreleased][unreleased]
 
 ### [Added][#]
 
--
+- Create function #nthWeekdayOfMonth
+- Create function getNthWeekdayOfMonth
+- Create function getFirstWeekdayOfMonth
+- Create function getLastWeekdayOfMonth
+- Create function #WeekdayInMonth
+- Create function getWeekdayInMonth
 
 ### [Changed][#]
 
--
+- Rename function from GdayOfYear to GDayOfYear
+- Rename function from GdateOfDayOfYear to GDateOfDayOfYear
+- Rename function from GdaysInMonths to GDaysInMonths
 
 ### [Fixed][#]
 
 -
+
+#
+
+<div style="text-align: center;">
+
+## [2.1.25] - SH 1402-08-06 - G 2023-10-28
+
+</div>
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- افزودن تست برای مرورگر [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [تغییر کرد][#]
+
+- اصلاح و تغییر در gulpfile [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [رفع / درست شد][#]
+
+- رفع خطای انتشار در github [[4ece537](https://github.com/md-akhi/SHDateTime-js/commit/4ece537ae13cae68003ec1f06710cca4b2bfab2e)]
+- رفع خطای اجرا در مرورگر [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+</div>
+
+### [Added][#]
+
+- Add test for browser [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [Changed][#]
+
+- Fixes and changes in gulpfile [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+### [Fixed][#]
+
+- Fix release error on github [[4ece537](https://github.com/md-akhi/SHDateTime-js/commit/4ece537ae13cae68003ec1f06710cca4b2bfab2e)]
+- Fix execution error in browser [[a179f8a](https://github.com/md-akhi/SHDateTime-js/commit/a179f8ac052cd286de81951d4f5eb1a5ebfd719b)]
+
+#
+
+<div style="text-align: center;">
+
+## [2.1.23] - SH 1402-08-04 - G 2023-10-26
+
+</div>
+
+<div dir="rtl" style="text-align: right;">
+
+### [ایجاد / اضافه شد][#]
+
+- ایجاد تست برای exports PKGS [[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+
+### [تغییر کرد][#]
+
+- تغییر نام تابع تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- بازنویسی gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+- بازنویسی دستورات PKGS [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+
+### [رفع / درست شد][#]
+
+- اصلاح آدرس‌های exports PKGS برای فراخوانی‌ها [[8b6a11a](https://github.com/md-akhi/SHDateTime-js/commit/8b6a11a53446074eec0711876c2c66982868cc88)]
+
+</div>
+
+### [Added][#]
+
+- Create test for PKGS exports[[f7daec4](https://github.com/md-akhi/SHDateTime-js/commit/f7daec448e4ac162b6fb3e77fd95e3e2cded862c)]
+
+### [Changed][#]
+
+- Rename conversion function from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- Rewrite gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+- Rewriting PKGS commands [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
+
+### [Fixed][#]
+
+- Modification of export PKGS addresses for calls [[8b6a11a](https://github.com/md-akhi/SHDateTime-js/commit/8b6a11a53446074eec0711876c2c66982868cc88)]
 
 #
 
@@ -119,7 +210,7 @@ All notable changes to this project will be documented in this file.
 - Added documentation in `Farsi` language
 - Adding part of the documentation
 - Added ability to work with strings by the `parse` function
-- Adding necessary tests
+- Adding necessary test
 - Implementation of `getDayOfYear` function
 - Implementation of `getUTCDayOfYear` function
 - Implementation of the `getWeekOfYear` function
@@ -253,7 +344,10 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...HEAD
+[2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.24...2.1.25
+[2.1.24]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...2.1.24
+[2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23
 [2.1.10]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.4...2.1.10
 [1.2.4]: https://github.com/md-akhi/SHDateTime-js/compare/1.2.0...1.2.4
 [1.2.0]: https://github.com/md-akhi/SHDateTime-js/compare/1.1.1...1.2.0

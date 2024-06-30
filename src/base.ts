@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.1.22
+ * @version Release: 2.1.26
  */
 
 import Word from "./word.js";
@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static VERSION: string = "2.1.05";
+	static VERSION: string = "2.1.26";
 
 	/**
 	 * @type {number[]} days in month without leap year
@@ -142,8 +142,7 @@ export default class SHDate {
 		if (!(new.target || this)) {
 			// if you run me without new
 			//throw new Error("You must use new to create a instance of this class");
-			let shdate = new SHDate(...arguments);
-			return shdate;
+			return new SHDate(...arguments);
 		}
 		// this.#date = new Date();
 		if (typeof mix == "number")
@@ -178,23 +177,26 @@ export default class SHDate {
 	 * @returns {null}
 	 */
 	#dateSync(): void {
-		const [UTC_year, UTC_month, UTC_date] = this.#GregorianToSolar(
-			this.#date.getUTCFullYear(),
-			this.#date.getUTCMonth(),
-			this.#date.getUTCDate()
-		);
-		this.#sh.UTC_year = UTC_year;
-		this.#sh.UTC_month = UTC_month;
-		this.#sh.UTC_date = UTC_date;
-
-		const [year, month, date] = this.#GregorianToSolar(
-			this.#date.getFullYear(),
-			this.#date.getMonth(),
-			this.#date.getDate()
-		);
-		this.#sh.year = year;
-		this.#sh.month = month;
-		this.#sh.date = date;
+		const _year = this.#date.getFullYear(),
+			_month = this.#date.getMonth(),
+			_date = this.#date.getDate(),
+			_utc_year = this.#date.getUTCFullYear(),
+			_utc_month = this.#date.getUTCMonth(),
+			_utc_date = this.#date.getUTCDate();
+		if (_utc_year == _year && _utc_month == _month && _utc_date == _date) {
+			const [year, month, date] = this.#GregorianToSolar(_year, _month, _date);
+			this.#sh.year = this.#sh.UTC_year = year;
+			this.#sh.month = this.#sh.UTC_month = month;
+			this.#sh.date = this.#sh.UTC_date = date;
+		} else {
+			[this.#sh.UTC_year, this.#sh.UTC_month, this.#sh.UTC_date] =
+				this.#GregorianToSolar(_utc_year, _utc_month, _utc_date);
+			[this.#sh.year, this.#sh.month, this.#sh.date] = this.#GregorianToSolar(
+				this.#date.getFullYear(),
+				this.#date.getMonth(),
+				this.#date.getDate()
+			);
+		}
 		return;
 	}
 
@@ -206,68 +208,74 @@ export default class SHDate {
 		this.#date.setTime(
 			this.#date.getTime() + this.#config.time_difference_server
 		);
+		this.#dateSync();
 		return;
 	}
 
 	/**
-	 *  Convert gregorian date to solar hijri date
+	 * Convert gregorian date to solar date
 	 * @param {number} gyear - gregorian year
 	 * @param {number} gmonth - gregorian month
 	 * @param {number} gdate - gregorian date
-	 * @param {boolean} julian - julian date
-	 * @returns {array} - solar hijri date
+	 * @param {boolean} is_julian - julian date (default: false)
+	 * @returns {array} - solar date
 	 */
 	#GregorianToSolar(
 		gyear: number,
 		gmonth: number,
 		gdate: number,
-		julian: boolean = false
+		is_julian: boolean = false
 	): number[] {
 		// 0622/03/22 = 0001/01/01
-		var gdoy: number, doy: number, year: number;
-		gdoy =
-			(gyear - 1) * 365 +
-			([0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] +
-				gdate) -
-			226745; //226745 = 621*365+80
+		var gdoy: number =
+			(gyear - 1) * 365 + this.#GDayOfYear(gmonth, gdate) - 226745; //226745 = 621*365+80
 		if (this.#GIsLeapYear(gyear) && gmonth > 1) gdoy++;
-		year = Math.trunc(gdoy / 365) + 1;
-		doy =
+		const syear = Math.trunc(gdoy / 365) + 1;
+		const sdoy =
 			(gdoy % 365) +
 			this.#GIsLeapYear(gyear, true) -
-			this.#isLeapYear(year, true);
-		return this.#dateOfDayOfYear(year, doy - 1);
+			this.#isLeapYear(syear, true);
+		return this.#dateOfDayOfYear(syear, sdoy - 1);
 	}
 
 	/**
-	 * Convert solar hijri date to gregorian date
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
-	 * @param {boolean} julian - julian date
+	 * Convert solar date to gregorian date
+	 * @param {number} s_year - solar year
+	 * @param {number} s_month - solar month
+	 * @param {number} s_date - solar date
+	 * @param {boolean} is_julian - julian date (default: false)
 	 * @returns {array} - gregorian date
 	 */
 	#SolarToGregorian(
-		year: number,
-		month: number,
-		date: number,
-		julian: boolean = false
+		s_year: number,
+		s_month: number,
+		s_date: number,
+		is_julian: boolean = false
 	): number[] {
 		// 0001/01/01 = 0622/03/22
-		var doy: number, gdoy: number, gyear: number;
-		doy =
-			(year - 1) * 365 + this.#dayOfYear(month, date) + 226746 /*621*365+80*/;
-		gyear = Math.trunc(doy / 365) + 1;
-		gdoy =
-			(doy % 365) +
-			this.#isLeapYear(year, true) -
+		const [syear, smonth, sdate] =
+			s_month < 0 || s_month > 11
+				? this.dateCorrection(s_year, s_month, s_date)
+				: [s_year, s_month, s_date];
+		const sdoy =
+			(syear - 1) * 365 +
+			this.#dayOfYear(smonth, sdate) +
+			226746; /*621*365+80*/
+		const gyear = Math.trunc(sdoy / 365) + 1;
+		const gdoy =
+			(sdoy % 365) +
+			this.#isLeapYear(syear, true) -
 			this.#GIsLeapYear(gyear, true);
-		return this.#GdateOfDayOfYear(gyear, gdoy);
+		return this.#GDateOfDayOfYear(gyear, gdoy);
 	}
 
-	#GdateOfDayOfYear(gyear: number, gdoy: number): number[] {
+	#GDayOfYear(gmonth: number, gdate: number) {
+		return (
+			[0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gmonth] + gdate
+		);
+	}
+	#GDateOfDayOfYear(gyear: number, gdoy: number): number[] {
 		var gdiy: number = this.#GDaysInYear(gyear),
-			gleap: number,
 			data = { gmonth: 0, gdate: 0 };
 		if (gdoy < 1)
 			do {
@@ -281,16 +289,20 @@ export default class SHDate {
 				gdiy = this.#GDaysInYear(gyear);
 				gdoy -= gdiy;
 			} while (gdoy > gdiy);
-		gleap = this.#GIsLeapYear(gyear) ? 29 : 28;
-		[0, 31, gleap, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].forEach(
-			(gdim: number, gmoy: number) => {
-				if (gdoy <= gdim) return;
-				gdoy -= gdim;
-				data.gmonth = gmoy;
-				data.gdate = Math.trunc(gdoy);
-			}
-		);
+		this.#GDaysInMonths(gyear).every((gdim: number, gmoy: number) => {
+			if (gdoy <= gdim) return false;
+			gdoy -= gdim;
+			data.gmonth = gmoy;
+			data.gdate = Math.trunc(gdoy);
+			return true;
+		});
 		return [gyear, data.gmonth, data.gdate];
+	}
+
+	#GDaysInMonths(year: number): number[] {
+		return this.#GIsLeapYear(year)
+			? [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+			: [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	}
 
 	#GDaysInYear(year: number): number {
@@ -320,19 +332,19 @@ export default class SHDate {
 
 	/**
 	 * Get leap year
-	 * @param {number} year - solar hijri year
+	 * @param {number} s_year - solar year
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 */
-	#isLeapYear(year: number, all: boolean = false): number {
+	#isLeapYear(s_year: number, all: boolean = false): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
 		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
-		const years = year + 1127;
-		if (all) return Math.trunc(Math.ceil(years * 0.2422)) - 274;
-		return Math.trunc((years + 1) * 0.2422) - Math.trunc(years * 0.2422);
+		const year = s_year + 1127;
+		if (all) return Math.trunc(Math.ceil(year * 0.2422)) - 274;
+		return Math.trunc((year + 1) * 0.2422) - Math.trunc(year * 0.2422);
 	}
 
 	/**
@@ -345,9 +357,9 @@ export default class SHDate {
 
 	/**
 	 * Get day of week (dow)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
 	 */
 	#dayOfWeek(
@@ -369,9 +381,93 @@ export default class SHDate {
 	}
 
 	/**
+	 * Get nth instance of a particular weekday of a month (wom)
+	 *
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number[]} that is nth instance of Weekday of month
+	 */
+	#nthWeekdayOfMonth(
+		year: number,
+		month: number,
+		day: number
+		// nth: number = 1
+	): number[] {
+		const first_dow: number = this.#dayOfWeek(year, month, 1),
+			first_nth: number = ((7 - first_dow + day) % 7) + 1;
+		// Move to first instance of day in month and add (n - 1) weeks
+		// date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7
+		let nth = [first_nth, first_nth + 7, first_nth + 14, first_nth + 21];
+		if (first_nth + 28 <= this.#daysInMonth(year, month))
+			nth.push(first_nth + 28);
+		return nth;
+	}
+
+	/**
+	 * Get nth instance of a particular weekday of a month (wom)
+	 *
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
+	 * @param {number} nth - instance of day, 1 to 5
+	 * @returns {number} the Nth Weekday of current Month
+	 */
+	getNthWeekdayOfMonth(
+		day: number,
+		nth: number | boolean = false
+	): number | number[] | boolean {
+		const dates = this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			day
+		);
+		if (nth == false) return dates;
+		else if (
+			day < 0 ||
+			day > 6 ||
+			(nth as number) < 1 ||
+			(nth as number) > dates.length
+		)
+			return false;
+		return dates[(nth as number) - 1];
+	}
+
+	getFirstWeekdayOfMonth(day: number): number {
+		return this.#nthWeekdayOfMonth(this.getFullYear(), this.getMonth(), day)[0];
+	}
+
+	getLastWeekdayOfMonth(day: number): number {
+		const dates = this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			day
+		);
+		return dates[dates.length - 1];
+	}
+
+	/**
+	 * Get nth instance of a particular weekday in a month (wim)
+	 *
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
+	 * @returns {number} the Nth Weekday of current Month
+	 */
+	#WeekdayInMonth(year: number, month: number, date: number): number {
+		return this.#nthWeekdayOfMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			this.#dayOfWeek(year, month, date)
+		).findIndex((item) => item == date);
+	}
+	getWeekdayInMonth(year: number, month: number, date: number) {
+		return this.#WeekdayInMonth(year, month, date);
+	}
+
+	/**
 	 * Get day of year (doy)
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - day of year
 	 */
 	#dayOfYear(month: number, date: number): number {
@@ -401,9 +497,9 @@ export default class SHDate {
 
 	/**
 	 * Get week of year (woy)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
-	 * @param {number} date - solar hijri date
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
+	 * @param {number} date - solar date
 	 * @returns {number} - week of year
 	 */
 	#weekOfYear(
@@ -471,7 +567,7 @@ export default class SHDate {
 
 	/**
 	 * Get weeks in year (wiy)
-	 * @param {number} year - solar hijri year
+	 * @param {number} year - solar year
 	 * @returns {number} - weeks in year
 	 */
 	#weeksInYear(year: number): number {
@@ -498,9 +594,9 @@ export default class SHDate {
 
 	/**
 	 * Get week of day (wod)
-	 * @param year  - solar hijri year
-	 * @param week - solar hijri week
-	 * @param date - solar hijri date (default: 0)
+	 * @param year  - solar year
+	 * @param week - solar week
+	 * @param date - solar date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
@@ -510,9 +606,9 @@ export default class SHDate {
 
 	/**
 	 * Set week of day (wod)
-	 * @param year  - solar hijri year
-	 * @param week - solar hijri week
-	 * @param date - solar hijri date (default: 0)
+	 * @param year  - solar year
+	 * @param week - solar week
+	 * @param date - solar date (default: 0)
 	 * @returns {number} - week of day
 	 */
 	setWeek(year: number, week: number, date: number = 0): number {
@@ -522,8 +618,8 @@ export default class SHDate {
 
 	/**
 	 * Get date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	#dateOfDayOfYear(year: number, doy: number): number[] {
@@ -554,8 +650,8 @@ export default class SHDate {
 
 	/**
 	 * Set date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setDateOfDayOfYear(year: number, doy: number): number {
@@ -565,8 +661,8 @@ export default class SHDate {
 
 	/**
 	 * Set UTC date of days of year (dodoy)
-	 * @param year - solar hijri year
-	 * @param doy  - solar hijri day of year (start: 0)
+	 * @param year - solar year
+	 * @param doy  - solar day of year (start: 0)
 	 * @returns {array} - days of day
 	 */
 	setUTCDateOfDayOfYear(year: number, doy: number): number {
@@ -576,8 +672,8 @@ export default class SHDate {
 
 	/**
 	 * Get days in month (dim)
-	 * @param {number} year - solar hijri year
-	 * @param {number} month - solar hijri month
+	 * @param {number} year - solar year
+	 * @param {number} month - solar month
 	 * @returns {number} - days in month
 	 */
 	#daysInMonth(year: number, month: number): number {
@@ -603,7 +699,7 @@ export default class SHDate {
 
 	/**
 	 * Get days in year (diy)
-	 * @param {number} year - solar hijri year
+	 * @param {number} year - solar year
 	 * @returns {number} - days in year
 	 */
 	#daysInYear(year: number): number {
@@ -825,7 +921,7 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get private data of solar hijri date
+	 * Get private data of solar date
 	 * @param {string} format - format of data
 	 * @returns {array}
 	 */
@@ -1826,12 +1922,19 @@ export default class SHDate {
 	}
 
 	/**
-	 * resets the time of the SHDate instance.
+	 * Equinoxes and Solstices are for a given year
+	 * @links https://stellafane.org/misc/equinox.html
+	 * @returns number
+	 */
+	getEquinoxOrSolstice() {} // TODO: implement
+
+	/**
+	 * resets the time
 	 * @param {number} hours - The hours value (default: 0)
 	 * @param {number} minutes - The minutes value (default: 0)
 	 * @param {number} seconds - The seconds value (default: 0)
 	 * @param {number} milliseconds - The milliseconds value (default: 0)
-	 * @returns {boolean} Returns true after resetting the time
+	 * @returns {boolean} After setting the time, it returns the input value
 	 */
 	#restTime(
 		hours: number = 0,
@@ -1876,8 +1979,8 @@ export default class SHDate {
 	}
 
 	#isFalse(data: number | false, defaultData: any): number {
-		if (typeof data == "boolean") return defaultData;
-		else return data;
+		if (data === false) return defaultData;
+		return data;
 	}
 
 	/**

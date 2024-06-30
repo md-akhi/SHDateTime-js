@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.mjs",
+  "scripts": {
+    "test": "node test.mjs > test.log"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "shdate": "file:../../.."
+  },
+  "type": "module"
+}

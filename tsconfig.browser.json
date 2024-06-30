@@ -1,18 +1,19 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "node10",
-    "module": "umd",
+    "module": "commonjs",
     "outDir": "dist/browser",
-    "target": "es2022",
-    "lib": ["dom","es2022" ],
+    "target": "es6",
+    "lib": ["dom", "es6"],
     "esModuleInterop": false,
     "noImplicitAny": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
     "removeComments": true
   },
   "compileOnSave": false,
-  "include": ["src/browser/**.ts"],
+  "include": ["src/browser"],
   "exclude": ["node_modules", "dist"]
 }

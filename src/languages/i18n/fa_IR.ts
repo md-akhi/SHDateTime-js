@@ -26,20 +26,6 @@ export default class fa_IR {
 		","
 	];
 
-	public static DIGIT2: string[] = [
-		"٠",
-		"١",
-		"٢",
-		"٣",
-		"٤",
-		"٥",
-		"٦",
-		"٧",
-		"٨",
-		"٩",
-		","
-	];
-
 	public static SUFFIX: string = "ام";
 
 	public static MERIDIEN_FULL_NAMES: string[] = ["قبل از ظهر", "بعد از ظهر"];
@@ -51,7 +37,7 @@ export default class fa_IR {
 		"ارديبهشت",
 		"خرداد",
 		"تير",
-		"امرداد",
+		"مرداد",
 		"شهريور",
 		"مهر",
 		"آبان",
@@ -66,7 +52,7 @@ export default class fa_IR {
 		"ارد",
 		"خرد",
 		"تير",
-		"امر",
+		"مرد",
 		"شهر",
 		"مهر",
 		"آبا",

@@ -13,8 +13,8 @@ Date and Time - SH (Solar Hijri, Shamsi Hijri, Iranian Hijri)
 [![GitHub license](https://img.shields.io/github/license/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/blob/dev/LICENSE)
 [![GitHub version release](https://img.shields.io/github/v/release/md-akhi/SHDateTime-js?color=green)](https://github.com/md-akhi/SHDateTime-js/releases)
 [![GitHub version dev](https://img.shields.io/github/v/tag/md-akhi/SHDateTime-js)](https://github.com/md-akhi/SHDateTime-js/tags)
-[![ workflow test](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)](https://github.com/md-akhi/SHDateTime-js/actions)
-![ workflow publish](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)
+[![ workflow test](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml/badge.svg?branch=dev)](https://github.com/md-akhi/SHDateTime-js/actions/workflows/test.yaml)
+[![ workflow publish](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml/badge.svg?branch=main)](https://github.com/md-akhi/SHDateTime-js/actions/workflows/publish.yaml)
 [![Static Badge npm](https://img.shields.io/badge/shdate-npm-red)](https://www.npmjs.com/package/shdate)
 
 <!-- [![Static Badge npm](https://img.shields.io/badge/shdate-yarn-red)](https://yarnpkg.com/package/@md-akhi/shdatetime) -->

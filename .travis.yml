@@ -11,6 +11,6 @@ jobs:
     - stage: "Build"
       name: "Build lib"
       script: npm run build --if-present
-    - stage: "Tests" # naming the Tests stage
-      name: "Unit Tests" # names the first Tests stage job
+    - stage: "test" # naming the test stage
+      name: "Unit Test" # names the first Tests stage job
       script: npm test
