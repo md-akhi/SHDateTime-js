@@ -39,7 +39,8 @@
     "dev:test": "nodemon --exec npm test",
     "test:release": "gulp testRelease && mocha",
     "test:build": "gulp compileTest && node dist/test/build-test.js > test/build-test.log",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve": "node server.js"
   },
   "main": "./dist/cjs/base.js",
   "module": "./dist/mjs/base.js",
@@ -102,6 +103,7 @@
     "url": "https://github.com/md-akhi/SHDateTime-js/issues"
   },
   "homepage": "https://github.com/md-akhi/SHDateTime-js#readme",
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.22.19",
     "@babel/preset-env": "^7.22.15",

@@ -134,12 +134,14 @@ function concatBrowserTS() {
 }
 function compileBrowser(cb) {
 	//"tsc:browser"
+
 	return exec(
 		"tsc --project tsconfig.browser.json",
 		function (err, stdout, stderr) {
 			// console.log(stdout);
 			// console.log(stderr);
 			cb(err);
+			exec("bash bin/index > dist/browser/index.html");
 		}
 	);
 }

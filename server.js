@@ -1,18 +1,45 @@
-var http = require("http");
-var fs = require("fs");
-var index = fs.readFileSync("test/browser/index.html");
+const http = require("node:http");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const MIME_TYPES = {
+	default: "application/octet-stream",
+	html: "text/html; charset=UTF-8",
+	js: "application/javascript",
+	css: "text/css",
+	png: "image/png",
+	jpg: "image/jpg",
+	gif: "image/gif",
+	ico: "image/x-icon",
+	svg: "image/svg+xml"
+};
+
+const STATIC_PATH = path.join(process.cwd(), "dist/browser");
+
+const toBool = [() => true, () => false];
+
+const prepareFile = async (url) => {
+	const paths = [STATIC_PATH, url];
+	if (url.endsWith("/")) paths.push("index.html");
+	const filePath = path.join(...paths);
+	const pathTraversal = !filePath.startsWith(STATIC_PATH);
+	const exists = await fs.promises.access(filePath).then(...toBool);
+	const found = !pathTraversal && exists;
+	const streamPath = found ? filePath : STATIC_PATH + "/index.html";
+	const ext = path.extname(streamPath).substring(1).toLowerCase();
+	const stream = fs.createReadStream(streamPath);
+	return { found, ext, stream };
+};
 
 http
-	.createServer(function (req, res) {
-		// will get you  '/' or 'index.html' or 'css/styles.css' ...
-		// • you need to isolate extension
-		// • have a small mimetype lookup array/object
-		// • only there and then reading the file
-		// •  delivering it after setting the right content type
-
-		res.writeHead(200, { "Content-Type": "text/html" });
-
-		console.dir(req.url);
-		res.end(index);
+	.createServer(async (req, res) => {
+		const file = await prepareFile(req.url);
+		const statusCode = file.found ? 200 : 404;
+		const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
+		res.writeHead(statusCode, { "Content-Type": mimeType });
+		file.stream.pipe(res);
+		console.log(`${req.method} ${req.url} ${statusCode}`);
 	})
 	.listen(3000);
+
+console.log(`Server running at http://127.0.0.1:3000/`);
