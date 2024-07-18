@@ -1,4 +1,4 @@
-name: Publish Packages to GitHub Packages And NPMJS
+name: Publish Packages
 on:
   push:
     branches: [main]
