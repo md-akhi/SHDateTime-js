@@ -165,15 +165,27 @@ const exData = function (ex) {
 
 		case "getUTCSeconds":
 			return `const date1 = new SHDate('1372-Mordad-05 04:20:30 GMT+11:00');
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 30
+	
+				date1.setUTCSeconds(39);
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 39
+				`;
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 30
-
-			date1.setUTCSeconds(39);
-
-			console.log(date1.getUTCSeconds());
-			// Expected output: 39
-			`;
+		case "isLeapYear":
+			return `const date1 = new SHDate('1372');
+		
+					console.log(date1.isLeapYear());
+					// Expected output: false
+		
+					date1.setFullYear(1403);
+		
+					console.log(date1.isLeapYear());
+					// Expected output: true
+					`;
 
 		case "now":
 			return `
@@ -389,14 +401,40 @@ const exData = function (ex) {
 
 		case "setUTCSeconds":
 			return `const date1 = new SHDate('1372-Mordad-05 04:20:30 GMT');
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 30
+	
+				date1.setUTCSeconds(40);
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 40
+				`;
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 30
+		case "static":
+			return `console.log(SHDate.VERSION);
+				// Expected output: "2.2.5"
 
-			date1.setUTCSeconds(40);
+				console.log(SHDate.DAYS_IN_MONTH);
+				// Expected output: "[31,31,31,31,31,31,30,30,30,30,30,29]"
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 40
+				console.log(SHDate.DAYS_IN_MONTH_LEAP);
+				// Expected output: "[31,31,31,31,31,31,30,30,30,30,30,30]"
+
+				console.log(SHDate.DAY_OF_YEAR);
+				// Expected output: "[0,31,62,93,124,155,186,216,246,276,306,336]"
+
+				console.log(SHDate.DAYS_IN_YEAR);
+				// Expected output: "365"
+
+				console.log(SHDate.DAYS_IN_YEAR_LEAP);
+				// Expected output: "366"
+
+				console.log(SHDate.WEEKS_IN_YEAR);
+				// Expected output: "52"
+
+				console.log(SHDate.WEEKS_IN_YEAR_LEAP);
+				// Expected output: "53"
 			`;
 
 		case "toDateString":
