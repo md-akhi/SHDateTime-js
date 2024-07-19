@@ -1707,6 +1707,8 @@ export default class SHDate {
 	}
 
 	/**
+	 * ! TODO: Bug "1372W53-7" => [1373, 2, 0] "Fri 05 Far 1373 00:00:00 GMT+0430 (Iran Daylight Time)"
+	 * ! TODO: Bug "1373W2-0" => "Mon 01 Far 1373 00:00:00 GMT+0330 (Iran Standard Time)"
 	 * Parses a string containing a date, and returns the number of milliseconds between that date and midnight, 11 Dey 1348.
 	 * @param {string} str — A date string
 	 * @returns {number} The number of milliseconds between that date and midnight, 11 Dey 1348.
