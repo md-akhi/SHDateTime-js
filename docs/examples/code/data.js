@@ -534,7 +534,7 @@ const exData = function (ex) {
 
 		case "toUTCString":
 			return `const event = new SHDate('1372-Mordad-05 00:00:00 PDT');
-
+	
 			console.log(event.toUTCString());
 			// Expected output: "Mon, 04 Amo 1372 16:00:00 GMT"
 			`;
