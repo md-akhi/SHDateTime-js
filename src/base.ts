@@ -757,8 +757,8 @@ export default class SHDate {
 	 * date correction
 	 *
 	 * @param  {number} year Year of the date
-	 * @param  {number} month month of the date
-	 * @param  {number} day day of the date
+	 * @param  {number} month month of the date (between: 0 - 11) (default: 0)
+	 * @param  {number} day day of the date (default: 1)
 	 * @return array
 	 */
 	dateCorrection(year: number, month: number = 0, day: number = 1) {
@@ -1615,7 +1615,7 @@ export default class SHDate {
 	}
 
 	/**
-	 * Gets the UTC time value in milliseconds.
+	 * Gets the time coordinated universal time (utc) value in milliseconds.
 	 * @returns {number}
 	 */
 	public getUTCTime(): number {
@@ -1632,17 +1632,16 @@ export default class SHDate {
 	}
 
 	/**
-	 * Returns a string representation of a function.
-	 * @returns {string} A string representation of a function.
+	 * Returns a string representation of a date. The format of the string depends on the locale.
+	 * @returns {string}
 	 */
 	public toString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY");
 		return `${this.toDateString()} ${this.toTimeString()}`;
 	}
-
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date converted to a string using Universal Coordinated Time (UTC).
+	 * @returns {string}
 	 */
 	public toUTCString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY", true);
@@ -1650,8 +1649,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date as a string value.
+	 * @returns {string}
 	 */
 	public toDateString(): string {
 		const [day_short_name, date, month_short_name, year] =
@@ -1660,8 +1659,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date coordinated universal time (utc) as a string value.
+	 * @returns {string}
 	 */
 	public toUTCDateString(): string {
 		const [day_short_name, date, month_short_name, year] = this.format(
@@ -1673,7 +1672,7 @@ export default class SHDate {
 
 	/**
 	 * Returns a time as a string value.
-	 * @returns {string} A string representation of a function.
+	 * @returns {string}
 	 */
 	public toTimeString(): string {
 		return this.#date.toTimeString();
@@ -1689,8 +1688,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a string representation of a date. The format of the string depends on the locale.
+	 * @returns {string}
 	 */
 	public toISOString(): string {
 		const [dates, times] = this.#date.toJSON().split(/\s*(?:T|$)\s*/);
@@ -1699,8 +1698,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Used by the JSON.stringify method to enable the transformation of an object's data for JavaScript Object Notation (JSON) serialization.
+	 * @returns {string}
 	 */
 	public toJSON(): string {
 		return this.toISOString();
