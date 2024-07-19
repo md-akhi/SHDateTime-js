@@ -784,7 +784,7 @@ export default class SHDate {
 	 * @param  {number} year Year of the date
 	 * @param  {number} week Week of the date
 	 * @param  {number} day Day of the date
-	 * @return array
+	 * @return {array} [isoYear, isoWeek, dayOfWeek]
 	 */
 	weekCorrection(year: number, week: number, day: number = 0) {
 		const [y4, month, date] = this.#weekOfDay(year, week, day);
@@ -1680,8 +1680,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a time coordinated universal time (utc) as a string value.
+	 * @returns {string}
 	 */
 	public toUTCTimeString(): string {
 		const [hours, minute, second] = this.format("HH=II=SS", true);

@@ -539,6 +539,12 @@ const exData = function (ex) {
 			// Expected output: "Mon, 04 Amo 1372 16:00:00 GMT"
 			`;
 
+		case "toUTCTimeString":
+			return `var shdate = new SHDate();
+			console.log(shdate.toUTCString()); // "Fri, 29 Tir 1403 13:26:09 GMT"
+			console.log(shdate.toUTCTimeString()); // 19:45:30 GMT
+			`;
+
 		case "UTC":
 			return `const utcDate1 = new SHDate(SHDate.UTC(72, 4, 5, 4, 20, 30));
 			const utcDate2 = new SHDate(SHDate.UTC(0, 0, 0, 0, 0, 0));
@@ -562,8 +568,11 @@ const exData = function (ex) {
 			// Expected output: 20424193445000
 			`;
 
-		case "":
-			return ``;
+		case "weekCorrection":
+			return `var shdate = new SHDate();
+			var week = shdate.weekCorrection(1372, 53, 7);
+			console.log(shdate.toString());
+			console.log(week); // Array [1373, 2, 0]`;
 		case "":
 			return ``;
 		case "":
