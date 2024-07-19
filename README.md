@@ -203,21 +203,23 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 
 - isLeapYear: ( [en](https://md-akhi.github.io/SHDateTime-js/en/isLeapYear) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/isLeapYear) )
 
-## Documents are being prepared
+- static VERSION: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static DAYS_IN_MONTH: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static DAYS_IN_MONTH_LEAP: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static DAY_OF_YEAR: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static DAYS_IN_YEAR: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static DAYS_IN_YEAR_LEAP: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static WEEKS_IN_YEAR: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
+- static WEEKS_IN_YEAR_LEAP: ( [en](https://md-akhi.github.io/SHDateTime-js/en/static) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/static) )
 
-- static VERSION
-- static DAYS_IN_MONTH
-- static DAYS_IN_MONTH_LEAP
-- static DAY_OF_YEAR
-- static DAYS_IN_YEAR
-- static DAYS_IN_YEAR_LEAP
-- static WEEKS_IN_YEAR
-- static WEEKS_IN_YEAR_LEAP
+- toUTCTimeString(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/toUTCTimeString) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/toUTCTimeString) )
+- weekCorrection(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/weekCorrection) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/weekCorrection) )
+
+## Documents are being prepared
 
 - setWeek()
 - setDateOfDayOfYear()
 - setUTCDateOfDayOfYear()
-
 - getDayOfYear()
 - getUTCDayOfYear()
 - getDaysInYear()
@@ -232,35 +234,29 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - getUTCDates()
 - toUTCDateString()
 - getUTCTime()
-- toUTCTimeString()
-
 - checkDate()
 - dateCorrection()
-
 - checkWeek()
-- weekCorrection()
-
 - static checkTime() || checkTime()
 - checkTime12()
 - timeCorrection()
 - restTime()
 - restUTCTime()
-
 - getLanguage()
 - getFirstDayOfWeek()
 - getTimeServerDiff()
 - getTimeZone()
-
 - setTimeServerDiff()
 - setTimeZone()
 - setLanguage()
 - setFirstDayOfWeek()
-
 - setConfig()
-
 - clone()
 - instance()
-
 - getVersion()
-
 - NumbersTo()
+- getNthWeekdayOfMonth()
+- getFirstWeekdayOfMonth()
+- getLastWeekdayOfMonth()
+- WeekdayInMonth()
+- getWeekdayInMonth()
