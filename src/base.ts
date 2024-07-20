@@ -600,6 +600,7 @@ export default class SHDate {
 	 * @returns {number} - week of day
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
+		[year, week, date] = this.weekCorrection(year, week, date);
 		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
 		return this.#dateOfDayOfYear(year, doy);
 	}
@@ -757,8 +758,8 @@ export default class SHDate {
 	 * date correction
 	 *
 	 * @param  {number} year Year of the date
-	 * @param  {number} month month of the date
-	 * @param  {number} day day of the date
+	 * @param  {number} month month of the date (default: 0)
+	 * @param  {number} day day of the date (default: 1)
 	 * @return array
 	 */
 	dateCorrection(year: number, month: number = 0, day: number = 1) {
@@ -783,7 +784,7 @@ export default class SHDate {
 	 *
 	 * @param  {number} year Year of the date
 	 * @param  {number} week Week of the date
-	 * @param  {number} day Day of the date
+	 * @param  {number} day Day of the date (default: 0)
 	 * @return array
 	 */
 	weekCorrection(year: number, week: number, day: number = 0) {
@@ -795,15 +796,15 @@ export default class SHDate {
 
 	/**
 	 * Validate a date
-	 * @param {number} year Year of the date
-	 * @param {number} month Month of the date
-	 * @param {number} date Date of the date
+	 * @param {number} year Year of the date (between: 1 - 3,500,000)
+	 * @param {number} month Month of the date (between: 0 - 11)
+	 * @param {number} date Date of the date (between: 1 - 29 | 30 | 31)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkDate(year: number, month: number, date: number): boolean {
 		return !(
 			year < 1 ||
-			year > 1700 /* 3,500,000 */ ||
+			year > 3500000 ||
 			month < 0 ||
 			month > 11 ||
 			date < 1 ||
@@ -813,10 +814,10 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H24
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @param {number} milliseconds Milliseconds of the time (default: 0)
+	 * @param {number} hours Hour of the time (between: 0 - 23)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime(
@@ -839,17 +840,17 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H12
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @param {number} milliseconds Milliseconds of the time (default: 0)
+	 * @param {number} hours Hour of the time (between: 0 - 11)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime12(
 		hours: number,
 		minutes: number,
 		seconds: number,
-		milliseconds: number
+		milliseconds: number = 0
 	): boolean {
 		return !(
 			hours < 0 ||
@@ -865,15 +866,15 @@ export default class SHDate {
 
 	/**
 	 * Validate a week
-	 * @param year  Year of the weeks
-	 * @param week  Week of the weeks
-	 * @param day  Day of the weeks
+	 * @param year  Year of the weeks (between: 1 - 3,500,000)
+	 * @param week  Week of the weeks (between: 1 - 52 | 53)
+	 * @param day  Day of the weeks (between: 0 - 7)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkWeek(year: number, week: number, day: number): boolean {
 		return !(
 			year < 1 ||
-			year > 10000 /* 3,500,000 */ ||
+			year > 3500000 ||
 			week < 1 ||
 			week > this.#weeksInYear(year) ||
 			day < 0 ||
@@ -910,7 +911,7 @@ export default class SHDate {
 				isUTC ? date.getUTCMonth() : date.getMonth(),
 				isUTC ? date.getUTCDate() : date.getDate()
 			),
-			timestamp: date.getTime()
+			timestamp: isUTC ? date.getTime() : date.getUTCTime()
 		};
 	}
 	getDates() {
@@ -1730,6 +1731,7 @@ export default class SHDate {
 			seconds: number = 0,
 			milliseconds: number = 0,
 			doy: number,
+			dow: number,
 			week: number,
 			tz: string = "",
 			tztime: number = 0;
@@ -1776,11 +1778,8 @@ export default class SHDate {
 					break;
 				case "WEEK_OF_YEAR":
 					week = Math.trunc(value);
-					date.setWeek(
-						year,
-						week,
-						dataObj.DAY_OF_WEEK ? Math.trunc(dataObj.DAY_OF_WEEK) - 1 : 0
-					);
+					dow = dataObj.DAY_OF_WEEK ? Math.trunc(dataObj.DAY_OF_WEEK) : 0;
+					date.setWeek(year, week, dow);
 					year = date.getFullYear();
 					month = date.getMonth();
 					day = date.getDate();
