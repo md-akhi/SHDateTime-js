@@ -46,15 +46,14 @@ var shdate = new SHDate();
 var week = shdate.weekCorrection(1372, 53, 7);
 console.log(shdate.toString());
 console.log(week); // Array [1373, 2, 0]
-!Bug;
 var shdate = new SHDate("1372W53-7");
-var week = shdate.weekCorrection(1372, 53, 7);
 console.log(shdate.toString()); // "Fri 05 Far 1373 00:00:00 GMT+0430 (Iran Daylight Time)"
+var week = shdate.weekCorrection(1372, 53, 7);
 console.log(week); // Array [1373, 2, 0]
 const [iy, iw, dow] = week;
-console.log(`${iy}W${iw}-${dow}`); // Array [1373, 2, 0]
-var shdate = new SHDate(`${iy}W${iw}-${dow}`);
-console.log(shdate.toString()); // "Mon 01 Far 1373 00:00:00 GMT+0330 (Iran Standard Time)"
+console.log(`${iy}W0${iw}-${dow}`); // Array [1373, 2, 0]
+var shdate = new SHDate(`${iy}W0${iw}-${dow}`);
+console.log(shdate.toString()); // "Fri 05 Far 1373 00:00:00 GMT+0430 (Iran Daylight Time)"
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/weekCorrection
