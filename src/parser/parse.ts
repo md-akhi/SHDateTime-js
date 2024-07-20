@@ -218,6 +218,7 @@ export default class SHParser {
 					}
 					return true;
 				}
+				throw new Error("week between 00 - 53 - ex 1402W01-5 || 1402W015");
 			}
 		}
 		this.resetPosition(pos);
