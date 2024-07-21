@@ -311,38 +311,38 @@ export default class SHDate {
 
 	/**
 	 * Get gregorian leap year
-	 * @param {number} gyear - gregorian year
+	 * @param {number} year - gregorian year
 	 * @param {boolean} all - all leap year
 	 * @returns {boolean} - leap year
 	 */
-	#GIsLeapYear(gyear: number, all: boolean = false): number {
+	#GIsLeapYear(year: number, all: boolean = false): number {
 		/**
 		 * 150 = Correcting the difference of leap with the gregorian date
 		 */
 		if (all)
 			return (
 				Math.ceil(
-					Math.trunc(--gyear / 4) -
-						Math.trunc(gyear / 100) +
-						Math.trunc(gyear / 400)
+					Math.trunc(--year / 4) -
+						Math.trunc(year / 100) +
+						Math.trunc(year / 400)
 				) - 150
 			);
-		return gyear % 4 == 0 && !(gyear % 100 == 0 && gyear % 400 != 0) ? 1 : 0;
+		return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0) ? 1 : 0;
 	}
 
 	/**
 	 * Get leap year
-	 * @param {number} s_year - solar year
+	 * @param {number} year - solar year
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 */
-	#isLeapYear(s_year: number, all: boolean = false): number {
+	#isLeapYear(year: number, all: boolean = false): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
 		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
-		const year = s_year + 1127;
+		year = year + 1127;
 		if (all) return Math.trunc(Math.ceil(year * 0.2422)) - 274;
 		return Math.trunc((year + 1) * 0.2422) - Math.trunc(year * 0.2422);
 	}
@@ -804,12 +804,23 @@ export default class SHDate {
 	public checkDate(year: number, month: number, date: number): boolean {
 		return !(
 			year < 1 ||
-			year > 3500000 ||
+			year > 3500000 /* 3,500,000 */ ||
 			month < 0 ||
 			month > 11 ||
 			date < 1 ||
 			date > this.#daysInMonth(year, month)
 		);
+	}
+
+	/**
+	 * Validate a date
+	 * @param {number} year Year of the date (between: 0 - 3,500,000)
+	 * @param {number} month Month of the date (between: 0 - 11)
+	 * @param {number} date Date of the date (between: 0 - 31)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public static checkDate(year: number, month: number, date: number): boolean {
+		return new SHDate().checkDate(year, month, date);
 	}
 
 	/**
@@ -839,6 +850,23 @@ export default class SHDate {
 	}
 
 	/**
+	 * Validate a time H24
+	 * @param {number} hours Hour of the time (between: 0 - 23)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number = 0
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds);
+	}
+
+	/**
 	 * Validate a time H12
 	 * @param {number} hours Hour of the time (between: 0 - 11)
 	 * @param {number} minutes Minutes of the time (between: 0 - 59)
@@ -847,6 +875,7 @@ export default class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime12(
+		meridien: boolean,
 		hours: number,
 		minutes: number,
 		seconds: number,
@@ -854,7 +883,7 @@ export default class SHDate {
 	): boolean {
 		return !(
 			hours < 0 ||
-			hours > 11 ||
+			hours > (meridien ? 11 : 12) ||
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||
@@ -862,6 +891,25 @@ export default class SHDate {
 			milliseconds < 0 ||
 			milliseconds > 999
 		);
+	}
+
+	/**
+	 * Validate a time H12
+	 * @param {boolean} meridien Meridiem of the time (Ante : false | Post: true)
+	 * @param {number} hours Hour of the time (between: 0 - 12)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time  (between: 0 - 999) (default: 0)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime12(
+		meridien: boolean,
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number = 0
+	): boolean {
+		return SHDate.checkTime12(meridien, hours, minutes, seconds, milliseconds);
 	}
 
 	/**
@@ -874,12 +922,23 @@ export default class SHDate {
 	public checkWeek(year: number, week: number, day: number): boolean {
 		return !(
 			year < 1 ||
-			year > 3500000 ||
+			year > 10000 /* 3,500,000 */ ||
 			week < 1 ||
 			week > this.#weeksInYear(year) ||
 			day < 0 ||
 			day > 7
 		);
+	}
+
+	/**
+	 * Validate a week
+	 * @param year  Year of the weeks (between: 1 - 3,500,000)
+	 * @param week  Week of the weeks (between: 1 - 52 | 53)
+	 * @param day  Day of the weeks (between: 0 - 7)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public static checkWeek(year: number, week: number, day: number): boolean {
+		return new SHDate().checkWeek(year, week, day);
 	}
 
 	/**
