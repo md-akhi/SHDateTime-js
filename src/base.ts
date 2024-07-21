@@ -931,6 +931,17 @@ export default class SHDate {
 	}
 
 	/**
+	 * Validate a week
+	 * @param year  Year of the weeks (between: 1 - 3,500,000)
+	 * @param week  Week of the weeks (between: 1 - 52 | 53)
+	 * @param day  Day of the weeks (between: 0 - 7)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public static checkWeek(year: number, week: number, day: number): boolean {
+		return new SHDate().checkWeek(year, week, day);
+	}
+
+	/**
 	 * Get date/time information
 	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of SHDate.now().
 	 * @return  object  an associative object of information related to the timestamp.
