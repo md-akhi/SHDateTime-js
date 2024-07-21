@@ -875,6 +875,7 @@ export default class SHDate {
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime12(
+		meridien: boolean,
 		hours: number,
 		minutes: number,
 		seconds: number,
@@ -882,7 +883,7 @@ export default class SHDate {
 	): boolean {
 		return !(
 			hours < 0 ||
-			hours > 11 ||
+			hours > (meridien ? 11 : 12) ||
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||
