@@ -311,38 +311,38 @@ export default class SHDate {
 
 	/**
 	 * Get gregorian leap year
-	 * @param {number} gyear - gregorian year
+	 * @param {number} year - gregorian year
 	 * @param {boolean} all - all leap year
 	 * @returns {boolean} - leap year
 	 */
-	#GIsLeapYear(gyear: number, all: boolean = false): number {
+	#GIsLeapYear(year: number, all: boolean = false): number {
 		/**
 		 * 150 = Correcting the difference of leap with the gregorian date
 		 */
 		if (all)
 			return (
 				Math.ceil(
-					Math.trunc(--gyear / 4) -
-						Math.trunc(gyear / 100) +
-						Math.trunc(gyear / 400)
+					Math.trunc(--year / 4) -
+						Math.trunc(year / 100) +
+						Math.trunc(year / 400)
 				) - 150
 			);
-		return gyear % 4 == 0 && !(gyear % 100 == 0 && gyear % 400 != 0) ? 1 : 0;
+		return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0) ? 1 : 0;
 	}
 
 	/**
 	 * Get leap year
-	 * @param {number} s_year - solar year
+	 * @param {number} year - solar year
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - leap year
 	 */
-	#isLeapYear(s_year: number, all: boolean = false): number {
+	#isLeapYear(year: number, all: boolean = false): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
 		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
-		const year = s_year + 1127;
+		year = year + 1127;
 		if (all) return Math.trunc(Math.ceil(year * 0.2422)) - 274;
 		return Math.trunc((year + 1) * 0.2422) - Math.trunc(year * 0.2422);
 	}
