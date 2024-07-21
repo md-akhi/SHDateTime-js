@@ -804,7 +804,7 @@ export default class SHDate {
 	public checkDate(year: number, month: number, date: number): boolean {
 		return !(
 			year < 1 ||
-			year > 3500000 ||
+			year > 3500000 /* 3,500,000 */ ||
 			month < 0 ||
 			month > 11 ||
 			date < 1 ||
@@ -922,7 +922,7 @@ export default class SHDate {
 	public checkWeek(year: number, week: number, day: number): boolean {
 		return !(
 			year < 1 ||
-			year > 3500000 ||
+			year > 10000 /* 3,500,000 */ ||
 			week < 1 ||
 			week > this.#weeksInYear(year) ||
 			day < 0 ||
