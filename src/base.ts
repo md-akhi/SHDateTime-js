@@ -813,6 +813,17 @@ export default class SHDate {
 	}
 
 	/**
+	 * Validate a date
+	 * @param {number} year Year of the date (between: 0 - 3,500,000)
+	 * @param {number} month Month of the date (between: 0 - 11)
+	 * @param {number} date Date of the date (between: 0 - 31)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public static checkDate(year: number, month: number, date: number): boolean {
+		return new SHDate().checkDate(year, month, date);
+	}
+
+	/**
 	 * Validate a time H24
 	 * @param {number} hours Hour of the time (between: 0 - 23)
 	 * @param {number} minutes Minutes of the time (between: 0 - 59)
