@@ -850,6 +850,23 @@ export default class SHDate {
 	}
 
 	/**
+	 * Validate a time H24
+	 * @param {number} hours Hour of the time (between: 0 - 23)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime(
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number = 0
+	): boolean {
+		return SHDate.checkTime(hours, minutes, seconds, milliseconds);
+	}
+
+	/**
 	 * Validate a time H12
 	 * @param {number} hours Hour of the time (between: 0 - 11)
 	 * @param {number} minutes Minutes of the time (between: 0 - 59)
