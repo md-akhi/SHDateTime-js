@@ -894,6 +894,25 @@ export default class SHDate {
 	}
 
 	/**
+	 * Validate a time H12
+	 * @param {boolean} meridien Meridiem of the time (Ante : false | Post: true)
+	 * @param {number} hours Hour of the time (between: 0 - 12)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time  (between: 0 - 999) (default: 0)
+	 * @returns {boolean} TRUE if valid; otherwise FALSE
+	 */
+	public checkTime12(
+		meridien: boolean,
+		hours: number,
+		minutes: number,
+		seconds: number,
+		milliseconds: number = 0
+	): boolean {
+		return SHDate.checkTime12(meridien, hours, minutes, seconds, milliseconds);
+	}
+
+	/**
 	 * Validate a week
 	 * @param year  Year of the weeks (between: 1 - 3,500,000)
 	 * @param week  Week of the weeks (between: 1 - 52 | 53)
