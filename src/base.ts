@@ -795,9 +795,9 @@ export default class SHDate {
 
 	/**
 	 * Validate a date
-	 * @param {number} year Year of the date
-	 * @param {number} month Month of the date
-	 * @param {number} date Date of the date
+	 * @param {number} year Year of the date (between: 0 - 3,500,000)
+	 * @param {number} month Month of the date (between: 0 - 11)
+	 * @param {number} date Date of the date (between: 0 - 31)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkDate(year: number, month: number, date: number): boolean {
@@ -813,10 +813,10 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H24
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @param {number} milliseconds Milliseconds of the time (default: 0)
+	 * @param {number} hours Hour of the time (between: 0 - 23)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime(
@@ -839,10 +839,11 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H12
-	 * @param {number} hours Hour of the time
-	 * @param {number} minutes Minutes of the time
-	 * @param {number} seconds Seconds of the time
-	 * @param {number} milliseconds Milliseconds of the time (default: 0)
+	 * @param {boolean} meridien Meridiem of the time (Ante : false | Post: true)
+	 * @param {number} hours Hour of the time (between: 0 - 12)
+	 * @param {number} minutes Minutes of the time (between: 0 - 59)
+	 * @param {number} seconds Seconds of the time (between: 0 - 59)
+	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime12(
@@ -865,9 +866,9 @@ export default class SHDate {
 
 	/**
 	 * Validate a week
-	 * @param year  Year of the weeks
-	 * @param week  Week of the weeks
-	 * @param day  Day of the weeks
+	 * @param year  Year of the weeks (between: 1 - 3,500,000)
+	 * @param week  Week of the weeks (between: 1 - 52 | 53)
+	 * @param day  Day of the weeks (between: 0 - 7)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkWeek(year: number, week: number, day: number): boolean {

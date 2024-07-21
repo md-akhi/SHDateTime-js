@@ -12,14 +12,73 @@ const exData = function (ex) {
 			// Expected output: 743730600000
 			`;
 
+		case "checkDate":
+			return `let check = new SHDate();
+			let isTrue = check.checkDate(1390, 10, 25);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkDate(1390, 10, 25);
+
+			console.log(isTrue); // true
+			`;
+
+		case "checkTime":
+			return `let check = new SHDate();
+			let isTrue = check.checkTime(14, 50, 20);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkTime(14, 50, 20, 900);
+
+			console.log(isTrue); // true
+			`;
+
+		case "checkTime12":
+			return `let check = new SHDate();
+			let isTrue = check.checkTime12(true, 14, 50, 20);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkTime12(false, 14, 50, 20, 900);
+
+			console.log(isTrue); // false
+			`;
+
+		case "checkWeek":
+			return `let check = new SHDate();
+			let isTrue = check.checkWeek(1390, 11, 5);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkWeek(1390, 53, 5);
+
+			console.log(isTrue); // false
+			`;
+
+		case "clone":
+			return `var shdate = new SHDate("Dey 25, 1390 23:15:30");
+			var clone = shdate.clone();
+				
+			console.log(shdate.toString()); // "Sun 25 Dey 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+			shdate.setMonth(11);
+			console.log(shdate.toString()); // "Thu 25 Esf 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+				
+			console.log(clone.toString()); // "Sun 25 Dey 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+			`;
+
 		case "getDate":
 			return `
-				const birthday = new SHDate('1372-Mor-05');
-				const date = birthday.getDate();
+			const birthday = new SHDate('1372-Mor-05');
+			const date = birthday.getDate();
 
-				console.log(date);
-				// Expected output: 5
-				`;
+			console.log(date);
+			// Expected output: 5
+			`;
 
 		case "getDay":
 			return `

@@ -217,6 +217,12 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 
 ## Documents are being prepared
 
+- static checkDate() || checkDate(): (TODO [en](https://md-akhi.github.io/SHDateTime-js/en/checkDate) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/checkDate) )
+- static checkWeek() || checkWeek(): (TODO [en](https://md-akhi.github.io/SHDateTime-js/en/checkWeek) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/checkWeek) )
+- static checkTime() || checkTime(): (TODO [en](https://md-akhi.github.io/SHDateTime-js/en/checkTime) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/checkTime) )
+- static checkTime12() || checkTime12(): (TODO [en](https://md-akhi.github.io/SHDateTime-js/en/checkTime12) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/checkTime12) )
+- clone(): (TODO [en](https://md-akhi.github.io/SHDateTime-js/en/clone) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/clone) )
+
 - setWeek()
 - setDateOfDayOfYear()
 - setUTCDateOfDayOfYear()
@@ -234,11 +240,7 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - getUTCDates()
 - toUTCDateString()
 - getUTCTime()
-- checkDate()
 - dateCorrection()
-- checkWeek()
-- static checkTime() || checkTime()
-- checkTime12()
 - timeCorrection()
 - restTime()
 - restUTCTime()
@@ -251,7 +253,6 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - setLanguage()
 - setFirstDayOfWeek()
 - setConfig()
-- clone()
 - instance()
 - getVersion()
 - NumbersTo()
