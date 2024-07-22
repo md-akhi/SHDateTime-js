@@ -1187,15 +1187,9 @@ export default class SHDate {
 		month = this.#isFalse(month, isUTC ? this.getUTCMonth() : this.getMonth());
 		date = this.#isFalse(date, isUTC ? this.getUTCDate() : this.getDate());
 		const [gyear, gmonth, gdate] = this.#SolarToGregorian(year, month, date);
-		if (typeof date == "number")
-			isUTC
-				? this.#date.setUTCFullYear(gyear, gmonth, gdate)
-				: this.#date.setFullYear(gyear, gmonth, gdate);
-		else if (typeof month == "number")
-			isUTC
-				? this.#date.setUTCFullYear(gyear, gmonth)
-				: this.#date.setFullYear(gyear, gmonth);
-		else this.#date.setFullYear(gyear);
+		isUTC
+			? this.#date.setUTCFullYear(gyear, gmonth, gdate)
+			: this.#date.setFullYear(gyear, gmonth, gdate);
 		this.#dateSync();
 		return this.getTime();
 	}
@@ -1241,11 +1235,9 @@ export default class SHDate {
 			month,
 			date
 		);
-		if (typeof date == "number")
-			isUTC
-				? this.#date.setUTCMonth(gmonth, gdate)
-				: this.#date.setMonth(gmonth, gdate);
-		else isUTC ? this.#date.setUTCMonth(gmonth) : this.#date.setMonth(gmonth);
+		isUTC
+			? this.#date.setUTCFullYear(gyear, gmonth, gdate)
+			: this.#date.setFullYear(gyear, gmonth, gdate);
 		this.#dateSync();
 		return this.getTime();
 	}
@@ -1276,7 +1268,9 @@ export default class SHDate {
 			this.getMonth(),
 			date
 		);
-		isUTC ? this.#date.setUTCDate(gdate) : this.#date.setDate(gdate);
+		isUTC
+			? this.#date.setUTCFullYear(gyear, gmonth, gdate)
+			: this.#date.setFullYear(gyear, gmonth, gdate);
 		this.#dateSync();
 		return this.getTime();
 	}
@@ -1327,19 +1321,9 @@ export default class SHDate {
 			minutes,
 			isUTC ? this.getUTCMinutes() : this.getMinutes()
 		);
-		if (typeof milliseconds == "number")
-			isUTC
-				? this.#date.setUTCHours(hours, minutes, seconds, milliseconds)
-				: this.#date.setHours(hours, minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			isUTC
-				? this.#date.setUTCHours(hours, minutes, seconds)
-				: this.#date.setHours(hours, minutes, seconds);
-		else if (typeof minutes == "number")
-			isUTC
-				? this.#date.setUTCHours(hours, minutes)
-				: this.#date.setHours(hours, minutes);
-		else isUTC ? this.#date.setUTCHours(hours) : this.#date.setHours(hours);
+		isUTC
+			? this.#date.setUTCHours(hours, minutes, seconds, milliseconds)
+			: this.#date.setHours(hours, minutes, seconds, milliseconds);
 		this.#timeSync();
 		return this.getTime();
 	}
@@ -1392,18 +1376,9 @@ export default class SHDate {
 			seconds,
 			isUTC ? this.getUTCSeconds() : this.getSeconds()
 		);
-		if (typeof milliseconds == "number")
-			isUTC
-				? this.#date.setUTCMinutes(minutes, seconds, milliseconds)
-				: this.#date.setMinutes(minutes, seconds, milliseconds);
-		else if (typeof seconds == "number")
-			isUTC
-				? this.#date.setUTCMinutes(minutes, seconds)
-				: this.#date.setMinutes(minutes, seconds);
-		else
-			isUTC
-				? this.#date.setUTCMinutes(minutes)
-				: this.#date.setMinutes(minutes);
+		isUTC
+			? this.#date.setUTCMinutes(minutes, seconds, milliseconds)
+			: this.#date.setMinutes(minutes, seconds, milliseconds);
 		this.#timeSync();
 		return this.getTime();
 	}
@@ -1447,14 +1422,9 @@ export default class SHDate {
 			milliseconds,
 			isUTC ? this.getUTCMilliseconds() : this.getMilliseconds()
 		);
-		if (typeof milliseconds == "number")
-			isUTC
-				? this.#date.setUTCSeconds(seconds, milliseconds)
-				: this.#date.setSeconds(seconds, milliseconds);
-		else
-			isUTC
-				? this.#date.setUTCSeconds(seconds)
-				: this.#date.setSeconds(seconds);
+		isUTC
+			? this.#date.setUTCSeconds(seconds, milliseconds)
+			: this.#date.setSeconds(seconds, milliseconds);
 		this.#timeSync();
 		return this.getTime();
 	}
