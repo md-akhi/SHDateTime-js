@@ -71,6 +71,18 @@ const exData = function (ex) {
 			console.log(clone.toString()); // "Sun 25 Dey 1390 23:15:30 GMT+0330 (Iran Standard Time)"
 			`;
 
+		case "dateCorrection":
+			return `var shdate = new SHDate();
+			var date = shdate.dateCorrection(1372, 14, 100);
+
+			console.log(date); // Array [1373, 5, 7]
+
+			// Static
+			var date = SHDate.dateCorrection(1372, 15, 100);
+
+			console.log(date); // Array [1373, 6, 7]
+			`;
+
 		case "getDate":
 			return `
 			const birthday = new SHDate('1372-Mor-05');
@@ -495,6 +507,17 @@ const exData = function (ex) {
 				console.log(SHDate.WEEKS_IN_YEAR_LEAP);
 				// Expected output: "53"
 			`;
+
+		case "timeCorrection":
+			return `var shdate = new SHDate();
+			var date = shdate.timeCorrection(30, 150, 120, 1200);
+
+			console.log(date); // Array [8, 32, 1, 200, 1]
+
+			// Static
+			var date = SHDate.timeCorrection(1372, 15, 100);
+
+			console.log(date); // Array [8, 32, 1, 200, 1]`;
 
 		case "toDateString":
 			return `const event = new SHDate(1372, 4, 5, 4, 20, 30);
