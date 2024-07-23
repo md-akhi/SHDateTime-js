@@ -1,16 +1,16 @@
 name: Tests Packages
 on:
   push:
-    branches: [dev, release/*]
+    branches: [main, dev, release/*, hotfix/*]
   pull_request:
-    branches: [dev, release/*]
+    branches: [main, dev, release/*, hotfix/*]
 jobs:
   test-pkgs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version:
-          [16.x, 18.x, 20.x]
+          [16.x, 18.x, 20.x, 22.x]
           # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - uses: actions/checkout@v4

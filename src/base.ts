@@ -737,7 +737,7 @@ export default class SHDate {
 		minute: number,
 		second: number,
 		millisecond: number = 0
-	) {
+	): Array<number> {
 		/**
 		 * 86400000 = 24*60*60*1000 - date to millisecond
 		 * 3600000 = 60*60*1000 - hours to millisecond
@@ -762,7 +762,11 @@ export default class SHDate {
 	 * @param  {number} day day of the date (default: 1)
 	 * @return array
 	 */
-	dateCorrection(year: number, month: number = 0, day: number = 1) {
+	dateCorrection(
+		year: number,
+		month: number = 0,
+		day: number = 1
+	): Array<number> {
 		month++;
 		if (month < 1)
 			do {
@@ -785,7 +789,7 @@ export default class SHDate {
 	 * @param  {number} year Year of the date
 	 * @param  {number} week Week of the date
 	 * @param  {number} day Day of the date (default: 0)
-	 * @return array
+	 * @return {array} [isoYear, isoWeek, dayOfWeek]
 	 */
 	weekCorrection(year: number, week: number, day: number = 0) {
 		const [y4, month, date] = this.#weekOfDay(year, week, day);
@@ -796,9 +800,9 @@ export default class SHDate {
 
 	/**
 	 * Validate a date
-	 * @param {number} year Year of the date (between: 1 - 3,500,000)
+	 * @param {number} year Year of the date (between: 0 - 3,500,000)
 	 * @param {number} month Month of the date (between: 0 - 11)
-	 * @param {number} date Date of the date (between: 1 - 29 | 30 | 31)
+	 * @param {number} date Date of the date (between: 0 - 31)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkDate(year: number, month: number, date: number): boolean {
@@ -912,7 +916,7 @@ export default class SHDate {
 	/**
 	 * Validate a week
 	 * @param year  Year of the weeks (between: 1 - 3,500,000)
-	 * @param week  Week of the weeks (between: 1 - 52 | 53)
+	 * @param week  Week of the weeks (between: 1 - 53)
 	 * @param day  Day of the weeks (between: 0 - 7)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
@@ -1643,7 +1647,7 @@ export default class SHDate {
 	}
 
 	/**
-	 * Gets the UTC time value in milliseconds.
+	 * Gets the time coordinated universal time (utc) value in milliseconds.
 	 * @returns {number}
 	 */
 	public getUTCTime(): number {
@@ -1660,17 +1664,16 @@ export default class SHDate {
 	}
 
 	/**
-	 * Returns a string representation of a function.
-	 * @returns {string} A string representation of a function.
+	 * Returns a string representation of a date. The format of the string depends on the locale.
+	 * @returns {string}
 	 */
 	public toString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY");
 		return `${this.toDateString()} ${this.toTimeString()}`;
 	}
-
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date converted to a string using Universal Coordinated Time (UTC).
+	 * @returns {string}
 	 */
 	public toUTCString(): string {
 		//const [day_short_name, date, month_short_name, year] = this.format("dsn=DD=msn=YY", true);
@@ -1678,8 +1681,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date as a string value.
+	 * @returns {string}
 	 */
 	public toDateString(): string {
 		const [day_short_name, date, month_short_name, year] =
@@ -1688,8 +1691,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a date coordinated universal time (utc) as a string value.
+	 * @returns {string}
 	 */
 	public toUTCDateString(): string {
 		const [day_short_name, date, month_short_name, year] = this.format(
@@ -1701,15 +1704,15 @@ export default class SHDate {
 
 	/**
 	 * Returns a time as a string value.
-	 * @returns {string} A string representation of a function.
+	 * @returns {string}
 	 */
 	public toTimeString(): string {
 		return this.#date.toTimeString();
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a time coordinated universal time (utc) as a string value.
+	 * @returns {string}
 	 */
 	public toUTCTimeString(): string {
 		const [hours, minute, second] = this.format("HH=II=SS", true);
@@ -1717,8 +1720,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Returns a string representation of a date. The format of the string depends on the locale.
+	 * @returns {string}
 	 */
 	public toISOString(): string {
 		const [dates, times] = this.#date.toJSON().split(/\s*(?:T|$)\s*/);
@@ -1727,8 +1730,8 @@ export default class SHDate {
 	}
 
 	/**
-	 *
-	 * @returns {string} A string representation of a function.
+	 * Used by the JSON.stringify method to enable the transformation of an object's data for JavaScript Object Notation (JSON) serialization.
+	 * @returns {string}
 	 */
 	public toJSON(): string {
 		return this.toISOString();
