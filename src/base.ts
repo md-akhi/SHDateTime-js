@@ -737,7 +737,7 @@ export default class SHDate {
 		minute: number,
 		second: number,
 		millisecond: number = 0
-	) {
+	): Array<number> {
 		/**
 		 * 86400000 = 24*60*60*1000 - date to millisecond
 		 * 3600000 = 60*60*1000 - hours to millisecond
@@ -762,7 +762,11 @@ export default class SHDate {
 	 * @param  {number} day day of the date (default: 1)
 	 * @return array
 	 */
-	dateCorrection(year: number, month: number = 0, day: number = 1) {
+	dateCorrection(
+		year: number,
+		month: number = 0,
+		day: number = 1
+	): Array<number> {
 		month++;
 		if (month < 1)
 			do {
