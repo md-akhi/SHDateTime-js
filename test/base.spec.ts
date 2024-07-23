@@ -177,12 +177,12 @@ describe("correctly date & time & week", () => {
 				assert.equal(SHDate.checkTime(h24, min, sec, ms), check24);
 			});
 		});
-		// it("correctly checkTime12", () => {
-		// 	checkTime.forEach(({ time, check12 }) => {
-		// 		const [h24, min, sec, ms] = time;
-		// 		assert.equal(SHDate.checkTime12(h24, min, sec, ms), check12);
-		// 	});
-		// });
+		it("correctly checkTime12", () => {
+			checkTime.forEach(({ time, check12 }) => {
+				const [h24, min, sec, ms] = time;
+				assert.equal(SHDate.checkTime12(h24, min, sec, ms), check12);
+			});
+		});
 		it("correctly checkdate", () => {
 			checkDate.forEach(({ date, check }) => {
 				const [year, month, day] = date;

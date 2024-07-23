@@ -868,22 +868,21 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H12
-	 * @param {number} hours Hour of the time (between: 0 - 11)
+	 * @param {number} hours Hour of the time (between: 1 - 12)
 	 * @param {number} minutes Minutes of the time (between: 0 - 59)
 	 * @param {number} seconds Seconds of the time (between: 0 - 59)
 	 * @param {number} milliseconds Milliseconds of the time (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public static checkTime12(
-		meridien: boolean,
 		hours: number,
 		minutes: number,
 		seconds: number,
 		milliseconds: number = 0
 	): boolean {
 		return !(
-			hours < 0 ||
-			hours > (meridien ? 11 : 12) ||
+			hours < 1 ||
+			hours > 12 ||
 			minutes < 0 ||
 			minutes > 59 ||
 			seconds < 0 ||
@@ -895,21 +894,19 @@ export default class SHDate {
 
 	/**
 	 * Validate a time H12
-	 * @param {boolean} meridien Meridiem of the time (Ante : false | Post: true)
-	 * @param {number} hours Hour of the time (between: 0 - 12)
+	 * @param {number} hours Hour of the time (between: 1 - 12)
 	 * @param {number} minutes Minutes of the time (between: 0 - 59)
 	 * @param {number} seconds Seconds of the time (between: 0 - 59)
 	 * @param {number} milliseconds Milliseconds of the time  (between: 0 - 999) (default: 0)
 	 * @returns {boolean} TRUE if valid; otherwise FALSE
 	 */
 	public checkTime12(
-		meridien: boolean,
 		hours: number,
 		minutes: number,
 		seconds: number,
 		milliseconds: number = 0
 	): boolean {
-		return SHDate.checkTime12(meridien, hours, minutes, seconds, milliseconds);
+		return SHDate.checkTime12(hours, minutes, seconds, milliseconds);
 	}
 
 	/**
@@ -949,7 +946,8 @@ export default class SHDate {
 	#getDates(timestamp: any = this.getTime(), isUTC: boolean = false) {
 		let date: SHDate;
 		if (typeof timestamp === "undefined") date = new SHDate();
-		else if (timestamp instanceof SHDate) date = timestamp; // Not provided
+		else if (timestamp instanceof SHDate)
+			date = timestamp; // Not provided
 		else date = new SHDate(timestamp);
 		// Javascript Date() // UNIX timestamp (auto-convert to int)
 		return {
