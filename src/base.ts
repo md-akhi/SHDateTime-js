@@ -454,11 +454,13 @@ export default class SHDate {
 	 * @returns {number} the Nth Weekday of current Month
 	 */
 	#WeekdayInMonth(year: number, month: number, date: number): number {
-		return this.#nthWeekdayOfMonth(
-			this.getFullYear(),
-			this.getMonth(),
-			this.#dayOfWeek(year, month, date)
-		).findIndex((item) => item == date);
+		return (
+			this.#nthWeekdayOfMonth(
+				this.getFullYear(),
+				this.getMonth(),
+				this.#dayOfWeek(year, month, date)
+			).findIndex((item) => item == date) + 1
+		);
 	}
 	getWeekdayInMonth(year: number, month: number, date: number) {
 		return this.#WeekdayInMonth(year, month, date);
@@ -600,7 +602,6 @@ export default class SHDate {
 	 * @returns {number} - week of day
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
-		[year, week, date] = this.weekCorrection(year, week, date);
 		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
 		return this.#dateOfDayOfYear(year, doy);
 	}
