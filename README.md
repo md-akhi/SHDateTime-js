@@ -261,3 +261,5 @@ https://unpkg.com/shdate@latest/dist/browser/shdate.min.js
 - getLastWeekdayOfMonth(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/getLastWeekdayOfMonth) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/getLastWeekdayOfMonth) )
 - WeekdayInMonth(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/WeekdayInMonth) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/WeekdayInMonth) )
 - getWeekdayInMonth(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/getWeekdayInMonth) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/getWeekdayInMonth) )
+- copy(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/copy) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/copy) )
+- this(): ( [en](https://md-akhi.github.io/SHDateTime-js/en/this) | [fa](https://md-akhi.github.io/SHDateTime-js/fa/this) )
