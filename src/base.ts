@@ -32,8 +32,8 @@ export default class SHDate {
 	static VERSION: string = "2.1.26";
 
 	/**
-	 * @type {number[]} days in month without leap year
 	 * This static property represents the number of days in each month of a specific calendar.
+	 * @type {number[]} days in month without leap year
 	 */
 	public static DAYS_IN_MONTH: number[] = [
 		31, // far
@@ -120,7 +120,7 @@ export default class SHDate {
 	#config: any = {
 		time_zone: "Asia/Tehran",
 		word_language: Word.LANGUAGE,
-		first_day_of_week: Word.FIRST_DAY_OF_WEEK,
+		first_day_of_week: Word.FIRST_DAY_OF_WEEK, // 0 - 6
 		time_difference_server: 0 // miliseconds
 	};
 
@@ -339,7 +339,7 @@ export default class SHDate {
 	 * Get leap year
 	 * @param {number} year - solar year
 	 * @param {boolean} all - all leap year (default: false)
-	 * @returns {boolean} - leap year
+	 * @returns {boolean} - True if the leap year, False otherwise.
 	 */
 	#isLeapYear(year: number, all: boolean = false): number {
 		/**
@@ -354,18 +354,20 @@ export default class SHDate {
 
 	/**
 	 * Get leap year
-	 * @returns {boolean} - leap year
+	 * @param {number} year - solar year (default: current year)
+	 * @returns {boolean} - True if the leap year, False otherwise.
 	 */
-	public isLeapYear(): boolean {
-		return this.#isLeapYear(this.getFullYear()) === 1;
+	public isLeapYear(year: number = this.getFullYear()): boolean {
+		return this.#isLeapYear(year) === 1;
 	}
 
 	/**
 	 * Get day of week (dow)
-	 * @param {number} year - solar year
-	 * @param {number} month - solar month
-	 * @param {number} date - solar date
-	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @param {number} FDOW - first day of week (between: 0:sat - 6:fri)
+	 * @returns {number} - day of week - 0: Saturday, ... , 6: Friday
 	 */
 	#dayOfWeek(
 		year: number,
@@ -386,24 +388,35 @@ export default class SHDate {
 	}
 
 	/**
-	 * Get nth instance of a particular weekday of a month (wom)
-	 *
-	 * @param {number} year - solar year
-	 * @param {number} month - solar month
-	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
-	 * @param {number} nth - instance of day, 1 to 5
-	 * @returns {number[]} that is nth instance of Weekday of month
+	 * Get day of week (dow)
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @param {number} FDOW - first day of week (between: 0:sat - 6:fri)
+	 * @returns {number} - day of week - 0 = Saturday, ... , 6 = Friday
 	 */
-	#nthWeekdayOfMonth(
+	dayOfWeek(
 		year: number,
 		month: number,
-		day: number
-		// nth: number = 1
-	): number[] {
+		date: number,
+		FDOW: number = this.#config.first_day_of_week
+	): number {
+		return this.#dayOfWeek(year, month, date, FDOW);
+	}
+
+	/**
+	 * Get nth instance of a particular weekday of a month (wom)
+	 *
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc. (between: 0 - 6)
+	 * @returns {number[]} that is nth instance of Weekday of month
+	 */
+	#nthWeekdayOfMonth(year: number, month: number, day: number): number[] {
+		// date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7
 		const first_dow: number = this.#dayOfWeek(year, month, 1),
 			first_nth: number = ((7 - first_dow + day) % 7) + 1;
 		// Move to first instance of day in month and add (n - 1) weeks
-		// date = 1 + ((7 - first_dow + day) % 7) + (nth - 1) * 7
 		let nth = [first_nth, first_nth + 7, first_nth + 14, first_nth + 21];
 		if (first_nth + 28 <= this.#daysInMonth(year, month))
 			nth.push(first_nth + 28);
@@ -412,9 +425,19 @@ export default class SHDate {
 
 	/**
 	 * Get nth instance of a particular weekday of a month (wom)
-	 *
-	 * @param {number} day - day of week, Sat 0, Sun 1, etc.
-	 * @param {number} nth - instance of day, 1 to 5
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc. (between: 0 - 6)
+	 * @returns {number[]} that is nth instance of Weekday of month
+	 */
+	nthWeekdayOfMonth(year: number, month: number, day: number): number[] {
+		return this.#nthWeekdayOfMonth(year, month, day);
+	}
+
+	/**
+	 * Get nth instance of a particular weekday of a month (wom)
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc. (between: 0 - 6)
+	 * @param {number} nth - instance of day (between: 1 - 5)
 	 * @returns {number} the Nth Weekday of current Month
 	 */
 	getNthWeekdayOfMonth(
@@ -437,10 +460,20 @@ export default class SHDate {
 		return dates[(nth as number) - 1];
 	}
 
+	/**
+	 * Get first nth instance of a particular weekday of a month (wom)
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc. (between: 0 - 6)
+	 * @returns {number} the Nth Weekday of current Month
+	 */
 	getFirstWeekdayOfMonth(day: number): number {
 		return this.#nthWeekdayOfMonth(this.getFullYear(), this.getMonth(), day)[0];
 	}
 
+	/**
+	 * Get last nth instance of a particular weekday of a month (wom)
+	 * @param {number} day - day of week, Sat 0, Sun 1, etc. (between: 0 - 6)
+	 * @returns {number} the Nth Weekday of current Month
+	 */
 	getLastWeekdayOfMonth(day: number): number {
 		const dates = this.#nthWeekdayOfMonth(
 			this.getFullYear(),
@@ -452,11 +485,10 @@ export default class SHDate {
 
 	/**
 	 * Get nth instance of a particular weekday in a month (wim)
-	 *
-	 * @param {number} year - solar year
-	 * @param {number} month - solar month
-	 * @param {number} date - solar date
-	 * @returns {number} the Nth Weekday of current Month
+	 * @param {number} year - solar year (between: 1200 - 1700)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @returns {number} the Nth Weekday of current Month (between: 1 - 5)
 	 */
 	#WeekdayInMonth(year: number, month: number, date: number): number {
 		return (
@@ -467,15 +499,35 @@ export default class SHDate {
 			).findIndex((item) => item == date) + 1
 		);
 	}
-	getWeekdayInMonth(year: number, month: number, date: number) {
+
+	/**
+	 * Get nth instance of a particular weekday in a month (wim)
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @returns {number} the Nth Weekday of current Month (between: 1 - 5)
+	 */
+	weekdayInMonth(year: number, month: number, date: number): number {
 		return this.#WeekdayInMonth(year, month, date);
 	}
 
 	/**
+	 * Get nth instance of a particular weekday in a month (wim)
+	 * @returns {number} the Nth Weekday of current Month (between: 1 - 5)
+	 */
+	getWeekdayInMonth(): number {
+		return this.#WeekdayInMonth(
+			this.getFullYear(),
+			this.getMonth(),
+			this.getDate()
+		);
+	}
+
+	/**
 	 * Get day of year (doy)
-	 * @param {number} month - solar month
-	 * @param {number} date - solar date
-	 * @returns {number} - day of year
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @returns {number} - day of year (between: 0 - 365)
 	 */
 	#dayOfYear(month: number, date: number): number {
 		return SHDate.DAY_OF_YEAR[month] + date - 1;
@@ -488,7 +540,17 @@ export default class SHDate {
 
 	/**
 	 * Get day of year (doy)
-	 * @returns {number} - day of year
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @returns {number} - day of year (between: 0 - 365)
+	 */
+	dayOfYear(month: number, date: number): number {
+		return this.#dayOfYear(month, date);
+	}
+
+	/**
+	 * Get day of year (doy)
+	 * @returns {number} - day of year (between: 0 - 365)
 	 */
 	getDayOfYear(): number {
 		return this.#dayOfYear(this.getMonth(), this.getDate());
@@ -496,7 +558,7 @@ export default class SHDate {
 
 	/**
 	 * Get UTC day of year (doy)
-	 * @returns {number} - day of year
+	 * @returns {number} - day of year (between: 0 - 365)
 	 */
 	getUTCDayOfYear(): number {
 		return this.#dayOfYear(this.getUTCMonth(), this.getUTCDate());
@@ -504,10 +566,11 @@ export default class SHDate {
 
 	/**
 	 * Get week of year (woy)
-	 * @param {number} year - solar year
-	 * @param {number} month - solar month
-	 * @param {number} date - solar date
-	 * @returns {number} - week of year
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @param {number} FDOW - first day of week (between: 0:sat - 6:fri)
+	 * @returns {number[]} - week of year [ iso year, iso week ]
 	 */
 	#weekOfYear(
 		year: number,
@@ -548,34 +611,49 @@ export default class SHDate {
 
 	/**
 	 * Get week of year (woy)
-	 * @returns {number} - week of year
+	 * @param {number} year - solar year (between: 1 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @param {number} date - solar date (between: 1 - 31)
+	 * @param {number} FDOW - first day of week (between: 0:sat - 6:fri)
+	 * @returns {number[]} - week of year [ iso year, iso week ]
+	 */
+	weekOfYear(
+		year: number,
+		month: number,
+		date: number,
+		FDOW: number = this.#config.first_day_of_week
+	): number[] {
+		return this.#weekOfYear(year, month, date, FDOW);
+	}
+
+	/**
+	 * Get week of year (woy)
+	 * @returns {number[]} - week of year [ iso year, iso week ]
 	 */
 	getWeekOfYear(): number[] {
 		return this.#weekOfYear(
 			this.getFullYear(),
 			this.getMonth(),
-			this.getDate(),
-			this.#config.first_day_of_week
+			this.getDate()
 		);
 	}
 
 	/**
 	 * Get UTC week of year (woy)
-	 * @returns {number} - week of year
+	 * @returns {number[]} - week of year [ iso year, iso week ]
 	 */
 	getUTCWeekOfYear(): number[] {
 		return this.#weekOfYear(
 			this.getUTCFullYear(),
 			this.getUTCMonth(),
-			this.getUTCDate(),
-			this.#config.first_day_of_week
+			this.getUTCDate()
 		);
 	}
 
 	/**
 	 * Get weeks in year (wiy)
-	 * @param {number} year - solar year
-	 * @returns {number} - weeks in year
+	 * @param {number} year - solar year (between: 0 - 3,500,000)
+	 * @returns {number} - weeks in year (between: 52 - 53)
 	 */
 	#weeksInYear(year: number): number {
 		const far1dow: number = this.#dayOfWeek(year, 0, 1) + 1;
@@ -585,7 +663,16 @@ export default class SHDate {
 
 	/**
 	 * Get weeks in year (wiy)
-	 * @returns {number} - weeks in year
+	 * @param {number} year - solar year (between: 0 - 3,500,000)
+	 * @returns {number} - weeks in year (between: 52 - 53)
+	 */
+	weeksInYear(year: number): number {
+		return this.#weeksInYear(year);
+	}
+
+	/**
+	 * Get weeks in year (wiy)
+	 * @returns {number} - weeks in year (between: 52 - 53)
 	 */
 	getWeeksInYear(): number {
 		return this.#weeksInYear(this.getFullYear());
@@ -593,18 +680,18 @@ export default class SHDate {
 
 	/**
 	 * Get UTC weeks in year (wiy)
-	 * @returns {number} - weeks in year
+	 * @returns {number} - weeks in year (between: 52 - 53)
 	 */
 	getUTCWeeksInYear(): number {
 		return this.#weeksInYear(this.getUTCFullYear());
 	}
 
 	/**
-	 * Get week of day (wod)
-	 * @param year  - solar year
-	 * @param week - solar week
-	 * @param date - solar date (default: 0)
-	 * @returns {number} - week of day
+	 * Get the date of the week (wod)
+	 * @param year  - solar year (between: 0 - 3,500,000)
+	 * @param week - solar week (between: 1 - 53)
+	 * @param date - solar date (default: 0) (between: 0 - 6)
+	 * @returns {number[]} - [year, month, date]
 	 */
 	#weekOfDay(year: number, week: number, date: number = 0): number[] {
 		const doy = (week - 1) * 7 + date + 1 - this.#dayOfWeek(year, 0, 4) + 2;
@@ -612,10 +699,21 @@ export default class SHDate {
 	}
 
 	/**
-	 * Set week of day (wod)
-	 * @param year  - solar year
-	 * @param week - solar week
-	 * @param date - solar date (default: 0)
+	 * Get the date of the week (wod)
+	 * @param year  - solar year (between: 0 - 3,500,000)
+	 * @param week - solar week (between: 1 - 53)
+	 * @param date - solar date (default: 0) (between: 0 - 6)
+	 * @returns {number[]} - [year, month, date]
+	 */
+	weekOfDay(year: number, week: number, date: number = 0): number[] {
+		return this.#weekOfDay(year, week, date);
+	}
+
+	/**
+	 * Set week of day
+	 * @param year  - solar year (between: 0 - 3,500,000)
+	 * @param week - solar week (between: 1 - 53)
+	 * @param date - solar date (default: 0) (between: 0 - 6)
 	 * @returns {number} - week of day
 	 */
 	setWeek(year: number, week: number, date: number = 0): number {
@@ -625,9 +723,9 @@ export default class SHDate {
 
 	/**
 	 * Get date of days of year (dodoy)
-	 * @param year - solar year
-	 * @param doy  - solar day of year (start: 0)
-	 * @returns {array} - days of day
+	 * @param year - solar year (between: 0 - 3,500,000)
+	 * @param doy  - solar day of year (start: 0) (between: +- number)
+	 * @returns {number[]} - days of day - [ year, month, date ]
 	 */
 	#dateOfDayOfYear(year: number, doy: number): number[] {
 		var diy, month, date;
@@ -654,34 +752,43 @@ export default class SHDate {
 		}
 		return [year, month, date];
 	}
+	/**
+	 * Get date of days of year (dodoy)
+	 * @param year - solar year (between: 0 - 3,500,000)
+	 * @param doy  - solar day of year (start: 0) (between: +- number)
+	 * @returns {number[]} - days of day - [ year, month, date ]
+	 */
+	dateOfDayOfYear(year: number, doy: number): number[] {
+		return this.#dateOfDayOfYear(year, doy);
+	}
 
 	/**
-	 * Set date of days of year (dodoy)
-	 * @param year - solar year
-	 * @param doy  - solar day of year (start: 0)
-	 * @returns {array} - days of day
+	 * Set date of days of year
+	 * @param year - solar year (between: 0 - 3,500,000)
+	 * @param doy  - solar day of year (start: 0) (between: +- number)
+	 * @returns {number[]} - days of day - [ year, month, date ]
 	 */
-	setDateOfDayOfYear(year: number, doy: number): number {
+	setDayOfYear(year: number, doy: number): number {
 		const [years, months, days] = this.#dateOfDayOfYear(year, doy);
 		return this.setFullYear(years, months, days);
 	}
 
 	/**
-	 * Set UTC date of days of year (dodoy)
-	 * @param year - solar year
-	 * @param doy  - solar day of year (start: 0)
-	 * @returns {array} - days of day
+	 * Set UTC date of days of year
+	 * @param year - solar year (between: 0 - 3,500,000)
+	 * @param doy  - solar day of year (start: 0) (between: +- number)
+	 * @returns {number[]} - days of day - [ year, month, date ]
 	 */
-	setUTCDateOfDayOfYear(year: number, doy: number): number {
+	setUTCDayOfYear(year: number, doy: number): number {
 		const [years, months, days] = this.#dateOfDayOfYear(year, doy);
 		return this.setUTCFullYear(years, months, days);
 	}
 
 	/**
 	 * Get days in month (dim)
-	 * @param {number} year - solar year
-	 * @param {number} month - solar month
-	 * @returns {number} - days in month
+	 * @param {number} year - solar year (between: 0 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @returns {number} - days in month (between: 29 - 31)
 	 */
 	#daysInMonth(year: number, month: number): number {
 		if (month < 11) return SHDate.DAYS_IN_MONTH[month];
@@ -690,7 +797,17 @@ export default class SHDate {
 
 	/**
 	 * Get days in month (dim)
-	 * @returns {number} - days in month
+	 * @param {number} year - solar year (between: 0 - 3,500,000)
+	 * @param {number} month - solar month (between: 0 - 11)
+	 * @returns {number} - days in month (between: 29 - 31)
+	 */
+	daysInMonth(year: number, month: number): number {
+		return this.#daysInMonth(year, month);
+	}
+
+	/**
+	 * Get days in month (dim)
+	 * @returns {number} - days in month (between: 29 - 31)
 	 */
 	getDaysInMonth(): number {
 		return this.#daysInMonth(this.getFullYear(), this.getMonth());
@@ -698,7 +815,7 @@ export default class SHDate {
 
 	/**
 	 * Get UTC days in month (dim)
-	 * @returns {number} - days in month
+	 * @returns {number} - days in month (between: 29 - 31)
 	 */
 	getUTCDaysInMonth(): number {
 		return this.#daysInMonth(this.getUTCFullYear(), this.getUTCMonth());
@@ -706,8 +823,8 @@ export default class SHDate {
 
 	/**
 	 * Get days in year (diy)
-	 * @param {number} year - solar year
-	 * @returns {number} - days in year
+	 * @param {number} year - solar year (between: 0 - 3,500,000)
+	 * @returns {number} - days in year (between: 365 - 366)
 	 */
 	#daysInYear(year: number): number {
 		return this.#isLeapYear(year) ? 366 : 365; // SHDate.DAYS_IN_YEAR_LEAP : SHDate.DAYS_IN_YEAR;
@@ -715,7 +832,15 @@ export default class SHDate {
 
 	/**
 	 * Get days in year (diy)
-	 * @returns {number} - days in year
+	 * @returns {number} - days in year (between: 365 - 366)
+	 */
+	daysInYear(year: number): number {
+		return this.#daysInYear(year);
+	}
+
+	/**
+	 * Get days in year (diy)
+	 * @returns {number} - days in year (between: 365 - 366)
 	 */
 	getDaysInYear(): number {
 		return this.#daysInYear(this.getFullYear());
@@ -723,7 +848,7 @@ export default class SHDate {
 
 	/**
 	 * Get UTC days in year (diy)
-	 * @returns {number} - days in year
+	 * @returns {number} - days in year (between: 365 - 366)
 	 */
 	getUTCDaysInYear(): number {
 		return this.#daysInYear(this.getUTCFullYear());
@@ -732,18 +857,18 @@ export default class SHDate {
 	/**
 	 * time correction
 	 *
-	 * @param  {number} hours hours in time
-	 * @param  {number} minute minute in time
-	 * @param  {number} second second in time
-	 * @param  {number} millisecond millisecond in time (default: 0)
-	 * @return array
+	 * @param  {number} hours hours in time (start: 0)
+	 * @param  {number} minute minute in time (start: 0)
+	 * @param  {number} second second in time (start: 0)
+	 * @param  {number} millisecond millisecond in time (start: 0) (default: 0)
+	 * @return {number[]} [hours, minute, second, millisecond, doy]
 	 */
 	timeCorrection(
 		hours: number,
 		minute: number,
 		second: number,
 		millisecond: number = 0
-	): Array<number> {
+	): number[] {
 		/**
 		 * 86400000 = 24*60*60*1000 - date to millisecond
 		 * 3600000 = 60*60*1000 - hours to millisecond
@@ -763,16 +888,12 @@ export default class SHDate {
 	/**
 	 * date correction
 	 *
-	 * @param  {number} year Year of the date
-	 * @param  {number} month month of the date (default: 0)
-	 * @param  {number} day day of the date (default: 1)
-	 * @return array
+	 * @param  {number} year Year of the date (start: 1)
+	 * @param  {number} month month of the date (start: 0) (default: 0)
+	 * @param  {number} day day of the date (start: 0) (default: 1)
+	 * @return {number[]} [ year, month, date ]
 	 */
-	dateCorrection(
-		year: number,
-		month: number = 0,
-		day: number = 1
-	): Array<number> {
+	dateCorrection(year: number, month: number = 0, day: number = 1): number[] {
 		month++;
 		if (month < 1)
 			do {
@@ -792,12 +913,12 @@ export default class SHDate {
 	/**
 	 * week correction
 	 *
-	 * @param  {number} year Year of the date
-	 * @param  {number} week Week of the date
-	 * @param  {number} day Day of the date (default: 0)
-	 * @return {array} [isoYear, isoWeek, dayOfWeek]
+	 * @param  {number} year Year of the date (start: 1)
+	 * @param  {number} week Week of the date (start: 0)
+	 * @param  {number} day Day of the date (start: 0) (default: 0)
+	 * @return {number[]} [iso year, iso week, day of week]
 	 */
-	weekCorrection(year: number, week: number, day: number = 0) {
+	weekCorrection(year: number, week: number, day: number = 0): number[] {
 		const [y4, month, date] = this.#weekOfDay(year, week, day);
 		const [iy, iw] = this.#weekOfYear(y4, month, date);
 		const dow = this.#dayOfWeek(y4, month, date);
@@ -980,17 +1101,29 @@ export default class SHDate {
 			timestamp: isUTC ? date.getTime() : date.getUTCTime()
 		};
 	}
-	getDates() {
-		return this.#getDates(this.getTime(), false);
+
+	/**
+	 * Get date/time information
+	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of SHDate.now().
+	 * @return  object  an associative object of information related to the timestamp.
+	 */
+	getDates(time: any = this.getTime()) {
+		return this.#getDates(time, false);
 	}
-	getUTCDates() {
-		return this.#getDates(this.getTime(), true);
+
+	/**
+	 * Get UTC date/time information
+	 * @param   {number}  timestamp  The optional timestamp parameter is an integer Unix timestamp that defaults to the current local time if a timestamp is not given. In other words,it defaults to the value of SHDate.now().
+	 * @return  object  an associative object of information related to the timestamp.
+	 */
+	getUTCDates(time: any = this.getTime()) {
+		return this.#getDates(time, true);
 	}
 
 	/**
 	 * Get private data of solar date
 	 * @param {string} format - format of data
-	 * @returns {array}
+	 * @returns {any[]}
 	 */
 	public format(format: string, isUTC: boolean = false): any[] {
 		const year: number = isUTC ? this.getUTCFullYear() : this.getFullYear(),
@@ -1603,7 +1736,7 @@ export default class SHDate {
 
 	/**
 	 * Gets the day-of-the-week in a Date object, using local time.
-	 * @returns {number} 0 for satarday , 1 for Sunday, and so on.
+	 * @returns {number} 0 for satarday , 1 for Sunday, and so on. (between: 0 - 6)
 	 */
 	public getDay(): number {
 		return this.#dayOfWeek(this.getFullYear(), this.getMonth(), this.getDate());
@@ -1612,7 +1745,7 @@ export default class SHDate {
 
 	/**
 	 * Gets the day-of-the-week in a Date object, using Universal Coordinated Time (UTC).
-	 * @returns {number} 0 for satarday , 1 for Sunday, and so on.
+	 * @returns {number} 0 for satarday , 1 for Sunday, and so on. (between: 0 - 6)
 	 */
 	public getUTCDay(): number {
 		return this.#dayOfWeek(
@@ -1753,7 +1886,7 @@ export default class SHDate {
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
 	 * https://www.w3schools.com/js/js_date_formats.asp
 	 */
-	public static parse(str: string, time: number = Date.now()): number {
+	public static parse(str: string, time: number = SHDate.now()): number {
 		//throw new Error("Not Implemented parse / Invalid Date"); // TODO: implement
 		let date: SHDate = new SHDate(time),
 			defaultDate = date.getDates(),
@@ -1806,7 +1939,7 @@ export default class SHDate {
 					break;
 				case "DAY_OF_YEAR":
 					doy = Math.trunc(value);
-					date.setDateOfDayOfYear(year, doy);
+					date.setDayOfYear(year, doy);
 					year = date.getFullYear();
 					month = date.getMonth();
 					day = date.getDate();
@@ -1935,15 +2068,15 @@ export default class SHDate {
 	}
 
 	/**
-	 * Start first day of the week (1: Saturday, ..., 7: Friday)
-	 * @param FDOW first day of week (default: 1)
+	 * Start first day of the week
+	 * @param FDOW first day of week (default: 1) (between: 1: Sat -  7: Fri)
 	 * @returns void
 	 */
 	setFirstDayOfWeek(FDOW: number = 1): void {
 		if (FDOW >= 1 && FDOW <= 7) this.#config.first_day_of_week = FDOW - 1;
 		else
 			throw new Error(
-				"setFirstDayOfWeek: " + FDOW + " less than 0 or more than 6"
+				"setFirstDayOfWeek: " + FDOW + " less than 1 or more than 7"
 			);
 		return;
 	}
@@ -1964,11 +2097,11 @@ export default class SHDate {
 
 	/**
 	 * resets the time
-	 * @param {number} hours - The hours value (default: 0)
-	 * @param {number} minutes - The minutes value (default: 0)
-	 * @param {number} seconds - The seconds value (default: 0)
-	 * @param {number} milliseconds - The milliseconds value (default: 0)
-	 * @returns {boolean} After setting the time, it returns the input value
+	 * @param {number} hours - The hours value (default: 0) (between: 0 - 23)
+	 * @param {number} minutes - The minutes value (default: 0) (between: 0 - 59)
+	 * @param {number} seconds - The seconds value (default: 0) (between: 0 - 59)
+	 * @param {number} milliseconds - The milliseconds value (default: 0) (between: 0 - 999)
+	 * @returns {number[]} After setting the time, it returns the input value [hours, minutes, seconds, milliseconds]
 	 */
 	#restTime(
 		hours: number = 0,
@@ -2024,6 +2157,13 @@ export default class SHDate {
 	public clone(): SHDate {
 		return new SHDate(this);
 	}
+	/**
+	 * creates a copy of the current date.
+	 * @returns {SHDate} A copy of the current date
+	 */
+	public copy(): SHDate {
+		return this.clone();
+	}
 
 	/**
 	 * an instance of the current date.
@@ -2031,6 +2171,13 @@ export default class SHDate {
 	 */
 	public instance(): SHDate {
 		return this;
+	}
+	/**
+	 * an instance of the current date.
+	 * @returns {SHDate} An instance of the current date
+	 */
+	public this(): SHDate {
+		return this.instance();
 	}
 	/**
 	 * the version of the SHDate class.

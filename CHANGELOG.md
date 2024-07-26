@@ -21,22 +21,38 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
-- ایجاد تابع #nthWeekdayOfMonth
-- ایجاد تابع getNthWeekdayOfMonth
-- ایجاد تابع getFirstWeekdayOfMonth
-- ایجاد تابع getLastWeekdayOfMonth
-- ایجاد تابع #WeekdayInMonth
-- ایجاد تابع getWeekdayInMonth
+- ایجاد متد `#nthWeekdayOfMonth`
+- ایجاد متد `nthWeekdayOfMonth`
+- ایجاد متد `getNthWeekdayOfMonth`
+- ایجاد متد `getFirstWeekdayOfMonth`
+- ایجاد متد `getLastWeekdayOfMonth`
+- ایجاد متد `#WeekdayInMonth`
+- ایجاد متد `getWeekdayInMonth`
+- ایجاد متد `dayOfWeek`
+- ایجاد متد `weekdayInMonth`
+- ایجاد متد `dayOfYear`
+- ایجاد متد `weekOfYear`
+- ایجاد متد `weeksInYear`
+- ایجاد متد `weekOfDay`
+- ایجاد متد `dateOfDayOfYear`
+- ایجاد متد `daysInMonth`
+- ایجاد متد `daysInYear`
+- ایجاد متد `copy`
+- ایجاد متد `this`
 
 ### [تغییر کرد][#]
 
-- تغییر نام GdayOfYear به GDayOfYear
-- تغییر نام GdateOfDayOfYear به GDateOfDayOfYear
-- تغییر نام GdaysInMonths به GDaysInMonths
+- تغییر نام `GdayOfYear` به `GDayOfYear`
+- تغییر نام `GdateOfDayOfYear` به `GDateOfDayOfYear`
+- تغییر نام `GdaysInMonths` به `GDaysInMonths`
+- تغییر نام `setUTCDateOfDayOfYear` به `setUTCDayOfYear`
+- تغییر نام `setDateOfDayOfYear` به `setDayOfYear`
 
 ### [رفع / درست شد][#]
 
--
+- رفع خطای ثبت سال در متد `#setFullYear`
+- رفع خطای ثبت ماه در متد `#setMonth`
+- رفع خطای ثبت روز در متد `#setDate`
 
 </div>
 
@@ -44,22 +60,38 @@ All notable changes to this project will be documented in this file.
 
 ### [Added][#]
 
-- Create function #nthWeekdayOfMonth
-- Create function getNthWeekdayOfMonth
-- Create function getFirstWeekdayOfMonth
-- Create function getLastWeekdayOfMonth
-- Create function #WeekdayInMonth
-- Create function getWeekdayInMonth
+- Create method `#nthWeekdayOfMonth`
+- Create method `nthWeekdayOfMonth`
+- Create method `getNthWeekdayOfMonth`
+- Create method `getFirstWeekdayOfMonth`
+- Create method `getLastWeekdayOfMonth`
+- Create method `#WeekdayInMonth`
+- Create method `weekdayInMonth`
+- Create method `getWeekdayInMonth`
+- Create method `dayOfWeek`
+- Create method `dayOfYear`
+- Create method `weekOfYear`
+- Create method `weeksInYear`
+- Create method `weekOfDay`
+- Create method `dateOfDayOfYear`
+- Create method `daysInMonth`
+- Create method `daysInYear`
+- Create method `copy`
+- Create method `this`
 
 ### [Changed][#]
 
-- Rename function from GdayOfYear to GDayOfYear
-- Rename function from GdateOfDayOfYear to GDateOfDayOfYear
-- Rename function from GdaysInMonths to GDaysInMonths
+- Rename method from `GdayOfYear` to `GDayOfYear`
+- Rename method from `GdateOfDayOfYear` to `GDateOfDayOfYear`
+- Rename method from `GdaysInMonths` to `GDaysInMonths`
+- Rename method from `setUTCDateOfDayOfYear` to `setUTCDayOfYear`
+- Rename method from `setDateOfDayOfYear` to `setDayOfYear`
 
 ### [Fixed][#]
 
--
+- Fixed year registration error in `#setFullYear` method
+- Fixed month registration error in `#setMonth` method
+- Fixed the day registration error in the `#setDate` method
 
 #
 
@@ -114,7 +146,7 @@ All notable changes to this project will be documented in this file.
 
 ### [تغییر کرد][#]
 
-- تغییر نام تابع تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- تغییر نام متد تبدیل عدد از NumbersTo به toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
 - بازنویسی gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
 - بازنویسی دستورات PKGS [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
 
@@ -130,7 +162,7 @@ All notable changes to this project will be documented in this file.
 
 ### [Changed][#]
 
-- Rename conversion function from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
+- Rename conversion method from NumbersTo to toNumber [[a48a6d1](https://github.com/md-akhi/SHDateTime-js/commit/a48a6d1ec26503fe19c33378aa8384e8b76537e8)]
 - Rewrite gulp [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
 - Rewriting PKGS commands [[54bbb56](https://github.com/md-akhi/SHDateTime-js/commit/54bbb56dd3504315d5e0c9f9a6c3a5e39f3c0383)]
 
@@ -154,52 +186,52 @@ All notable changes to this project will be documented in this file.
 - اضافه شدن مستندات به زبان انگلیسی
 - اضافه شدن مستندات به زبان فارسی
 - اضافه شدن بخشی از مستندات
-- اضافه شدن قابلیت کار با رشته توسط تابع `parse`
+- اضافه شدن قابلیت کار با رشته توسط متد `parse`
 - اضافه شدن تست‌های لازم و ضروری
-- پیاده‌سازی تابع `getDayOfYear‍‍‍`
-- پیاده‌سازی تابع `getUTCDayOfYear‍‍`
-- پیاده‌سازی تابع `getWeekOfYear`
-- پیاده‌سازی تابع `getUTCWeekOfYear`
-- پیاده‌سازی تابع `getWeeksInYear`
-- پیاده‌سازی تابع `getUTCWeeksInYear`
-- پیاده‌سازی تابع `setWeek`
-- پیاده‌سازی تابع `setDateOfDayOfYear`
-- پیاده‌سازی تابع `setUTCDateOfDayOfYear`
-- پیاده‌سازی تابع `getDaysInMonth`
-- پیاده‌سازی تابع `getUTCDaysInMonth`
-- پیاده‌سازی تابع `getDaysInYear`
-- پیاده‌سازی تابع `getUTCDaysInYear`
-- پیاده‌سازی تابع `timeCorrection`
-- پیاده‌سازی تابع `dateCorrection`
-- پیاده‌سازی تابع `weekCorrection`
-- پیاده‌سازی تابع `checkDate`
-- پیاده‌سازی تابع `checkTime`
-- پیاده‌سازی تابع `checkTime12`
-- پیاده‌سازی تابع `checkWeek`
-- پیاده‌سازی تابع `getDates`
-- پیاده‌سازی تابع `getUTCTime`
-- پیاده‌سازی تابع `parse`
-- پیاده‌سازی تابع `restTime`
-- پیاده‌سازی تابع `restUTCTime`
-- پیاده‌سازی تابع `getVersion`
-- پیاده‌سازی تابع `clone`
-- پیاده‌سازی تابع `instance`
+- پیاده‌سازی متد `getDayOfYear‍‍‍`
+- پیاده‌سازی متد `getUTCDayOfYear‍‍`
+- پیاده‌سازی متد `getWeekOfYear`
+- پیاده‌سازی متد `getUTCWeekOfYear`
+- پیاده‌سازی متد `getWeeksInYear`
+- پیاده‌سازی متد `getUTCWeeksInYear`
+- پیاده‌سازی متد `setWeek`
+- پیاده‌سازی متد `setDateOfDayOfYear`
+- پیاده‌سازی متد `setUTCDateOfDayOfYear`
+- پیاده‌سازی متد `getDaysInMonth`
+- پیاده‌سازی متد `getUTCDaysInMonth`
+- پیاده‌سازی متد `getDaysInYear`
+- پیاده‌سازی متد `getUTCDaysInYear`
+- پیاده‌سازی متد `timeCorrection`
+- پیاده‌سازی متد `dateCorrection`
+- پیاده‌سازی متد `weekCorrection`
+- پیاده‌سازی متد `checkDate`
+- پیاده‌سازی متد `checkTime`
+- پیاده‌سازی متد `checkTime12`
+- پیاده‌سازی متد `checkWeek`
+- پیاده‌سازی متد `getDates`
+- پیاده‌سازی متد `getUTCTime`
+- پیاده‌سازی متد `parse`
+- پیاده‌سازی متد `restTime`
+- پیاده‌سازی متد `restUTCTime`
+- پیاده‌سازی متد `getVersion`
+- پیاده‌سازی متد `clone`
+- پیاده‌سازی متد `instance`
 
 ### [تغییر کرد][#]
 
 - تغییر نام فایل `index` به `base`
 - انتقال فایل‌های زبان به پوشه `language`
 - فراخوان برنامه از `@md-akhi/shdatetime` به `shdate`
-- تغییر نام تابع `updateDate` به `dateSync`
-- تغییر نام تابع `updateTime` به `timeSync`
-- تغییر پارامتر تابع `isLeapYear` به بدون پارامتر
-- تغییر ارزش بازگشتی تابع `weekOfYear` از [هفته،سال] به [سال،هفته]
-- تغییر نام تابع `dateOfDoy` به `dateOfDayOfYear`
-- تغییر ارزش پیش فرض پارامتر `date` تابع `weekOfDay` از `1` به `0`
+- تغییر نام متد `updateDate` به `dateSync`
+- تغییر نام متد `updateTime` به `timeSync`
+- تغییر پارامتر متد `isLeapYear` به بدون پارامتر
+- تغییر ارزش بازگشتی متد `weekOfYear` از [هفته،سال] به [سال،هفته]
+- تغییر نام متد `dateOfDoy` به `dateOfDayOfYear`
+- تغییر ارزش پیش فرض پارامتر `date` متد `weekOfDay` از `1` به `0`
 
 ### [رفع / درست شد][#]
 
-- اصلاح نمایش دقیقه و ثانیه در تابع `format` ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
+- اصلاح نمایش دقیقه و ثانیه در متد `format` ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
 
 </div>
 
@@ -209,52 +241,52 @@ All notable changes to this project will be documented in this file.
 - Added documentation in `English` language
 - Added documentation in `Farsi` language
 - Adding part of the documentation
-- Added ability to work with strings by the `parse` function
+- Added ability to work with strings by the `parse` method
 - Adding necessary test
-- Implementation of `getDayOfYear` function
-- Implementation of `getUTCDayOfYear` function
-- Implementation of the `getWeekOfYear` function
-- Implementation of `getUTCWeekOfYear` function
-- Implementation of the `getWeeksInYear` function
-- Implementation of `getUTCWeeksInYear` function
-- Implementation of the `setWeek` function
-- Implementation of the `setDateOfDayOfYear` function
-- Implementation of `setUTCDateOfDayOfYear` function
-- Implementation of `getDaysInMonth` function
-- Implementation of `getUTCDaysInMonth` function
-- Implementation of `getDaysInYear` function
-- Implementation of `getUTCDaysInYear` function
-- Implementation of the `timeCorrection` function
-- Implementation of the `dateCorrection` function
-- Implementation of the `weekCorrection` function
-- Implementation of the `checkDate` function
-- Implementation of the `checkTime` function
-- Implementation of `checkTime12` function
-- Implementation of the `checkWeek` function
-- Implementation of `getDates` function
-- Implementation of `getUTCTime` function
-- Implementation of the `parse` function
-- implementation of `RestTime` function
-- Implementation of `restUTCTime` function
-- Implementation of `getVersion` function
-- Implementation of the `clone` function
-- Implementation of the `instance` function
+- Implementation of `getDayOfYear` method
+- Implementation of `getUTCDayOfYear` method
+- Implementation of the `getWeekOfYear` method
+- Implementation of `getUTCWeekOfYear` method
+- Implementation of the `getWeeksInYear` method
+- Implementation of `getUTCWeeksInYear` method
+- Implementation of the `setWeek` method
+- Implementation of the `setDateOfDayOfYear` method
+- Implementation of `setUTCDateOfDayOfYear` method
+- Implementation of `getDaysInMonth` method
+- Implementation of `getUTCDaysInMonth` method
+- Implementation of `getDaysInYear` method
+- Implementation of `getUTCDaysInYear` method
+- Implementation of the `timeCorrection` method
+- Implementation of the `dateCorrection` method
+- Implementation of the `weekCorrection` method
+- Implementation of the `checkDate` method
+- Implementation of the `checkTime` method
+- Implementation of `checkTime12` method
+- Implementation of the `checkWeek` method
+- Implementation of `getDates` method
+- Implementation of `getUTCTime` method
+- Implementation of the `parse` method
+- implementation of `RestTime` method
+- Implementation of `restUTCTime` method
+- Implementation of `getVersion` method
+- Implementation of the `clone` method
+- Implementation of the `instance` method
 
 ### [Changed][#]
 
 - Rename the `index` file to `base`
 - Move the language files to the language folder
 - Changing program call and address from `@md-akhi/shdatetime` to `shdate`
-- Rename function `updateDate` to `dateSync`
-- Rename function `updateTime` to `timeSync`
-- Change the `isLeapYear` function parameter to no parameter
-- Change the return value of the `weekOfYear` function from `[week, year]` to `[year, week]`
-- Rename function `dateOfDoy` to `dateOfDayOfYear`
-- Changing the default value of the date parameter of the `weekOfDay` function from 1 to 0
+- Rename method `updateDate` to `dateSync`
+- Rename method `updateTime` to `timeSync`
+- Change the `isLeapYear` method parameter to no parameter
+- Change the return value of the `weekOfYear` method from `[week, year]` to `[year, week]`
+- Rename method `dateOfDoy` to `dateOfDayOfYear`
+- Changing the default value of the date parameter of the `weekOfDay` method from 1 to 0
 
 ### [Fixed][#]
 
-- Correcting the display of minutes and seconds in the `format` function ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
+- Correcting the display of minutes and seconds in the `format` method ([88811df](https://github.com/md-akhi/SHDateTime-js/commits/88811dfe9596caa596f234f95474b5a716fd350b))
 
 #
 
@@ -288,12 +320,12 @@ All notable changes to this project will be documented in this file.
 
 - اضافه شدن مستندات
 - اضاقه شدن داکرایز
-- ایجاد تابع چک کننده زبان
+- ایجاد متد چک کننده زبان
 
 ### [تغییر کرد][#]
 
-- تغییر نام تابع از setTimeServer به setTimeServerDiff
-- تغییر نام تابع از getTimeServer به getTimeServerDiff
+- تغییر نام متد از setTimeServer به setTimeServerDiff
+- تغییر نام متد از getTimeServer به getTimeServerDiff
 
 </div>
 
@@ -301,12 +333,12 @@ All notable changes to this project will be documented in this file.
 
 - Added documentation
 - Added dockerize
-- added check language function
+- added check language method
 
 ### [Changed][#]
 
-- Change setTimeServer function to setTimeServerDiff
-- Change getTimeServer function to getTimeServerDiff
+- Change setTimeServer method to setTimeServerDiff
+- Change getTimeServer method to getTimeServerDiff
 
 <div style="text-align: center;">
 
