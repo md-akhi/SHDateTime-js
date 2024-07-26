@@ -21,6 +21,40 @@ All notable changes to this project will be documented in this file.
 
 ### [ایجاد / اضافه شد][#]
 
+-
+
+### [تغییر کرد][#]
+
+-
+
+### [رفع / درست شد][#]
+
+-
+
+</div>
+
+## [unreleased][unreleased]
+
+### [Added][#]
+
+-
+
+### [Changed][#]
+
+-
+
+### [Fixed][#]
+
+-
+
+#
+
+<div dir="rtl" style="text-align: center;">
+
+## [2.3.17] - SH 1403-05-05 - G 2024-07-26
+
+### [ایجاد / اضافه شد][#]
+
 - ایجاد متد `#nthWeekdayOfMonth`
 - ایجاد متد `nthWeekdayOfMonth`
 - ایجاد متد `getNthWeekdayOfMonth`
@@ -72,8 +106,6 @@ All notable changes to this project will be documented in this file.
 - رفع خطای ثبت روز در متد `#setDate`
 
 </div>
-
-## [unreleased][unreleased]
 
 ### [Added][#]
 
@@ -410,7 +442,8 @@ All notable changes to this project will be documented in this file.
 
 #
 
-[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...HEAD
+[unreleased]: https://github.com/md-akhi/SHDateTime-js/compare/2.3.17...HEAD
+[2.3.17]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.25...2.3.17
 [2.1.25]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.24...2.1.25
 [2.1.24]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.23...2.1.24
 [2.1.23]: https://github.com/md-akhi/SHDateTime-js/compare/2.1.10...2.1.23
