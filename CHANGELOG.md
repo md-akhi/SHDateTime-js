@@ -39,6 +39,23 @@ All notable changes to this project will be documented in this file.
 - ایجاد متد `daysInYear`
 - ایجاد متد `copy`
 - ایجاد متد `this`
+- اضافه شدن مستندات متد `VERSION`
+- اضافه شدن مستندات متد `DAYS_IN_MONTH`
+- اضافه شدن مستندات متد `DAYS_IN_MONTH_LEAP`
+- اضافه شدن مستندات متد `DAY_OF_YEAR`
+- اضافه شدن مستندات متد `DAYS_IN_YEAR`
+- اضافه شدن مستندات متد `DAYS_IN_YEAR_LEAP`
+- اضافه شدن مستندات متد `WEEKS_IN_YEAR`
+- اضافه شدن مستندات متد `WEEKS_IN_YEAR_LEAP`
+- اضافه شدن مستندات متد `toUTCTimeString()`
+- اضافه شدن مستندات متد `weekCorrection()`
+- اضافه شدن مستندات متد `checkDate()`
+- اضافه شدن مستندات متد `checkWeek()`
+- اضافه شدن مستندات متد `checkTime()`
+- اضافه شدن مستندات متد `checkTime12()`
+- اضافه شدن مستندات متد `clone()`
+- اضافه شدن مستندات متد `dateCorrection()`
+- اضافه شدن مستندات متد `timeCorrection()`
 
 ### [تغییر کرد][#]
 
@@ -78,6 +95,23 @@ All notable changes to this project will be documented in this file.
 - Create method `daysInYear`
 - Create method `copy`
 - Create method `this`
+- Added method documentation `VERSION`
+- Added method documentation `DAYS_IN_MONTH`
+- Added method documentation `DAYS_IN_MONTH_LEAP`
+- Added method documentation `DAY_OF_YEAR`
+- Added method documentation `DAYS_IN_YEAR`
+- Added method documentation `DAYS_IN_YEAR_LEAP`
+- Added method documentation `WEEKS_IN_YEAR`
+- Added method documentation `WEEKS_IN_YEAR_LEAP`
+- Added method documentation `toUTCTimeString()`
+- Added method documentation `weekCorrection()`
+- Added method documentation `checkDate()`
+- Added method documentation `checkWeek()`
+- Added method documentation `checkTime()`
+- Added method documentation `checkTime12()`
+- Added method documentation `clone()`
+- Added method documentation `dateCorrection()`
+- Added method documentation `timeCorrection()`
 
 ### [Changed][#]
 
