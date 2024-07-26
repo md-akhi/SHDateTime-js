@@ -146,7 +146,12 @@ export default class SHDate {
 		}
 		// this.#date = new Date();
 		if (typeof mix == "number")
-			if (mix.toString().length == 4 && (mix >= 1200 || mix < 1700)) {
+			if (
+				(mix as number) >= 1200 &&
+				(mix as number) <= 1700 &&
+				(args[0] as number) >= 0 &&
+				(args[0] as number) <= 11
+			) {
 				const [
 					month = 0,
 					date = 1,
@@ -951,8 +956,7 @@ export default class SHDate {
 	#getDates(timestamp: any = this.getTime(), isUTC: boolean = false) {
 		let date: SHDate;
 		if (typeof timestamp === "undefined") date = new SHDate();
-		else if (timestamp instanceof SHDate)
-			date = timestamp; // Not provided
+		else if (timestamp instanceof SHDate) date = timestamp; // Not provided
 		else date = new SHDate(timestamp);
 		// Javascript Date() // UNIX timestamp (auto-convert to int)
 		return {
@@ -1809,7 +1813,7 @@ export default class SHDate {
 					break;
 				case "WEEK_OF_YEAR":
 					week = Math.trunc(value);
-					dow = dataObj.DAY_OF_WEEK ? Math.trunc(dataObj.DAY_OF_WEEK) : 0;
+					dow = dataObj.DAY_OF_WEEK ? Math.trunc(dataObj.DAY_OF_WEEK) - 1 : 0;
 					date.setWeek(year, week, dow);
 					year = date.getFullYear();
 					month = date.getMonth();
