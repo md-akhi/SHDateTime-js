@@ -18,7 +18,7 @@ describe("Convert Date Gregorian() And Solar()", () => {
 	it("correctly leap & leaps", () => {
 		leapYear.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
-			let date = new SHDate(year, month, day);
+			const date = new SHDate(year, month, day);
 			const [leaps] = date.format("LPS");
 			assert.equal(date.isLeapYear(), sdata.Leap);
 			assert.equal(leaps, sdata.Leaps);
@@ -49,12 +49,13 @@ describe("Convert Date Gregorian() And Solar()", () => {
 		});
 	});
 
-	it("correctly solar and gregorian for date", () => {
-		solarDates.forEach(({ sdata, gdata }) => {
-			const [year, month, day] = sdata.solar;
+	it("correctly solar and gregorian for dates", () => {
+		solarDates.forEach(({ idata, sdata, gdata }) => {
+			const [iyear, imonth, iday] = idata.solar;
+			// const [syear, smonth, sday] = sdata.solar;
 			const [gyear, gmonth, gday] = gdata.gregorian;
+			let sdate = new SHDate(iyear, imonth, iday);
 			let gdate = new Date(gyear, gmonth, gday);
-			let sdate = new SHDate(year, month, day);
 			assert.deepEqual(
 				[gdate.getFullYear(), gdate.getMonth(), gdate.getDate()],
 				gdata.gregorian
@@ -72,7 +73,7 @@ describe("get in/of date", () => {
 		it("correctly day of week (dow)", () => {
 			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
+				const date = new SHDate(year, month, day);
 				assert.equal(date.getDay(), sdata.Dow);
 			});
 		});
@@ -80,7 +81,7 @@ describe("get in/of date", () => {
 		it("correctly week of year (woy)", () => {
 			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
+				const date = new SHDate(year, month, day);
 				const [woy] = date.format("woy");
 				assert.deepEqual(woy, sdata.Woy);
 			});
@@ -89,9 +90,27 @@ describe("get in/of date", () => {
 		it("correctly weeks in year (wiy)", () => {
 			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
-				let date = new SHDate(year, month, day);
+				const date = new SHDate(year, month, day);
 				const [Wiys] = date.format("wiy");
 				assert.equal(Wiys, sdata.Wiy);
+			});
+		});
+
+		it("correctly nth weekday of month (wom)", () => {
+			solarDate.forEach(({ sdata }) => {
+				const [year, month, day] = sdata.solar;
+				const date = new SHDate(year, month, day);
+				const Wim_date = date.getNthWeekdayOfMonth(sdata.Dow, sdata.Wim);
+				assert.equal(Wim_date, day);
+			});
+		});
+
+		it("correctly nth weekday in month (wim)", () => {
+			solarDate.forEach(({ sdata }) => {
+				const [year, month, day] = sdata.solar;
+				const date = new SHDate(year, month, day);
+				const nth = date.weekdayInMonth(year, month, day);
+				assert.equal(nth, sdata.Wim);
 			});
 		});
 	});
@@ -101,7 +120,7 @@ describe("year", () => {
 	it("correctly days in year (diy)", () => {
 		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
-			let date = new SHDate(year, month, day);
+			const date = new SHDate(year, month, day);
 			const [Diy] = date.format("diy");
 			assert.equal(Diy, sdata.Diy);
 		});
@@ -110,7 +129,7 @@ describe("year", () => {
 	it("correctly day of year (doy)", () => {
 		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
-			let date = new SHDate(year, month, day);
+			const date = new SHDate(year, month, day);
 			const [Doy] = date.format("doy");
 			assert.equal(Doy, sdata.Doy);
 		});
@@ -121,7 +140,7 @@ describe("month", () => {
 	it("correctly days in month (dim)", () => {
 		solarDate.forEach(({ sdata }) => {
 			const [year, month, day] = sdata.solar;
-			let date = new SHDate(year, month, day);
+			const date = new SHDate(year, month, day);
 			const [Dim] = date.format("dim");
 			assert.equal(Dim, sdata.Dim);
 		});
@@ -129,7 +148,7 @@ describe("month", () => {
 });
 
 describe("set function", () => {
-	let date = new SHDate();
+	const date = new SHDate();
 	it("correctly setWeek", () => {
 		solarDate.forEach(({ sdata }) => {
 			// [iy,iw ] = sdata.Woy;
@@ -143,7 +162,7 @@ describe("set function", () => {
 		solarDate.forEach(({ sdata, stime, gtime }) => {
 			// [year, month, day] = sdata.solar;
 			date.setHours(0, 0, 0, 0);
-			date.setDateOfDayOfYear(sdata.solar[0], sdata.Doy);
+			date.setDayOfYear(sdata.solar[0], sdata.Doy);
 			assert.equal(date.getDayOfYear(), sdata.Doy);
 		});
 	});

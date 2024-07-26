@@ -8,6 +8,7 @@ import fa_IR from "../src/languages/i18n/fa_IR.js";
 import ckb_IR from "../src/languages/l10n/ckb_IR.js";
 import * as fs from "node:fs";
 const dataYear = 1402;
+const dataMonth = 1;
 
 // cjs
 const wordFileCJS = fs.readFileSync("./dist/test/cjs/test.log", "utf-8").trim();
@@ -22,10 +23,16 @@ const wordFilePKGS = fs
 
 describe("test CommonJS (CJS) && ES Modules (ESM) && exports pkgs", () => {
 	it("run CJS", () => {
-		assert.equal(wordFileCJS, new SHDate(dataYear).toDateString());
+		assert.equal(
+			wordFileCJS,
+			new SHDate(dataYear, dataMonth - 1).toDateString()
+		);
 	});
 	it("run ES Modules (ESM)", () => {
-		assert.equal(wordFileMJS, new SHDate(dataYear).toDateString());
+		assert.equal(
+			wordFileMJS,
+			new SHDate(dataYear, dataMonth - 1).toDateString()
+		);
 	});
 	it("run exports pkgs", () => {
 		assert.equal(

@@ -1,11 +1,7 @@
-name: Publish Packages to GitHub Packages And NPMJS
+name: Publish Packages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
-  release:
-    types: [published]
 # env:
 #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 #   NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

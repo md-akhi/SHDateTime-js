@@ -7,6 +7,30 @@
       url: now
     - title: parse
       url: parse
+    - title: VERSION
+      url: VERSION
+    - title: DAYS_IN_MONTH
+      url: DAYS_IN_MONTH
+    - title: DAYS_IN_MONTH_LEAP
+      url: DAYS_IN_MONTH_LEAP
+    - title: DAY_OF_YEAR
+      url: DAY_OF_YEAR
+    - title: DAYS_IN_YEAR
+      url: DAYS_IN_YEAR
+    - title: DAYS_IN_YEAR_LEAP
+      url: DAYS_IN_YEAR_LEAP
+    - title: WEEKS_IN_YEAR
+      url: WEEKS_IN_YEAR
+    - title: WEEKS_IN_YEAR_LEAP
+      url: WEEKS_IN_YEAR_LEAP
+    - title: checkDate
+      url: checkDate
+    - title: checkWeek
+      url: checkWeek
+    - title: checkTime
+      url: checkTime
+    - title: checkTime12
+      url: checkTime12
 - title: "Instance Methods"
   url: "#Instance-Methods"
   children:
@@ -14,6 +38,18 @@
       url: "@@toPrimitive"
     - title: constructor
       url: constructor
+    - title: checkDate
+      url: checkDate
+    - title: checkWeek
+      url: checkWeek
+    - title: checkTime
+      url: checkTime
+    - title: checkTime12
+      url: checkTime12
+    - title: clone
+      url: clone
+    - title: dateCorrection
+      url: dateCorrection
     - title: getDate
       url: getDate
     - title: getDay
@@ -82,6 +118,8 @@
       url: setUTCMonth
     - title: setUTCSeconds
       url: setUTCSeconds
+    - title: timeCorrection
+      url: timeCorrection
     - title: toDateString
       url: toDateString
     - title: toIsoString
@@ -98,9 +136,13 @@
       url: toString
     - title: toTimeString
       url: toTimeString
+    - title: toUTCTimeString
+      url: toUTCTimeString
     - title: toUTCString
       url: toUTCString
     - title: utc
       url: utc
     - title: valueOf
       url: valueOf
+    - title: weekCorrection
+      url: weekCorrection

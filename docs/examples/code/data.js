@@ -12,14 +12,85 @@ const exData = function (ex) {
 			// Expected output: 743730600000
 			`;
 
+		case "checkDate":
+			return `let check = new SHDate();
+			let isTrue = check.checkDate(1390, 10, 25);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkDate(1390, 10, 25);
+
+			console.log(isTrue); // true
+			`;
+
+		case "checkTime":
+			return `let check = new SHDate();
+			let isTrue = check.checkTime(14, 50, 20);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkTime(14, 50, 20, 900);
+
+			console.log(isTrue); // true
+			`;
+
+		case "checkTime12":
+			return `let check = new SHDate();
+			let isTrue = check.checkTime12(true, 14, 50, 20);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkTime12(false, 14, 50, 20, 900);
+
+			console.log(isTrue); // false
+			`;
+
+		case "checkWeek":
+			return `let check = new SHDate();
+			let isTrue = check.checkWeek(1390, 11, 5);
+
+			console.log(isTrue); // true
+
+			// Static
+			isTrue = SHDate.checkWeek(1390, 53, 5);
+
+			console.log(isTrue); // false
+			`;
+
+		case "clone":
+			return `var shdate = new SHDate("Dey 25, 1390 23:15:30");
+			var clone = shdate.clone();
+				
+			console.log(shdate.toString()); // "Sun 25 Dey 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+			shdate.setMonth(11);
+			console.log(shdate.toString()); // "Thu 25 Esf 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+				
+			console.log(clone.toString()); // "Sun 25 Dey 1390 23:15:30 GMT+0330 (Iran Standard Time)"
+			`;
+
+		case "dateCorrection":
+			return `var shdate = new SHDate();
+			var date = shdate.dateCorrection(1372, 14, 100);
+
+			console.log(date); // Array [1373, 5, 7]
+
+			// Static
+			var date = SHDate.dateCorrection(1372, 15, 100);
+
+			console.log(date); // Array [1373, 6, 7]
+			`;
+
 		case "getDate":
 			return `
-				const birthday = new SHDate('1372-Mor-05');
-				const date = birthday.getDate();
+			const birthday = new SHDate('1372-Mor-05');
+			const date = birthday.getDate();
 
-				console.log(date);
-				// Expected output: 5
-				`;
+			console.log(date);
+			// Expected output: 5
+			`;
 
 		case "getDay":
 			return `
@@ -165,15 +236,27 @@ const exData = function (ex) {
 
 		case "getUTCSeconds":
 			return `const date1 = new SHDate('1372-Mordad-05 04:20:30 GMT+11:00');
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 30
+	
+				date1.setUTCSeconds(39);
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 39
+				`;
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 30
-
-			date1.setUTCSeconds(39);
-
-			console.log(date1.getUTCSeconds());
-			// Expected output: 39
-			`;
+		case "isLeapYear":
+			return `const date1 = new SHDate('1372');
+		
+					console.log(date1.isLeapYear());
+					// Expected output: false
+		
+					date1.setFullYear(1403);
+		
+					console.log(date1.isLeapYear());
+					// Expected output: true
+					`;
 
 		case "now":
 			return `
@@ -389,15 +472,52 @@ const exData = function (ex) {
 
 		case "setUTCSeconds":
 			return `const date1 = new SHDate('1372-Mordad-05 04:20:30 GMT');
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 30
+	
+				date1.setUTCSeconds(40);
+	
+				console.log(date1.getUTCSeconds());
+				// Expected output: 40
+				`;
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 30
+		case "static":
+			return `console.log(SHDate.VERSION);
+				// Expected output: "2.2.5"
 
-			date1.setUTCSeconds(40);
+				console.log(SHDate.DAYS_IN_MONTH);
+				// Expected output: "[31,31,31,31,31,31,30,30,30,30,30,29]"
 
-			console.log(date1.getUTCSeconds());
-			// Expected output: 40
+				console.log(SHDate.DAYS_IN_MONTH_LEAP);
+				// Expected output: "[31,31,31,31,31,31,30,30,30,30,30,30]"
+
+				console.log(SHDate.DAY_OF_YEAR);
+				// Expected output: "[0,31,62,93,124,155,186,216,246,276,306,336]"
+
+				console.log(SHDate.DAYS_IN_YEAR);
+				// Expected output: "365"
+
+				console.log(SHDate.DAYS_IN_YEAR_LEAP);
+				// Expected output: "366"
+
+				console.log(SHDate.WEEKS_IN_YEAR);
+				// Expected output: "52"
+
+				console.log(SHDate.WEEKS_IN_YEAR_LEAP);
+				// Expected output: "53"
 			`;
+
+		case "timeCorrection":
+			return `var shdate = new SHDate();
+			var date = shdate.timeCorrection(30, 150, 120, 1200);
+
+			console.log(date); // Array [8, 32, 1, 200, 1]
+
+			// Static
+			var date = SHDate.timeCorrection(1372, 15, 100);
+
+			console.log(date); // Array [8, 32, 1, 200, 1]`;
 
 		case "toDateString":
 			return `const event = new SHDate(1372, 4, 5, 4, 20, 30);
@@ -496,9 +616,15 @@ const exData = function (ex) {
 
 		case "toUTCString":
 			return `const event = new SHDate('1372-Mordad-05 00:00:00 PDT');
-
+	
 			console.log(event.toUTCString());
 			// Expected output: "Mon, 04 Amo 1372 16:00:00 GMT"
+			`;
+
+		case "toUTCTimeString":
+			return `var shdate = new SHDate();
+			console.log(shdate.toUTCString()); // "Fri, 29 Tir 1403 13:26:09 GMT"
+			console.log(shdate.toUTCTimeString()); // 19:45:30 GMT
 			`;
 
 		case "UTC":
@@ -524,8 +650,11 @@ const exData = function (ex) {
 			// Expected output: 20424193445000
 			`;
 
-		case "":
-			return ``;
+		case "weekCorrection":
+			return `var shdate = new SHDate();
+			var week = shdate.weekCorrection(1372, 53, 7);
+			console.log(shdate.toString());
+			console.log(week); // Array [1373, 2, 0]`;
 		case "":
 			return ``;
 		case "":

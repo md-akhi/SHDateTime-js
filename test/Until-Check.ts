@@ -17,7 +17,7 @@ function strtoint(str: string | number) {
 						time:[${H24},${min},${sec},${ms}],
 						correction:[${shdate.timeCorrection(H24, min, sec, ms)}],
 						check24:${SHDate.checkTime(H24, min, sec, ms)},
-						check12:${SHDate.checkTime(H24, min, sec, ms, true)}
+						check12:${SHDate.checkTime12(H24, min, sec, ms)}
 				},`
 				);
 			});
@@ -64,43 +64,43 @@ export const checkTime = [
 		time: [0, 0, 0, 0],
 		correction: [0, 0, 0, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 1],
 		correction: [0, 0, 0, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 2],
 		correction: [0, 0, 0, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 300],
 		correction: [0, 0, 0, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 500],
 		correction: [0, 0, 0, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 998],
 		correction: [0, 0, 0, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 999],
 		correction: [0, 0, 0, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 0, 1000],
@@ -118,43 +118,43 @@ export const checkTime = [
 		time: [0, 0, 1, 0],
 		correction: [0, 0, 1, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 1],
 		correction: [0, 0, 1, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 2],
 		correction: [0, 0, 1, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 300],
 		correction: [0, 0, 1, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 500],
 		correction: [0, 0, 1, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 998],
 		correction: [0, 0, 1, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 999],
 		correction: [0, 0, 1, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 1, 1000],
@@ -172,43 +172,43 @@ export const checkTime = [
 		time: [0, 0, 2, 0],
 		correction: [0, 0, 2, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 1],
 		correction: [0, 0, 2, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 2],
 		correction: [0, 0, 2, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 300],
 		correction: [0, 0, 2, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 500],
 		correction: [0, 0, 2, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 998],
 		correction: [0, 0, 2, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 999],
 		correction: [0, 0, 2, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 2, 1000],
@@ -226,43 +226,43 @@ export const checkTime = [
 		time: [0, 0, 20, 0],
 		correction: [0, 0, 20, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 1],
 		correction: [0, 0, 20, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 2],
 		correction: [0, 0, 20, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 300],
 		correction: [0, 0, 20, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 500],
 		correction: [0, 0, 20, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 998],
 		correction: [0, 0, 20, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 999],
 		correction: [0, 0, 20, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 20, 1000],
@@ -280,43 +280,43 @@ export const checkTime = [
 		time: [0, 0, 59, 0],
 		correction: [0, 0, 59, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 1],
 		correction: [0, 0, 59, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 2],
 		correction: [0, 0, 59, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 300],
 		correction: [0, 0, 59, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 500],
 		correction: [0, 0, 59, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 998],
 		correction: [0, 0, 59, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 999],
 		correction: [0, 0, 59, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 0, 59, 1000],
@@ -442,43 +442,43 @@ export const checkTime = [
 		time: [0, 1, 0, 0],
 		correction: [0, 1, 0, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 1],
 		correction: [0, 1, 0, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 2],
 		correction: [0, 1, 0, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 300],
 		correction: [0, 1, 0, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 500],
 		correction: [0, 1, 0, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 998],
 		correction: [0, 1, 0, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 999],
 		correction: [0, 1, 0, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 0, 1000],
@@ -496,43 +496,43 @@ export const checkTime = [
 		time: [0, 1, 1, 0],
 		correction: [0, 1, 1, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 1],
 		correction: [0, 1, 1, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 2],
 		correction: [0, 1, 1, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 300],
 		correction: [0, 1, 1, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 500],
 		correction: [0, 1, 1, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 998],
 		correction: [0, 1, 1, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 999],
 		correction: [0, 1, 1, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 1, 1000],
@@ -550,43 +550,43 @@ export const checkTime = [
 		time: [0, 1, 2, 0],
 		correction: [0, 1, 2, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 1],
 		correction: [0, 1, 2, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 2],
 		correction: [0, 1, 2, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 300],
 		correction: [0, 1, 2, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 500],
 		correction: [0, 1, 2, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 998],
 		correction: [0, 1, 2, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 999],
 		correction: [0, 1, 2, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 2, 1000],
@@ -604,43 +604,43 @@ export const checkTime = [
 		time: [0, 1, 20, 0],
 		correction: [0, 1, 20, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 1],
 		correction: [0, 1, 20, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 2],
 		correction: [0, 1, 20, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 300],
 		correction: [0, 1, 20, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 500],
 		correction: [0, 1, 20, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 998],
 		correction: [0, 1, 20, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 999],
 		correction: [0, 1, 20, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 20, 1000],
@@ -658,43 +658,43 @@ export const checkTime = [
 		time: [0, 1, 59, 0],
 		correction: [0, 1, 59, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 1],
 		correction: [0, 1, 59, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 2],
 		correction: [0, 1, 59, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 300],
 		correction: [0, 1, 59, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 500],
 		correction: [0, 1, 59, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 998],
 		correction: [0, 1, 59, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 999],
 		correction: [0, 1, 59, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 1, 59, 1000],
@@ -820,43 +820,43 @@ export const checkTime = [
 		time: [0, 2, 0, 0],
 		correction: [0, 2, 0, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 1],
 		correction: [0, 2, 0, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 2],
 		correction: [0, 2, 0, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 300],
 		correction: [0, 2, 0, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 500],
 		correction: [0, 2, 0, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 998],
 		correction: [0, 2, 0, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 999],
 		correction: [0, 2, 0, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 0, 1000],
@@ -874,43 +874,43 @@ export const checkTime = [
 		time: [0, 2, 1, 0],
 		correction: [0, 2, 1, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 1],
 		correction: [0, 2, 1, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 2],
 		correction: [0, 2, 1, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 300],
 		correction: [0, 2, 1, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 500],
 		correction: [0, 2, 1, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 998],
 		correction: [0, 2, 1, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 999],
 		correction: [0, 2, 1, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 1, 1000],
@@ -928,43 +928,43 @@ export const checkTime = [
 		time: [0, 2, 2, 0],
 		correction: [0, 2, 2, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 1],
 		correction: [0, 2, 2, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 2],
 		correction: [0, 2, 2, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 300],
 		correction: [0, 2, 2, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 500],
 		correction: [0, 2, 2, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 998],
 		correction: [0, 2, 2, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 999],
 		correction: [0, 2, 2, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 2, 1000],
@@ -982,43 +982,43 @@ export const checkTime = [
 		time: [0, 2, 20, 0],
 		correction: [0, 2, 20, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 1],
 		correction: [0, 2, 20, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 2],
 		correction: [0, 2, 20, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 300],
 		correction: [0, 2, 20, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 500],
 		correction: [0, 2, 20, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 998],
 		correction: [0, 2, 20, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 999],
 		correction: [0, 2, 20, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 20, 1000],
@@ -1036,43 +1036,43 @@ export const checkTime = [
 		time: [0, 2, 59, 0],
 		correction: [0, 2, 59, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 1],
 		correction: [0, 2, 59, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 2],
 		correction: [0, 2, 59, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 300],
 		correction: [0, 2, 59, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 500],
 		correction: [0, 2, 59, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 998],
 		correction: [0, 2, 59, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 999],
 		correction: [0, 2, 59, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 2, 59, 1000],
@@ -1198,43 +1198,43 @@ export const checkTime = [
 		time: [0, 20, 0, 0],
 		correction: [0, 20, 0, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 1],
 		correction: [0, 20, 0, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 2],
 		correction: [0, 20, 0, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 300],
 		correction: [0, 20, 0, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 500],
 		correction: [0, 20, 0, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 998],
 		correction: [0, 20, 0, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 999],
 		correction: [0, 20, 0, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 0, 1000],
@@ -1252,43 +1252,43 @@ export const checkTime = [
 		time: [0, 20, 1, 0],
 		correction: [0, 20, 1, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 1],
 		correction: [0, 20, 1, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 2],
 		correction: [0, 20, 1, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 300],
 		correction: [0, 20, 1, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 500],
 		correction: [0, 20, 1, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 998],
 		correction: [0, 20, 1, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 999],
 		correction: [0, 20, 1, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 1, 1000],
@@ -1306,43 +1306,43 @@ export const checkTime = [
 		time: [0, 20, 2, 0],
 		correction: [0, 20, 2, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 1],
 		correction: [0, 20, 2, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 2],
 		correction: [0, 20, 2, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 300],
 		correction: [0, 20, 2, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 500],
 		correction: [0, 20, 2, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 998],
 		correction: [0, 20, 2, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 999],
 		correction: [0, 20, 2, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 2, 1000],
@@ -1360,43 +1360,43 @@ export const checkTime = [
 		time: [0, 20, 20, 0],
 		correction: [0, 20, 20, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 1],
 		correction: [0, 20, 20, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 2],
 		correction: [0, 20, 20, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 300],
 		correction: [0, 20, 20, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 500],
 		correction: [0, 20, 20, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 998],
 		correction: [0, 20, 20, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 999],
 		correction: [0, 20, 20, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 20, 1000],
@@ -1414,43 +1414,43 @@ export const checkTime = [
 		time: [0, 20, 59, 0],
 		correction: [0, 20, 59, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 1],
 		correction: [0, 20, 59, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 2],
 		correction: [0, 20, 59, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 300],
 		correction: [0, 20, 59, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 500],
 		correction: [0, 20, 59, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 998],
 		correction: [0, 20, 59, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 999],
 		correction: [0, 20, 59, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 20, 59, 1000],
@@ -1576,43 +1576,43 @@ export const checkTime = [
 		time: [0, 59, 0, 0],
 		correction: [0, 59, 0, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 1],
 		correction: [0, 59, 0, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 2],
 		correction: [0, 59, 0, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 300],
 		correction: [0, 59, 0, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 500],
 		correction: [0, 59, 0, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 998],
 		correction: [0, 59, 0, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 999],
 		correction: [0, 59, 0, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 0, 1000],
@@ -1630,43 +1630,43 @@ export const checkTime = [
 		time: [0, 59, 1, 0],
 		correction: [0, 59, 1, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 1],
 		correction: [0, 59, 1, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 2],
 		correction: [0, 59, 1, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 300],
 		correction: [0, 59, 1, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 500],
 		correction: [0, 59, 1, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 998],
 		correction: [0, 59, 1, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 999],
 		correction: [0, 59, 1, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 1, 1000],
@@ -1684,43 +1684,43 @@ export const checkTime = [
 		time: [0, 59, 2, 0],
 		correction: [0, 59, 2, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 1],
 		correction: [0, 59, 2, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 2],
 		correction: [0, 59, 2, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 300],
 		correction: [0, 59, 2, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 500],
 		correction: [0, 59, 2, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 998],
 		correction: [0, 59, 2, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 999],
 		correction: [0, 59, 2, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 2, 1000],
@@ -1738,43 +1738,43 @@ export const checkTime = [
 		time: [0, 59, 20, 0],
 		correction: [0, 59, 20, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 1],
 		correction: [0, 59, 20, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 2],
 		correction: [0, 59, 20, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 300],
 		correction: [0, 59, 20, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 500],
 		correction: [0, 59, 20, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 998],
 		correction: [0, 59, 20, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 999],
 		correction: [0, 59, 20, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 20, 1000],
@@ -1792,43 +1792,43 @@ export const checkTime = [
 		time: [0, 59, 59, 0],
 		correction: [0, 59, 59, 0, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 1],
 		correction: [0, 59, 59, 1, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 2],
 		correction: [0, 59, 59, 2, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 300],
 		correction: [0, 59, 59, 300, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 500],
 		correction: [0, 59, 59, 500, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 998],
 		correction: [0, 59, 59, 998, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 999],
 		correction: [0, 59, 59, 999, 0],
 		check24: true,
-		check12: true
+		check12: false
 	},
 	{
 		time: [0, 59, 59, 1000],
@@ -10648,43 +10648,43 @@ export const checkTime = [
 		time: [12, 0, 0, 0],
 		correction: [12, 0, 0, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 1],
 		correction: [12, 0, 0, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 2],
 		correction: [12, 0, 0, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 300],
 		correction: [12, 0, 0, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 500],
 		correction: [12, 0, 0, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 998],
 		correction: [12, 0, 0, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 999],
 		correction: [12, 0, 0, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 0, 1000],
@@ -10702,43 +10702,43 @@ export const checkTime = [
 		time: [12, 0, 1, 0],
 		correction: [12, 0, 1, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 1],
 		correction: [12, 0, 1, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 2],
 		correction: [12, 0, 1, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 300],
 		correction: [12, 0, 1, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 500],
 		correction: [12, 0, 1, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 998],
 		correction: [12, 0, 1, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 999],
 		correction: [12, 0, 1, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 1, 1000],
@@ -10756,43 +10756,43 @@ export const checkTime = [
 		time: [12, 0, 2, 0],
 		correction: [12, 0, 2, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 1],
 		correction: [12, 0, 2, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 2],
 		correction: [12, 0, 2, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 300],
 		correction: [12, 0, 2, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 500],
 		correction: [12, 0, 2, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 998],
 		correction: [12, 0, 2, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 999],
 		correction: [12, 0, 2, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 2, 1000],
@@ -10810,43 +10810,43 @@ export const checkTime = [
 		time: [12, 0, 20, 0],
 		correction: [12, 0, 20, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 1],
 		correction: [12, 0, 20, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 2],
 		correction: [12, 0, 20, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 300],
 		correction: [12, 0, 20, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 500],
 		correction: [12, 0, 20, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 998],
 		correction: [12, 0, 20, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 999],
 		correction: [12, 0, 20, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 20, 1000],
@@ -10864,43 +10864,43 @@ export const checkTime = [
 		time: [12, 0, 59, 0],
 		correction: [12, 0, 59, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 1],
 		correction: [12, 0, 59, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 2],
 		correction: [12, 0, 59, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 300],
 		correction: [12, 0, 59, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 500],
 		correction: [12, 0, 59, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 998],
 		correction: [12, 0, 59, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 999],
 		correction: [12, 0, 59, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 0, 59, 1000],
@@ -11026,43 +11026,43 @@ export const checkTime = [
 		time: [12, 1, 0, 0],
 		correction: [12, 1, 0, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 1],
 		correction: [12, 1, 0, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 2],
 		correction: [12, 1, 0, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 300],
 		correction: [12, 1, 0, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 500],
 		correction: [12, 1, 0, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 998],
 		correction: [12, 1, 0, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 999],
 		correction: [12, 1, 0, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 0, 1000],
@@ -11080,43 +11080,43 @@ export const checkTime = [
 		time: [12, 1, 1, 0],
 		correction: [12, 1, 1, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 1],
 		correction: [12, 1, 1, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 2],
 		correction: [12, 1, 1, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 300],
 		correction: [12, 1, 1, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 500],
 		correction: [12, 1, 1, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 998],
 		correction: [12, 1, 1, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 999],
 		correction: [12, 1, 1, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 1, 1000],
@@ -11134,43 +11134,43 @@ export const checkTime = [
 		time: [12, 1, 2, 0],
 		correction: [12, 1, 2, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 1],
 		correction: [12, 1, 2, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 2],
 		correction: [12, 1, 2, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 300],
 		correction: [12, 1, 2, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 500],
 		correction: [12, 1, 2, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 998],
 		correction: [12, 1, 2, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 999],
 		correction: [12, 1, 2, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 2, 1000],
@@ -11188,43 +11188,43 @@ export const checkTime = [
 		time: [12, 1, 20, 0],
 		correction: [12, 1, 20, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 1],
 		correction: [12, 1, 20, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 2],
 		correction: [12, 1, 20, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 300],
 		correction: [12, 1, 20, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 500],
 		correction: [12, 1, 20, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 998],
 		correction: [12, 1, 20, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 999],
 		correction: [12, 1, 20, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 20, 1000],
@@ -11242,43 +11242,43 @@ export const checkTime = [
 		time: [12, 1, 59, 0],
 		correction: [12, 1, 59, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 1],
 		correction: [12, 1, 59, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 2],
 		correction: [12, 1, 59, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 300],
 		correction: [12, 1, 59, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 500],
 		correction: [12, 1, 59, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 998],
 		correction: [12, 1, 59, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 999],
 		correction: [12, 1, 59, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 1, 59, 1000],
@@ -11404,43 +11404,43 @@ export const checkTime = [
 		time: [12, 2, 0, 0],
 		correction: [12, 2, 0, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 1],
 		correction: [12, 2, 0, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 2],
 		correction: [12, 2, 0, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 300],
 		correction: [12, 2, 0, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 500],
 		correction: [12, 2, 0, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 998],
 		correction: [12, 2, 0, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 999],
 		correction: [12, 2, 0, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 0, 1000],
@@ -11458,43 +11458,43 @@ export const checkTime = [
 		time: [12, 2, 1, 0],
 		correction: [12, 2, 1, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 1],
 		correction: [12, 2, 1, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 2],
 		correction: [12, 2, 1, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 300],
 		correction: [12, 2, 1, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 500],
 		correction: [12, 2, 1, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 998],
 		correction: [12, 2, 1, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 999],
 		correction: [12, 2, 1, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 1, 1000],
@@ -11512,43 +11512,43 @@ export const checkTime = [
 		time: [12, 2, 2, 0],
 		correction: [12, 2, 2, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 1],
 		correction: [12, 2, 2, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 2],
 		correction: [12, 2, 2, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 300],
 		correction: [12, 2, 2, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 500],
 		correction: [12, 2, 2, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 998],
 		correction: [12, 2, 2, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 999],
 		correction: [12, 2, 2, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 2, 1000],
@@ -11566,43 +11566,43 @@ export const checkTime = [
 		time: [12, 2, 20, 0],
 		correction: [12, 2, 20, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 1],
 		correction: [12, 2, 20, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 2],
 		correction: [12, 2, 20, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 300],
 		correction: [12, 2, 20, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 500],
 		correction: [12, 2, 20, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 998],
 		correction: [12, 2, 20, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 999],
 		correction: [12, 2, 20, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 20, 1000],
@@ -11620,43 +11620,43 @@ export const checkTime = [
 		time: [12, 2, 59, 0],
 		correction: [12, 2, 59, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 1],
 		correction: [12, 2, 59, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 2],
 		correction: [12, 2, 59, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 300],
 		correction: [12, 2, 59, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 500],
 		correction: [12, 2, 59, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 998],
 		correction: [12, 2, 59, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 999],
 		correction: [12, 2, 59, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 2, 59, 1000],
@@ -11782,43 +11782,43 @@ export const checkTime = [
 		time: [12, 20, 0, 0],
 		correction: [12, 20, 0, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 1],
 		correction: [12, 20, 0, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 2],
 		correction: [12, 20, 0, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 300],
 		correction: [12, 20, 0, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 500],
 		correction: [12, 20, 0, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 998],
 		correction: [12, 20, 0, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 999],
 		correction: [12, 20, 0, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 0, 1000],
@@ -11836,43 +11836,43 @@ export const checkTime = [
 		time: [12, 20, 1, 0],
 		correction: [12, 20, 1, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 1],
 		correction: [12, 20, 1, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 2],
 		correction: [12, 20, 1, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 300],
 		correction: [12, 20, 1, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 500],
 		correction: [12, 20, 1, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 998],
 		correction: [12, 20, 1, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 999],
 		correction: [12, 20, 1, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 1, 1000],
@@ -11890,43 +11890,43 @@ export const checkTime = [
 		time: [12, 20, 2, 0],
 		correction: [12, 20, 2, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 1],
 		correction: [12, 20, 2, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 2],
 		correction: [12, 20, 2, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 300],
 		correction: [12, 20, 2, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 500],
 		correction: [12, 20, 2, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 998],
 		correction: [12, 20, 2, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 999],
 		correction: [12, 20, 2, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 2, 1000],
@@ -11944,43 +11944,43 @@ export const checkTime = [
 		time: [12, 20, 20, 0],
 		correction: [12, 20, 20, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 1],
 		correction: [12, 20, 20, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 2],
 		correction: [12, 20, 20, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 300],
 		correction: [12, 20, 20, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 500],
 		correction: [12, 20, 20, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 998],
 		correction: [12, 20, 20, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 999],
 		correction: [12, 20, 20, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 20, 1000],
@@ -11998,43 +11998,43 @@ export const checkTime = [
 		time: [12, 20, 59, 0],
 		correction: [12, 20, 59, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 1],
 		correction: [12, 20, 59, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 2],
 		correction: [12, 20, 59, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 300],
 		correction: [12, 20, 59, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 500],
 		correction: [12, 20, 59, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 998],
 		correction: [12, 20, 59, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 999],
 		correction: [12, 20, 59, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 20, 59, 1000],
@@ -12160,43 +12160,43 @@ export const checkTime = [
 		time: [12, 59, 0, 0],
 		correction: [12, 59, 0, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 1],
 		correction: [12, 59, 0, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 2],
 		correction: [12, 59, 0, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 300],
 		correction: [12, 59, 0, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 500],
 		correction: [12, 59, 0, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 998],
 		correction: [12, 59, 0, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 999],
 		correction: [12, 59, 0, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 0, 1000],
@@ -12214,43 +12214,43 @@ export const checkTime = [
 		time: [12, 59, 1, 0],
 		correction: [12, 59, 1, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 1],
 		correction: [12, 59, 1, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 2],
 		correction: [12, 59, 1, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 300],
 		correction: [12, 59, 1, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 500],
 		correction: [12, 59, 1, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 998],
 		correction: [12, 59, 1, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 999],
 		correction: [12, 59, 1, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 1, 1000],
@@ -12268,43 +12268,43 @@ export const checkTime = [
 		time: [12, 59, 2, 0],
 		correction: [12, 59, 2, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 1],
 		correction: [12, 59, 2, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 2],
 		correction: [12, 59, 2, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 300],
 		correction: [12, 59, 2, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 500],
 		correction: [12, 59, 2, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 998],
 		correction: [12, 59, 2, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 999],
 		correction: [12, 59, 2, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 2, 1000],
@@ -12322,43 +12322,43 @@ export const checkTime = [
 		time: [12, 59, 20, 0],
 		correction: [12, 59, 20, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 1],
 		correction: [12, 59, 20, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 2],
 		correction: [12, 59, 20, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 300],
 		correction: [12, 59, 20, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 500],
 		correction: [12, 59, 20, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 998],
 		correction: [12, 59, 20, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 999],
 		correction: [12, 59, 20, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 20, 1000],
@@ -12376,43 +12376,43 @@ export const checkTime = [
 		time: [12, 59, 59, 0],
 		correction: [12, 59, 59, 0, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 1],
 		correction: [12, 59, 59, 1, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 2],
 		correction: [12, 59, 59, 2, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 300],
 		correction: [12, 59, 59, 300, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 500],
 		correction: [12, 59, 59, 500, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 998],
 		correction: [12, 59, 59, 998, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 999],
 		correction: [12, 59, 59, 999, 0],
 		check24: true,
-		check12: false
+		check12: true
 	},
 	{
 		time: [12, 59, 59, 1000],
@@ -25501,541 +25501,6 @@ export const checkDate = [
 		date: [1699, 11, 29],
 		correction: [1699, 11, 29],
 		check: true
-	},
-	{
-		date: [1699, 11, 30],
-		correction: [1700, 0, 1],
-		check: false
-	},
-	{
-		date: [1699, 11, 31],
-		correction: [1700, 0, 2],
-		check: false
-	},
-	{
-		date: [1699, 11, 32],
-		correction: [1700, 0, 3],
-		check: false
-	},
-	{
-		date: [1699, 12, 0],
-		correction: [1699, 11, 29],
-		check: false
-	},
-	{
-		date: [1699, 12, 1],
-		correction: [1700, 0, 1],
-		check: false
-	},
-	{
-		date: [1699, 12, 2],
-		correction: [1700, 0, 2],
-		check: false
-	},
-	{
-		date: [1699, 12, 15],
-		correction: [1700, 0, 15],
-		check: false
-	},
-	{
-		date: [1699, 12, 29],
-		correction: [1700, 0, 29],
-		check: false
-	},
-	{
-		date: [1699, 12, 30],
-		correction: [1700, 0, 30],
-		check: false
-	},
-	{
-		date: [1699, 12, 31],
-		correction: [1700, 0, 31],
-		check: false
-	},
-	{
-		date: [1699, 12, 32],
-		correction: [1700, 1, 1],
-		check: false
-	},
-	{
-		date: [1700, -1, 0],
-		correction: [1699, 10, 30],
-		check: false
-	},
-	{
-		date: [1700, -1, 1],
-		correction: [1699, 11, 1],
-		check: false
-	},
-	{
-		date: [1700, -1, 2],
-		correction: [1699, 11, 2],
-		check: false
-	},
-	{
-		date: [1700, -1, 15],
-		correction: [1699, 11, 15],
-		check: false
-	},
-	{
-		date: [1700, -1, 29],
-		correction: [1699, 11, 29],
-		check: false
-	},
-	{
-		date: [1700, -1, 30],
-		correction: [1700, 0, 1],
-		check: false
-	},
-	{
-		date: [1700, -1, 31],
-		correction: [1700, 0, 2],
-		check: false
-	},
-	{
-		date: [1700, -1, 32],
-		correction: [1700, 0, 3],
-		check: false
-	},
-	{
-		date: [1700, 0, 0],
-		correction: [1699, 11, 29],
-		check: false
-	},
-	{
-		date: [1700, 0, 1],
-		correction: [1700, 0, 1],
-		check: true
-	},
-	{
-		date: [1700, 0, 2],
-		correction: [1700, 0, 2],
-		check: true
-	},
-	{
-		date: [1700, 0, 15],
-		correction: [1700, 0, 15],
-		check: true
-	},
-	{
-		date: [1700, 0, 29],
-		correction: [1700, 0, 29],
-		check: true
-	},
-	{
-		date: [1700, 0, 30],
-		correction: [1700, 0, 30],
-		check: true
-	},
-	{
-		date: [1700, 0, 31],
-		correction: [1700, 0, 31],
-		check: true
-	},
-	{
-		date: [1700, 0, 32],
-		correction: [1700, 1, 1],
-		check: false
-	},
-	{
-		date: [1700, 1, 0],
-		correction: [1700, 0, 31],
-		check: false
-	},
-	{
-		date: [1700, 1, 1],
-		correction: [1700, 1, 1],
-		check: true
-	},
-	{
-		date: [1700, 1, 2],
-		correction: [1700, 1, 2],
-		check: true
-	},
-	{
-		date: [1700, 1, 15],
-		correction: [1700, 1, 15],
-		check: true
-	},
-	{
-		date: [1700, 1, 29],
-		correction: [1700, 1, 29],
-		check: true
-	},
-	{
-		date: [1700, 1, 30],
-		correction: [1700, 1, 30],
-		check: true
-	},
-	{
-		date: [1700, 1, 31],
-		correction: [1700, 1, 31],
-		check: true
-	},
-	{
-		date: [1700, 1, 32],
-		correction: [1700, 2, 1],
-		check: false
-	},
-	{
-		date: [1700, 6, 0],
-		correction: [1700, 5, 31],
-		check: false
-	},
-	{
-		date: [1700, 6, 1],
-		correction: [1700, 6, 1],
-		check: true
-	},
-	{
-		date: [1700, 6, 2],
-		correction: [1700, 6, 2],
-		check: true
-	},
-	{
-		date: [1700, 6, 15],
-		correction: [1700, 6, 15],
-		check: true
-	},
-	{
-		date: [1700, 6, 29],
-		correction: [1700, 6, 29],
-		check: true
-	},
-	{
-		date: [1700, 6, 30],
-		correction: [1700, 6, 30],
-		check: true
-	},
-	{
-		date: [1700, 6, 31],
-		correction: [1700, 7, 1],
-		check: false
-	},
-	{
-		date: [1700, 6, 32],
-		correction: [1700, 7, 2],
-		check: false
-	},
-	{
-		date: [1700, 11, 0],
-		correction: [1700, 10, 30],
-		check: false
-	},
-	{
-		date: [1700, 11, 1],
-		correction: [1700, 11, 1],
-		check: true
-	},
-	{
-		date: [1700, 11, 2],
-		correction: [1700, 11, 2],
-		check: true
-	},
-	{
-		date: [1700, 11, 15],
-		correction: [1700, 11, 15],
-		check: true
-	},
-	{
-		date: [1700, 11, 29],
-		correction: [1700, 11, 29],
-		check: true
-	},
-	{
-		date: [1700, 11, 30],
-		correction: [1701, 0, 1],
-		check: false
-	},
-	{
-		date: [1700, 11, 31],
-		correction: [1701, 0, 2],
-		check: false
-	},
-	{
-		date: [1700, 11, 32],
-		correction: [1701, 0, 3],
-		check: false
-	},
-	{
-		date: [1700, 12, 0],
-		correction: [1700, 11, 29],
-		check: false
-	},
-	{
-		date: [1700, 12, 1],
-		correction: [1701, 0, 1],
-		check: false
-	},
-	{
-		date: [1700, 12, 2],
-		correction: [1701, 0, 2],
-		check: false
-	},
-	{
-		date: [1700, 12, 15],
-		correction: [1701, 0, 15],
-		check: false
-	},
-	{
-		date: [1700, 12, 29],
-		correction: [1701, 0, 29],
-		check: false
-	},
-	{
-		date: [1700, 12, 30],
-		correction: [1701, 0, 30],
-		check: false
-	},
-	{
-		date: [1700, 12, 31],
-		correction: [1701, 0, 31],
-		check: false
-	},
-	{
-		date: [1700, 12, 32],
-		correction: [1701, 1, 1],
-		check: false
-	},
-	{
-		date: [1701, -1, 0],
-		correction: [1700, 10, 30],
-		check: false
-	},
-	{
-		date: [1701, -1, 1],
-		correction: [1700, 11, 1],
-		check: false
-	},
-	{
-		date: [1701, -1, 2],
-		correction: [1700, 11, 2],
-		check: false
-	},
-	{
-		date: [1701, -1, 15],
-		correction: [1700, 11, 15],
-		check: false
-	},
-	{
-		date: [1701, -1, 29],
-		correction: [1700, 11, 29],
-		check: false
-	},
-	{
-		date: [1701, -1, 30],
-		correction: [1701, 0, 1],
-		check: false
-	},
-	{
-		date: [1701, -1, 31],
-		correction: [1701, 0, 2],
-		check: false
-	},
-	{
-		date: [1701, -1, 32],
-		correction: [1701, 0, 3],
-		check: false
-	},
-	{
-		date: [1701, 0, 0],
-		correction: [1700, 11, 29],
-		check: false
-	},
-	{
-		date: [1701, 0, 1],
-		correction: [1701, 0, 1],
-		check: false
-	},
-	{
-		date: [1701, 0, 2],
-		correction: [1701, 0, 2],
-		check: false
-	},
-	{
-		date: [1701, 0, 15],
-		correction: [1701, 0, 15],
-		check: false
-	},
-	{
-		date: [1701, 0, 29],
-		correction: [1701, 0, 29],
-		check: false
-	},
-	{
-		date: [1701, 0, 30],
-		correction: [1701, 0, 30],
-		check: false
-	},
-	{
-		date: [1701, 0, 31],
-		correction: [1701, 0, 31],
-		check: false
-	},
-	{
-		date: [1701, 0, 32],
-		correction: [1701, 1, 1],
-		check: false
-	},
-	{
-		date: [1701, 1, 0],
-		correction: [1701, 0, 31],
-		check: false
-	},
-	{
-		date: [1701, 1, 1],
-		correction: [1701, 1, 1],
-		check: false
-	},
-	{
-		date: [1701, 1, 2],
-		correction: [1701, 1, 2],
-		check: false
-	},
-	{
-		date: [1701, 1, 15],
-		correction: [1701, 1, 15],
-		check: false
-	},
-	{
-		date: [1701, 1, 29],
-		correction: [1701, 1, 29],
-		check: false
-	},
-	{
-		date: [1701, 1, 30],
-		correction: [1701, 1, 30],
-		check: false
-	},
-	{
-		date: [1701, 1, 31],
-		correction: [1701, 1, 31],
-		check: false
-	},
-	{
-		date: [1701, 1, 32],
-		correction: [1701, 2, 1],
-		check: false
-	},
-	{
-		date: [1701, 6, 0],
-		correction: [1701, 5, 31],
-		check: false
-	},
-	{
-		date: [1701, 6, 1],
-		correction: [1701, 6, 1],
-		check: false
-	},
-	{
-		date: [1701, 6, 2],
-		correction: [1701, 6, 2],
-		check: false
-	},
-	{
-		date: [1701, 6, 15],
-		correction: [1701, 6, 15],
-		check: false
-	},
-	{
-		date: [1701, 6, 29],
-		correction: [1701, 6, 29],
-		check: false
-	},
-	{
-		date: [1701, 6, 30],
-		correction: [1701, 6, 30],
-		check: false
-	},
-	{
-		date: [1701, 6, 31],
-		correction: [1701, 7, 1],
-		check: false
-	},
-	{
-		date: [1701, 6, 32],
-		correction: [1701, 7, 2],
-		check: false
-	},
-	{
-		date: [1701, 11, 0],
-		correction: [1701, 10, 30],
-		check: false
-	},
-	{
-		date: [1701, 11, 1],
-		correction: [1701, 11, 1],
-		check: false
-	},
-	{
-		date: [1701, 11, 2],
-		correction: [1701, 11, 2],
-		check: false
-	},
-	{
-		date: [1701, 11, 15],
-		correction: [1701, 11, 15],
-		check: false
-	},
-	{
-		date: [1701, 11, 29],
-		correction: [1701, 11, 29],
-		check: false
-	},
-	{
-		date: [1701, 11, 30],
-		correction: [1701, 11, 30],
-		check: false
-	},
-	{
-		date: [1701, 11, 31],
-		correction: [1702, 0, 1],
-		check: false
-	},
-	{
-		date: [1701, 11, 32],
-		correction: [1702, 0, 2],
-		check: false
-	},
-	{
-		date: [1701, 12, 0],
-		correction: [1701, 11, 30],
-		check: false
-	},
-	{
-		date: [1701, 12, 1],
-		correction: [1702, 0, 1],
-		check: false
-	},
-	{
-		date: [1701, 12, 2],
-		correction: [1702, 0, 2],
-		check: false
-	},
-	{
-		date: [1701, 12, 15],
-		correction: [1702, 0, 15],
-		check: false
-	},
-	{
-		date: [1701, 12, 29],
-		correction: [1702, 0, 29],
-		check: false
-	},
-	{
-		date: [1701, 12, 30],
-		correction: [1702, 0, 30],
-		check: false
-	},
-	{
-		date: [1701, 12, 31],
-		correction: [1702, 0, 31],
-		check: false
-	},
-	{
-		date: [1701, 12, 32],
-		correction: [1702, 1, 1],
-		check: false
 	}
 ];
 
