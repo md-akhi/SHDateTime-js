@@ -109,7 +109,7 @@ describe("get in/of date", () => {
 			solarDate.forEach(({ sdata }) => {
 				const [year, month, day] = sdata.solar;
 				const date = new SHDate(year, month, day);
-				const nth = date.getWeekdayInMonth(year, month, day);
+				const nth = date.weekdayInMonth(year, month, day);
 				assert.equal(nth, sdata.Wim);
 			});
 		});
@@ -162,7 +162,7 @@ describe("set function", () => {
 		solarDate.forEach(({ sdata, stime, gtime }) => {
 			// [year, month, day] = sdata.solar;
 			date.setHours(0, 0, 0, 0);
-			date.setDateOfDayOfYear(sdata.solar[0], sdata.Doy);
+			date.setDayOfYear(sdata.solar[0], sdata.Doy);
 			assert.equal(date.getDayOfYear(), sdata.Doy);
 		});
 	});
