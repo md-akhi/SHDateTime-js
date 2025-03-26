@@ -5,7 +5,7 @@
  * @link http://git.akhi.ir/js/SHDate | https://github.com/md-akhi/SHDateTime-js#readme
  * @copyright (C) 2015 - 2023 Open Source Matters,Inc. All right reserved.
  * @license AGPL-3.0 License
- * @version Release: 2.1.26
+ * @version Release: 2.3.17
  */
 
 import Word from "./word.js";
@@ -29,7 +29,7 @@ export default class SHDate {
 	/**
 	 * version of SHDate
 	 */
-	static VERSION: string = "2.1.26";
+	static VERSION: string = "2.3.17";
 
 	/**
 	 * This static property represents the number of days in each month of a specific calendar.
@@ -237,9 +237,7 @@ export default class SHDate {
 		if (this.#GIsLeapYear(gyear) && gmonth > 1) gdoy++;
 		const syear = Math.trunc(gdoy / 365) + 1;
 		const sdoy =
-			(gdoy % 365) +
-			this.#GIsLeapYear(gyear, true) -
-			this.#isLeapYear(syear, true);
+			(gdoy % 365) + this.#GLeapYears(gyear) - this.#leapYears(syear);
 		return this.#dateOfDayOfYear(syear, sdoy - 1);
 	}
 
@@ -268,9 +266,7 @@ export default class SHDate {
 			226746; /*621*365+80*/
 		const gyear = Math.trunc(sdoy / 365) + 1;
 		const gdoy =
-			(sdoy % 365) +
-			this.#isLeapYear(syear, true) -
-			this.#GIsLeapYear(gyear, true);
+			(sdoy % 365) + this.#leapYears(syear) - this.#GLeapYears(gyear);
 		return this.#GDateOfDayOfYear(gyear, gdoy);
 	}
 
@@ -320,19 +316,21 @@ export default class SHDate {
 	 * @param {boolean} all - all leap year
 	 * @returns {boolean} - leap year
 	 */
-	#GIsLeapYear(year: number, all: boolean = false): number {
+	#GIsLeapYear(year: number): number {
 		/**
 		 * 150 = Correcting the difference of leap with the gregorian date
 		 */
-		if (all)
-			return (
-				Math.ceil(
-					Math.trunc(--year / 4) -
-						Math.trunc(year / 100) +
-						Math.trunc(year / 400)
-				) - 150
-			);
 		return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0) ? 1 : 0;
+	}
+	#GLeapYears(year: number): number {
+		/**
+		 * 150 = Correcting the difference of leap with the gregorian date
+		 */
+		return (
+			Math.ceil(
+				Math.trunc(--year / 4) - Math.trunc(year / 100) + Math.trunc(year / 400)
+			) - 150
+		);
 	}
 
 	/**
@@ -341,15 +339,23 @@ export default class SHDate {
 	 * @param {boolean} all - all leap year (default: false)
 	 * @returns {boolean} - True if the leap year, False otherwise.
 	 */
-	#isLeapYear(year: number, all: boolean = false): number {
+	#isLeapYear(year: number): number {
 		/**
 		 * years * 0.2422 = years * 365.2422 - years * 365
 		 * 0.2422 = 365.2422
 		 * 274 = Correcting the difference of leap with the solar date
 		 */
 		year = year + 1127;
-		if (all) return Math.trunc(Math.ceil(year * 0.2422)) - 274;
 		return Math.trunc((year + 1) * 0.2422) - Math.trunc(year * 0.2422);
+	}
+	#leapYears(year: number): number {
+		/**
+		 * years * 0.2422 = years * 365.2422 - years * 365
+		 * 0.2422 = 365.2422
+		 * 274 = Correcting the difference of leap with the solar date
+		 */
+		year = year + 1127;
+		return Math.trunc(Math.ceil(year * 0.2422)) - 274;
 	}
 
 	/**
@@ -378,11 +384,7 @@ export default class SHDate {
 		//return (8 + this.#date.getDay() - FDOW) % 7; // (7+(gdow+1)-FDOW)%7
 		// 5 => first day of week is Tuesday
 		return (
-			(5 +
-				year +
-				this.#isLeapYear(year, true) +
-				this.#dayOfYear(month, date) -
-				FDOW) %
+			(5 + year + this.#leapYears(year) + this.#dayOfYear(month, date) - FDOW) %
 			7
 		);
 	}
@@ -910,7 +912,11 @@ export default class SHDate {
 	 * @param  {number} day day of the date (start: 0) (default: 1)
 	 * @return {number[]} [ year, month, date ]
 	 */
-	public dateCorrection(year: number, month: number = 0, day: number = 1): number[] {
+	public dateCorrection(
+		year: number,
+		month: number = 0,
+		day: number = 1
+	): number[] {
 		month++;
 		if (month < 1)
 			do {
@@ -964,7 +970,11 @@ export default class SHDate {
 	 * @param  {number} day day of the date (start: 0) (default: 1)
 	 * @return {number[]} [ year, month, date ]
 	 */
-	public static weekCorrection(year: number, week: number, day: number = 0): number[] {
+	public static weekCorrection(
+		year: number,
+		week: number,
+		day: number = 0
+	): number[] {
 		return new SHDate().weekCorrection(year, week, day);
 	}
 
@@ -1319,7 +1329,7 @@ export default class SHDate {
 					break;
 				case "LPS":
 				case "lps":
-					str.push(this.#isLeapYear(year, true));
+					str.push(this.#leapYears(year));
 					break;
 				default:
 					str.push(f);
